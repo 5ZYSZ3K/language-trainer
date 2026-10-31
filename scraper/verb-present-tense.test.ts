@@ -12,7 +12,7 @@ const forms = (html: string, prompt: string) =>
 
 const SITE = 'https://prirucka.ujc.cas.cz/'
 
-/** A fake site: known URLs return their page, anything else (e.g. the load-ack) returns an empty body. */
+/** A fake site: known URLs return their page, anything else returns an empty body. */
 function fakeSite(pages: Record<string, string>, failOn?: RegExp) {
   const urls: string[] = []
   const get: HttpGet = async (url) => {
@@ -24,10 +24,10 @@ function fakeSite(pages: Record<string, string>, failOn?: RegExp) {
 }
 
 describe('VerbPresentTense.fetchPage', () => {
-  it('searches for the verb, returns the page, then sends the load-ack the page asks its browser to send', async () => {
+  it('searches for the verb and returns the page, with no further requests', async () => {
     const { get, urls } = fakeSite({ [`${SITE}?slovo=bavit`]: fixture('bavit') })
     await expect(verbPresentTense.fetchPage('bavit', get)).resolves.toBe(fixture('bavit'))
-    expect(urls).toEqual([`${SITE}?slovo=bavit`, `${SITE}?id=bavit&action=single`])
+    expect(urls).toEqual([`${SITE}?slovo=bavit`])
   })
 
   it('url-encodes the search, spaces and diacritics included', async () => {
@@ -36,26 +36,19 @@ describe('VerbPresentTense.fetchPage', () => {
     expect(urls[0]).toBe(`${SITE}?slovo=b%C3%A1t%20se`)
   })
 
-  it('follows the "sloveso" link when the word has several entries, and acks that page too', async () => {
+  it('follows the "sloveso" link when the word has several entries', async () => {
     const verbPage = fixture('bavit')
     const { get, urls } = fakeSite({
       [`${SITE}?slovo=st%C3%A1t`]: fixture('stat-disambiguation'),
       [`${SITE}?id=st%C3%A1t_1`]: verbPage,
     })
     await expect(verbPresentTense.fetchPage('stát', get)).resolves.toBe(verbPage)
-    expect(urls).toEqual([
-      `${SITE}?slovo=st%C3%A1t`,
-      `${SITE}?id=st%C3%A1t&action=select`,
-      `${SITE}?id=st%C3%A1t_1`,
-      `${SITE}?id=bavit&action=single`,
-    ])
+    expect(urls).toEqual([`${SITE}?slovo=st%C3%A1t`, `${SITE}?id=st%C3%A1t_1`])
   })
 
   describe('reflexive verbs the site has no entry for', () => {
     // "bavit si" stands in for "dát si": the site answers with an unrelated page (the noun "pusa" fixture)
     // and has the plain verb under its own name (the "bavit" fixture).
-    const searches = (urls: string[]) => urls.filter((u) => u.includes('?slovo='))
-
     it('falls back to the plain verb, which parse then completes with the particle', async () => {
       const { get, urls } = fakeSite({
         [`${SITE}?slovo=bavit%20si`]: fixture('dat-si-noun'),
@@ -63,20 +56,20 @@ describe('VerbPresentTense.fetchPage', () => {
       })
       const html = await verbPresentTense.fetchPage('bavit si', get)
       expect(html).toBe(fixture('bavit'))
-      expect(searches(urls)).toEqual([`${SITE}?slovo=bavit%20si`, `${SITE}?slovo=bavit`])
+      expect(urls).toEqual([`${SITE}?slovo=bavit%20si`, `${SITE}?slovo=bavit`])
       expect(forms(html, 'bavit si')[0]).toEqual(['verbPresent.1sg', ['bavím si']])
     })
 
     it('does not search twice when the first page is already the entry', async () => {
       const { get, urls } = fakeSite({ [`${SITE}?slovo=b%C3%A1t%20se`]: fixture('bat-se') })
       await verbPresentTense.fetchPage('bát se', get)
-      expect(searches(urls)).toEqual([`${SITE}?slovo=b%C3%A1t%20se`])
+      expect(urls).toEqual([`${SITE}?slovo=b%C3%A1t%20se`])
     })
 
     it('does not search twice for a verb without a particle', async () => {
       const { get, urls } = fakeSite({ [`${SITE}?slovo=hnat`]: fixture('dat-si-noun') })
       await verbPresentTense.fetchPage('hnat', get)
-      expect(searches(urls)).toEqual([`${SITE}?slovo=hnat`])
+      expect(urls).toEqual([`${SITE}?slovo=hnat`])
     })
 
     it('returns the first page when the plain verb has no entry either, so parse reports the real problem', async () => {
@@ -85,11 +78,6 @@ describe('VerbPresentTense.fetchPage', () => {
       expect(html).toBe(fixture('nechtit-se-other-entry'))
       expect(() => verbPresentTense.parse(html, 'nechtít se')).toThrow(ParseError)
     })
-  })
-
-  it('still returns the page when the ack fails', async () => {
-    const { get } = fakeSite({ [`${SITE}?slovo=bavit`]: fixture('bavit') }, /action=/)
-    await expect(verbPresentTense.fetchPage('bavit', get)).resolves.toBe(fixture('bavit'))
   })
 
   it('does not hide a failed search', async () => {

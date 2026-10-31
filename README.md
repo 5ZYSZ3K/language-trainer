@@ -57,10 +57,18 @@ next push only fetches the new verbs.
   is optional, as on the site itself (`bání (se)`): `bojí (se)` accepts both `bojí se` and `bojí`. Suffix-only
   clitics such as the `-s` in `jsi, -s` are dropped, since they are not words one can type alone.
 - **Politeness.** One request at a time, 1.5 s apart, 30 s timeout, retries with a growing wait. The site
-  keeps an address "busy" until the page reports that it loaded (the page's own JavaScript sends a small
-  `?id=…&action=…` request from `onload`); a client that does not run JavaScript has to send that
-  acknowledgement itself, which the scraper does by replaying the page's own `onload` call. It never uses
-  the site's "nechci čekat" override. If the site still answers "busy", the scraper waits and retries.
+  keeps an address "busy" while it thinks an earlier query from it is still being evaluated, and answers
+  HTTP 200 with a "server is overloaded" page (the scraper recognises it and retries after a pause; it
+  never uses the page's "nechci čekat" override). During development this state set in after a burst of
+  overlapping and timed-out requests from one address and then lasted tens of minutes, so: **never run two
+  scrapes at once, and do not keep re-running a scrape that is failing**. The scraper itself stops after 5
+  fetch failures in a row for the same reason.
+
+> **Not yet verified at full scale.** The parser and the scrape logic are tested against saved real pages, and
+> one verb (`bavit`) was fetched live through the CLI and came out correct, but a complete scrape of
+> `czech_verbs.txt` has not been run against the live site yet: the site stopped answering the development
+> machine after the first few hundred requests. The first run in GitHub Actions (a different address) is the
+> first real full-scale test; check its log, and its failure summary, before relying on the site.
 
 #### Verbs known to fail
 

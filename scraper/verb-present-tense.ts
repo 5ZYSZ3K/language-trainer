@@ -67,31 +67,6 @@ export function isServerBusy(html: string): boolean {
   return html.includes('server je přetížen')
 }
 
-/**
- * The site keeps an address "busy" until the browser reports that it loaded the page, which it does
- * from the page's own onload handler. This rebuilds the URL of that report from the page itself.
- */
-function loadAckUrl(html: string): string | undefined {
-  const $ = cheerio.load(html)
-  const action = /sendinfo\(url \+ "([^"]*)"\)/.exec($('body').attr('onload') ?? '')?.[1]
-  const url = /var url = "([^"]*)" \+ encodeURIComponent\("([^"]*)"\)/.exec($('script').text())
-  return action && url ? url[1] + encodeURIComponent(url[2]!) + action : undefined
-}
-
-/** Gets a page and, like a browser would, reports that it arrived. The report is best effort. */
-async function getAcked(url: string, get: HttpGet): Promise<string> {
-  const html = await get(url)
-  const ack = loadAckUrl(html)
-  if (ack) {
-    try {
-      await get(ack)
-    } catch {
-      // Not worth failing the verb over; the lock times out on its own.
-    }
-  }
-  return html
-}
-
 /** On a "choose an entry" page, the link to the entry that is the verb itself, if there is exactly one. */
 function verbEntryLink(html: string, prompt: string): string | undefined {
   const $ = cheerio.load(html)
@@ -107,9 +82,9 @@ function verbEntryLink(html: string, prompt: string): string | undefined {
 
 /** Searches for a word and, if it has several entries, follows the one that is the verb. */
 async function fetchEntryPage(word: string, get: HttpGet): Promise<string> {
-  const html = await getAcked(`${SITE}?slovo=${encodeURIComponent(word)}`, get)
+  const html = await get(`${SITE}?slovo=${encodeURIComponent(word)}`)
   const entry = verbEntryLink(html, word)
-  return entry ? getAcked(entry, get) : html
+  return entry ? get(entry) : html
 }
 
 export const verbPresentTense: ScrapableExercise = {
