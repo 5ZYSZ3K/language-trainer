@@ -74,7 +74,17 @@ next *scrape* only fetches the new verbs.
   saved. There is no overrides file for now. Two safety rules: a failed `--force` refresh keeps the
   verb's previous data instead of deleting it, and after 5 fetch failures in a row (timeouts, "busy", HTTP
   errors; a page that merely fails to parse does not count) the run stops asking the site and reports the
-  remaining verbs as "not attempted". There is no automatic cool-down: wait, then run it again.
+  remaining verbs as "not attempted". By default there is no cool-down: wait, then run it again, or use
+  `--fail-cooldown` (next point).
+- **`--fail-cooldown <duration>`.** When a verb cannot be fetched (after the request-level retries described
+  under *Politeness*), the scrape stops for that long and then tries the same verb again instead of moving
+  on, e.g. `npm run scrape -- --fail-cooldown 10m`. The duration needs a unit: `500ms`, `90s`, `10m`, `1h`
+  (a bare number is rejected, so it cannot be mistaken for the milliseconds of `--delay-ms`). Only fetch
+  failures trigger it; a page that merely fails to parse is not retried, because the site is fine and waiting
+  will not change the page. Each failed attempt still counts towards the 5-in-a-row limit, so a site that
+  stays down is given up on after 5 attempts at the same verb (4 cool-downs), not waited for forever. Pass a
+  longer duration if the site needs longer to recover. The progress log shows `retry  <verb> (n/total): <reason>;
+  cooling down for N s first`. Off by default; Ctrl-C works during a cool-down like at any other time.
 - **A page is only accepted if it is that verb's own entry.** The site answers some searches with an
   unrelated page (e.g. `dát si` returns the noun *pusa*, `nechtít se` returns the entry for *chtít*), so the
   heading must match the requested verb. Words with several entries (e.g. `stát`) are resolved by following

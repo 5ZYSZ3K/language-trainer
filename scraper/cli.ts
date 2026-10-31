@@ -1,9 +1,11 @@
 /**
- * Build-time scraper. Usage: npm run scrape [-- --force] [--delay-ms <ms>]  (see USAGE in cli-options.ts)
+ * Build-time scraper. Usage: npm run scrape [-- --force] [--delay-ms <ms>] [--fail-cooldown <duration>]
+ * (see USAGE in cli-options.ts)
  *
  * Reads czech_verbs.txt, fetches only the verbs missing from the existing data file (all of them with
  * --force) and saves public/data/ after every verb, so stopping the run (Ctrl-C, a crash, the site going
- * away) loses nothing. Exits non-zero if any verb failed; the data of the verbs that worked is already
+ * away) loses nothing. With --fail-cooldown, a verb the site would not serve is retried after a pause
+ * instead of being skipped. Exits non-zero if any verb failed; the data of the verbs that worked is already
  * written. Only one scrape may run at a time (.scrape.lock).
  */
 import { readFile } from 'node:fs/promises'
@@ -34,7 +36,7 @@ async function main(): Promise<number> {
     console.error(`${parsed.error}\n${USAGE}`)
     return 2
   }
-  const { force, delayMs } = parsed.options
+  const { force, delayMs, failCooldownMs } = parsed.options
 
   let lock: Lock
   try {
@@ -71,6 +73,7 @@ async function main(): Promise<number> {
       `${listed.size} verbs listed, ${alreadyScraped} already scraped, ${force ? listed.size : listed.size - alreadyScraped} to fetch${force ? ' (--force)' : ''}.`,
     )
     console.log(`Pausing ${delayMs} ms after each request.`)
+    if (failCooldownMs > 0) console.log(`After a verb fails to fetch: cooling down for ${failCooldownMs / 1000} s, then trying it again.`)
 
     // One request at a time, `delayMs` after the previous one finished. The site is slow and sometimes answers
     // "busy"; back off and retry.
@@ -84,7 +87,7 @@ async function main(): Promise<number> {
       await writeData(dataFile, tmpDataFile, { exerciseType: exercise.type, items: [...items] })
       savedCount = items.length
     }
-    const { items, failures } = await scrape({ exercise, prompts, existing, force, get, save, log: console.log })
+    const { items, failures } = await scrape({ exercise, prompts, existing, force, get, save, failCooldownMs, log: console.log })
 
     console.log(`\nDone: ${items.length} verbs in ${dataFile}`)
     if (failures.length > 0) {

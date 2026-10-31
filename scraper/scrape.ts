@@ -20,7 +20,14 @@ export interface ScrapeOptions {
    * "busy"), the site is assumed to be down and the remaining prompts are not tried. Default 5.
    */
   maxConsecutiveFetchFailures?: number
+  /**
+   * When a verb fails for reasons other than the page's content (see above), wait this long and try the same
+   * verb again instead of moving on to the next one. Each such failure counts towards
+   * `maxConsecutiveFetchFailures`, so a site that stays down is still given up on. 0 (the default) turns it off.
+   */
+  failCooldownMs?: number
   log?: (message: string) => void
+  sleep?: (ms: number) => Promise<void>
 }
 
 export interface Failure {
@@ -35,7 +42,18 @@ export interface ScrapeResult {
 }
 
 export async function scrape(options: ScrapeOptions): Promise<ScrapeResult> {
-  const { exercise, prompts, existing, force, get, save, maxConsecutiveFetchFailures = 5, log = () => {} } = options
+  const {
+    exercise,
+    prompts,
+    existing,
+    force,
+    get,
+    save,
+    maxConsecutiveFetchFailures = 5,
+    failCooldownMs = 0,
+    log = () => {},
+    sleep = (ms) => new Promise((r) => setTimeout(r, ms)),
+  } = options
   const listed = [...new Set(prompts)]
   const inList = new Set(listed)
   const previous = new Map(existing.filter((item) => inList.has(item.prompt)).map((item) => [item.prompt, item]))
@@ -65,21 +83,31 @@ export async function scrape(options: ScrapeOptions): Promise<ScrapeResult> {
 
     tried++
     const progress = `(${tried}/${toTry.length})`
-    let item: Item
-    try {
-      const html = await exercise.fetchPage(prompt, get)
-      fetchFailuresInARow = 0
-      const cells = exercise.parse(html, prompt)
-      const empty = cells.find((cell) => cell.acceptedForms.length === 0)
-      if (empty) throw new ParseError(`no form found for ${empty.label}`)
-      item = { prompt, cells }
-    } catch (error) {
-      const reason = error instanceof Error ? error.message : String(error)
-      if (!(error instanceof ParseError)) fetchFailuresInARow++
-      failures.push({ prompt, reason })
-      log(`FAILED ${prompt} ${progress}: ${reason}`)
-      continue
+    let item: Item | undefined
+    while (item === undefined) {
+      try {
+        const html = await exercise.fetchPage(prompt, get)
+        fetchFailuresInARow = 0
+        const cells = exercise.parse(html, prompt)
+        const empty = cells.find((cell) => cell.acceptedForms.length === 0)
+        if (empty) throw new ParseError(`no form found for ${empty.label}`)
+        item = { prompt, cells }
+      } catch (error) {
+        const reason = error instanceof Error ? error.message : String(error)
+        const fetchFailed = !(error instanceof ParseError)
+        if (fetchFailed) fetchFailuresInARow++
+        // Waiting only helps when the site is the problem, and is pointless once the run is about to give up.
+        if (fetchFailed && failCooldownMs > 0 && fetchFailuresInARow < maxConsecutiveFetchFailures) {
+          log(`retry  ${prompt} ${progress}: ${reason}; cooling down for ${failCooldownMs / 1000} s first`)
+          await sleep(failCooldownMs)
+          continue
+        }
+        failures.push({ prompt, reason })
+        log(`FAILED ${prompt} ${progress}: ${reason}`)
+        break
+      }
     }
+    if (item === undefined) continue
 
     // Outside the try: a failed save is fatal, not a failure of this verb.
     scraped.set(prompt, item)

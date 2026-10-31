@@ -27,6 +27,21 @@ function recordingGet(failOn: string[] = []) {
   return { get, urls }
 }
 
+/** Like recordingGet, but each url in `failures` fails that many times and then works. */
+function flakyGet(failures: Record<string, number>) {
+  const urls: string[] = []
+  const left = { ...failures }
+  const get: HttpGet = async (url) => {
+    urls.push(url)
+    if ((left[url] ?? 0) > 0) {
+      left[url]!--
+      throw new Error('HTTP 503')
+    }
+    return url
+  }
+  return { get, urls }
+}
+
 const stored = (prompt: string): Item => ({
   prompt,
   cells: [
@@ -157,6 +172,153 @@ describe('scrape', () => {
       })
       expect(urls).toHaveLength(7) // every prompt was tried
       expect(result.items.map((i) => i.prompt)).toEqual(['b', 'd'])
+    })
+  })
+
+  describe('with a cooldown after failures', () => {
+    /** A `sleep` that records what it was asked to wait, together with the urls fetched up to then. */
+    function sleeper(urls: string[]) {
+      const naps: { ms: number; fetchedBefore: string[] }[] = []
+      const sleep = async (ms: number) => void naps.push({ ms, fetchedBefore: [...urls] })
+      return { sleep, naps }
+    }
+
+    it('waits, then tries the same verb again before moving on', async () => {
+      const { get, urls } = flakyGet({ 'page:b': 1 })
+      const { sleep, naps } = sleeper(urls)
+      const result = await scrape({
+        exercise: stub,
+        prompts: ['a', 'b', 'c'],
+        existing: [],
+        force: false,
+        get,
+        save: noSave,
+        failCooldownMs: 600_000,
+        sleep,
+      })
+      expect(urls).toEqual(['page:a', 'page:b', 'page:b', 'page:c'])
+      expect(naps).toEqual([{ ms: 600_000, fetchedBefore: ['page:a', 'page:b'] }])
+      expect(result.items.map((i) => i.prompt)).toEqual(['a', 'b', 'c'])
+      expect(result.failures).toEqual([])
+    })
+
+    it('waits again for every further failure of the same verb', async () => {
+      const { get, urls } = flakyGet({ 'page:a': 2 })
+      const { sleep, naps } = sleeper(urls)
+      const result = await scrape({
+        exercise: stub,
+        prompts: ['a'],
+        existing: [],
+        force: false,
+        get,
+        save: noSave,
+        failCooldownMs: 1000,
+        sleep,
+      })
+      expect(urls).toEqual(['page:a', 'page:a', 'page:a'])
+      expect(naps.map((n) => n.ms)).toEqual([1000, 1000])
+      expect(result.failures).toEqual([])
+    })
+
+    it('saves the retried verb once it works, and not before', async () => {
+      const { get, urls } = flakyGet({ 'page:b': 1 })
+      const { sleep } = sleeper(urls)
+      const saved: string[][] = []
+      await scrape({
+        exercise: stub,
+        prompts: ['a', 'b'],
+        existing: [],
+        force: false,
+        get,
+        save: async (items) => void saved.push(items.map((i) => i.prompt)),
+        failCooldownMs: 1000,
+        sleep,
+      })
+      expect(saved).toEqual([['a'], ['a', 'b']])
+    })
+
+    it('gives up after the allowed number of failures in a row, and reports the verb and the rest', async () => {
+      const { get, urls } = recordingGet(['page:a', 'page:b', 'page:c'])
+      const { sleep, naps } = sleeper(urls)
+      const result = await scrape({
+        exercise: stub,
+        prompts: ['a', 'b', 'c'],
+        existing: [],
+        force: false,
+        get,
+        save: noSave,
+        failCooldownMs: 1000,
+        sleep,
+        maxConsecutiveFetchFailures: 3,
+      })
+      expect(urls).toEqual(['page:a', 'page:a', 'page:a']) // never reached b
+      expect(naps).toHaveLength(2) // no pointless wait before giving up
+      expect(result.failures.map((f) => f.prompt)).toEqual(['a', 'b', 'c'])
+      expect(result.failures[0]).toEqual({ prompt: 'a', reason: 'HTTP 503' })
+      expect(result.failures[1]!.reason).toMatch(/not attempted/)
+    })
+
+    it('does not wait for a page that merely fails to parse, since the site is fine', async () => {
+      const { get, urls } = recordingGet()
+      const { sleep, naps } = sleeper(urls)
+      const result = await scrape({
+        exercise: stub,
+        prompts: ['bad one', 'empty one', 'a'],
+        existing: [],
+        force: false,
+        get,
+        save: noSave,
+        failCooldownMs: 1000,
+        sleep,
+      })
+      expect(naps).toEqual([])
+      expect(urls).toEqual(['page:bad one', 'page:empty one', 'page:a'])
+      expect(result.failures.map((f) => f.prompt)).toEqual(['bad one', 'empty one'])
+    })
+
+    it('does not wait at all when no cooldown is set, as before', async () => {
+      const { get, urls } = recordingGet(['page:b'])
+      const { sleep, naps } = sleeper(urls)
+      const result = await scrape({ exercise: stub, prompts: ['a', 'b', 'c'], existing: [], force: false, get, save: noSave, sleep })
+      expect(naps).toEqual([])
+      expect(urls).toEqual(['page:a', 'page:b', 'page:c'])
+      expect(result.failures).toEqual([{ prompt: 'b', reason: 'HTTP 503' }])
+    })
+
+    it('counts a retried verb once in the progress numbers, and logs the pause', async () => {
+      const { get, urls } = flakyGet({ 'page:a': 1 })
+      const { sleep } = sleeper(urls)
+      const lines: string[] = []
+      await scrape({
+        exercise: stub,
+        prompts: ['a', 'b'],
+        existing: [],
+        force: false,
+        get,
+        save: noSave,
+        failCooldownMs: 90_000,
+        sleep,
+        log: (message) => void lines.push(message),
+      })
+      expect(lines).toEqual(['retry  a (1/2): HTTP 503; cooling down for 90 s first', 'ok     a (1/2)', 'ok     b (2/2)'])
+    })
+
+    it('keeps the previous item when a forced refresh still fails after the last try', async () => {
+      const { get, urls } = recordingGet(['page:a'])
+      const { sleep } = sleeper(urls)
+      const result = await scrape({
+        exercise: stub,
+        prompts: ['a'],
+        existing: [stored('a')],
+        force: true,
+        get,
+        save: noSave,
+        failCooldownMs: 1000,
+        sleep,
+        maxConsecutiveFetchFailures: 2,
+      })
+      expect(result.items).toEqual([stored('a')])
+      expect(result.failures).toEqual([{ prompt: 'a', reason: 'HTTP 503' }])
     })
   })
 
