@@ -1,5 +1,5 @@
 /**
- * Build-time scraper. Usage: npm run scrape [-- --force]
+ * Build-time scraper. Usage: npm run scrape [-- --force] [--delay-ms <ms>]  (see USAGE in cli-options.ts)
  *
  * Reads czech_verbs.txt, fetches only the verbs missing from the existing data file (all of them with
  * --force) and writes the merged data to public/data/. Exits non-zero if any verb failed; the data of
@@ -9,6 +9,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { ExerciseData, Item } from '../src/core/cell'
+import { parseCliOptions, USAGE } from './cli-options'
 import { fetchText, politely } from './http'
 import { scrape } from './scrape'
 import { parseVerbList } from './verb-list'
@@ -34,21 +35,22 @@ async function readExisting(): Promise<Item[]> {
 }
 
 async function main(): Promise<number> {
-  const args = process.argv.slice(2)
-  const unknown = args.filter((a) => a !== '--force')
-  if (unknown.length > 0) {
-    console.error(`Unknown argument: ${unknown.join(' ')}\nUsage: npm run scrape [-- --force]`)
+  const parsed = parseCliOptions(process.argv.slice(2), process.env)
+  if ('error' in parsed) {
+    console.error(`${parsed.error}\n${USAGE}`)
     return 2
   }
-  const force = args.includes('--force')
+  const { force, delayMs } = parsed.options
 
   const prompts = parseVerbList(await readFile(verbsFile, 'utf8'))
   const existing = await readExisting()
   console.log(`${new Set(prompts).size} verbs listed, ${existing.length} already scraped${force ? ' (--force: fetching all)' : ''}.`)
+  console.log(`Pausing ${delayMs} ms after each request.`)
 
-  // One request at a time, 1.5 s apart. The site is slow and sometimes answers "busy"; back off and retry.
+  // One request at a time, `delayMs` after the previous one finished. The site is slow and sometimes answers
+  // "busy"; back off and retry.
   const get = politely(fetchText({ timeoutMs: 30_000, userAgent: USER_AGENT }), {
-    delayMs: 1500,
+    delayMs,
     retries: 4,
     retryDelayMs: 15_000,
     isUnusable: isServerBusy,

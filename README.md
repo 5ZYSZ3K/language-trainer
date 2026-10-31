@@ -56,7 +56,10 @@ next push only fetches the new verbs.
 - **Variants.** Forms listed with several variants (`mohu, můžu`) all count as correct. A parenthesised part
   is optional, as on the site itself (`bání (se)`): `bojí (se)` accepts both `bojí se` and `bojí`. Suffix-only
   clitics such as the `-s` in `jsi, -s` are dropped, since they are not words one can type alone.
-- **Politeness.** One request at a time, 1.5 s apart, 30 s timeout, retries with a growing wait. The site
+- **Politeness.** One request at a time, 30 s timeout, retries with a growing wait, and a pause of 1.5 s by
+  default between one request finishing (answer, error or timeout) and the next one starting, so a slow
+  answer never leaves two requests in flight. Change the pause with `npm run scrape -- --delay-ms 5000` or
+  the `SCRAPE_DELAY_MS` environment variable (the flag wins); the retry waits are never shorter than it. The site
   keeps an address "busy" while it thinks an earlier query from it is still being evaluated, and answers
   HTTP 200 with a "server is overloaded" page (the scraper recognises it and retries after a pause; it
   never uses the page's "nechci čekat" override). During development this state set in after a burst of

@@ -28,6 +28,49 @@ describe('politely', () => {
     expect(starts).toEqual([0, 1000, 2000])
   })
 
+  it('counts the delay from the end of the previous request, so a slow answer is never followed at once', async () => {
+    const clock = fakeClock()
+    const starts: number[] = []
+    const raw: HttpGet = async () => {
+      starts.push(clock.now())
+      await clock.sleep(400) // the request itself takes 400 ms
+      return 'ok'
+    }
+    const get = politely(raw, { delayMs: 1000, retries: 0, retryDelayMs: 0, ...clock })
+    await get('a')
+    await get('b')
+    await get('c')
+    expect(starts).toEqual([0, 1400, 2800])
+  })
+
+  it('also waits after a request that failed, such as a timeout, before the next one', async () => {
+    const clock = fakeClock()
+    const starts: number[] = []
+    const raw: HttpGet = async (url) => {
+      starts.push(clock.now())
+      await clock.sleep(30_000)
+      if (url === 'a') throw new Error('timeout')
+      return 'ok'
+    }
+    const get = politely(raw, { delayMs: 1000, retries: 0, retryDelayMs: 0, ...clock })
+    await expect(get('a')).rejects.toThrow('timeout')
+    await get('b')
+    expect(starts).toEqual([0, 31_000])
+  })
+
+  it('does not wait at all when the delay is 0', async () => {
+    const clock = fakeClock()
+    const starts: number[] = []
+    const raw: HttpGet = async () => {
+      starts.push(clock.now())
+      return 'ok'
+    }
+    const get = politely(raw, { delayMs: 0, retries: 0, retryDelayMs: 0, ...clock })
+    await get('a')
+    await get('b')
+    expect(starts).toEqual([0, 0])
+  })
+
   it('does not add a wait when the gap has already passed on its own', async () => {
     const clock = fakeClock()
     const starts: number[] = []

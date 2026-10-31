@@ -1,7 +1,10 @@
 import type { HttpGet } from './exercise'
 
 export interface PoliteOptions {
-  /** Minimum time between the starts of two requests. */
+  /**
+   * Minimum pause between a request finishing (answer, error or timeout) and the next one starting. Counted
+   * from the end, not the start, so a slow answer never leaves the site with two requests at once.
+   */
   delayMs: number
   /** How many times to retry a failed request. */
   retries: number
@@ -23,22 +26,23 @@ export function politely(raw: HttpGet, options: PoliteOptions): HttpGet {
     now = Date.now,
     sleep = (ms) => new Promise((r) => setTimeout(r, ms)),
   } = options
-  let lastStart: number | undefined
+  let lastEnd: number | undefined
 
   return async (url) => {
     for (let attempt = 0; ; attempt++) {
-      if (lastStart !== undefined) {
+      if (lastEnd !== undefined) {
         const gap = attempt === 0 ? delayMs : Math.max(delayMs, retryDelayMs * attempt)
-        const wait = lastStart + gap - now()
+        const wait = lastEnd + gap - now()
         if (wait > 0) await sleep(wait)
       }
-      lastStart = now()
       try {
         const body = await raw(url)
         if (isUnusable(body)) throw new Error(`the site is busy or gave an unusable response for ${url}`)
         return body
       } catch (error) {
         if (attempt >= retries) throw error
+      } finally {
+        lastEnd = now()
       }
     }
   }
