@@ -125,6 +125,24 @@ describe('VerbPresentTense.parse', () => {
     expect(cells['verbPresent.2sg']).toEqual(['můžeš'])
   })
 
+  describe('parenthesised parts, which the site uses for optional words ("bání (se)")', () => {
+    // No real present-tense cell has one in the pages we hold, so the real "bavit" markup is edited here.
+    const withCell = (from: string, to: string) => fixture('bavit').replace(`>${from}<`, `>${to}<`)
+    const first = (html: string) => (forms(html, 'bavit')[0] as [string, string[]])[1]
+
+    it('accepts the form with and without an optional word', () => {
+      expect(first(withCell('bavím', 'bavím (se)'))).toEqual(['bavím se', 'bavím'])
+    })
+
+    it('accepts an optional ending written inside the word', () => {
+      expect(first(withCell('bavím', 'bavím(e)'))).toEqual(['bavíme', 'bavím'])
+    })
+
+    it('expands each comma-separated variant on its own, without duplicates', () => {
+      expect(first(withCell('bavím', 'bavím (si), bavím'))).toEqual(['bavím si', 'bavím'])
+    })
+  })
+
   it('drops suffix-only clitics such as "-s", which are not words one can type on their own', () => {
     const cells = Object.fromEntries(forms(fixture('byt'), 'být') as [string, string[]][])
     expect(cells['verbPresent.2sg']).toEqual(['jsi'])

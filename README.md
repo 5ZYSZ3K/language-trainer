@@ -40,16 +40,22 @@ next push only fetches the new verbs.
   `npm run scrape -- --force` re-fetches everything.
 - **Failures.** A verb that cannot be fetched or parsed is logged and left out of the data (so it is not on
   the site). The run ends with a summary and a **non-zero exit code**; the verbs that worked are still
-  written. There is no overrides file for now.
+  written. There is no overrides file for now. Two safety rules: a failed `--force` refresh keeps the
+  verb's previous data instead of deleting it, and after 5 fetch failures in a row (timeouts, "busy", HTTP
+  errors; a page that merely fails to parse does not count) the run stops asking the site and reports the
+  remaining verbs as "not attempted".
 - **A page is only accepted if it is that verb's own entry.** The site answers some searches with an
   unrelated page (e.g. `dát si` returns the noun *pusa*, `nechtít se` returns the entry for *chtít*), so the
   heading must match the requested verb. Words with several entries (e.g. `stát`) are resolved by following
   the "sloveso" link.
 - **Reflexives.** Where the site has an entry for the reflexive verb (`bát se`) its forms are used as they
   are. Where it only has the plain verb (`myslet si` is listed as *myslet*), `si` / `se` is added to every
-  accepted form, because the particle is part of what the learner types.
-- **Variants.** Forms listed with several variants (`mohu, můžu`) all count as correct. Suffix-only clitics
-  such as the `-s` in `jsi, -s` are dropped, since they are not words one can type alone.
+  accepted form, because the particle is part of what the learner types. If the search for a reflexive
+  verb finds no matching entry at all (`dát si` returns the noun *pusa*, `hnát se` is not a headword), the
+  plain verb (`dát`, `hnát`) is searched instead and the particle added the same way.
+- **Variants.** Forms listed with several variants (`mohu, můžu`) all count as correct. A parenthesised part
+  is optional, as on the site itself (`bání (se)`): `bojí (se)` accepts both `bojí se` and `bojí`. Suffix-only
+  clitics such as the `-s` in `jsi, -s` are dropped, since they are not words one can type alone.
 - **Politeness.** One request at a time, 1.5 s apart, 30 s timeout, retries with a growing wait. The site
   keeps an address "busy" until the page reports that it loaded (the page's own JavaScript sends a small
   `?id=…&action=…` request from `onload`); a client that does not run JavaScript has to send that
@@ -58,14 +64,9 @@ next push only fetches the new verbs.
 
 #### Verbs known to fail
 
-These cannot be scraped from the site and will show up in the failure summary on every run until they are
-removed from `czech_verbs.txt` (or an overrides mechanism is added):
-
-| Verb         | Why                                                                   |
-| ------------ | --------------------------------------------------------------------- |
-| `dát si`     | The site has no entry for it (the search returns the noun *pusa*).     |
-| `nechtít se` | The site returns the entry for *chtít*; the impersonal form differs.   |
-| `hnát se`    | Not a headword; it only appears in an example under *hnát*.           |
+`nechtít se` cannot be scraped: the site only has *chtít*, and the impersonal *nechce se mi* is a different
+construction, so it is rejected and will appear in the failure summary on every run until it is removed from
+`czech_verbs.txt` (or an overrides mechanism is added). Any other verb that fails is listed by the run itself.
 
 ## Deployment
 

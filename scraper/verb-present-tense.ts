@@ -38,15 +38,28 @@ function cellText($: cheerio.CheerioAPI, td: El): string {
   return $(td).clone().find('sup').remove().end().text()
 }
 
+/** "bavím (se)" -> ["bavím (se)" with the group opened, then without]; every (...) is an optional part. */
+function expandOptionalParts(variant: string): string[] {
+  const group = /\(([^()]*)\)/.exec(variant)
+  if (!group) return [variant]
+  const [whole, inner] = [group[0], group[1]!]
+  const before = variant.slice(0, group.index)
+  const after = variant.slice(group.index + whole.length)
+  return [...expandOptionalParts(before + inner + after), ...expandOptionalParts(before + after)]
+}
+
 /**
- * Splits a table cell such as "mohu, můžu" into its variants. Suffix-only clitics ("-s" in "jsi, -s")
- * are dropped: they are not words that can be typed on their own.
+ * Splits a table cell such as "mohu, můžu" into its variants. Parenthesised parts are optional ("bojí (se)"
+ * accepts both). Suffix-only clitics ("-s" in "jsi, -s") are dropped: they are not words that can be typed
+ * on their own.
  */
 function expandVariants(text: string): string[] {
-  return text
+  const variants = text
     .split(',')
+    .flatMap(expandOptionalParts)
     .map(collapse)
     .filter((v) => v !== '' && !v.startsWith('-'))
+  return [...new Set(variants)]
 }
 
 /** The site answers 200 with this page when an earlier query from the same address is still open. */
