@@ -66,7 +66,7 @@ async function exists(path: string): Promise<boolean> {
   }
 }
 
-/** Checks everything that can be checked before touching git, and returns the prompts in the built data. */
+/** Checks everything that can be checked before touching git, and returns the prompts in the built data file. */
 async function checkPreconditions(root: string): Promise<string[]> {
   const branch = await git(root, ['rev-parse', '--abbrev-ref', 'HEAD'])
   if (branch !== 'main') {
@@ -98,9 +98,9 @@ async function checkPreconditions(root: string): Promise<string[]> {
 }
 
 export async function publishPages({ root, log }: PublishOptions): Promise<PublishResult> {
-  const published = await checkPreconditions(root)
+  const promptsInBuiltData = await checkPreconditions(root)
 
-  const present = new Set(published)
+  const present = new Set(promptsInBuiltData)
   const listed = [...new Set(parseVerbList(await readFile(join(root, 'czech_verbs.txt'), 'utf8')))]
   const missing = listed.filter((verb) => !present.has(verb))
   if (missing.length > 0) {

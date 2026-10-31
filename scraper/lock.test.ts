@@ -31,17 +31,11 @@ describe('acquireLock', () => {
     expect(await readFile(file, 'utf8')).toBe('999') // left alone
   })
 
-  it('asks about the PID found in the file', async () => {
+  it('reads the PID from the file, ignoring a trailing newline', async () => {
     await writeFile(file, '999\n')
-    const asked: number[] = []
-    await acquireLock(file, {
-      pid: 1,
-      isAlive: (pid) => {
-        asked.push(pid)
-        return false
-      },
-    })
-    expect(asked).toEqual([999])
+    const error = await acquireLock(file, { pid: 1, isAlive: (pid) => pid === 999 }).catch((e: unknown) => e)
+    expect(error).toBeInstanceOf(LockHeldError)
+    expect((error as LockHeldError).pid).toBe(999)
   })
 
   it('replaces a stale lock whose process is dead', async () => {
@@ -50,7 +44,13 @@ describe('acquireLock', () => {
     expect(await readFile(file, 'utf8')).toBe('4242')
   })
 
-  it.each([['empty', ''], ['garbage', 'not a pid'], ['a negative number', '-5'], ['zero', '0']])(
+  it.each([
+    ['empty', ''],
+    ['garbage', 'not a pid'],
+    ['a negative number', '-5'],
+    ['zero', '0'],
+    ['a number too large to be a PID', '99999999999999999999'],
+  ])(
     'replaces a lock with %s content',
     async (_name, content) => {
       await writeFile(file, content)
@@ -58,6 +58,12 @@ describe('acquireLock', () => {
       expect(await readFile(file, 'utf8')).toBe('4242')
     },
   )
+
+  it('replaces a lock with a huge number even when asking the OS, which rejects it outright', async () => {
+    await writeFile(file, '99999999999999999999')
+    await acquireLock(file, { pid: 4242 })
+    expect(await readFile(file, 'utf8')).toBe('4242')
+  })
 
   it('treats this very process as alive by default', async () => {
     await writeFile(file, String(process.pid))

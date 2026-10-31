@@ -4,7 +4,7 @@ import { readFile, unlink, writeFile } from 'node:fs/promises'
 /** Another scrape holds the lock. `pid` is its process id when the lock file said. */
 export class LockHeldError extends Error {
   constructor(
-    readonly file: string,
+    file: string,
     readonly pid?: number,
   ) {
     super(`${file} is held${pid === undefined ? '' : ` by process ${pid}`}`)
@@ -40,6 +40,8 @@ function processIsAlive(pid: number): boolean {
 
 const isMissing = (error: unknown) => (error as NodeJS.ErrnoException).code === 'ENOENT'
 
+const MAX_PID = 2 ** 31 - 1 // a PID is a 32-bit int; process.kill throws on anything larger
+
 /** The PID in a lock file, or undefined if the file is gone, empty or not a PID. */
 async function readHolder(file: string): Promise<number | undefined> {
   let text: string
@@ -50,7 +52,7 @@ async function readHolder(file: string): Promise<number | undefined> {
     throw error
   }
   const pid = /^\d+$/.test(text.trim()) ? Number(text) : 0
-  return pid > 0 ? pid : undefined
+  return pid > 0 && pid <= MAX_PID ? pid : undefined
 }
 
 /**

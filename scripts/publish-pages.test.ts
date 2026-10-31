@@ -12,6 +12,13 @@ let extraDirs: string[]
 let logged: string[]
 const log = (message: string) => void logged.push(message)
 
+/** What `publishPages` rejects with, asserted to be a PublishError (one call, one message to match). */
+async function refusal(): Promise<string> {
+  const error = await publishPages({ root, log }).then(() => undefined, (e: unknown) => e)
+  expect(error).toBeInstanceOf(PublishError)
+  return (error as PublishError).message
+}
+
 const git = (args: string[], cwd = root) => execFileSync('git', args, { cwd, encoding: 'utf8' }).trim()
 
 async function write(path: string, content: string, base = root) {
@@ -79,8 +86,7 @@ afterEach(async () => {
 describe('publishPages preconditions', () => {
   it('refuses to run off main', async () => {
     git(['checkout', '-q', '-b', 'feature'])
-    await expect(publishPages({ root, log })).rejects.toThrow(PublishError)
-    await expect(publishPages({ root, log })).rejects.toThrow(/main/)
+    expect(await refusal()).toMatch(/main/)
     expect(() => git(['rev-parse', '--verify', '--quiet', 'refs/heads/gh-pages'])).toThrow()
   })
 
@@ -91,24 +97,22 @@ describe('publishPages preconditions', () => {
 
   it('refuses without dist/index.html and says to build', async () => {
     await rm(join(root, 'dist', 'index.html'))
-    await expect(publishPages({ root, log })).rejects.toThrow(PublishError)
-    await expect(publishPages({ root, log })).rejects.toThrow(/npm run build/)
+    expect(await refusal()).toMatch(/npm run build/)
   })
 
   it('refuses when the built data file is missing, and says to scrape then build', async () => {
     await rm(join(root, DATA))
-    await expect(publishPages({ root, log })).rejects.toThrow(PublishError)
-    await expect(publishPages({ root, log })).rejects.toThrow(/npm run scrape/)
+    expect(await refusal()).toMatch(/npm run scrape/)
   })
 
   it('refuses when the built data file has no verbs', async () => {
     await write(DATA, dataFor([]))
-    await expect(publishPages({ root, log })).rejects.toThrow(/npm run scrape/)
+    expect(await refusal()).toMatch(/npm run scrape/)
   })
 
   it('refuses when the built data file is not valid JSON', async () => {
     await write(DATA, '{"exerciseType":')
-    await expect(publishPages({ root, log })).rejects.toThrow(PublishError)
+    expect(await refusal()).toMatch(/not valid JSON/)
   })
 
   it('creates nothing when it refuses', async () => {

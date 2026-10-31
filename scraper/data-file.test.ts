@@ -82,12 +82,13 @@ describe('readItems', () => {
 })
 
 describe('writeData', () => {
-  const data: ExerciseData = { exerciseType: 'x', items: [item('a'), item('b')] }
+  const data: ExerciseData = { exerciseType: 'x', items: [{ prompt: 'a', cells: [{ label: 'verbPresent.1sg', acceptedForms: ['am'] }] }] }
+  const expected = '{"exerciseType":"x","items":[\n{"prompt":"a","cells":[{"label":"verbPresent.1sg","acceptedForms":["am"]}]}\n]}\n'
 
   it('creates the data directory and writes the serialised data', async () => {
     const file = join(dir, 'public', 'data', 'x.json')
     await writeData(file, join(dir, '.tmp'), data)
-    expect(await readFile(file, 'utf8')).toBe(serialise(data))
+    expect(await readFile(file, 'utf8')).toBe(expected)
   })
 
   it('leaves no temp file behind', async () => {
@@ -99,7 +100,7 @@ describe('writeData', () => {
     const file = join(dir, 'x.json')
     await writeFile(file, 'old contents')
     await writeData(file, join(dir, '.tmp'), data)
-    expect(await readFile(file, 'utf8')).toBe(serialise(data))
+    expect(await readFile(file, 'utf8')).toBe(expected)
   })
 
   it('rejects and leaves the previous file byte for byte intact when the write fails', async () => {
