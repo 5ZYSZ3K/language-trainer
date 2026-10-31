@@ -51,6 +51,42 @@ describe('VerbPresentTense.fetchPage', () => {
     ])
   })
 
+  describe('reflexive verbs the site has no entry for', () => {
+    // "bavit si" stands in for "dát si": the site answers with an unrelated page (the noun "pusa" fixture)
+    // and has the plain verb under its own name (the "bavit" fixture).
+    const searches = (urls: string[]) => urls.filter((u) => u.includes('?slovo='))
+
+    it('falls back to the plain verb, which parse then completes with the particle', async () => {
+      const { get, urls } = fakeSite({
+        [`${SITE}?slovo=bavit%20si`]: fixture('dat-si-noun'),
+        [`${SITE}?slovo=bavit`]: fixture('bavit'),
+      })
+      const html = await verbPresentTense.fetchPage('bavit si', get)
+      expect(html).toBe(fixture('bavit'))
+      expect(searches(urls)).toEqual([`${SITE}?slovo=bavit%20si`, `${SITE}?slovo=bavit`])
+      expect(forms(html, 'bavit si')[0]).toEqual(['verbPresent.1sg', ['bavím si']])
+    })
+
+    it('does not search twice when the first page is already the entry', async () => {
+      const { get, urls } = fakeSite({ [`${SITE}?slovo=b%C3%A1t%20se`]: fixture('bat-se') })
+      await verbPresentTense.fetchPage('bát se', get)
+      expect(searches(urls)).toEqual([`${SITE}?slovo=b%C3%A1t%20se`])
+    })
+
+    it('does not search twice for a verb without a particle', async () => {
+      const { get, urls } = fakeSite({ [`${SITE}?slovo=hnat`]: fixture('dat-si-noun') })
+      await verbPresentTense.fetchPage('hnat', get)
+      expect(searches(urls)).toEqual([`${SITE}?slovo=hnat`])
+    })
+
+    it('returns the first page when the plain verb has no entry either, so parse reports the real problem', async () => {
+      const { get } = fakeSite({ [`${SITE}?slovo=${encodeURIComponent('nechtít se')}`]: fixture('nechtit-se-other-entry') })
+      const html = await verbPresentTense.fetchPage('nechtít se', get)
+      expect(html).toBe(fixture('nechtit-se-other-entry'))
+      expect(() => verbPresentTense.parse(html, 'nechtít se')).toThrow(ParseError)
+    })
+  })
+
   it('still returns the page when the ack fails', async () => {
     const { get } = fakeSite({ [`${SITE}?slovo=bavit`]: fixture('bavit') }, /action=/)
     await expect(verbPresentTense.fetchPage('bavit', get)).resolves.toBe(fixture('bavit'))

@@ -3,11 +3,11 @@ import { cs } from './cs'
 import { en, type TranslationKey } from './en'
 
 export type { TranslationKey }
-export type Language = 'en' | 'cs'
 
-/** To add a language: create its dictionary file typed like cs.ts and register it here. */
-const dictionaries: Record<Language, Record<TranslationKey, string>> = { en, cs }
+/** To add a language: create its dictionary file typed like cs.ts and register it here. Nothing else. */
+const dictionaries = { en, cs } satisfies Record<string, Record<TranslationKey, string>>
 
+export type Language = keyof typeof dictionaries
 export const LANGUAGES = Object.keys(dictionaries) as Language[]
 export const LANGUAGE_KEY = 'language'
 
@@ -45,6 +45,9 @@ export function setLanguage(language: Language, storage: StorageLike): void {
 }
 
 export const getLanguage = (): Language => current
+
+/** The short name a language goes by on the language switch ("CZ" for Czech), in that language's own dictionary. */
+export const languageLabel = (language: Language): string => dictionaries[language]['language.switchLabel']
 
 /** Text for a key in the current language. An unknown key shows as itself, so gaps are visible. */
 export function t(key: TranslationKey): string {

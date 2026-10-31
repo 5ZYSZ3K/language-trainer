@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio'
 import type { Cell } from '../src/core/cell'
+import type { TranslationKey } from '../src/i18n/en'
 import { verbPresentTense as runtime } from '../src/exercises/verb-present-tense'
 import { ParseError, type HttpGet, type ScrapableExercise } from './exercise'
 
@@ -9,13 +10,27 @@ type El = Parameters<cheerio.CheerioAPI>[0]
 
 const collapse = (s: string) => s.replace(/\s+/g, ' ').trim()
 
+/** "bát se" -> { base: "bát", particle: "se" }; a verb without a particle gives neither. */
+function splitReflexive(prompt: string): { base?: string; particle?: string } {
+  const [, base, particle] = /^(.+) (se|si)$/.exec(collapse(prompt)) ?? []
+  return { base, particle }
+}
+
 /**
  * "myslet si" is listed as plain "myslet", while "bát se" has its own entry that includes the particle,
  * so an entry may be headed by either the prompt or its base.
  */
-function acceptableHeadings(prompt: string): { headings: Set<string>; particle?: string } {
-  const [, base, particle] = /^(.+) (se|si)$/.exec(collapse(prompt)) ?? []
-  return { headings: new Set([collapse(prompt), ...(base ? [base] : [])]), particle }
+function acceptableHeadings(prompt: string): Set<string> {
+  const { base } = splitReflexive(prompt)
+  return new Set([collapse(prompt), ...(base ? [base] : [])])
+}
+
+function hasEntry(html: string, prompt: string): boolean {
+  const $ = cheerio.load(html)
+  const headings = acceptableHeadings(prompt)
+  return $('div.hlavicka h2 strong')
+    .toArray()
+    .some((el) => headings.has(collapse($(el).text())))
 }
 
 /** Text of a table cell without its footnote markers (<sup>). */
@@ -67,7 +82,7 @@ async function getAcked(url: string, get: HttpGet): Promise<string> {
 /** On a "choose an entry" page, the link to the entry that is the verb itself, if there is exactly one. */
 function verbEntryLink(html: string, prompt: string): string | undefined {
   const $ = cheerio.load(html)
-  const { headings } = acceptableHeadings(prompt)
+  const headings = acceptableHeadings(prompt)
   const links = $('span.odsazeno')
     .filter((_, el) => /,\s*sloveso\b/.test($(el).text()))
     .find('a')
@@ -77,18 +92,31 @@ function verbEntryLink(html: string, prompt: string): string | undefined {
   return href ? new URL(href, SITE).href : undefined
 }
 
+/** Searches for a word and, if it has several entries, follows the one that is the verb. */
+async function fetchEntryPage(word: string, get: HttpGet): Promise<string> {
+  const html = await getAcked(`${SITE}?slovo=${encodeURIComponent(word)}`, get)
+  const entry = verbEntryLink(html, word)
+  return entry ? getAcked(entry, get) : html
+}
+
 export const verbPresentTense: ScrapableExercise = {
   ...runtime,
 
   async fetchPage(prompt, get) {
-    const html = await getAcked(`${SITE}?slovo=${encodeURIComponent(prompt)}`, get)
-    const entry = verbEntryLink(html, prompt)
-    return entry ? getAcked(entry, get) : html
+    const page = await fetchEntryPage(prompt, get)
+    const { base, particle } = splitReflexive(prompt)
+    if (!base || !particle || hasEntry(page, prompt)) return page
+
+    // The site has no entry for "dát si" (it answers with something unrelated) but does for "dát".
+    // parse() adds the particle to the plain verb's forms.
+    const plain = await fetchEntryPage(base, get)
+    return hasEntry(plain, base) ? plain : page
   },
 
   parse(html, prompt) {
     const $ = cheerio.load(html)
-    const { headings, particle } = acceptableHeadings(prompt)
+    const headings = acceptableHeadings(prompt)
+    const { particle } = splitReflexive(prompt)
 
     // Headings carry homonym digits in a <sup> outside the <strong>, so reading the <strong> skips them.
     const entry = $('div.hlavicka')
@@ -96,17 +124,17 @@ export const verbPresentTense: ScrapableExercise = {
       .first()
     if (!entry.length) throw new ParseError(`no dictionary entry named "${prompt}"`)
 
-    const byLabel = new Map<string, string[]>()
+    const byLabel = new Map<TranslationKey, string[]>()
     entry
       .nextAll('table.para')
       .first()
       .find('tr')
       .each((_, tr) => {
         const tds = $(tr).children('td')
-        const person = /^([123])\. osoba$/.exec(collapse($(tds[0]).text()))?.[1]
+        const person = /^([123])\. osoba$/.exec(collapse($(tds[0]).text()))?.[1] as '1' | '2' | '3' | undefined
         if (!person) return
-        byLabel.set(`verbPresent.${person}sg`, expandVariants(cellText($, tds[1]!)))
-        byLabel.set(`verbPresent.${person}pl`, expandVariants(cellText($, tds[2]!)))
+        byLabel.set(`verbPresent.${person}sg` as const, expandVariants(cellText($, tds[1]!)))
+        byLabel.set(`verbPresent.${person}pl` as const, expandVariants(cellText($, tds[2]!)))
       })
     const withParticle = (form: string) => (particle && !form.endsWith(` ${particle}`) ? `${form} ${particle}` : form)
     return runtime.cellLabels.map(

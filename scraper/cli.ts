@@ -44,9 +44,7 @@ async function main(): Promise<number> {
 
   const prompts = parseVerbList(await readFile(verbsFile, 'utf8'))
   const existing = await readExisting()
-  const wanted = new Set(prompts)
-  const toFetch = force ? wanted.size : [...wanted].filter((p) => !existing.some((i) => i.prompt === p)).length
-  console.log(`${wanted.size} verbs listed, ${existing.length} already scraped${force ? ' (--force: fetching all)' : ''}; fetching ${toFetch}.`)
+  console.log(`${new Set(prompts).size} verbs listed, ${existing.length} already scraped${force ? ' (--force: fetching all)' : ''}.`)
 
   // One request at a time, 1.5 s apart. The site is slow and sometimes answers "busy"; back off and retry.
   const get = politely(fetchText({ timeoutMs: 30_000, userAgent: USER_AGENT }), {

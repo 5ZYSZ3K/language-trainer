@@ -64,6 +64,15 @@ describe('scrape', () => {
     expect(result.items[0]!.cells[0]!.acceptedForms).toEqual(['page:a/verbPresent.1sg'])
   })
 
+  it('keeps the previous item when a forced refresh of it fails, and still reports the failure', async () => {
+    const { get } = recordingGet(['page:b'])
+    const result = await scrape({ exercise: stub, prompts: ['a', 'b'], existing: [stored('a'), stored('b')], force: true, get })
+    expect(result.items.map((i) => i.prompt)).toEqual(['a', 'b'])
+    expect(result.items[0]!.cells[0]!.acceptedForms).toEqual(['page:a/verbPresent.1sg']) // refreshed
+    expect(result.items[1]).toEqual(stored('b')) // not lost
+    expect(result.failures).toEqual([{ prompt: 'b', reason: 'HTTP 503' }])
+  })
+
   it('drops existing items whose prompt is no longer in the list', async () => {
     const { get, urls } = recordingGet()
     const result = await scrape({ exercise: stub, prompts: ['a'], existing: [stored('a'), stored('gone')], force: false, get })
@@ -99,6 +108,50 @@ describe('scrape', () => {
     expect(result.failures).toHaveLength(1)
     expect(result.failures[0]).toMatchObject({ prompt: 'empty one' })
     expect(result.failures[0]!.reason).toMatch(/verbPresent\.1sg/)
+  })
+
+  describe('when the site stops answering', () => {
+    it('stops asking after several fetch failures in a row, and reports what it did not try', async () => {
+      const { get, urls } = recordingGet(['page:a', 'page:b', 'page:c', 'page:d', 'page:e'])
+      const result = await scrape({
+        exercise: stub,
+        prompts: ['a', 'b', 'c', 'd', 'e'],
+        existing: [],
+        force: false,
+        get,
+        maxConsecutiveFetchFailures: 3,
+      })
+      expect(urls).toEqual(['page:a', 'page:b', 'page:c'])
+      expect(result.failures.map((f) => f.prompt)).toEqual(['a', 'b', 'c', 'd', 'e'])
+      expect(result.failures[3]!.reason).toMatch(/not attempted/)
+    })
+
+    it('keeps the previous items of the verbs it did not get to', async () => {
+      const { get } = recordingGet(['page:a', 'page:b'])
+      const result = await scrape({
+        exercise: stub,
+        prompts: ['a', 'b', 'c'],
+        existing: [stored('c')],
+        force: true,
+        get,
+        maxConsecutiveFetchFailures: 2,
+      })
+      expect(result.items).toEqual([stored('c')])
+    })
+
+    it('does not count a successful fetch or a page that merely fails to parse as the site failing', async () => {
+      const { get, urls } = recordingGet(['page:a', 'page:c'])
+      const result = await scrape({
+        exercise: stub,
+        prompts: ['a', 'b', 'c', 'bad 1', 'bad 2', 'bad 3', 'd'],
+        existing: [],
+        force: false,
+        get,
+        maxConsecutiveFetchFailures: 2,
+      })
+      expect(urls).toHaveLength(7) // every prompt was tried
+      expect(result.items.map((i) => i.prompt)).toEqual(['b', 'd'])
+    })
   })
 
   it('tries a previously failed prompt again on the next run', async () => {

@@ -3,6 +3,7 @@ export const en = {
   'app.intro': 'Fill in all six present-tense forms of the verb, then check your answers.',
   'prompt.label': 'Conjugate',
   'language.label': 'Language',
+  'language.switchLabel': 'EN',
 
   'verbPresent.1sg': 'I (1st sg.)',
   'verbPresent.1pl': 'we (1st pl.)',

@@ -4,7 +4,7 @@ import { pickNext } from './core/pick'
 import { Round } from './core/round'
 import { Scores, type StorageLike } from './core/scores'
 import { applyShortcut } from './core/shortcuts'
-import { getLanguage, LANGUAGES, setLanguage, t, type Language, type TranslationKey } from './i18n'
+import { getLanguage, LANGUAGES, languageLabel, setLanguage, t, type TranslationKey } from './i18n'
 
 export interface AppDeps {
   exercise: Exercise
@@ -13,7 +13,6 @@ export interface AppDeps {
 }
 
 const SPECIAL_CHARS = [...'áéíóúýčďěňřšťžů']
-const LANGUAGE_BUTTON_TEXT: Record<Language, string> = { en: 'EN', cs: 'CZ' }
 
 // All visible text is filled in from the dictionaries by applyTexts() via the data-i18n attributes.
 const SHELL = `
@@ -108,7 +107,7 @@ export async function mountApp(root: HTMLElement, { exercise, storage, loadData 
     const button = document.createElement('button')
     button.type = 'button'
     button.dataset.lang = language
-    button.textContent = LANGUAGE_BUTTON_TEXT[language]
+    button.textContent = languageLabel(language)
     button.addEventListener('click', () => {
       setLanguage(language, storage)
       applyTexts()

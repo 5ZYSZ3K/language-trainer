@@ -20,6 +20,8 @@ concurrency:
 
 jobs:
   deploy:
+    # A manual run from another branch must not publish that branch's build.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     # A first or forced scrape fetches every verb one at a time, a few seconds each.
     timeout-minutes: 120
@@ -53,8 +55,13 @@ jobs:
           FORCE: ${{ inputs.force && '--force' || '' }}
         run: npm run scrape -- $FORCE
 
+      # An outage on the first run must not publish an empty site.
       - name: Check there is data to publish
-        run: test -s public/data/verb-present-tense.json
+        run: |
+          node -e "
+            const d = JSON.parse(require('fs').readFileSync('public/data/verb-present-tense.json', 'utf8'))
+            if (!d.items.length) { console.error('The data file has no verbs, not publishing.'); process.exit(1) }
+          "
 
       - name: Build
         run: npm run build

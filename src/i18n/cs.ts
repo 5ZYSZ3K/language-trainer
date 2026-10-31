@@ -5,6 +5,7 @@ export const cs: Record<TranslationKey, string> = {
   'app.intro': 'Doplňte všech šest tvarů přítomného času a potom odpovědi zkontrolujte.',
   'prompt.label': 'Vyčasujte',
   'language.label': 'Jazyk',
+  'language.switchLabel': 'CZ',
 
   'verbPresent.1sg': 'já (1. os. j. č.)',
   'verbPresent.1pl': 'my (1. os. mn. č.)',
