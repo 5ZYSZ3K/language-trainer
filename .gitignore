@@ -1,6 +1,6 @@
 node_modules/
 dist/
-# Scraped data is derived from czech_verbs.txt; CI merges it with the copy on gh-pages.
-public/data/
 *.log
 .DS_Store
+.scrape.lock
+.scrape-data.tmp

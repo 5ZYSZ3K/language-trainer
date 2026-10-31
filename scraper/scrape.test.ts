@@ -15,6 +15,8 @@ const stub: ScrapableExercise = {
   },
 }
 
+const noSave = async () => {}
+
 function recordingGet(failOn: string[] = []) {
   const urls: string[] = []
   const get: HttpGet = async (url) => {
@@ -36,7 +38,7 @@ const stored = (prompt: string): Item => ({
 describe('scrape', () => {
   it('fetches every prompt when nothing has been scraped yet, keeping the list order', async () => {
     const { get, urls } = recordingGet()
-    const result = await scrape({ exercise: stub, prompts: ['b', 'a', 'c'], existing: [], force: false, get })
+    const result = await scrape({ exercise: stub, prompts: ['b', 'a', 'c'], existing: [], force: false, get, save: noSave })
     expect(urls).toEqual(['page:b', 'page:a', 'page:c'])
     expect(result.items.map((i) => i.prompt)).toEqual(['b', 'a', 'c'])
     expect(result.items[0]!.cells[0]).toEqual({ label: 'verbPresent.1sg', acceptedForms: ['page:b/verbPresent.1sg'] })
@@ -51,6 +53,7 @@ describe('scrape', () => {
       existing: [stored('a'), stored('c')],
       force: false,
       get,
+      save: noSave,
     })
     expect(urls).toEqual(['page:b'])
     expect(result.items.map((i) => i.prompt)).toEqual(['a', 'b', 'c'])
@@ -59,14 +62,14 @@ describe('scrape', () => {
 
   it('fetches everything again when forced', async () => {
     const { get, urls } = recordingGet()
-    const result = await scrape({ exercise: stub, prompts: ['a', 'b'], existing: [stored('a'), stored('b')], force: true, get })
+    const result = await scrape({ exercise: stub, prompts: ['a', 'b'], existing: [stored('a'), stored('b')], force: true, get, save: noSave })
     expect(urls).toEqual(['page:a', 'page:b'])
     expect(result.items[0]!.cells[0]!.acceptedForms).toEqual(['page:a/verbPresent.1sg'])
   })
 
   it('keeps the previous item when a forced refresh of it fails, and still reports the failure', async () => {
     const { get } = recordingGet(['page:b'])
-    const result = await scrape({ exercise: stub, prompts: ['a', 'b'], existing: [stored('a'), stored('b')], force: true, get })
+    const result = await scrape({ exercise: stub, prompts: ['a', 'b'], existing: [stored('a'), stored('b')], force: true, get, save: noSave })
     expect(result.items.map((i) => i.prompt)).toEqual(['a', 'b'])
     expect(result.items[0]!.cells[0]!.acceptedForms).toEqual(['page:a/verbPresent.1sg']) // refreshed
     expect(result.items[1]).toEqual(stored('b')) // not lost
@@ -75,35 +78,35 @@ describe('scrape', () => {
 
   it('drops existing items whose prompt is no longer in the list', async () => {
     const { get, urls } = recordingGet()
-    const result = await scrape({ exercise: stub, prompts: ['a'], existing: [stored('a'), stored('gone')], force: false, get })
+    const result = await scrape({ exercise: stub, prompts: ['a'], existing: [stored('a'), stored('gone')], force: false, get, save: noSave })
     expect(urls).toEqual([])
     expect(result.items.map((i) => i.prompt)).toEqual(['a'])
   })
 
   it('ignores a prompt listed twice', async () => {
     const { get, urls } = recordingGet()
-    const result = await scrape({ exercise: stub, prompts: ['a', 'a'], existing: [], force: false, get })
+    const result = await scrape({ exercise: stub, prompts: ['a', 'a'], existing: [], force: false, get, save: noSave })
     expect(urls).toEqual(['page:a'])
     expect(result.items).toHaveLength(1)
   })
 
   it('skips a prompt whose fetch fails, reports why, and carries on with the rest', async () => {
     const { get } = recordingGet(['page:b'])
-    const result = await scrape({ exercise: stub, prompts: ['a', 'b', 'c'], existing: [], force: false, get })
+    const result = await scrape({ exercise: stub, prompts: ['a', 'b', 'c'], existing: [], force: false, get, save: noSave })
     expect(result.items.map((i) => i.prompt)).toEqual(['a', 'c'])
     expect(result.failures).toEqual([{ prompt: 'b', reason: 'HTTP 503' }])
   })
 
   it('skips a prompt whose page cannot be parsed', async () => {
     const { get } = recordingGet()
-    const result = await scrape({ exercise: stub, prompts: ['a', 'bad one'], existing: [], force: false, get })
+    const result = await scrape({ exercise: stub, prompts: ['a', 'bad one'], existing: [], force: false, get, save: noSave })
     expect(result.items.map((i) => i.prompt)).toEqual(['a'])
     expect(result.failures).toEqual([{ prompt: 'bad one', reason: 'not the right page' }])
   })
 
   it('skips a prompt when any cell ends up with no accepted form', async () => {
     const { get } = recordingGet()
-    const result = await scrape({ exercise: stub, prompts: ['empty one', 'a'], existing: [], force: false, get })
+    const result = await scrape({ exercise: stub, prompts: ['empty one', 'a'], existing: [], force: false, get, save: noSave })
     expect(result.items.map((i) => i.prompt)).toEqual(['a'])
     expect(result.failures).toHaveLength(1)
     expect(result.failures[0]).toMatchObject({ prompt: 'empty one' })
@@ -119,6 +122,7 @@ describe('scrape', () => {
         existing: [],
         force: false,
         get,
+        save: noSave,
         maxConsecutiveFetchFailures: 3,
       })
       expect(urls).toEqual(['page:a', 'page:b', 'page:c'])
@@ -134,6 +138,7 @@ describe('scrape', () => {
         existing: [stored('c')],
         force: true,
         get,
+        save: noSave,
         maxConsecutiveFetchFailures: 2,
       })
       expect(result.items).toEqual([stored('c')])
@@ -147,6 +152,7 @@ describe('scrape', () => {
         existing: [],
         force: false,
         get,
+        save: noSave,
         maxConsecutiveFetchFailures: 2,
       })
       expect(urls).toHaveLength(7) // every prompt was tried
@@ -156,11 +162,195 @@ describe('scrape', () => {
 
   it('tries a previously failed prompt again on the next run', async () => {
     const first = recordingGet(['page:b'])
-    const run1 = await scrape({ exercise: stub, prompts: ['a', 'b'], existing: [], force: false, get: first.get })
+    const run1 = await scrape({ exercise: stub, prompts: ['a', 'b'], existing: [], force: false, get: first.get, save: noSave })
     const second = recordingGet()
-    const run2 = await scrape({ exercise: stub, prompts: ['a', 'b'], existing: run1.items, force: false, get: second.get })
+    const run2 = await scrape({ exercise: stub, prompts: ['a', 'b'], existing: run1.items, force: false, get: second.get, save: noSave })
     expect(second.urls).toEqual(['page:b'])
     expect(run2.items.map((i) => i.prompt)).toEqual(['a', 'b'])
     expect(run2.failures).toEqual([])
+  })
+
+  describe('saving as it goes', () => {
+    /** A `save` that records a copy of every snapshot it is given, as prompt lists. */
+    function recorder() {
+      const saved: string[][] = []
+      const save = async (items: readonly Item[]) => {
+        saved.push(items.map((i) => i.prompt))
+      }
+      return { save, saved }
+    }
+
+    it('saves once per successful verb, with the full snapshot in list order', async () => {
+      const { get } = recordingGet()
+      const { save, saved } = recorder()
+      await scrape({ exercise: stub, prompts: ['a', 'b', 'c'], existing: [], force: false, get, save })
+      expect(saved).toEqual([['a'], ['a', 'b'], ['a', 'b', 'c']])
+    })
+
+    it('saves the scraped items, not just their prompts', async () => {
+      const { get } = recordingGet()
+      const snapshots: Item[][] = []
+      await scrape({ exercise: stub, prompts: ['a'], existing: [], force: false, get, save: async (items) => void snapshots.push([...items]) })
+      expect(snapshots[0]![0]!.cells[0]).toEqual({ label: 'verbPresent.1sg', acceptedForms: ['page:a/verbPresent.1sg'] })
+    })
+
+    it('keeps the list order when a verb in the middle is fetched after the ones around it were already scraped', async () => {
+      const { get } = recordingGet()
+      const { save, saved } = recorder()
+      await scrape({ exercise: stub, prompts: ['a', 'b', 'c'], existing: [stored('a'), stored('c')], force: false, get, save })
+      expect(saved).toEqual([['a', 'b', 'c']])
+    })
+
+    it('with force, snapshots still hold the old entries of verbs not reached yet', async () => {
+      const { get } = recordingGet()
+      const snapshots: Item[][] = []
+      await scrape({
+        exercise: stub,
+        prompts: ['a', 'b', 'c'],
+        existing: [stored('a'), stored('b'), stored('c')],
+        force: true,
+        get,
+        save: async (items) => void snapshots.push([...items]),
+      })
+      expect(snapshots).toHaveLength(3)
+      expect(snapshots[0]!.map((i) => i.prompt)).toEqual(['a', 'b', 'c'])
+      expect(snapshots[0]![0]!.cells[0]!.acceptedForms).toEqual(['page:a/verbPresent.1sg']) // refreshed
+      expect(snapshots[0]![1]).toEqual(stored('b')) // not reached yet
+      expect(snapshots[0]![2]).toEqual(stored('c'))
+    })
+
+    it('with force, a verb whose refresh failed keeps its old entry in later snapshots', async () => {
+      const { get } = recordingGet(['page:a'])
+      const snapshots: Item[][] = []
+      await scrape({
+        exercise: stub,
+        prompts: ['a', 'b'],
+        existing: [stored('a'), stored('b')],
+        force: true,
+        get,
+        save: async (items) => void snapshots.push([...items]),
+      })
+      expect(snapshots).toHaveLength(1) // only b succeeded
+      expect(snapshots[0]![0]).toEqual(stored('a'))
+      expect(snapshots[0]![1]!.cells[0]!.acceptedForms).toEqual(['page:b/verbPresent.1sg'])
+    })
+
+    it('does not save for failures: fetch, parse, empty cell, or not attempted', async () => {
+      const { get } = recordingGet(['page:a', 'page:b'])
+      const { save, saved } = recorder()
+      await scrape({
+        exercise: stub,
+        prompts: ['a', 'b', 'bad one', 'empty one', 'c'],
+        existing: [],
+        force: false,
+        get,
+        save,
+        maxConsecutiveFetchFailures: 2,
+      })
+      expect(saved).toEqual([])
+    })
+
+    it('after the site-down stop, the last saved snapshot holds everything that worked before it', async () => {
+      const { get } = recordingGet(['page:c', 'page:d'])
+      const { save, saved } = recorder()
+      const result = await scrape({
+        exercise: stub,
+        prompts: ['a', 'b', 'c', 'd', 'e'],
+        existing: [],
+        force: false,
+        get,
+        save,
+        maxConsecutiveFetchFailures: 2,
+      })
+      expect(saved.at(-1)).toEqual(['a', 'b'])
+      expect(result.items.map((i) => i.prompt)).toEqual(['a', 'b'])
+    })
+
+    it('saves once at the start when verbs were pruned from the list', async () => {
+      const { get } = recordingGet()
+      const { save, saved } = recorder()
+      await scrape({ exercise: stub, prompts: ['a'], existing: [stored('a'), stored('gone')], force: false, get, save })
+      expect(saved).toEqual([['a']])
+    })
+
+    it('saves once at the start when the list order changed', async () => {
+      const { get } = recordingGet()
+      const { save, saved } = recorder()
+      await scrape({ exercise: stub, prompts: ['b', 'a'], existing: [stored('a'), stored('b')], force: false, get, save })
+      expect(saved).toEqual([['b', 'a']])
+    })
+
+    it('does not save at the start when the existing data already matches the list', async () => {
+      const { get } = recordingGet()
+      const { save, saved } = recorder()
+      await scrape({ exercise: stub, prompts: ['a', 'b'], existing: [stored('a'), stored('b')], force: false, get, save })
+      expect(saved).toEqual([])
+    })
+
+    it('does not save at the start when the only change is that verbs are still missing', async () => {
+      const { get } = recordingGet(['page:c'])
+      const { save, saved } = recorder()
+      await scrape({ exercise: stub, prompts: ['a', 'b', 'c'], existing: [stored('a')], force: false, get, save })
+      expect(saved).toEqual([['a', 'b']])
+    })
+
+    it('rejects when a save fails, and makes no further fetch', async () => {
+      const { get, urls } = recordingGet()
+      const save = async () => {
+        throw new Error('disk full')
+      }
+      await expect(scrape({ exercise: stub, prompts: ['a', 'b', 'c'], existing: [], force: false, get, save })).rejects.toThrow('disk full')
+      expect(urls).toEqual(['page:a'])
+    })
+
+    it('rejects when the save at the start fails, before any fetch', async () => {
+      const { get, urls } = recordingGet()
+      const save = async () => {
+        throw new Error('disk full')
+      }
+      await expect(
+        scrape({ exercise: stub, prompts: ['a', 'b'], existing: [stored('gone')], force: false, get, save }),
+      ).rejects.toThrow('disk full')
+      expect(urls).toEqual([])
+    })
+  })
+
+  describe('progress log', () => {
+    function logged(run: (log: (message: string) => void) => Promise<unknown>) {
+      const lines: string[] = []
+      return run((message) => lines.push(message)).then(() => lines)
+    }
+
+    it('counts tries out of the number of verbs that will be tried, failures included', async () => {
+      const { get } = recordingGet(['page:b'])
+      const lines = await logged((log) =>
+        scrape({ exercise: stub, prompts: ['a', 'b', 'c'], existing: [], force: false, get, save: noSave, log }),
+      )
+      expect(lines).toEqual(['ok     a (1/3)', 'FAILED b (2/3): HTTP 503', 'ok     c (3/3)'])
+    })
+
+    it('leaves already scraped verbs out of the total', async () => {
+      const { get } = recordingGet()
+      const lines = await logged((log) =>
+        scrape({ exercise: stub, prompts: ['a', 'b', 'c'], existing: [stored('a')], force: false, get, save: noSave, log }),
+      )
+      expect(lines).toEqual(['ok     b (1/2)', 'ok     c (2/2)'])
+    })
+
+    it('counts every listed verb with force', async () => {
+      const { get } = recordingGet()
+      const lines = await logged((log) =>
+        scrape({ exercise: stub, prompts: ['a', 'b'], existing: [stored('a')], force: true, get, save: noSave, log }),
+      )
+      expect(lines).toEqual(['ok     a (1/2)', 'ok     b (2/2)'])
+    })
+
+    it('does not log the verbs it did not attempt', async () => {
+      const { get } = recordingGet(['page:a', 'page:b'])
+      const lines = await logged((log) =>
+        scrape({ exercise: stub, prompts: ['a', 'b', 'c'], existing: [], force: false, get, save: noSave, log, maxConsecutiveFetchFailures: 2 }),
+      )
+      expect(lines).toEqual(['FAILED a (1/3): HTTP 503', 'FAILED b (2/3): HTTP 503'])
+    })
   })
 })

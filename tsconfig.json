@@ -14,5 +14,5 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["src", "scraper", "vite.config.ts"]
+  "include": ["src", "scraper", "scripts", "vite.config.ts"]
 }

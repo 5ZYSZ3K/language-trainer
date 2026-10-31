@@ -10,6 +10,12 @@ export interface ScrapeOptions {
   force: boolean
   get: HttpGet
   /**
+   * Persists everything known so far, in the order of `prompts`. Called after every verb that was scraped
+   * successfully (and once at the start if verbs were pruned or re-ordered), never for a failure. If it
+   * rejects, `scrape` rejects at once and fetches nothing more: a run that cannot save must not carry on.
+   */
+  save: (items: readonly Item[]) => Promise<void>
+  /**
    * After this many fetches in a row that fail for reasons other than the page's content (timeouts, errors,
    * "busy"), the site is assumed to be down and the remaining prompts are not tried. Default 5.
    */
@@ -29,43 +35,56 @@ export interface ScrapeResult {
 }
 
 export async function scrape(options: ScrapeOptions): Promise<ScrapeResult> {
-  const { exercise, prompts, existing, force, get, maxConsecutiveFetchFailures = 5, log = () => {} } = options
-  const known = new Map(existing.map((item) => [item.prompt, item]))
-  const items: Item[] = []
+  const { exercise, prompts, existing, force, get, save, maxConsecutiveFetchFailures = 5, log = () => {} } = options
+  const listed = [...new Set(prompts)]
+  const inList = new Set(listed)
+  const previous = new Map(existing.filter((item) => inList.has(item.prompt)).map((item) => [item.prompt, item]))
+  const scraped = new Map<string, Item>()
   const failures: Failure[] = []
   let fetchFailuresInARow = 0
 
-  for (const prompt of new Set(prompts)) {
-    const kept = force ? undefined : known.get(prompt)
-    if (kept) {
-      items.push(kept)
-      continue
-    }
+  // What is known right now: this run's item if there is one, else the previous one. A failed refresh must not
+  // throw away data that was good, so every failure path leaves the previous item in place.
+  const snapshot = (): Item[] =>
+    listed.flatMap((prompt) => {
+      const item = scraped.get(prompt) ?? previous.get(prompt)
+      return item ? [item] : []
+    })
 
-    // A failed refresh must not throw away data that was good, so every failure path keeps the old item.
-    const previous = known.get(prompt)
+  const initial = snapshot()
+  const unchanged = initial.length === existing.length && initial.every((item, i) => item.prompt === existing[i]?.prompt)
+  if (!unchanged) await save(initial)
 
+  const toTry = force ? listed : listed.filter((prompt) => !previous.has(prompt))
+  let tried = 0
+  for (const prompt of toTry) {
     if (fetchFailuresInARow >= maxConsecutiveFetchFailures) {
       failures.push({ prompt, reason: 'not attempted: the site stopped responding' })
-      if (previous) items.push(previous)
       continue
     }
 
+    tried++
+    const progress = `(${tried}/${toTry.length})`
+    let item: Item
     try {
       const html = await exercise.fetchPage(prompt, get)
       fetchFailuresInARow = 0
       const cells = exercise.parse(html, prompt)
       const empty = cells.find((cell) => cell.acceptedForms.length === 0)
       if (empty) throw new ParseError(`no form found for ${empty.label}`)
-      items.push({ prompt, cells })
-      log(`ok     ${prompt}`)
+      item = { prompt, cells }
     } catch (error) {
       const reason = error instanceof Error ? error.message : String(error)
       if (!(error instanceof ParseError)) fetchFailuresInARow++
       failures.push({ prompt, reason })
-      log(`FAILED ${prompt}: ${reason}`)
-      if (previous) items.push(previous)
+      log(`FAILED ${prompt} ${progress}: ${reason}`)
+      continue
     }
+
+    // Outside the try: a failed save is fatal, not a failure of this verb.
+    scraped.set(prompt, item)
+    await save(snapshot())
+    log(`ok     ${prompt} ${progress}`)
   }
-  return { items, failures }
+  return { items: snapshot(), failures }
 }

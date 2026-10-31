@@ -8,14 +8,17 @@ Live site (GitHub Pages project page): <https://5zysz3k.github.io/uceni-se-cesti
 
 ## How it works
 
-There is no server and no runtime scraping.
+There is no server, no runtime scraping and no CI: scraping, building and publishing are three steps the
+owner runs by hand.
 
-1. **At build time** `npm run scrape` reads [`czech_verbs.txt`](czech_verbs.txt), fetches each verb from
-   <https://prirucka.ujc.cas.cz/> (Internetová jazyková příručka), parses the present-tense table and writes
-   `public/data/verb-present-tense.json`.
-2. **Vite** builds the page. The page fetches that JSON file from its own origin.
-3. **GitHub Actions** does both on every push to `main` and force-pushes only the built output to the
-   `gh-pages` branch.
+1. **Scrape.** `npm run scrape` reads [`czech_verbs.txt`](czech_verbs.txt), fetches each verb from
+   <https://prirucka.ujc.cas.cz/> (Internetová jazyková příručka), parses the present-tense table and saves
+   `public/data/verb-present-tense.json` after every verb. That file is **committed to `main`** as scraped
+   source data; it is the only copy, so commit it after a scrape.
+2. **Build.** `npm run build` (Vite) builds the page into `dist/`. The page fetches the JSON file from its
+   own origin.
+3. **Publish.** `npm run publish-pages` commits `dist/` to the local `gh-pages` branch; you push that branch
+   yourself.
 
 ## Everyday use
 
@@ -28,22 +31,50 @@ npm run typecheck
 npm run build       # typecheck + production build into dist/
 ```
 
+To put a new version on the site:
+
+```sh
+npm run scrape                        # only if czech_verbs.txt changed or verbs are missing
+git add public/data && git commit     # the scraped data lives in the repo
+npm run build
+npm run publish-pages                 # commits dist/ to the local gh-pages branch
+git push origin gh-pages
+```
+
 ### Adding verbs
 
 Add them to `czech_verbs.txt` (comma-separated infinitives; reflexives are written like `bát se`, `dát si`).
 That file is the single source of truth: a verb that is removed from it is also removed from the data. The
-next push only fetches the new verbs.
+next *scrape* only fetches the new verbs.
 
 ### The scraper
 
 - **Incremental.** Only verbs missing from `public/data/verb-present-tense.json` are fetched.
-  `npm run scrape -- --force` re-fetches everything.
+  `npm run scrape -- --force` re-fetches everything (see below).
+- **Saved as it goes.** After every verb that was fetched and parsed, the whole data file is rewritten (to
+  `.scrape-data.tmp`, then renamed over the data file, so it is never half-written), in the order of
+  `czech_verbs.txt`. Failures are never written. Verbs that are no longer in `czech_verbs.txt` are pruned
+  from the file when the scrape starts. The file has one verb per line (still plain JSON, same schema), so
+  committing it gives readable diffs. Each line of progress is numbered: `ok     bavit (3/120)`, where the
+  total is the number of verbs this run will try.
+- **Interrupting is safe.** Ctrl-C (or SIGTERM) prints `Stopped: N of M verbs saved in <file>`, removes the
+  lock and exits 130 (143 for SIGTERM). Run the scrape again and it carries on with the verbs that are
+  missing. Nothing is lost, so stopping early when the site misbehaves is always fine.
+- **One scrape at a time.** `.scrape.lock` (in the repo root, git-ignored) holds the PID of the running
+  scrape. A second scrape is refused with exit code 2 while that process is alive; a lock left behind by a
+  crashed run is ignored. (The lock and the temp file are in the repo root, not in `public/`, because Vite
+  copies everything in `public/` into `dist/`.)
+- **`--force` is not resumable.** It replaces entries one by one as they succeed, and a failed refresh
+  keeps the old entry, but a second `--force` starts again from the first verb. To refresh just a few
+  verbs, delete their entries from the data file and run a plain `npm run scrape`.
+- **Exit codes.** `0` everything worked; `1` some verbs failed, or a fatal error such as a failed save;
+  `2` bad usage or another scrape is running; `130` / `143` interrupted.
 - **Failures.** A verb that cannot be fetched or parsed is logged and left out of the data (so it is not on
-  the site). The run ends with a summary and a **non-zero exit code**; the verbs that worked are still
-  written. There is no overrides file for now. Two safety rules: a failed `--force` refresh keeps the
+  the site). The run ends with a summary and a **non-zero exit code**; the verbs that worked are already
+  saved. There is no overrides file for now. Two safety rules: a failed `--force` refresh keeps the
   verb's previous data instead of deleting it, and after 5 fetch failures in a row (timeouts, "busy", HTTP
   errors; a page that merely fails to parse does not count) the run stops asking the site and reports the
-  remaining verbs as "not attempted".
+  remaining verbs as "not attempted". There is no automatic cool-down: wait, then run it again.
 - **A page is only accepted if it is that verb's own entry.** The site answers some searches with an
   unrelated page (e.g. `dát si` returns the noun *pusa*, `nechtít se` returns the entry for *chtít*), so the
   heading must match the requested verb. Words with several entries (e.g. `stát`) are resolved by following
@@ -70,8 +101,8 @@ next push only fetches the new verbs.
 > **Not yet verified at full scale.** The parser and the scrape logic are tested against saved real pages, and
 > one verb (`bavit`) was fetched live through the CLI and came out correct, but a complete scrape of
 > `czech_verbs.txt` has not been run against the live site yet: the site stopped answering the development
-> machine after the first few hundred requests. The first run in GitHub Actions (a different address) is the
-> first real full-scale test; check its log, and its failure summary, before relying on the site.
+> machine after the first few hundred requests. The first full local run is the first real full-scale test;
+> check its log, and its failure summary, before relying on the site.
 
 #### Verbs known to fail
 
@@ -81,23 +112,26 @@ construction, so it is rejected and will appear in the failure summary on every 
 
 ## Deployment
 
-[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) runs on every push to `main` (and manually,
-with an optional "force" input for a full re-scrape):
+`npm run publish-pages` ([`scripts/publish-pages.ts`](scripts/publish-pages.ts)) puts the contents of
+`dist/` on the `gh-pages` branch:
 
-1. check out the previously scraped data from `gh-pages` (if the branch exists),
-2. scrape the missing verbs,
-3. build,
-4. force-push only the built output (including the merged data JSON) to `gh-pages`.
+- It commits `dist/` on top of the **local** `gh-pages` branch (creating it as an orphan branch the first
+  time), using a temporary git worktree, so your working tree, index, current branch and `HEAD` are left
+  exactly as they were. The commit message is `Publish build of <short sha of main>`, plus
+  ` (uncommitted changes)` when the working tree is dirty. It uses your own git identity.
+- It only runs from `main`, and refuses to publish without `dist/index.html` or with a data file that has no
+  verbs. If verbs from `czech_verbs.txt` are missing from the built data it warns, with their names, and
+  publishes anyway. If `dist/` is identical to `gh-pages` it says so and makes no commit.
+- It **does not build** (run `npm run build` first, after your last scrape) and **does not push**: it prints
+  `git push origin gh-pages` for you to run. History on `gh-pages` therefore accumulates, and a normal
+  `git push` is enough (no force-push).
 
-If some verbs fail to scrape, the site is still built and deployed without them, and the job is then marked
-as failed so the problem is visible. The build output is never committed to `main`.
+The tests run the same logic against a temporary git repository; they never touch this one.
 
-### One-time repository settings (done by the owner, not by the workflow)
+### One-time repository settings (done by the owner)
 
 - **Settings → Pages → Build and deployment:** Source = *Deploy from a branch*, Branch = `gh-pages`, folder
   `/ (root)`.
-- **Settings → Actions → General → Workflow permissions:** *Read and write permissions*. The workflow also
-  declares `permissions: contents: write`.
 
 ## Code layout
 
@@ -108,7 +142,10 @@ src/
   i18n/        typed en / cs dictionaries and the t() helper
   app.ts       the DOM layer (deliberately thin and not unit tested)
 scraper/       build-time only, never shipped: HTTP policy, scrape orchestration, the verb parser
+  data-file.ts reading the data file, and writing it atomically (one item per line)
+  lock.ts      the PID lock file that keeps two scrapes from running at once
   fixtures/    trimmed real pages from prirucka.ujc.cas.cz that the parser tests run against
+scripts/       publish-pages.ts: commits dist/ to the local gh-pages branch (tested against a temporary repo)
 ```
 
 ### Extension points (and nothing more)
