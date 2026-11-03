@@ -15,7 +15,7 @@ const SITE = 'https://prirucka.ujc.cas.cz/'
 describe('prirucka request policy', () => {
   it('asks slowly, waits long and retries the busy page', () => {
     expect(priruckaPolicy).toMatchObject({ delayMs: 1500, timeoutMs: 30_000, retries: 4, retryDelayMs: 15_000 })
-    expect(priruckaPolicy.userAgent).toMatch(/scraper \(\+https:\/\/github\.com\/5ZYSZ3K\//)
+    expect(priruckaPolicy.userAgent).toBe('language-trainer-scraper (+https://github.com/5ZYSZ3K/language-trainer)')
     expect(priruckaPolicy.isUnusable?.(fixture('server-busy'))).toBe(true)
     expect(priruckaPolicy.isUnusable?.(fixture('bavit'))).toBe(false)
   })

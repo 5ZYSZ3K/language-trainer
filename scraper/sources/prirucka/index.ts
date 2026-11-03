@@ -4,6 +4,7 @@
  * tens of minutes: one request at a time, a pause counted from the end of the previous one, long retry waits.
  */
 import type { Item } from '../../../src/core/cell'
+import { REPOSITORY, REPOSITORY_URL } from '../../../src/config'
 import type { Adapter, ScraperSource } from '../../harness/context'
 import type { RequestPolicy } from '../../harness/http'
 import { runListDriven } from '../../list-driven'
@@ -14,7 +15,7 @@ export const priruckaPolicy: RequestPolicy = {
   timeoutMs: 30_000,
   retries: 4,
   retryDelayMs: 15_000,
-  userAgent: 'uceni-se-cestiny-scraper (+https://github.com/5ZYSZ3K/uceni-se-cestiny)',
+  userAgent: `${REPOSITORY.name}-scraper (+${REPOSITORY_URL})`,
   isUnusable: isServerBusy,
 }
 
