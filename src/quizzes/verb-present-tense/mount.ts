@@ -70,6 +70,21 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
   })
   find('#next').addEventListener('click', startRound)
 
+  // Enter on a finished round starts the next verb, wherever in the exercise the focus is. This listens while the event
+  // is still on its way down (capture), before any field or button sees it: so the Enter that checks the last cell
+  // (round not complete yet) is left to the field, and only a later Enter gets here with the round complete.
+  exerciseEl.addEventListener(
+    'keydown',
+    (event) => {
+      if (event.key !== 'Enter' || !round.complete) return
+      // Stop here: the old fields are about to be replaced, and a button must not also be activated by this Enter.
+      event.preventDefault()
+      event.stopPropagation()
+      startRound()
+    },
+    true,
+  )
+
   // ---- rounds -----------------------------------------------------------------------------------
 
   function startRound(): void {

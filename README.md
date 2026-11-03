@@ -287,8 +287,8 @@ still need to be reviewed.
 
 - A random verb each round, never the same one twice in a row (unless there is only one).
 - All six forms are always shown, singular first, then plural: singular on the left and plural on the right on a
-  wide screen, one after the other on a narrow one. Enter moves to the next form in that order. Reflexive particles (`se`, `si`) are typed as part of the
-  answer.
+  wide screen, one after the other on a narrow one. Enter checks the field and moves to the next open form in that order; once every form is checked, Enter starts
+  the next verb. Reflexive particles (`se`, `si`) are typed as part of the answer.
 - Each cell has its own Check button, plus "Check all". Checking locks a cell for the round: correct turns it
   green, wrong turns it red and shows all accepted variants joined by ` / `. A single check on an empty cell is
   ignored; "Check all" counts empty cells as wrong. "Next verb" starts a new round.
