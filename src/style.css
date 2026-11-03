@@ -296,6 +296,11 @@ button.link {
   margin-top: 0.2rem;
 }
 
+/* Keeps its line in the layout (visibility, not display) so checking a cell doesn't make the row grow. */
+.cell[data-state='open'] .answer {
+  visibility: hidden;
+}
+
 .cell .answer-label {
   color: var(--muted);
 }

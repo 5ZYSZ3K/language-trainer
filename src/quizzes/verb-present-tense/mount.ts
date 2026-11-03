@@ -128,9 +128,9 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
     row.append(input, button)
 
     // Shown once the cell is checked, right or wrong: every accepted form, so a correct variant also teaches the others.
+    // Hidden by CSS (not the hidden attribute) while the cell is open, so its line stays reserved and the row doesn't grow.
     const answer = document.createElement('div')
     answer.className = 'answer'
-    answer.hidden = true
 
     const answerLabel = document.createElement('span')
     answerLabel.className = 'answer-label'
@@ -160,8 +160,6 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
     wrap.dataset.state = state
     inputs[index]!.readOnly = state !== 'open'
     wrap.querySelector<HTMLButtonElement>('.check')!.disabled = state !== 'open'
-    const answer = wrap.querySelector<HTMLElement>('.answer')!
-    answer.hidden = state === 'open'
     wrap.querySelector<HTMLElement>('.answer-forms')!.textContent =
       state === 'open' ? '' : item!.cells[index]!.acceptedForms.join(' / ')
   }
