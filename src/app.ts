@@ -1,20 +1,21 @@
 import type { Cell, ExerciseData, Item } from './core/cell'
-import type { Exercise } from './core/exercise'
 import { pickNext } from './core/pick'
 import { Round } from './core/round'
 import { Scores, type StorageLike } from './core/scores'
 import { applyShortcut } from './core/shortcuts'
-import { getLanguage, LANGUAGES, languageLabel, setLanguage, t, type TranslationKey } from './i18n'
+import { getLanguage, languageLabel, setLanguage, t, UI_LANGUAGES, type TranslationKey } from './i18n'
+import type { Language } from './languages'
+import type { QuizType } from './quizzes'
 
 export interface AppDeps {
-  exercise: Exercise
+  quizType: QuizType<unknown>
+  /** The language being learned: its characters, typing shortcuts and `lang` attribute. */
+  language: Language
   /** The text key of the visible label for each cell id; data carries only the ids. */
   cellLabelKeys: Readonly<Record<string, TranslationKey>>
   storage: StorageLike
   loadData: () => Promise<ExerciseData>
 }
-
-const SPECIAL_CHARS = [...'áéíóúýčďěňřšťžů']
 
 // All visible text is filled in from the dictionaries by applyTexts() via the data-i18n attributes.
 const SHELL = `
@@ -36,7 +37,7 @@ const SHELL = `
   <p id="status" role="status"></p>
 
   <main id="exercise" hidden>
-    <p class="prompt"><span data-i18n="prompt.label"></span> <strong id="prompt" lang="cs"></strong></p>
+    <p class="prompt"><span data-i18n="prompt.label"></span> <strong id="prompt"></strong></p>
     <div id="cells" class="cells"></div>
     <div id="chars" class="chars" role="group" data-i18n-label="chars.label"></div>
     <div class="actions">
@@ -47,16 +48,13 @@ const SHELL = `
 
   <section class="help" aria-labelledby="help-title">
     <h2 id="help-title" data-i18n="help.title"></h2>
-    <ul>
-      <li data-i18n="help.acute"></li>
-      <li data-i18n="help.caron"></li>
-      <li data-i18n="help.ring"></li>
+    <ul id="help-list">
       <li data-i18n="help.reflexive"></li>
     </ul>
   </section>
 `
 
-export async function mountApp(root: HTMLElement, { exercise, cellLabelKeys, storage, loadData }: AppDeps): Promise<void> {
+export async function mountApp(root: HTMLElement, { quizType, language, cellLabelKeys, storage, loadData }: AppDeps): Promise<void> {
   root.innerHTML = SHELL
   const find = <E extends HTMLElement>(selector: string) => root.querySelector<E>(selector)!
 
@@ -65,6 +63,7 @@ export async function mountApp(root: HTMLElement, { exercise, cellLabelKeys, sto
   const exerciseEl = find('#exercise')
   const promptEl = find('#prompt')
   const cellsEl = find('#cells')
+  promptEl.lang = language.htmlLang
 
   let items: Item[] = []
   let item: Item | undefined
@@ -78,6 +77,7 @@ export async function mountApp(root: HTMLElement, { exercise, cellLabelKeys, sto
   function applyTexts(): void {
     document.documentElement.lang = getLanguage()
     document.title = t('app.title')
+    renderShortcutHelp()
     root.querySelectorAll<HTMLElement>('[data-i18n]').forEach((el) => {
       el.textContent = t(el.dataset.i18n as TranslationKey)
     })
@@ -89,6 +89,19 @@ export async function mountApp(root: HTMLElement, { exercise, cellLabelKeys, sto
     })
   }
 
+  /** The language's shortcut lines come first, then the quiz's own note (the static last list item). */
+  function renderShortcutHelp(): void {
+    const list = find('#help-list')
+    list.querySelectorAll('[data-shortcut-help]').forEach((item) => item.remove())
+    const lines = language.texts[getLanguage()].shortcutHelp.map((line) => {
+      const item = document.createElement('li')
+      item.dataset.shortcutHelp = ''
+      item.textContent = line
+      return item
+    })
+    list.prepend(...lines)
+  }
+
   function showStatus(key: TranslationKey | null): void {
     statusEl.hidden = key === null
     if (key) statusEl.dataset.i18n = key
@@ -97,7 +110,7 @@ export async function mountApp(root: HTMLElement, { exercise, cellLabelKeys, sto
   }
 
   function renderScores(): void {
-    const s = scores.get(exercise.type)
+    const s = scores.get(quizType.id)
     find('#score-cells').textContent = `${s.cellsCorrect}/${s.cellsChecked}`
     find('#score-items').textContent = `${s.itemsCorrect}/${s.itemsCompleted}`
   }
@@ -105,13 +118,13 @@ export async function mountApp(root: HTMLElement, { exercise, cellLabelKeys, sto
   // ---- header and static controls --------------------------------------------------------------
 
   const langGroup = find('.lang')
-  for (const language of LANGUAGES) {
+  for (const uiLanguage of UI_LANGUAGES) {
     const button = document.createElement('button')
     button.type = 'button'
-    button.dataset.lang = language
-    button.textContent = languageLabel(language)
+    button.dataset.lang = uiLanguage
+    button.textContent = languageLabel(uiLanguage)
     button.addEventListener('click', () => {
-      setLanguage(language, storage)
+      setLanguage(uiLanguage, storage)
       applyTexts()
     })
     langGroup.append(button)
@@ -125,11 +138,11 @@ export async function mountApp(root: HTMLElement, { exercise, cellLabelKeys, sto
   })
 
   const charsEl = find('#chars')
-  for (const char of SPECIAL_CHARS) {
+  for (const char of language.specialChars) {
     const button = document.createElement('button')
     button.type = 'button'
     button.textContent = char
-    button.lang = 'cs'
+    button.lang = language.htmlLang
     // Keep the focus (and caret) in the text field the user is typing in.
     button.addEventListener('mousedown', (event) => event.preventDefault())
     button.addEventListener('click', () => insertChar(char))
@@ -147,7 +160,7 @@ export async function mountApp(root: HTMLElement, { exercise, cellLabelKeys, sto
 
   function startRound(): void {
     item = pickNext(items, item, Math.random)
-    round = new Round(exercise.type, item, scores)
+    round = new Round(quizType.id, item, scores)
     promptEl.textContent = item.prompt
     cellEls = item.cells.map(buildCell)
     cellsEl.replaceChildren(...cellEls)
@@ -171,7 +184,7 @@ export async function mountApp(root: HTMLElement, { exercise, cellLabelKeys, sto
     const input = document.createElement('input')
     input.id = `cell-${index}`
     input.type = 'text'
-    input.lang = 'cs'
+    input.lang = language.htmlLang
     input.autocomplete = 'off'
     input.autocapitalize = 'none'
     input.spellcheck = false
@@ -200,7 +213,7 @@ export async function mountApp(root: HTMLElement, { exercise, cellLabelKeys, sto
     const answer = document.createElement('div')
     answer.className = 'answer'
     answer.hidden = true
-    answer.lang = 'cs'
+    answer.lang = language.htmlLang
 
     wrap.append(label, row, answer)
     return wrap
@@ -237,7 +250,7 @@ export async function mountApp(root: HTMLElement, { exercise, cellLabelKeys, sto
     // Only plain typing triggers shortcuts: not deleting, pasting or IME composition.
     if (event.inputType !== 'insertText' || event.isComposing) return
     const caret = input.selectionStart ?? input.value.length
-    const edit = applyShortcut(input.value, caret)
+    const edit = applyShortcut(input.value, caret, language.shortcuts)
     if (edit.value === input.value) return
     input.value = edit.value
     input.setSelectionRange(edit.caret, edit.caret)

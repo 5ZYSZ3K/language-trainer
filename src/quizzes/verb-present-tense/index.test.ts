@@ -1,17 +1,32 @@
 import { describe, expect, it } from 'vitest'
-import type { Item } from '../core/cell'
-import { verbPresentCellLabelKeys, verbPresentTense, verbPresentTenseContract } from './verb-present-tense'
+import type { Item } from '../../core/cell'
+import { verbPresentCellIds, verbPresentCellLabelKeys, verbPresentTense, verbPresentTenseContract } from './index'
 
 describe('verbPresentTense', () => {
+  it('has the permanent id verb-present-tense, which names its data file and its scores', () => {
+    expect(verbPresentTense.id).toBe('verb-present-tense')
+  })
+
+  it('uses its own contract', () => {
+    expect(verbPresentTense.contract).toBe(verbPresentTenseContract)
+  })
+
+  it('counts forms and verbs, in that order', () => {
+    expect(verbPresentTense.meters).toEqual([
+      { id: 'cells', label: 'scores.cells' },
+      { id: 'items', label: 'scores.items' },
+    ])
+  })
+
   it('has six neutral cell ids, in display order', () => {
-    expect(verbPresentTense.cellIds).toEqual(['1sg', '1pl', '2sg', '2pl', '3sg', '3pl'])
+    expect(verbPresentCellIds).toEqual(['1sg', '1pl', '2sg', '2pl', '3sg', '3pl'])
   })
 })
 
 describe('verbPresentCellLabelKeys', () => {
   it('maps every cell id, and nothing else, to its text key verbPresent.<id>', () => {
-    expect(Object.keys(verbPresentCellLabelKeys).sort()).toEqual([...verbPresentTense.cellIds].sort())
-    for (const id of verbPresentTense.cellIds) expect(verbPresentCellLabelKeys[id]).toBe(`verbPresent.${id}`)
+    expect(Object.keys(verbPresentCellLabelKeys).sort()).toEqual([...verbPresentCellIds].sort())
+    for (const id of verbPresentCellIds) expect(verbPresentCellLabelKeys[id]).toBe(`verbPresent.${id}`)
   })
 })
 

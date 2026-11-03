@@ -5,14 +5,13 @@ import { ParseError, type HttpGet, type ScrapableExercise } from './exercise'
 import { scrape } from './scrape'
 
 /** A stand-in exercise: the page for "x" is "page:x"; a prompt containing "bad" parses to an error, one containing "empty" to a first cell without a form. */
+const cellIds = ['1sg', '1pl']
 const stub: ScrapableExercise = {
-  type: 'stub',
-  cellIds: ['1sg', '1pl'],
   fetchPage: (prompt, get) => get(`page:${prompt}`),
   parse(html, prompt) {
     if (prompt.includes('bad')) throw new ParseError('not the right page')
-    if (prompt.includes('empty')) return this.cellIds.map((id, i) => ({ id, acceptedForms: i === 0 ? [] : [`${html}/${id}`] }))
-    return this.cellIds.map((id) => ({ id, acceptedForms: [`${html}/${id}`] }))
+    if (prompt.includes('empty')) return cellIds.map((id, i) => ({ id, acceptedForms: i === 0 ? [] : [`${html}/${id}`] }))
+    return cellIds.map((id) => ({ id, acceptedForms: [`${html}/${id}`] }))
   },
 }
 

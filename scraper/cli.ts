@@ -12,7 +12,7 @@ import { readFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { Item } from '../src/core/cell'
-import { verbPresentTenseContract } from '../src/exercises/verb-present-tense'
+import { verbPresentTense as quizType } from '../src/quizzes/verb-present-tense'
 import { parseCliOptions, USAGE } from './cli-options'
 import { readItems, writeData, type DataTarget } from './data-file'
 import { fetchText, politely } from './http'
@@ -24,9 +24,9 @@ import { isServerBusy, verbPresentTense } from './verb-present-tense'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const exercise = verbPresentTense
 // The single target until the scraper learns --source / --language / --quiz.
-const target: DataTarget = { language: 'cs', source: 'prirucka', quizType: exercise.type }
+const target: DataTarget = { language: 'cs', source: 'prirucka', quizType: quizType.id }
 const verbsFile = resolve(root, 'czech_verbs.txt')
-const dataFile = resolve(root, 'public', 'data', `${exercise.type}.json`)
+const dataFile = resolve(root, 'public', 'data', `${quizType.id}.json`)
 // In the repo root, not under public/: Vite copies everything in public/ into dist/, and these must not be published.
 const lockFile = resolve(root, '.scrape.lock')
 const tmpDataFile = resolve(root, '.scrape-data.tmp')
@@ -90,7 +90,7 @@ async function main(): Promise<number> {
       await writeData(dataFile, tmpDataFile, { ...target, items: [...items] })
       savedCount = items.length
     }
-    const { items, failures } = await scrape({ exercise, contract: verbPresentTenseContract, prompts, existing, force, get, save, failCooldownMs, log: console.log })
+    const { items, failures } = await scrape({ exercise, contract: quizType.contract, prompts, existing, force, get, save, failCooldownMs, log: console.log })
 
     console.log(`\nDone: ${items.length} verbs in ${dataFile}`)
     if (failures.length > 0) {

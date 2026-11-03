@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio'
 import type { Cell } from '../src/core/cell'
-import { verbPresentTense as runtime } from '../src/exercises/verb-present-tense'
+import { verbPresentCellIds } from '../src/quizzes/verb-present-tense'
 import { ParseError, type HttpGet, type ScrapableExercise } from './exercise'
 
 const SITE = 'https://prirucka.ujc.cas.cz/'
@@ -87,8 +87,6 @@ async function fetchEntryPage(word: string, get: HttpGet): Promise<string> {
 }
 
 export const verbPresentTense: ScrapableExercise = {
-  ...runtime,
-
   async fetchPage(prompt, get) {
     const page = await fetchEntryPage(prompt, get)
     const { base, particle } = splitReflexive(prompt)
@@ -124,6 +122,6 @@ export const verbPresentTense: ScrapableExercise = {
         byId.set(`${person}pl`, expandVariants(cellText($, tds[2]!)))
       })
     const withParticle = (form: string) => (particle && !form.endsWith(` ${particle}`) ? `${form} ${particle}` : form)
-    return runtime.cellIds.map((id): Cell => ({ id, acceptedForms: (byId.get(id) ?? []).map(withParticle) }))
+    return verbPresentCellIds.map((id): Cell => ({ id, acceptedForms: (byId.get(id) ?? []).map(withParticle) }))
   },
 }

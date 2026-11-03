@@ -13,7 +13,7 @@ import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 import type { ExerciseData } from '../src/core/cell'
-import { verbPresentTense } from '../src/exercises/verb-present-tense'
+import { verbPresentTense } from '../src/quizzes/verb-present-tense'
 import { parseVerbList } from '../scraper/verb-list'
 
 const execFileAsync = promisify(execFile)
@@ -76,7 +76,7 @@ async function checkPreconditions(root: string): Promise<string[]> {
   const dist = join(root, 'dist')
   if (!(await exists(join(dist, 'index.html')))) throw new PublishError('dist/index.html is missing. Run: npm run build')
 
-  const dataPath = `dist/data/${verbPresentTense.type}.json`
+  const dataPath = `dist/data/${verbPresentTense.id}.json`
   const remedy = 'Run: npm run scrape, then npm run build'
   let text: string
   try {

@@ -148,7 +148,11 @@ The tests run the same logic against a temporary git repository; they never touc
 ```
 src/
   core/        pure, tested logic: matching, typing shortcuts, Round, Scores, random pick
-  exercises/   what the page needs to know about an exercise (type id, cell ids and their label keys)
+  languages/   the languages that can be learned: characters and typing shortcuts (registry in index.ts)
+  sources/     the data sources and which datasets each provides (registry in index.ts)
+  quizzes/     the quiz types: id, contract, score meters (registry in index.ts)
+  datasets/    the pool: language, source and quiz type
+  selection.ts which pool the page opens on (pure rules for a future selector)
   i18n/        typed en / cs dictionaries and the t() helper
   app.ts       the DOM layer (deliberately thin and not unit tested)
 scraper/       build-time only, never shipped: HTTP policy, scrape orchestration, the verb parser
@@ -161,8 +165,8 @@ scripts/       publish-pages.ts: commits dist/ to the local gh-pages branch (tes
 ### Extension points (and nothing more)
 
 - A neutral `Cell` model (`id`, `acceptedForms[]`); the UI and scoring never mention persons or verbs.
-- An `Exercise` interface with `VerbPresentTense` as the only implementation. The page only needs the
-  runtime part (`src/core/exercise.ts`); fetching and parsing live in `scraper/` so the parser is not
+- A `QuizType` interface (`src/quizzes/quiz-type.ts`) with `verb-present-tense` as the only implementation. The
+  page only needs that runtime part; fetching and parsing live in `scraper/` so the parser is not
   bundled.
 - Scores are stored per exercise type, so future tenses or parts of speech cannot collide with them. The
   exercise `type` (`verb-present-tense`) is also the data file name and must not change.

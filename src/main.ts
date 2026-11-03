@@ -2,8 +2,12 @@ import './style.css'
 import { mountApp } from './app'
 import type { ExerciseData } from './core/cell'
 import type { StorageLike } from './core/scores'
-import { verbPresentCellLabelKeys, verbPresentTense } from './exercises/verb-present-tense'
 import { initLanguage } from './i18n'
+import { LANGUAGES } from './languages'
+import { QUIZ_TYPES } from './quizzes'
+import { verbPresentCellLabelKeys } from './quizzes/verb-present-tense'
+import { defaultPool } from './selection'
+import { SOURCES } from './sources'
 
 /** localStorage can throw on access (blocked cookies, some private modes); fall back to memory. */
 function pickStorage(): StorageLike {
@@ -31,9 +35,16 @@ async function loadData(type: string): Promise<ExerciseData> {
 const storage = pickStorage()
 initLanguage(storage, navigator.language)
 
+// No selector yet: the page opens on the single default pool of the registries.
+const pool = defaultPool({ languages: LANGUAGES, sources: SOURCES, quizTypes: QUIZ_TYPES })
+const language = LANGUAGES.find((candidate) => candidate.id === pool?.language)
+const quizType = QUIZ_TYPES.find((candidate) => candidate.id === pool?.quizType)
+if (!pool || !language || !quizType) throw new Error('No pool is registered, so there is nothing to practise.')
+
 mountApp(document.getElementById('app')!, {
-  exercise: verbPresentTense,
+  quizType,
+  language,
   cellLabelKeys: verbPresentCellLabelKeys,
   storage,
-  loadData: () => loadData(verbPresentTense.type),
+  loadData: () => loadData(quizType.id),
 })

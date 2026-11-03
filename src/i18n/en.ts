@@ -18,9 +18,6 @@ export const en = {
 
   'chars.label': 'Insert special character',
   'help.title': 'Typing shortcuts',
-  'help.acute': "' after a vowel gives an acute: á é í ó ú ý",
-  'help.caron': '^ after a letter gives a háček: č ď ě ň ř š ť ž',
-  'help.ring': 'u@ gives ů',
   'help.reflexive': 'For reflexive verbs, type the particle too (se / si), e.g. bojím se.',
 
   'scores.title': 'Score',

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { TranslationKey } from './en'
-import { detectLanguage, getLanguage, initLanguage, LANGUAGES, languageLabel, setLanguage, t } from './index'
+import { detectLanguage, getLanguage, initLanguage, languageLabel, setLanguage, t, UI_LANGUAGES } from './index'
 
 function memoryStorage(initial: Record<string, string> = {}) {
   const data = new Map(Object.entries(initial))
@@ -52,9 +52,9 @@ describe('t and setLanguage', () => {
 describe('languageLabel', () => {
   it('gives each language its own short label for the switch, independent of the current language', () => {
     setLanguage('en', memoryStorage())
-    expect(LANGUAGES.map((l) => languageLabel(l))).toEqual(['EN', 'CZ'])
+    expect(UI_LANGUAGES.map((l) => languageLabel(l))).toEqual(['EN', 'CZ'])
     setLanguage('cs', memoryStorage())
-    expect(LANGUAGES.map((l) => languageLabel(l))).toEqual(['EN', 'CZ'])
+    expect(UI_LANGUAGES.map((l) => languageLabel(l))).toEqual(['EN', 'CZ'])
   })
 })
 

@@ -1,12 +1,10 @@
-import type { Item } from '../core/cell'
-import type { Contract } from '../core/contract'
-import type { Exercise } from '../core/exercise'
-import type { TranslationKey } from '../i18n/en'
+import type { Item } from '../../core/cell'
+import type { Contract } from '../../core/contract'
+import type { TranslationKey } from '../../i18n'
+import type { QuizType } from '../quiz-type'
 
-export const verbPresentTense: Exercise = {
-  type: 'verb-present-tense',
-  cellIds: ['1sg', '1pl', '2sg', '2pl', '3sg', '3pl'],
-}
+/** The cells of an item, in display order (rendered as a two-column grid, row by row). */
+export const verbPresentCellIds: readonly string[] = ['1sg', '1pl', '2sg', '2pl', '3sg', '3pl']
 
 /** The text key of the visible label for each cell id. Data holds only the ids; the page looks the label up here. */
 export const verbPresentCellLabelKeys: Readonly<Record<string, TranslationKey>> = {
@@ -22,7 +20,7 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
 
 /**
- * What the quiz needs of an item: a non-empty prompt and exactly the six cells `cellIds`, in that order, each
+ * What the quiz needs of an item: a non-empty prompt and exactly the six cells `verbPresentCellIds`, in that order, each
  * with at least one non-empty accepted form. Other properties (an optional `sourceUrl`, say) are ignored.
  */
 export const verbPresentTenseContract: Contract<Item> = {
@@ -35,7 +33,7 @@ export const verbPresentTenseContract: Contract<Item> = {
     if (!Array.isArray(cells)) return [...problems, 'cells must be a list']
 
     const found = cells.map((cell: unknown) => (isRecord(cell) ? cell.id : undefined))
-    const expected = verbPresentTense.cellIds
+    const expected = verbPresentCellIds
     if (found.length !== expected.length || found.some((id, i) => id !== expected[i])) {
       problems.push(`cell ids must be ${expected.join(', ')} in that order, found ${found.map(String).join(', ')}`)
     }
@@ -51,4 +49,13 @@ export const verbPresentTenseContract: Contract<Item> = {
   },
 
   keyOf: (item) => item.prompt,
+}
+
+export const verbPresentTense: QuizType<Item> = {
+  id: 'verb-present-tense',
+  contract: verbPresentTenseContract,
+  meters: [
+    { id: 'cells', label: 'scores.cells' },
+    { id: 'items', label: 'scores.items' },
+  ],
 }

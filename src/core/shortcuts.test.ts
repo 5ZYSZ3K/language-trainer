@@ -1,7 +1,22 @@
 import { describe, expect, it } from 'vitest'
-import { applyShortcut } from './shortcuts'
+import { applyShortcut as apply, type ShortcutTable } from './shortcuts'
+
+// A fixture, not the real Czech table: src/core knows nothing about languages. The real table is tested in
+// src/languages/cs.test.ts.
+const table: ShortcutTable = {
+  "'": { a: 'á', e: 'é', i: 'í', o: 'ó', u: 'ú', y: 'ý' },
+  '^': { c: 'č', d: 'ď', e: 'ě', n: 'ň', r: 'ř', s: 'š', t: 'ť', z: 'ž' },
+  '@': { u: 'ů' },
+}
+const applyShortcut = (value: string, caret: number) => apply(value, caret, table)
 
 describe('applyShortcut', () => {
+  it('uses only the table it is given', () => {
+    expect(apply("a'", 2, {})).toEqual({ value: "a'", caret: 2 })
+    expect(apply('a+', 2, { '+': { a: 'ä' } })).toEqual({ value: 'ä', caret: 1 })
+    expect(apply("a'", 2, { '+': { a: 'ä' } })).toEqual({ value: "a'", caret: 2 })
+  })
+
   it("turns ' after a vowel into an acute", () => {
     expect(applyShortcut("ba'", 3)).toEqual({ value: 'bá', caret: 2 })
     expect(

@@ -20,9 +20,6 @@ export const cs: Record<TranslationKey, string> = {
 
   'chars.label': 'Vložit speciální znak',
   'help.title': 'Zkratky při psaní',
-  'help.acute': "' po samohlásce dá čárku: á é í ó ú ý",
-  'help.caron': '^ po písmenu dá háček: č ď ě ň ř š ť ž',
-  'help.ring': 'u@ dá ů',
   'help.reflexive': 'U zvratných sloves pište i částici (se / si), např. bojím se.',
 
   'scores.title': 'Skóre',
