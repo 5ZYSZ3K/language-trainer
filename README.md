@@ -168,8 +168,10 @@ scripts/       publish-pages.ts: commits dist/ to the local gh-pages branch (tes
 - A `QuizType` interface (`src/quizzes/quiz-type.ts`) with `verb-present-tense` as the only implementation. The
   page only needs that runtime part; fetching and parsing live in `scraper/` so the parser is not
   bundled.
-- Scores are stored per exercise type, so future tenses or parts of speech cannot collide with them. The
-  exercise `type` (`verb-present-tense`) is also the data file name and must not change.
+- Scores are stored per pool (`language/source/quizType`, e.g. `cs/prirucka/verb-present-tense`), one
+  `{ correct, total }` counter per meter the quiz type declares, so future tenses, sources or languages
+  cannot collide with them. The quiz type id (`verb-present-tense`) is also the data file name and must not
+  change.
 - Adding a language means adding a dictionary file typed like `src/i18n/cs.ts` and registering it in
   `src/i18n/index.ts`; a missing key is a compile error.
 

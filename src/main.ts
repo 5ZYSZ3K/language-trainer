@@ -43,6 +43,7 @@ if (!pool || !language || !quizType) throw new Error('No pool is registered, so 
 
 mountApp(document.getElementById('app')!, {
   quizType,
+  pool,
   language,
   cellLabelKeys: verbPresentCellLabelKeys,
   storage,

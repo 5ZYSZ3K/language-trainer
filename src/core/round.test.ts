@@ -1,9 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { Item } from './cell'
 import { Round } from './round'
-import { Scores } from './scores'
-
-const TYPE = 'test-exercise'
 
 const item: Item = {
   prompt: 'mít',
@@ -18,34 +15,32 @@ const item: Item = {
 }
 const ALL_RIGHT = ['mám', 'máme', 'máš', 'máte', 'má', 'mají']
 
-function memoryStorage(initial: Record<string, string> = {}) {
-  const data = new Map(Object.entries(initial))
-  return {
-    getItem: (key: string) => data.get(key) ?? null,
-    setItem: (key: string, value: string) => void data.set(key, value),
-    removeItem: (key: string) => void data.delete(key),
-  }
-}
-
-let scores: Scores
+/** What the round reported, in order: one entry per cell checked, one per item completed. */
+let cells: boolean[]
+let items: boolean[]
 beforeEach(() => {
-  scores = new Scores(memoryStorage())
+  cells = []
+  items = []
 })
-const newRound = () => new Round(TYPE, item, scores)
+const newRound = () =>
+  new Round(item, {
+    cellChecked: (correct) => cells.push(correct),
+    itemCompleted: (fullyCorrect) => items.push(fullyCorrect),
+  })
 
 describe('Round: checking one cell', () => {
   it('locks a correct cell as correct and counts it', () => {
     const round = newRound()
     round.checkCell(0, 'mám')
     expect(round.state(0)).toBe('correct')
-    expect(scores.get(TYPE)).toMatchObject({ cellsCorrect: 1, cellsChecked: 1 })
+    expect(cells).toEqual([true])
   })
 
-  it('locks a wrong cell as wrong and counts it as checked only', () => {
+  it('locks a wrong cell as wrong and reports it as an incorrect check', () => {
     const round = newRound()
     round.checkCell(0, 'mam')
     expect(round.state(0)).toBe('wrong')
-    expect(scores.get(TYPE)).toMatchObject({ cellsCorrect: 0, cellsChecked: 1 })
+    expect(cells).toEqual([false])
   })
 
   it('ignores a check on a cell that is already locked', () => {
@@ -53,7 +48,7 @@ describe('Round: checking one cell', () => {
     round.checkCell(0, 'mam')
     round.checkCell(0, 'mám')
     expect(round.state(0)).toBe('wrong')
-    expect(scores.get(TYPE)).toMatchObject({ cellsCorrect: 0, cellsChecked: 1 })
+    expect(cells).toEqual([false])
   })
 
   it('ignores a check on an empty input: not counted, not locked', () => {
@@ -62,7 +57,7 @@ describe('Round: checking one cell', () => {
     round.checkCell(1, '   ')
     expect(round.state(0)).toBe('open')
     expect(round.state(1)).toBe('open')
-    expect(scores.get(TYPE).cellsChecked).toBe(0)
+    expect(cells).toEqual([])
     round.checkCell(0, 'mám')
     expect(round.state(0)).toBe('correct')
   })
@@ -75,7 +70,8 @@ describe('Round: Check all', () => {
     expect([0, 1, 2, 3, 4, 5].map((i) => round.state(i))).toEqual([
       'correct', 'wrong', 'correct', 'wrong', 'wrong', 'correct',
     ])
-    expect(scores.get(TYPE)).toEqual({ cellsCorrect: 3, cellsChecked: 6, itemsCorrect: 0, itemsCompleted: 1 })
+    expect(cells).toEqual([true, false, true, false, false, true])
+    expect(items).toEqual([false])
   })
 
   it('leaves cells that are already locked alone', () => {
@@ -84,14 +80,16 @@ describe('Round: Check all', () => {
     round.checkCell(1, 'máme')
     round.checkAll(ALL_RIGHT)
     expect(round.state(0)).toBe('wrong')
-    expect(scores.get(TYPE)).toEqual({ cellsCorrect: 5, cellsChecked: 6, itemsCorrect: 0, itemsCompleted: 1 })
+    expect(cells).toEqual([false, true, true, true, true, true])
+    expect(items).toEqual([false])
   })
 
   it('does nothing when every cell is already locked', () => {
     const round = newRound()
     round.checkAll(ALL_RIGHT)
     round.checkAll(ALL_RIGHT)
-    expect(scores.get(TYPE)).toEqual({ cellsCorrect: 6, cellsChecked: 6, itemsCorrect: 1, itemsCompleted: 1 })
+    expect(cells).toEqual([true, true, true, true, true, true])
+    expect(items).toEqual([true])
   })
 })
 
@@ -100,20 +98,23 @@ describe('Round: completing the item', () => {
     const round = newRound()
     ALL_RIGHT.slice(0, 5).forEach((answer, i) => round.checkCell(i, answer))
     expect(round.complete).toBe(false)
-    expect(scores.get(TYPE)).toMatchObject({ cellsCorrect: 5, cellsChecked: 5, itemsCompleted: 0, itemsCorrect: 0 })
+    expect(cells).toEqual([true, true, true, true, true])
+    expect(items).toEqual([])
   })
 
   it('counts a fully correct item once the last cell is checked', () => {
     const round = newRound()
     ALL_RIGHT.forEach((answer, i) => round.checkCell(i, answer))
     expect(round.complete).toBe(true)
-    expect(scores.get(TYPE)).toMatchObject({ cellsCorrect: 6, cellsChecked: 6, itemsCompleted: 1, itemsCorrect: 1 })
+    expect(cells).toEqual([true, true, true, true, true, true])
+    expect(items).toEqual([true])
   })
 
   it('counts an item with one wrong cell as completed but not correct', () => {
     const round = newRound()
     ALL_RIGHT.forEach((answer, i) => round.checkCell(i, i === 3 ? 'mate' : answer))
-    expect(scores.get(TYPE)).toMatchObject({ cellsCorrect: 5, cellsChecked: 6, itemsCompleted: 1, itemsCorrect: 0 })
+    expect(cells).toEqual([true, true, true, false, true, true])
+    expect(items).toEqual([false])
   })
 
   it('accepts any variant listed for a cell', () => {
@@ -126,14 +127,17 @@ describe('Round: completing the item', () => {
     const round = newRound()
     ALL_RIGHT.forEach((answer, i) => round.checkCell(i, answer))
     ALL_RIGHT.forEach((answer, i) => round.checkCell(i, answer))
-    expect(scores.get(TYPE)).toMatchObject({ cellsChecked: 6, itemsCompleted: 1 })
+    expect(cells).toHaveLength(6)
+    expect(items).toHaveLength(1)
   })
 
-  it('scores again each time the item comes up in a new round', () => {
+  it('reports again each time the item comes up in a new round', () => {
     for (const answers of [ALL_RIGHT, ALL_RIGHT, ['x', 'x', 'x', 'x', 'x', 'x']]) {
       const round = newRound()
       answers.forEach((answer, i) => round.checkCell(i, answer))
     }
-    expect(scores.get(TYPE)).toEqual({ cellsCorrect: 12, cellsChecked: 18, itemsCorrect: 2, itemsCompleted: 3 })
+    expect(cells.filter(Boolean)).toHaveLength(12)
+    expect(cells).toHaveLength(18)
+    expect(items).toEqual([true, true, false])
   })
 })

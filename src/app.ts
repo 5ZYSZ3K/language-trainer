@@ -3,12 +3,15 @@ import { pickNext } from './core/pick'
 import { Round } from './core/round'
 import { Scores, type StorageLike } from './core/scores'
 import { applyShortcut } from './core/shortcuts'
+import { poolKey, type Pool } from './datasets/pool'
 import { getLanguage, languageLabel, setLanguage, t, UI_LANGUAGES, type TranslationKey } from './i18n'
 import type { Language } from './languages'
 import type { QuizType } from './quizzes'
 
 export interface AppDeps {
   quizType: QuizType<unknown>
+  /** What is being practised; its key is what scores are kept under. */
+  pool: Pool
   /** The language being learned: its characters, typing shortcuts and `lang` attribute. */
   language: Language
   /** The text key of the visible label for each cell id; data carries only the ids. */
@@ -27,10 +30,7 @@ const SHELL = `
 
   <section class="scores" aria-labelledby="scores-title">
     <h2 id="scores-title" data-i18n="scores.title"></h2>
-    <dl>
-      <div><dt data-i18n="scores.cells"></dt><dd id="score-cells"></dd></div>
-      <div><dt data-i18n="scores.items"></dt><dd id="score-items"></dd></div>
-    </dl>
+    <dl></dl>
     <button type="button" class="link" id="reset" data-i18n="scores.reset"></button>
   </section>
 
@@ -54,11 +54,15 @@ const SHELL = `
   </section>
 `
 
-export async function mountApp(root: HTMLElement, { quizType, language, cellLabelKeys, storage, loadData }: AppDeps): Promise<void> {
+export async function mountApp(
+  root: HTMLElement,
+  { quizType, pool, language, cellLabelKeys, storage, loadData }: AppDeps,
+): Promise<void> {
   root.innerHTML = SHELL
   const find = <E extends HTMLElement>(selector: string) => root.querySelector<E>(selector)!
 
   const scores = new Scores(storage)
+  const scoreKey = poolKey(pool)
   const statusEl = find('#status')
   const exerciseEl = find('#exercise')
   const promptEl = find('#prompt')
@@ -109,13 +113,32 @@ export async function mountApp(root: HTMLElement, { quizType, language, cellLabe
     statusEl.textContent = key ? t(key) : ''
   }
 
+  /** One row per meter of the quiz type, in its order: the meter's label and the pool's correct/total. */
+  function buildScoreRows(): void {
+    find('.scores dl').replaceChildren(
+      ...quizType.meters.map((meter) => {
+        const label = document.createElement('dt')
+        label.dataset.i18n = meter.label
+        const value = document.createElement('dd')
+        value.id = `score-${meter.id}`
+        const row = document.createElement('div')
+        row.append(label, value)
+        return row
+      }),
+    )
+  }
+
   function renderScores(): void {
-    const s = scores.get(quizType.id)
-    find('#score-cells').textContent = `${s.cellsCorrect}/${s.cellsChecked}`
-    find('#score-items').textContent = `${s.itemsCorrect}/${s.itemsCompleted}`
+    const poolScores = scores.get(scoreKey)
+    for (const meter of quizType.meters) {
+      const { correct, total } = poolScores[meter.id] ?? { correct: 0, total: 0 }
+      find(`#score-${meter.id}`).textContent = `${correct}/${total}`
+    }
   }
 
   // ---- header and static controls --------------------------------------------------------------
+
+  buildScoreRows()
 
   const langGroup = find('.lang')
   for (const uiLanguage of UI_LANGUAGES) {
@@ -160,7 +183,11 @@ export async function mountApp(root: HTMLElement, { quizType, language, cellLabe
 
   function startRound(): void {
     item = pickNext(items, item, Math.random)
-    round = new Round(quizType.id, item, scores)
+    // The meter ids are the ones verb-present-tense declares; the quiz moves out of this file in a later step.
+    round = new Round(item, {
+      cellChecked: (correct) => scores.record(scoreKey, 'cells', correct),
+      itemCompleted: (fullyCorrect) => scores.record(scoreKey, 'items', fullyCorrect),
+    })
     promptEl.textContent = item.prompt
     cellEls = item.cells.map(buildCell)
     cellsEl.replaceChildren(...cellEls)

@@ -1,52 +1,53 @@
-export interface ScoreSnapshot {
-  cellsCorrect: number
-  cellsChecked: number
-  itemsCorrect: number
-  itemsCompleted: number
+/** One counter: how many of `total` tries were correct. */
+export interface Tally {
+  correct: number
+  total: number
 }
+
+/** The counters of one pool, by meter id. A meter nothing has been recorded for yet is absent. */
+export type PoolScores = Record<string, Tally>
 
 export type StorageLike = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>
 
 export const SCORES_KEY = 'scores'
 
-const FIELDS = ['cellsCorrect', 'cellsChecked', 'itemsCorrect', 'itemsCompleted'] as const
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
 
-const empty = (): ScoreSnapshot => ({ cellsCorrect: 0, cellsChecked: 0, itemsCorrect: 0, itemsCompleted: 0 })
-
-function isSnapshot(value: unknown): value is ScoreSnapshot {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    FIELDS.every((f) => Number.isFinite((value as Record<string, unknown>)[f]))
-  )
+function isTally(value: unknown): value is Tally {
+  return isRecord(value) && Number.isFinite(value.correct) && Number.isFinite(value.total)
 }
 
+function isPoolScores(value: unknown): value is PoolScores {
+  return isRecord(value) && Object.values(value).every(isTally)
+}
+
+const copyOf = (scores: PoolScores): PoolScores =>
+  Object.fromEntries(Object.entries(scores).map(([meterId, { correct, total }]) => [meterId, { correct, total }]))
+
 /**
- * Running totals per exercise type, so exercises added later never collide with existing scores.
+ * Running totals per pool (its key, e.g. `cs/prirucka/verb-present-tense`) and meter, so datasets and quiz types
+ * added later never collide with existing scores. Knows nothing about what a meter means: the quiz type names them.
  * Persists to the given storage; if storage is missing or broken it carries on in memory.
  */
 export class Scores {
-  private data: Record<string, ScoreSnapshot> = {}
+  private data: Record<string, PoolScores> = {}
 
   constructor(private readonly storage: StorageLike) {
     this.data = this.load()
   }
 
-  get(type: string): ScoreSnapshot {
-    return { ...(this.data[type] ?? empty()) }
+  /** A copy of the pool's counters; changing it does not change the scores. */
+  get(pool: string): PoolScores {
+    return copyOf(this.data[pool] ?? {})
   }
 
-  recordCell(type: string, correct: boolean): void {
-    const score = (this.data[type] ??= empty())
-    score.cellsChecked++
-    if (correct) score.cellsCorrect++
-    this.save()
-  }
-
-  recordItem(type: string, fullyCorrect: boolean): void {
-    const score = (this.data[type] ??= empty())
-    score.itemsCompleted++
-    if (fullyCorrect) score.itemsCorrect++
+  /** Counts one try on the pool's meter, and a correct one if `correct`. */
+  record(pool: string, meterId: string, correct: boolean): void {
+    const meters = (this.data[pool] ??= {})
+    const tally = (meters[meterId] ??= { correct: 0, total: 0 })
+    tally.total++
+    if (correct) tally.correct++
     this.save()
   }
 
@@ -59,11 +60,12 @@ export class Scores {
     }
   }
 
-  private load(): Record<string, ScoreSnapshot> {
+  /** Pools in any other shape (such as the flat counters an older build saved per exercise type) are ignored. */
+  private load(): Record<string, PoolScores> {
     try {
       const parsed: unknown = JSON.parse(this.storage.getItem(SCORES_KEY) ?? 'null')
-      if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) return {}
-      const valid = Object.entries(parsed).filter(([, v]) => isSnapshot(v)) as [string, ScoreSnapshot][]
+      if (!isRecord(parsed)) return {}
+      const valid = Object.entries(parsed).filter((entry): entry is [string, PoolScores] => isPoolScores(entry[1]))
       return Object.fromEntries(valid)
     } catch {
       return {}

@@ -1,17 +1,23 @@
 import type { Item } from './cell'
 import { isCorrect } from './matching'
-import type { Scores } from './scores'
 
 export type CellState = 'open' | 'correct' | 'wrong'
 
-/** One attempt at one item. Checking locks a cell for the rest of the round and updates the scores. */
+/** What a round reports as it goes; whoever runs the round decides what to do with it (keep scores, say). */
+export interface RoundEvents {
+  /** A cell was checked and locked. */
+  cellChecked(correct: boolean): void
+  /** The last open cell was checked; `fullyCorrect` is true if every cell was right. Reported once per round. */
+  itemCompleted(fullyCorrect: boolean): void
+}
+
+/** One attempt at one item. Checking locks a cell for the rest of the round and reports the result. */
 export class Round {
   private readonly states: CellState[]
 
   constructor(
-    private readonly exerciseType: string,
     private readonly item: Item,
-    private readonly scores: Scores,
+    private readonly events: RoundEvents,
   ) {
     this.states = item.cells.map(() => 'open')
   }
@@ -36,13 +42,8 @@ export class Round {
     if (!cell || this.states[index] !== 'open') return
     const correct = isCorrect(input, cell.acceptedForms)
     this.states[index] = correct ? 'correct' : 'wrong'
-    this.scores.recordCell(this.exerciseType, correct)
-    if (this.complete) {
-      this.scores.recordItem(
-        this.exerciseType,
-        this.states.every((s) => s === 'correct'),
-      )
-    }
+    this.events.cellChecked(correct)
+    if (this.complete) this.events.itemCompleted(this.states.every((s) => s === 'correct'))
   }
 
   /** True once every cell has been checked. */
