@@ -13,10 +13,11 @@ owner runs by hand.
 
 1. **Scrape.** `npm run scrape` reads [`czech_verbs.txt`](czech_verbs.txt), fetches each verb from
    <https://prirucka.ujc.cas.cz/> (Internetová jazyková příručka), parses the present-tense table and saves
-   `public/data/verb-present-tense.json` after every verb. That file is **committed to `main`** as scraped
-   source data; it is the only copy, so commit it after a scrape.
-2. **Build.** `npm run build` (Vite) builds the page into `dist/`. The page fetches the JSON file from its
-   own origin.
+   `data/cs/prirucka/verb-present-tense.json` after every verb. That file is **committed to `main`** as
+   scraped source data; it is the only copy, so commit it after a scrape.
+2. **Build.** `npm run build` checks the data (`scripts/check-data.ts` fails the build on an invalid dataset
+   or when no dataset holds any item), then Vite builds the page into `dist/`. The dataset is bundled into the
+   page as its own JavaScript chunk; the page fetches no data file.
 3. **Publish.** `npm run publish-pages` commits `dist/` to the local `gh-pages` branch; you push that branch
    yourself.
 
@@ -28,14 +29,14 @@ npm run scrape      # fetch the verbs that are not scraped yet (a few seconds ea
 npm run dev         # http://localhost:5173
 npm test            # unit tests (parser tests run against saved HTML fixtures)
 npm run typecheck
-npm run build       # typecheck + production build into dist/
+npm run build       # typecheck + data check + production build into dist/
 ```
 
 To put a new version on the site:
 
 ```sh
 npm run scrape                        # only if czech_verbs.txt changed or verbs are missing
-git add public/data && git commit     # the scraped data lives in the repo
+git add data && git commit            # the scraped data lives in the repo
 npm run build
 npm run publish-pages                 # commits dist/ to the local gh-pages branch
 git push origin gh-pages
@@ -49,7 +50,7 @@ next *scrape* only fetches the new verbs.
 
 ### The scraper
 
-- **Incremental.** Only verbs missing from `public/data/verb-present-tense.json` are fetched.
+- **Incremental.** Only verbs missing from `data/cs/prirucka/verb-present-tense.json` are fetched.
   `npm run scrape -- --force` re-fetches everything (see below).
 - **Saved as it goes.** After every verb that was fetched and parsed, the whole data file is rewritten (to
   `.scrape-data.tmp`, then renamed over the data file, so it is never half-written), in the order of
@@ -62,8 +63,7 @@ next *scrape* only fetches the new verbs.
   missing. Nothing is lost, so stopping early when the site misbehaves is always fine.
 - **One scrape at a time.** `.scrape.lock` (in the repo root, git-ignored) holds the PID of the running
   scrape. A second scrape is refused with exit code 2 while that process is alive; a lock left behind by a
-  crashed run is ignored. (The lock and the temp file are in the repo root, not in `public/`, because Vite
-  copies everything in `public/` into `dist/`.)
+  crashed run is ignored. (The lock and the temp file are in the repo root and git-ignored.)
 - **`--force` is not resumable.** It replaces entries one by one as they succeed, and a failed refresh
   keeps the old entry, but a second `--force` starts again from the first verb. To refresh just a few
   verbs, delete their entries from the data file and run a plain `npm run scrape`.
@@ -129,9 +129,9 @@ construction, so it is rejected and will appear in the failure summary on every 
   time), using a temporary git worktree, so your working tree, index, current branch and `HEAD` are left
   exactly as they were. The commit message is `Publish build of <short sha of main>`, plus
   ` (uncommitted changes)` when the working tree is dirty. It uses your own git identity.
-- It only runs from `main`, and refuses to publish without `dist/index.html` or with a data file that has no
-  verbs. If verbs from `czech_verbs.txt` are missing from the built data it warns, with their names, and
-  publishes anyway. If `dist/` is identical to `gh-pages` it says so and makes no commit.
+- It only runs from `main`, and refuses to publish without `dist/index.html`. It reads no data or lists: the
+  data is inside the bundle, and `npm run build` refuses to build a site without items. If `dist/` is
+  identical to `gh-pages` it says so and makes no commit.
 - It **does not build** (run `npm run build` first, after your last scrape) and **does not push**: it prints
   `git push origin gh-pages` for you to run. History on `gh-pages` therefore accumulates, and a normal
   `git push` is enough (no force-push).
@@ -151,7 +151,7 @@ src/
   languages/   the languages that can be learned: characters and typing shortcuts (registry in index.ts)
   sources/     the data sources and which datasets each provides (registry in index.ts)
   quizzes/     the quiz types: id, contract, score meters (registry in index.ts)
-  datasets/    the pool: language, source and quiz type
+  datasets/    the pool (language, source, quiz type) and the loader of the bundled datasets
   selection.ts which pool the page opens on (pure rules for a future selector)
   i18n/        typed en / cs dictionaries and the t() helper
   app.ts       the DOM layer (deliberately thin and not unit tested)
@@ -159,7 +159,10 @@ scraper/       build-time only, never shipped: HTTP policy, scrape orchestration
   data-file.ts reading the data file, and writing it atomically (one item per line)
   lock.ts      the PID lock file that keeps two scrapes from running at once
   fixtures/    trimmed real pages from prirucka.ujc.cas.cz that the parser tests run against
-scripts/       publish-pages.ts: commits dist/ to the local gh-pages branch (tested against a temporary repo)
+scripts/       check-data.ts: validates data/ before every build; publish-pages.ts: commits dist/ to the local
+               gh-pages branch (tested against a temporary repo)
+data/          the committed datasets: data/<language>/<source>/<quiz type>.json
+public/        .nojekyll only
 ```
 
 ### Extension points (and nothing more)

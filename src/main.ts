@@ -1,7 +1,7 @@
 import './style.css'
 import { mountApp } from './app'
-import type { ExerciseData } from './core/cell'
 import type { StorageLike } from './core/scores'
+import { loadDataset } from './datasets/load'
 import { initLanguage } from './i18n'
 import { LANGUAGES } from './languages'
 import { QUIZ_TYPES } from './quizzes'
@@ -26,12 +26,6 @@ function pickStorage(): StorageLike {
   }
 }
 
-async function loadData(type: string): Promise<ExerciseData> {
-  const response = await fetch(`${import.meta.env.BASE_URL}data/${type}.json`)
-  if (!response.ok) throw new Error(`HTTP ${response.status}`)
-  return (await response.json()) as ExerciseData
-}
-
 const storage = pickStorage()
 initLanguage(storage, navigator.language)
 
@@ -47,5 +41,5 @@ mountApp(document.getElementById('app')!, {
   language,
   cellLabelKeys: verbPresentCellLabelKeys,
   storage,
-  loadData: () => loadData(quizType.id),
+  loadData: () => loadDataset(pool),
 })

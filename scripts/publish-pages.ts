@@ -7,14 +7,11 @@
  */
 import { execFile } from 'node:child_process'
 import { realpathSync } from 'node:fs'
-import { cp, mkdtemp, readdir, readFile, rm, stat } from 'node:fs/promises'
+import { cp, mkdtemp, readdir, rm, stat } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
-import type { ExerciseData } from '../src/core/cell'
-import { verbPresentTense } from '../src/quizzes/verb-present-tense'
-import { parseVerbList } from '../scraper/verb-list'
 
 const execFileAsync = promisify(execFile)
 
@@ -24,7 +21,7 @@ const BRANCH = 'gh-pages'
 export class PublishError extends Error {}
 
 export interface PublishOptions {
-  /** The repository root (where czech_verbs.txt and dist/ are). */
+  /** The repository root (where dist/ is). */
   root: string
   log: (message: string) => void
 }
@@ -66,46 +63,21 @@ async function exists(path: string): Promise<boolean> {
   }
 }
 
-/** Checks everything that can be checked before touching git, and returns the prompts in the built data file. */
-async function checkPreconditions(root: string): Promise<string[]> {
+/**
+ * Checks what must hold before touching git. It reads no data and no lists: the data is inside the bundle, and
+ * the build (scripts/check-data.ts) has already refused to build an empty site.
+ */
+async function checkPreconditions(root: string): Promise<void> {
   const branch = await git(root, ['rev-parse', '--abbrev-ref', 'HEAD'])
   if (branch !== 'main') {
     throw new PublishError(`Publish from main, not from ${branch === 'HEAD' ? 'a detached HEAD' : branch}. Run: git switch main`)
   }
 
-  const dist = join(root, 'dist')
-  if (!(await exists(join(dist, 'index.html')))) throw new PublishError('dist/index.html is missing. Run: npm run build')
-
-  const dataPath = `dist/data/${verbPresentTense.id}.json`
-  const remedy = 'Run: npm run scrape, then npm run build'
-  let text: string
-  try {
-    text = await readFile(join(root, dataPath), 'utf8')
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') throw new PublishError(`${dataPath} is missing. ${remedy}`)
-    throw error
-  }
-  let data: ExerciseData
-  try {
-    data = JSON.parse(text) as ExerciseData
-  } catch {
-    throw new PublishError(`${dataPath} is not valid JSON. ${remedy}`)
-  }
-  if (!Array.isArray(data.items) || data.items.length === 0) {
-    throw new PublishError(`${dataPath} has no verbs, so the site would be empty. ${remedy}`)
-  }
-  return data.items.map((item) => item.prompt)
+  if (!(await exists(join(root, 'dist', 'index.html')))) throw new PublishError('dist/index.html is missing. Run: npm run build')
 }
 
 export async function publishPages({ root, log }: PublishOptions): Promise<PublishResult> {
-  const promptsInBuiltData = await checkPreconditions(root)
-
-  const present = new Set(promptsInBuiltData)
-  const listed = [...new Set(parseVerbList(await readFile(join(root, 'czech_verbs.txt'), 'utf8')))]
-  const missing = listed.filter((verb) => !present.has(verb))
-  if (missing.length > 0) {
-    log(`${missing.length} of ${listed.length} listed verbs are missing from the data and will not be on the site: ${missing.join(', ')}`)
-  }
+  await checkPreconditions(root)
 
   const dirty = (await git(root, ['status', '--porcelain'])) !== ''
   const sha = await git(root, ['rev-parse', '--short', 'HEAD'])

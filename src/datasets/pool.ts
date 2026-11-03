@@ -8,5 +8,8 @@ export interface Pool {
   readonly quizType: string
 }
 
-/** The pool's identity as text, e.g. `cs/prirucka/verb-present-tense`. Also the location of its dataset under data/. */
+/** The pool's identity as text, e.g. `cs/prirucka/verb-present-tense`. */
 export const poolKey = (pool: Pool): string => `${pool.language}/${pool.source}/${pool.quizType}`
+
+/** Where the pool's dataset file lies under data/, e.g. `cs/prirucka/verb-present-tense.json`. */
+export const datasetPath = (pool: Pool): string => `${poolKey(pool)}.json`

@@ -3,15 +3,16 @@
  * (see USAGE in cli-options.ts)
  *
  * Reads czech_verbs.txt, fetches only the verbs missing from the existing data file (all of them with
- * --force) and saves public/data/ after every verb, so stopping the run (Ctrl-C, a crash, the site going
- * away) loses nothing. With --fail-cooldown, a verb the site would not serve is retried after a pause
- * instead of being skipped. Exits non-zero if any verb failed; the data of the verbs that worked is already
- * written. Only one scrape may run at a time (.scrape.lock).
+ * --force) and saves data/<language>/<source>/<quiz type>.json after every verb, so stopping the run (Ctrl-C,
+ * a crash, the site going away) loses nothing. With --fail-cooldown, a verb the site would not serve is
+ * retried after a pause instead of being skipped. Exits non-zero if any verb failed; the data of the verbs
+ * that worked is already written. Only one scrape may run at a time (.scrape.lock).
  */
 import { readFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { Item } from '../src/core/cell'
+import { datasetPath } from '../src/datasets/pool'
 import { verbPresentTense as quizType } from '../src/quizzes/verb-present-tense'
 import { parseCliOptions, USAGE } from './cli-options'
 import { readItems, writeData, type DataTarget } from './data-file'
@@ -26,8 +27,8 @@ const exercise = verbPresentTense
 // The single target until the scraper learns --source / --language / --quiz.
 const target: DataTarget = { language: 'cs', source: 'prirucka', quizType: quizType.id }
 const verbsFile = resolve(root, 'czech_verbs.txt')
-const dataFile = resolve(root, 'public', 'data', `${quizType.id}.json`)
-// In the repo root, not under public/: Vite copies everything in public/ into dist/, and these must not be published.
+const dataFile = resolve(root, 'data', datasetPath(target))
+// In the repo root, on the same filesystem as data/ (the atomic save renames the temporary file over the data file).
 const lockFile = resolve(root, '.scrape.lock')
 const tmpDataFile = resolve(root, '.scrape-data.tmp')
 

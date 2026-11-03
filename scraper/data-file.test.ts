@@ -105,7 +105,7 @@ describe('writeData', () => {
   const expected = '{"language":"cs","source":"prirucka","quizType":"verb-present-tense","items":[\n{"prompt":"a","cells":[{"id":"1sg","acceptedForms":["am"]}]}\n]}\n'
 
   it('creates the data directory and writes the serialised data', async () => {
-    const file = join(dir, 'public', 'data', 'x.json')
+    const file = join(dir, 'data', 'cs', 'prirucka', 'x.json')
     await writeData(file, join(dir, '.tmp'), data)
     expect(await readFile(file, 'utf8')).toBe(expected)
   })

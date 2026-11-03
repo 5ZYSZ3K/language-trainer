@@ -5,5 +5,8 @@ export default defineConfig({
   base: './',
   test: {
     include: ['src/**/*.test.ts', 'scraper/**/*.test.ts', 'scripts/**/*.test.ts'],
+    // The dataset loader's import.meta.glob is expanded when its module is transformed; a cached transform would
+    // not notice a dataset file that was added or removed since.
+    fsModuleCache: false,
   },
 })

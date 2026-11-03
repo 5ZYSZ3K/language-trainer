@@ -1,5 +1,7 @@
 // Lives in scripts/ rather than src/: step 8 extends it with the scraper's adapters, which src/ must never import.
 import { describe, expect, it } from 'vitest'
+import { loadDataset } from '../src/datasets/load'
+import { poolKey } from '../src/datasets/pool'
 import { LANGUAGES } from '../src/languages'
 import { QUIZ_TYPES } from '../src/quizzes'
 import { defaultPool } from '../src/selection'
@@ -43,5 +45,26 @@ describe('registries', () => {
   it('open the page on a pool that exists', () => {
     const pool = defaultPool({ languages: LANGUAGES, sources: SOURCES, quizTypes: QUIZ_TYPES })
     expect(pool).toEqual({ language: 'cs', source: 'prirucka', quizType: 'verb-present-tense' })
+  })
+})
+
+describe('data delivery', () => {
+  it('has no source that uses a delivery kind without a loader', () => {
+    for (const source of SOURCES) {
+      for (const { language, quizType, delivery } of source.provides) {
+        expect(delivery.kind, `${source.id} ${language}/${quizType}`).toBe('bundled')
+      }
+    }
+  })
+
+  it('bundles a dataset file for every provided pool, which the loader finds', async () => {
+    for (const source of SOURCES) {
+      for (const { language, quizType } of source.provides) {
+        const pool = { language, source: source.id, quizType }
+        const data = await loadDataset(pool)
+        expect({ language: data.language, source: data.source, quizType: data.quizType }, poolKey(pool)).toEqual(pool)
+        expect(data.items.length, poolKey(pool)).toBeGreaterThan(0)
+      }
+    }
   })
 })

@@ -5,8 +5,6 @@ import { dirname, join } from 'node:path'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { PublishError, publishPages } from './publish-pages'
 
-const DATA = 'dist/data/verb-present-tense.json'
-
 let root: string
 let extraDirs: string[]
 let logged: string[]
@@ -26,17 +24,14 @@ async function write(path: string, content: string, base = root) {
   await writeFile(join(base, path), content)
 }
 
-const dataFor = (prompts: string[]) =>
-  JSON.stringify({ language: 'cs', source: 'prirucka', quizType: 'verb-present-tense', items: prompts.map((prompt) => ({ prompt, cells: [] })) })
-
-/** A repo on `main` with a committed czech_verbs.txt (a, b, c) and a fabricated, git-ignored dist/. */
+/** A repo on `main` with a committed src/page.ts and notes.txt and a fabricated, git-ignored dist/. */
 async function makeRepo() {
   root = await mkdtemp(join(tmpdir(), 'publish-pages-test-'))
   git(['init', '-q', '-b', 'main'])
   git(['config', 'user.name', 'Test Owner'])
   git(['config', 'user.email', 'owner@example.test'])
   git(['config', 'commit.gpgsign', 'false'])
-  await write('czech_verbs.txt', 'a, b, c')
+  await write('notes.txt', 'a\n')
   await write('src/page.ts', 'export {}\n')
   await write('.gitignore', 'dist/\n')
   git(['add', '-A'])
@@ -44,7 +39,6 @@ async function makeRepo() {
   await write('dist/index.html', '<html>v1</html>')
   await write('dist/.nojekyll', '')
   await write('dist/assets/app.js', 'console.log(1)')
-  await write(DATA, dataFor(['a', 'b', 'c']))
 }
 
 /** Everything that identifies the state of the main working copy. */
@@ -100,23 +94,8 @@ describe('publishPages preconditions', () => {
     expect(await refusal()).toMatch(/npm run build/)
   })
 
-  it('refuses when the built data file is missing, and says to scrape then build', async () => {
-    await rm(join(root, DATA))
-    expect(await refusal()).toMatch(/npm run scrape/)
-  })
-
-  it('refuses when the built data file has no verbs', async () => {
-    await write(DATA, dataFor([]))
-    expect(await refusal()).toMatch(/npm run scrape/)
-  })
-
-  it('refuses when the built data file is not valid JSON', async () => {
-    await write(DATA, '{"language":')
-    expect(await refusal()).toMatch(/not valid JSON/)
-  })
-
   it('creates nothing when it refuses', async () => {
-    await write(DATA, dataFor([]))
+    await rm(join(root, 'dist', 'index.html'))
     await publishPages({ root, log }).catch(() => {})
     expect(() => git(['rev-parse', '--verify', '--quiet', 'refs/heads/gh-pages'])).toThrow()
     expect(worktreeCount()).toBe(1)
@@ -127,7 +106,7 @@ describe('publishPages', () => {
   it('the first run creates an orphan gh-pages whose tree is exactly dist/, dotfiles included, nothing from main', async () => {
     const result = await publishPages({ root, log })
     expect(result.status).toBe('published')
-    expect(pagesFiles()).toEqual(['.nojekyll', 'assets/app.js', 'data/verb-present-tense.json', 'index.html'])
+    expect(pagesFiles()).toEqual(['.nojekyll', 'assets/app.js', 'index.html'])
     expect(git(['rev-list', '--parents', '-n', '1', 'gh-pages']).split(' ')).toHaveLength(1) // a root commit: no parent
     expect(git(['rev-list', '--count', 'gh-pages'])).toBe('1')
   })
@@ -162,7 +141,7 @@ describe('publishPages', () => {
     expect(result.status).toBe('published')
     expect(git(['rev-parse', 'gh-pages^'])).toBe(first)
     expect(git(['show', 'gh-pages:index.html'])).toBe('<html>v2</html>')
-    expect(pagesFiles()).toEqual(['.nojekyll', 'data/verb-present-tense.json', 'index.html']) // the removed file is gone
+    expect(pagesFiles()).toEqual(['.nojekyll', 'index.html']) // the removed file is gone
   })
 
   it('names the commit after the short sha of main', async () => {
@@ -171,7 +150,7 @@ describe('publishPages', () => {
   })
 
   it('says so in the message when the working tree has uncommitted changes', async () => {
-    await write('czech_verbs.txt', 'a, b, c, d')
+    await write('notes.txt', 'a\nb\n')
     await publishPages({ root, log })
     expect(git(['log', '-1', '--format=%s', 'gh-pages'])).toBe(
       `Publish build of ${git(['rev-parse', '--short', 'HEAD'])} (uncommitted changes)`,
@@ -184,8 +163,9 @@ describe('publishPages', () => {
   })
 
   it('leaves the main working tree, index, branch and HEAD exactly as they were', async () => {
-    await write('czech_verbs.txt', 'a, b, c, d') // an uncommitted change that must survive
+    await write('notes.txt', 'a\nb\n') // an uncommitted change that must survive
     await write('untracked.txt', 'x')
+    await write('src/page.ts', 'export const staged = true\n')
     git(['add', 'src/page.ts'])
     const before = mainState()
     await publishPages({ root, log })
@@ -202,16 +182,9 @@ describe('publishPages', () => {
     expect(worktreeCount()).toBe(1)
   })
 
-  it('warns about verbs missing from the data, and still publishes', async () => {
-    await write(DATA, dataFor(['a']))
-    const result = await publishPages({ root, log })
-    expect(result.status).toBe('published')
-    expect(logged).toContain('2 of 3 listed verbs are missing from the data and will not be on the site: b, c')
-  })
-
-  it('does not warn when every listed verb is in the data', async () => {
+  it('needs no data or word list in the repository, and says nothing about them', async () => {
     await publishPages({ root, log })
-    expect(logged.filter((line) => /missing/.test(line))).toEqual([])
+    expect(logged).toHaveLength(1) // only the "Committed ... To publish" line
   })
 
   it('surfaces the git message when gh-pages is checked out in another worktree', async () => {
