@@ -12,8 +12,9 @@ import { readFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { Item } from '../src/core/cell'
+import { verbPresentTenseContract } from '../src/exercises/verb-present-tense'
 import { parseCliOptions, USAGE } from './cli-options'
-import { readItems, writeData } from './data-file'
+import { readItems, writeData, type DataTarget } from './data-file'
 import { fetchText, politely } from './http'
 import { acquireLock, LockHeldError, type Lock } from './lock'
 import { scrape } from './scrape'
@@ -22,6 +23,8 @@ import { isServerBusy, verbPresentTense } from './verb-present-tense'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const exercise = verbPresentTense
+// The single target until the scraper learns --source / --language / --quiz.
+const target: DataTarget = { language: 'cs', source: 'prirucka', quizType: exercise.type }
 const verbsFile = resolve(root, 'czech_verbs.txt')
 const dataFile = resolve(root, 'public', 'data', `${exercise.type}.json`)
 // In the repo root, not under public/: Vite copies everything in public/ into dist/, and these must not be published.
@@ -65,7 +68,7 @@ async function main(): Promise<number> {
   try {
     const prompts = parseVerbList(await readFile(verbsFile, 'utf8'))
     const listed = new Set(prompts)
-    const existing = await readItems(dataFile, exercise.type)
+    const existing = await readItems(dataFile, target)
     const alreadyScraped = existing.filter((item) => listed.has(item.prompt)).length
     listedCount = listed.size
     savedCount = alreadyScraped
@@ -84,10 +87,10 @@ async function main(): Promise<number> {
       isUnusable: isServerBusy,
     })
     const save = async (items: readonly Item[]) => {
-      await writeData(dataFile, tmpDataFile, { exerciseType: exercise.type, items: [...items] })
+      await writeData(dataFile, tmpDataFile, { ...target, items: [...items] })
       savedCount = items.length
     }
-    const { items, failures } = await scrape({ exercise, prompts, existing, force, get, save, failCooldownMs, log: console.log })
+    const { items, failures } = await scrape({ exercise, contract: verbPresentTenseContract, prompts, existing, force, get, save, failCooldownMs, log: console.log })
 
     console.log(`\nDone: ${items.length} verbs in ${dataFile}`)
     if (failures.length > 0) {

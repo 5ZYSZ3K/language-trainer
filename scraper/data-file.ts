@@ -2,11 +2,15 @@ import { mkdir, readFile, rename, writeFile } from 'node:fs/promises'
 import { dirname } from 'node:path'
 import type { ExerciseData, Item } from '../src/core/cell'
 
+/** What a data file is for: one quiz type, for one language, from one source. */
+export type DataTarget = Pick<ExerciseData, 'language' | 'source' | 'quizType'>
+
 /**
- * The items in an existing data file, or none if there is no file, it belongs to another exercise or has no
- * item list. A file that is not valid JSON throws: starting over would send the whole verb list to the site.
+ * The items in an existing data file, or none if there is no file, it belongs to another target (language,
+ * source or quiz type differs) or has no item list. A file that is not valid JSON throws: starting over would
+ * send the whole verb list to the site.
  */
-export async function readItems(file: string, exerciseType: string): Promise<Item[]> {
+export async function readItems(file: string, target: DataTarget): Promise<Item[]> {
   let text: string
   try {
     text = await readFile(file, 'utf8')
@@ -15,7 +19,8 @@ export async function readItems(file: string, exerciseType: string): Promise<Ite
     throw error
   }
   const data = JSON.parse(text) as ExerciseData
-  return data.exerciseType === exerciseType && Array.isArray(data.items) ? data.items : []
+  const sameTarget = data.language === target.language && data.source === target.source && data.quizType === target.quizType
+  return sameTarget && Array.isArray(data.items) ? data.items : []
 }
 
 /**
@@ -24,7 +29,9 @@ export async function readItems(file: string, exerciseType: string): Promise<Ite
  */
 export function serialise(data: ExerciseData): string {
   const items = data.items.map((item) => JSON.stringify(item)).join(',\n')
-  return `{"exerciseType":${JSON.stringify(data.exerciseType)},"items":[\n${items}${items ? '\n' : ''}]}\n`
+  const { language, source, quizType } = data
+  const head = `{"language":${JSON.stringify(language)},"source":${JSON.stringify(source)},"quizType":${JSON.stringify(quizType)}`
+  return `${head},"items":[\n${items}${items ? '\n' : ''}]}\n`
 }
 
 /**

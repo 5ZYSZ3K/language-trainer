@@ -10,8 +10,13 @@ export interface Item {
   cells: Cell[]
 }
 
-/** Shape of the scraped data file served next to the page. */
+/**
+ * Shape of a dataset file: the items of one quiz type, for one language, from one source. The three
+ * identifying fields must match the file's location and the registries.
+ */
 export interface ExerciseData {
-  exerciseType: string
+  language: string
+  source: string
+  quizType: string
   items: Item[]
 }

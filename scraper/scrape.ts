@@ -1,8 +1,11 @@
 import type { Item } from '../src/core/cell'
+import type { Contract } from '../src/core/contract'
 import { ParseError, type HttpGet, type ScrapableExercise } from './exercise'
 
 export interface ScrapeOptions {
   exercise: ScrapableExercise
+  /** What every item must satisfy before it is saved; its problems turn into a `ParseError`. */
+  contract: Contract<Item>
   prompts: readonly string[]
   /** Items from the previous run. */
   existing: readonly Item[]
@@ -44,6 +47,7 @@ export interface ScrapeResult {
 export async function scrape(options: ScrapeOptions): Promise<ScrapeResult> {
   const {
     exercise,
+    contract,
     prompts,
     existing,
     force,
@@ -88,10 +92,10 @@ export async function scrape(options: ScrapeOptions): Promise<ScrapeResult> {
       try {
         const html = await exercise.fetchPage(prompt, get)
         fetchFailuresInARow = 0
-        const cells = exercise.parse(html, prompt)
-        const empty = cells.find((cell) => cell.acceptedForms.length === 0)
-        if (empty) throw new ParseError(`no form found for ${empty.id}`)
-        item = { prompt, cells }
+        const candidate: Item = { prompt, cells: exercise.parse(html, prompt) }
+        const problems = contract.validateItem(candidate)
+        if (problems.length > 0) throw new ParseError(problems.join('; '))
+        item = candidate
       } catch (error) {
         const reason = error instanceof Error ? error.message : String(error)
         const fetchFailed = !(error instanceof ParseError)

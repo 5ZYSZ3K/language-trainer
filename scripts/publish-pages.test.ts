@@ -27,7 +27,7 @@ async function write(path: string, content: string, base = root) {
 }
 
 const dataFor = (prompts: string[]) =>
-  JSON.stringify({ exerciseType: 'verb-present-tense', items: prompts.map((prompt) => ({ prompt, cells: [] })) })
+  JSON.stringify({ language: 'cs', source: 'prirucka', quizType: 'verb-present-tense', items: prompts.map((prompt) => ({ prompt, cells: [] })) })
 
 /** A repo on `main` with a committed czech_verbs.txt (a, b, c) and a fabricated, git-ignored dist/. */
 async function makeRepo() {
@@ -111,7 +111,7 @@ describe('publishPages preconditions', () => {
   })
 
   it('refuses when the built data file is not valid JSON', async () => {
-    await write(DATA, '{"exerciseType":')
+    await write(DATA, '{"language":')
     expect(await refusal()).toMatch(/not valid JSON/)
   })
 

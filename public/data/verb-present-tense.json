@@ -1,4 +1,4 @@
-{"exerciseType":"verb-present-tense","items":[
+{"language":"cs","source":"prirucka","quizType":"verb-present-tense","items":[
 {"prompt":"bavit","cells":[{"id":"1sg","acceptedForms":["bavím"]},{"id":"1pl","acceptedForms":["bavíme"]},{"id":"2sg","acceptedForms":["bavíš"]},{"id":"2pl","acceptedForms":["bavíte"]},{"id":"3sg","acceptedForms":["baví"]},{"id":"3pl","acceptedForms":["baví"]}]},
 {"prompt":"bát se","cells":[{"id":"1sg","acceptedForms":["bojím se"]},{"id":"1pl","acceptedForms":["bojíme se"]},{"id":"2sg","acceptedForms":["bojíš se"]},{"id":"2pl","acceptedForms":["bojíte se"]},{"id":"3sg","acceptedForms":["bojí se"]},{"id":"3pl","acceptedForms":["bojí se"]}]},
 {"prompt":"běhat","cells":[{"id":"1sg","acceptedForms":["běhám"]},{"id":"1pl","acceptedForms":["běháme"]},{"id":"2sg","acceptedForms":["běháš"]},{"id":"2pl","acceptedForms":["běháte"]},{"id":"3sg","acceptedForms":["běhá"]},{"id":"3pl","acceptedForms":["běhají"]}]},
