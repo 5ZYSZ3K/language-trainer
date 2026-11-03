@@ -1,38 +1,29 @@
 /**
- * Build-time scraper. Usage: npm run scrape [-- --force] [--delay-ms <ms>] [--fail-cooldown <duration>]
- * (see USAGE in cli-options.ts)
+ * Build-time scraper. Usage: npm run scrape [-- --source <id>] [--language <id>] [--quiz <id>] [--force]
+ * [--delay-ms <ms>] [--fail-cooldown <duration>] (see USAGE in cli-options.ts)
  *
- * Reads czech_verbs.txt, fetches only the verbs missing from the existing data file (all of them with
- * --force) and saves data/<language>/<source>/<quiz type>.json after every verb, so stopping the run (Ctrl-C,
- * a crash, the site going away) loses nothing. With --fail-cooldown, a verb the site would not serve is
- * retried after a pause instead of being skipped. Exits non-zero if any verb failed; the data of the verbs
- * that worked is already written. Only one scrape may run at a time (.scrape.lock).
+ * Runs the registered adapters the filters select (with no filter, the only one; several are listed instead).
+ * Each adapter writes data/<language>/<source>/<quiz type>.json after every item, so stopping the run (Ctrl-C,
+ * a crash, the site going away) loses nothing. Exits non-zero if any item failed; the data of the items that
+ * worked is already written. Only one scrape may run at a time (.scrape.lock).
  */
-import { readFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import type { Item } from '../src/core/cell'
 import { datasetPath } from '../src/datasets/pool'
-import { verbPresentTense as quizType } from '../src/quizzes/verb-present-tense'
+import { QUIZ_TYPES } from '../src/quizzes'
 import { parseCliOptions, USAGE } from './cli-options'
-import { readItems, writeData, type DataTarget } from './data-file'
-import { fetchText, politely } from './http'
-import { acquireLock, LockHeldError, type Lock } from './lock'
-import { scrape } from './scrape'
-import { parseVerbList } from './verb-list'
-import { isServerBusy, verbPresentTense } from './verb-present-tense'
+import { createRunContext, type RunProgress, type ScraperSource } from './harness/context'
+import { politeGetter } from './harness/http'
+import { acquireLock, LockHeldError, type Lock } from './harness/lock'
+import { ADAPTERS, SCRAPER_SOURCES } from './harness/registry'
+import { selectTargets, targetName } from './harness/targets'
+import type { HttpGet } from './harness/types'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const exercise = verbPresentTense
-// The single target until the scraper learns --source / --language / --quiz.
-const target: DataTarget = { language: 'cs', source: 'prirucka', quizType: quizType.id }
-const verbsFile = resolve(root, 'czech_verbs.txt')
-const dataFile = resolve(root, 'data', datasetPath(target))
+const listsDir = resolve(root, 'lists')
 // In the repo root, on the same filesystem as data/ (the atomic save renames the temporary file over the data file).
 const lockFile = resolve(root, '.scrape.lock')
 const tmpDataFile = resolve(root, '.scrape-data.tmp')
-
-const USER_AGENT = 'uceni-se-cestiny-scraper (+https://github.com/5ZYSZ3K/uceni-se-cestiny)'
 
 async function main(): Promise<number> {
   const parsed = parseCliOptions(process.argv.slice(2), process.env)
@@ -41,6 +32,12 @@ async function main(): Promise<number> {
     return 2
   }
   const { force, delayMs, failCooldownMs } = parsed.options
+
+  const selected = selectTargets(ADAPTERS, parsed.options)
+  if ('error' in selected) {
+    console.error(selected.error)
+    return 2
+  }
 
   let lock: Lock
   try {
@@ -53,12 +50,14 @@ async function main(): Promise<number> {
   }
   process.on('exit', () => lock.release())
 
-  // What the signal handler reports; filled in once the list and the data file have been read.
-  let listedCount: number | undefined
-  let savedCount = 0
+  // What the signal handler reports: the target being scraped, once its data file has been read.
+  let current: { dataFile: string; progress: RunProgress } | undefined
   const onSignal = (code: number) => {
+    const total = current?.progress.total
     console.error(
-      listedCount === undefined ? '\nStopped.' : `\nStopped: ${savedCount} of ${listedCount} verbs saved in ${dataFile}`,
+      current === undefined || total === undefined
+        ? '\nStopped.'
+        : `\nStopped: ${current.progress.saved} of ${total} items saved in ${current.dataFile}`,
     )
     lock.release()
     process.exit(code)
@@ -66,40 +65,50 @@ async function main(): Promise<number> {
   process.on('SIGINT', () => onSignal(130))
   process.on('SIGTERM', () => onSignal(143))
 
+  // One polite getter per source for the whole run, so its pause also holds between that source's targets.
+  const getters = new Map<string, HttpGet>()
+  const getterFor = (source: ScraperSource): HttpGet => {
+    const get = getters.get(source.id) ?? politeGetter(source.policy, { delayMs })
+    getters.set(source.id, get)
+    return get
+  }
+
   try {
-    const prompts = parseVerbList(await readFile(verbsFile, 'utf8'))
-    const listed = new Set(prompts)
-    const existing = await readItems(dataFile, target)
-    const alreadyScraped = existing.filter((item) => listed.has(item.prompt)).length
-    listedCount = listed.size
-    savedCount = alreadyScraped
-    console.log(
-      `${listed.size} verbs listed, ${alreadyScraped} already scraped, ${force ? listed.size : listed.size - alreadyScraped} to fetch${force ? ' (--force)' : ''}.`,
-    )
-    console.log(`Pausing ${delayMs} ms after each request.`)
-    if (failCooldownMs > 0) console.log(`After a verb fails to fetch: cooling down for ${failCooldownMs / 1000} s, then trying it again.`)
+    let exitCode = 0
+    for (const [i, adapter] of selected.targets.entries()) {
+      console.log(`${i > 0 ? '\n' : ''}== ${targetName(adapter)} ==`)
+      const quizType = QUIZ_TYPES.find((q) => q.id === adapter.quizType)
+      if (!quizType) throw new Error(`Unknown quiz type ${adapter.quizType}`)
+      const target = { language: adapter.language, source: adapter.source, quizType: adapter.quizType }
+      const dataFile = resolve(root, 'data', datasetPath(target))
+      const source = SCRAPER_SOURCES.find((s) => s.id === adapter.source)
+      if (!source) throw new Error(`No request policy for source ${adapter.source}`)
+      const get = getterFor(source)
+      console.log(`Pausing ${delayMs ?? source.policy.delayMs} ms after each request.`)
+      if (failCooldownMs > 0) console.log(`After an item fails to fetch: cooling down for ${failCooldownMs / 1000} s, then trying it again.`)
 
-    // One request at a time, `delayMs` after the previous one finished. The site is slow and sometimes answers
-    // "busy"; back off and retry.
-    const get = politely(fetchText({ timeoutMs: 30_000, userAgent: USER_AGENT }), {
-      delayMs,
-      retries: 4,
-      retryDelayMs: 15_000,
-      isUnusable: isServerBusy,
-    })
-    const save = async (items: readonly Item[]) => {
-      await writeData(dataFile, tmpDataFile, { ...target, items: [...items] })
-      savedCount = items.length
-    }
-    const { items, failures } = await scrape({ exercise, contract: quizType.contract, prompts, existing, force, get, save, failCooldownMs, log: console.log })
+      const { context, progress } = await createRunContext({
+        target,
+        contract: quizType.contract,
+        dataFile,
+        tmpFile: tmpDataFile,
+        listsDir,
+        force,
+        failCooldownMs,
+        get,
+        log: console.log,
+      })
+      current = { dataFile, progress }
+      const { items, failures } = await adapter.run(context)
 
-    console.log(`\nDone: ${items.length} verbs in ${dataFile}`)
-    if (failures.length > 0) {
-      console.error(`\n${failures.length} verb(s) failed and are excluded from the site:`)
-      for (const { prompt, reason } of failures) console.error(`  - ${prompt}: ${reason}`)
-      return 1
+      console.log(`\nDone: ${items.length} items in ${dataFile}`)
+      if (failures.length > 0) {
+        console.error(`\n${failures.length} item(s) failed and are excluded from the site:`)
+        for (const { entry, reason } of failures) console.error(`  - ${entry}: ${reason}`)
+        exitCode = 1
+      }
     }
-    return 0
+    return exitCode
   } catch (error) {
     console.error(error)
     return 1

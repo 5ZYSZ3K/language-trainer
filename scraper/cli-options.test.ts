@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { DEFAULT_DELAY_MS, parseCliOptions } from './cli-options'
+import { parseCliOptions } from './cli-options'
 
 describe('parseCliOptions', () => {
-  it('uses the default delay and no force when given nothing', () => {
-    expect(parseCliOptions([], {})).toEqual({ options: { force: false, delayMs: DEFAULT_DELAY_MS, failCooldownMs: 0 } })
+  it("leaves the delay to the source's request policy, and no force, when given nothing", () => {
+    expect(parseCliOptions([], {})).toEqual({ options: { force: false, delayMs: undefined, failCooldownMs: 0 } })
   })
 
   it('reads --force', () => {
-    expect(parseCliOptions(['--force'], {})).toEqual({ options: { force: true, delayMs: DEFAULT_DELAY_MS, failCooldownMs: 0 } })
+    expect(parseCliOptions(['--force'], {})).toEqual({ options: { force: true, delayMs: undefined, failCooldownMs: 0 } })
   })
 
   it('reads the delay from --delay-ms, with a space or an equals sign', () => {
@@ -27,7 +27,7 @@ describe('parseCliOptions', () => {
   })
 
   it('treats an empty SCRAPE_DELAY_MS as not set', () => {
-    expect(parseCliOptions([], { SCRAPE_DELAY_MS: '' })).toEqual({ options: { force: false, delayMs: DEFAULT_DELAY_MS, failCooldownMs: 0 } })
+    expect(parseCliOptions([], { SCRAPE_DELAY_MS: '' })).toEqual({ options: { force: false, delayMs: undefined, failCooldownMs: 0 } })
   })
 
   it.each(['abc', '-5', '1.5', '', '1e3'])('rejects %j as a delay', (value) => {
@@ -56,7 +56,7 @@ describe('parseCliOptions', () => {
   })
 
   describe('--fail-cooldown', () => {
-    const cooldown = (ms: number) => ({ options: { force: false, delayMs: DEFAULT_DELAY_MS, failCooldownMs: ms } })
+    const cooldown = (ms: number) => ({ options: { force: false, delayMs: undefined, failCooldownMs: ms } })
 
     it('is off when not given', () => {
       expect(parseCliOptions([], {})).toEqual(cooldown(0))
@@ -87,6 +87,25 @@ describe('parseCliOptions', () => {
 
     it('rejects --fail-cooldown without a value', () => {
       expect(parseCliOptions(['--fail-cooldown'], {})).toEqual({ error: expect.stringMatching(/--fail-cooldown needs a value/) })
+    })
+  })
+
+  describe('target filters', () => {
+    it('reads --source, --language and --quiz, with a space or an equals sign', () => {
+      expect(parseCliOptions(['--source', 'prirucka', '--language=cs', '--quiz', 'verb-present-tense'], {})).toEqual({
+        options: { force: false, delayMs: undefined, failCooldownMs: 0, source: 'prirucka', language: 'cs', quizType: 'verb-present-tense' },
+      })
+    })
+
+    it('leaves out the filters that are not given', () => {
+      expect(parseCliOptions(['--source', 'prirucka'], {})).toEqual({
+        options: { force: false, delayMs: undefined, failCooldownMs: 0, source: 'prirucka' },
+      })
+    })
+
+    it.each(['--source', '--language', '--quiz'])('rejects %s without a value', (flag) => {
+      expect(parseCliOptions([flag], {})).toEqual({ error: expect.stringContaining(`${flag} needs a value`) })
+      expect(parseCliOptions([flag, '--force'], {})).toEqual({ error: expect.stringContaining(`${flag} needs a value`) })
     })
   })
 })

@@ -2,7 +2,7 @@ import { mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import type { ExerciseData, Item } from '../src/core/cell'
+import type { ExerciseData, Item } from '../../src/core/cell'
 import { readItems, serialise, writeData, type DataTarget } from './data-file'
 
 let dir: string

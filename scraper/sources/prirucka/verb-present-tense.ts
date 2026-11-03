@@ -1,7 +1,7 @@
 import * as cheerio from 'cheerio'
-import type { Cell } from '../src/core/cell'
-import { verbPresentCellIds } from '../src/quizzes/verb-present-tense'
-import { ParseError, type HttpGet, type ScrapableExercise } from './exercise'
+import type { Cell } from '../../../src/core/cell'
+import { verbPresentCellIds } from '../../../src/quizzes/verb-present-tense'
+import { ParseError, type HttpGet } from '../../harness/types'
 
 const SITE = 'https://prirucka.ujc.cas.cz/'
 
@@ -86,7 +86,15 @@ async function fetchEntryPage(word: string, get: HttpGet): Promise<string> {
   return entry ? get(entry) : html
 }
 
-export const verbPresentTense: ScrapableExercise = {
+/** How to get the cells of one verb from prirucka. */
+export interface VerbPageScraper {
+  /** Fetch the page that describes `prompt`, following any disambiguation. */
+  fetchPage(prompt: string, get: HttpGet): Promise<string>
+  /** Turn a fetched page into cells, in the quiz type's cell order. Throws ParseError if it is not the right page. */
+  parse(html: string, prompt: string): Cell[]
+}
+
+export const verbPresentTense: VerbPageScraper = {
   async fetchPage(prompt, get) {
     const page = await fetchEntryPage(prompt, get)
     const { base, particle } = splitReflexive(prompt)

@@ -1,4 +1,4 @@
-import type { HttpGet } from './exercise'
+import type { HttpGet } from './types'
 
 export interface PoliteOptions {
   /**
@@ -58,4 +58,32 @@ export function fetchText(options: { timeoutMs: number; userAgent: string }): Ht
     if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`)
     return response.text()
   }
+}
+
+/** How a source wants to be asked: each source declares one, and every request to it goes through it. */
+export interface RequestPolicy {
+  /** Default pause between one request ending and the next starting; --delay-ms / SCRAPE_DELAY_MS override it. */
+  delayMs: number
+  /** How many times a failed request is retried. */
+  retries: number
+  /** Wait before retry n is at least n * retryDelayMs, and never shorter than the pause. */
+  retryDelayMs: number
+  timeoutMs: number
+  userAgent: string
+  /** Recognises a page served as a success that is really a failure (a "server busy" page, say). */
+  isUnusable?: (body: string) => boolean
+}
+
+/**
+ * The polite getter for one source: real network access with the policy's timeout and User-Agent, paced and
+ * retried by the policy. `delayMs` overrides the policy's pause. Make one per source per run, so the pause also
+ * holds between the targets of that source.
+ */
+export function politeGetter(
+  policy: RequestPolicy,
+  options: { delayMs?: number; raw?: HttpGet } & Pick<PoliteOptions, 'now' | 'sleep'> = {},
+): HttpGet {
+  const { delayMs = policy.delayMs, raw = fetchText(policy), now, sleep } = options
+  const { retries, retryDelayMs, isUnusable } = policy
+  return politely(raw, { delayMs, retries, retryDelayMs, isUnusable, now, sleep })
 }

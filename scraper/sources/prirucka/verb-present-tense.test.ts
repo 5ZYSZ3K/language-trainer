@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { ParseError, type HttpGet } from './exercise'
+import { ParseError, type HttpGet } from '../../harness/types'
 import { isServerBusy, verbPresentTense } from './verb-present-tense'
 
 const fixture = (name: string) =>

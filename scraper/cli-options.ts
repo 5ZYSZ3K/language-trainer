@@ -1,17 +1,22 @@
-/** Pause between two requests when nothing says otherwise. */
-export const DEFAULT_DELAY_MS = 1500
+import type { TargetFilter } from './harness/targets'
 
-export const USAGE = `Usage: npm run scrape [-- --force] [--delay-ms <ms>] [--fail-cooldown <duration>]
-  --force                     re-fetch every verb, not only the missing ones
-  --delay-ms <ms>             pause between one request finishing and the next starting (default ${DEFAULT_DELAY_MS});
-                              can also be set with the SCRAPE_DELAY_MS environment variable, the flag wins
-  --fail-cooldown <duration>  when a verb cannot be fetched (after the usual retries), stop for this long and then
-                              try that verb again instead of moving on; a number and a unit: 500ms, 90s, 10m, 1h.
+export const USAGE = `Usage: npm run scrape [-- --source <id>] [--language <id>] [--quiz <id>] [--force] [--delay-ms <ms>] [--fail-cooldown <duration>]
+  --source <id>               only the targets of this source (e.g. prirucka)
+  --language <id>             only the targets for this learned language (e.g. cs)
+  --quiz <id>                 only the targets for this quiz type (e.g. verb-present-tense)
+                              With no filter the only target runs; if there are several, they are listed instead.
+  --force                     re-fetch every item, not only the missing ones
+  --delay-ms <ms>             pause between one request finishing and the next starting (default: the source's own,
+                              1500 for prirucka); can also be set with the SCRAPE_DELAY_MS environment variable, the
+                              flag wins
+  --fail-cooldown <duration>  when an item cannot be fetched (after the usual retries), stop for this long and then
+                              try that item again instead of moving on; a number and a unit: 500ms, 90s, 10m, 1h.
                               Off by default. The run still gives up after several failures in a row.`
 
-export interface CliOptions {
+export interface CliOptions extends TargetFilter {
   force: boolean
-  delayMs: number
+  /** Undefined: each source's request policy decides. */
+  delayMs: number | undefined
   /** 0 means no cooldown. */
   failCooldownMs: number
 }
@@ -32,16 +37,32 @@ function parseDuration(source: string, value: string): number | string {
   return Number(match[1]) * UNIT_MS[match[2] as keyof typeof UNIT_MS]
 }
 
+/** Each filter flag, the option it sets and an example value for the error message. */
+const FILTER_FLAGS = {
+  '--source': ['source', 'prirucka'],
+  '--language': ['language', 'cs'],
+  '--quiz': ['quizType', 'verb-present-tense'],
+} as const
+
 export function parseCliOptions(args: readonly string[], env: Readonly<Record<string, string | undefined>>): ParsedArgs {
   let force = false
   let delay: number | string | undefined
   let cooldown: number | string | undefined
+  const filter: TargetFilter = {}
   const unknown: string[] = []
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i]!
+    const filterFlag = Object.keys(FILTER_FLAGS).find((flag) => arg === flag || arg.startsWith(`${flag}=`)) as
+      | keyof typeof FILTER_FLAGS
+      | undefined
     if (arg === '--force') {
       force = true
+    } else if (filterFlag) {
+      const value = arg === filterFlag ? args[++i] : arg.slice(filterFlag.length + 1)
+      const [key, example] = FILTER_FLAGS[filterFlag]
+      if (value === undefined || value === '' || value.startsWith('--')) return { error: `${filterFlag} needs a value, e.g. ${filterFlag} ${example}` }
+      filter[key] = value
     } else if (arg === '--delay-ms' || arg.startsWith('--delay-ms=')) {
       const value = arg === '--delay-ms' ? args[++i] : arg.slice('--delay-ms='.length)
       if (value === undefined) return { error: '--delay-ms needs a value, e.g. --delay-ms 3000' }
@@ -59,5 +80,5 @@ export function parseCliOptions(args: readonly string[], env: Readonly<Record<st
   if (delay === undefined && env.SCRAPE_DELAY_MS) delay = parseMilliseconds('SCRAPE_DELAY_MS', env.SCRAPE_DELAY_MS)
   if (typeof delay === 'string') return { error: delay }
   if (typeof cooldown === 'string') return { error: cooldown }
-  return { options: { force, delayMs: delay ?? DEFAULT_DELAY_MS, failCooldownMs: cooldown ?? 0 } }
+  return { options: { force, delayMs: delay, failCooldownMs: cooldown ?? 0, ...filter } }
 }

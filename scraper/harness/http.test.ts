@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import type { HttpGet } from './exercise'
-import { politely } from './http'
+import type { HttpGet } from './types'
+import { politeGetter, politely, type RequestPolicy } from './http'
 
 /** Virtual time: sleeping advances the clock, requests take no time. */
 function fakeClock() {
@@ -139,5 +139,42 @@ describe('politely', () => {
     const get = politely(raw, { delayMs: 1000, retries: 2, retryDelayMs: 10, ...clock })
     await expect(get('a')).rejects.toThrow('HTTP 503 (#3)')
     expect(calls).toBe(3)
+  })
+})
+
+describe('politeGetter', () => {
+  const policy: RequestPolicy = {
+    delayMs: 1500,
+    retries: 1,
+    retryDelayMs: 15_000,
+    timeoutMs: 30_000,
+    userAgent: 'test',
+    isUnusable: (body) => body === 'busy',
+  }
+
+  function site(bodies: string[]) {
+    const clock = fakeClock()
+    const starts: number[] = []
+    const raw: HttpGet = async () => {
+      starts.push(clock.now())
+      return bodies.shift() ?? 'ok'
+    }
+    return { clock, starts, raw }
+  }
+
+  it("paces requests by the policy's pause and retries what the policy calls unusable", async () => {
+    const { clock, starts, raw } = site(['ok', 'busy', 'ok'])
+    const get = politeGetter(policy, { raw, ...clock })
+    await get('a')
+    await expect(get('b')).resolves.toBe('ok')
+    expect(starts).toEqual([0, 1500, 16_500])
+  })
+
+  it('uses the pause given for the run instead of the policy one', async () => {
+    const { clock, starts, raw } = site([])
+    const get = politeGetter(policy, { delayMs: 4000, raw, ...clock })
+    await get('a')
+    await get('b')
+    expect(starts).toEqual([0, 4000])
   })
 })

@@ -11,7 +11,7 @@ Live site (GitHub Pages project page): <https://5zysz3k.github.io/uceni-se-cesti
 There is no server, no runtime scraping and no CI: scraping, building and publishing are three steps the
 owner runs by hand.
 
-1. **Scrape.** `npm run scrape` reads [`czech_verbs.txt`](czech_verbs.txt), fetches each verb from
+1. **Scrape.** `npm run scrape` reads [`lists/cs/verb-present-tense.txt`](lists/cs/verb-present-tense.txt), fetches each verb from
    <https://prirucka.ujc.cas.cz/> (Internetová jazyková příručka), parses the present-tense table and saves
    `data/cs/prirucka/verb-present-tense.json` after every verb. That file is **committed to `main`** as
    scraped source data; it is the only copy, so commit it after a scrape.
@@ -35,7 +35,7 @@ npm run build       # typecheck + data check + production build into dist/
 To put a new version on the site:
 
 ```sh
-npm run scrape                        # only if czech_verbs.txt changed or verbs are missing
+npm run scrape                        # only if the verb list changed or verbs are missing
 git add data && git commit            # the scraped data lives in the repo
 npm run build
 npm run publish-pages                 # commits dist/ to the local gh-pages branch
@@ -44,7 +44,7 @@ git push origin gh-pages
 
 ### Adding verbs
 
-Add them to `czech_verbs.txt` (comma-separated infinitives; reflexives are written like `bát se`, `dát si`).
+Add them to `lists/cs/verb-present-tense.txt` (comma-separated infinitives; reflexives are written like `bát se`, `dát si`).
 That file is the single source of truth: a verb that is removed from it is also removed from the data. The
 next *scrape* only fetches the new verbs.
 
@@ -54,11 +54,11 @@ next *scrape* only fetches the new verbs.
   `npm run scrape -- --force` re-fetches everything (see below).
 - **Saved as it goes.** After every verb that was fetched and parsed, the whole data file is rewritten (to
   `.scrape-data.tmp`, then renamed over the data file, so it is never half-written), in the order of
-  `czech_verbs.txt`. Failures are never written. Verbs that are no longer in `czech_verbs.txt` are pruned
+  `lists/cs/verb-present-tense.txt`. Failures are never written. Verbs that are no longer in `lists/cs/verb-present-tense.txt` are pruned
   from the file when the scrape starts. The file has one verb per line (still plain JSON, same schema), so
   committing it gives readable diffs. Each line of progress is numbered: `ok     bavit (3/120)`, where the
   total is the number of verbs this run will try.
-- **Interrupting is safe.** Ctrl-C (or SIGTERM) prints `Stopped: N of M verbs saved in <file>`, removes the
+- **Interrupting is safe.** Ctrl-C (or SIGTERM) prints `Stopped: N of M items saved in <file>`, removes the
   lock and exits 130 (143 for SIGTERM). Run the scrape again and it carries on with the verbs that are
   missing. Nothing is lost, so stopping early when the site misbehaves is always fine.
 - **One scrape at a time.** `.scrape.lock` (in the repo root, git-ignored) holds the PID of the running
@@ -110,7 +110,7 @@ next *scrape* only fetches the new verbs.
 
 > **Not yet verified at full scale.** The parser and the scrape logic are tested against saved real pages, and
 > one verb (`bavit`) was fetched live through the CLI and came out correct, but a complete scrape of
-> `czech_verbs.txt` has not been run against the live site yet: the site stopped answering the development
+> `lists/cs/verb-present-tense.txt` has not been run against the live site yet: the site stopped answering the development
 > machine after the first few hundred requests. The first full local run is the first real full-scale test;
 > check its log, and its failure summary, before relying on the site.
 
@@ -118,7 +118,7 @@ next *scrape* only fetches the new verbs.
 
 `nechtít se` cannot be scraped: the site only has *chtít*, and the impersonal *nechce se mi* is a different
 construction, so it is rejected and will appear in the failure summary on every run until it is removed from
-`czech_verbs.txt` (or an overrides mechanism is added). Any other verb that fails is listed by the run itself.
+`lists/cs/verb-present-tense.txt` (or an overrides mechanism is added). Any other verb that fails is listed by the run itself.
 
 ## Deployment
 
@@ -155,10 +155,12 @@ src/
   selection.ts which pool the page opens on (pure rules for a future selector)
   i18n/        typed en / cs dictionaries and the t() helper
   app.ts       the DOM layer (deliberately thin and not unit tested)
-scraper/       build-time only, never shipped: HTTP policy, scrape orchestration, the verb parser
-  data-file.ts reading the data file, and writing it atomically (one item per line)
-  lock.ts      the PID lock file that keeps two scrapes from running at once
-  fixtures/    trimmed real pages from prirucka.ujc.cas.cz that the parser tests run against
+scraper/       build-time only, never shipped: cli.ts runs the adapters chosen by --source / --language / --quiz
+  harness/     lock, atomic data file (one item per line), polite requests, run context, adapter registry
+  list-driven.ts the loop over a word list: fetch, parse, validate, save after every item
+  sources/prirucka/ request policy, adapter and verb parser; fixtures/ holds trimmed real pages from
+               prirucka.ujc.cas.cz that the parser tests run against
+lists/         scraper input: lists/<language>/<quiz type>.txt
 scripts/       check-data.ts: validates data/ before every build; publish-pages.ts: commits dist/ to the local
                gh-pages branch (tested against a temporary repo)
 data/          the committed datasets: data/<language>/<source>/<quiz type>.json
