@@ -25,13 +25,6 @@ describe('verbPresentTense', () => {
   })
 })
 
-describe('verbPresentCellLabelKeys', () => {
-  it('maps every cell id, and nothing else, to its text key cell.<id>', () => {
-    expect(Object.keys(verbPresentCellLabelKeys).sort()).toEqual([...verbPresentCellIds].sort())
-    for (const id of verbPresentCellIds) expect(verbPresentCellLabelKeys[id]).toBe(`cell.${id}`)
-  })
-})
-
 describe('the texts of verbPresentTense', () => {
   const texts = verbPresentTense.texts
 
@@ -64,10 +57,25 @@ describe('verbPresentTenseContract', () => {
     expect(problems(valid())).toEqual([])
   })
 
-  it('accepts several forms per cell and ignores extra properties such as sourceUrl', () => {
-    const item = { ...valid(), sourceUrl: 'https://example.test/' }
+  it('accepts several forms per cell', () => {
+    const item = valid()
     item.cells[0]!.acceptedForms = ['mohu', 'můžu']
     expect(problems(item)).toEqual([])
+  })
+
+  it('accepts an optional sourceUrl that is text, and an item without one', () => {
+    expect(problems({ ...valid(), sourceUrl: 'https://example.test/' })).toEqual([])
+    expect('sourceUrl' in valid()).toBe(false)
+    expect(problems(valid())).toEqual([])
+  })
+
+  it('reports a sourceUrl that is not text', () => {
+    expect(problems({ ...valid(), sourceUrl: 42 })).toEqual(['sourceUrl must be text'])
+    expect(problems({ ...valid(), sourceUrl: null })).toEqual(['sourceUrl must be text'])
+  })
+
+  it('ignores other extra properties', () => {
+    expect(problems({ ...valid(), note: 'x' })).toEqual([])
   })
 
   it('reports a cell without any form as "no form found for <id>"', () => {

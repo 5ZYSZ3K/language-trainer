@@ -1,11 +1,11 @@
 // Lives in scripts/ rather than src/: it checks the scraper's adapters too, which src/ must never import.
 import { describe, expect, it } from 'vitest'
 import { loadDataset } from '../src/datasets/load'
-import { poolKey } from '../src/datasets/pool'
+import { poolKey, type Pool } from '../src/datasets/pool'
 import { LANGUAGES } from '../src/languages'
 import { QUIZ_TYPES } from '../src/quizzes'
 import { defaultPool } from '../src/selection'
-import { SOURCES } from '../src/sources'
+import { SOURCES, type Source } from '../src/sources'
 import { ADAPTERS, SCRAPER_SOURCES } from '../scraper/harness/registry'
 
 const duplicates = (values: string[]) => values.filter((value, i) => values.indexOf(value) !== i)
@@ -50,20 +50,23 @@ describe('registries', () => {
 })
 
 describe('scraper registry', () => {
-  const key = (source: string, language: string, quizType: string) => `${source}/${language}/${quizType}`
+  /** The pool of one `provides` entry of a source. */
+  const poolOf = (source: Source, entry: Source['provides'][number]): Pool => ({
+    language: entry.language,
+    source: source.id,
+    quizType: entry.quizType,
+  })
 
   it('has every non-manual provides entry produced by an adapter, and every adapter by a provides entry', () => {
-    const provided = SOURCES.flatMap((source) =>
-      source.provides.filter((entry) => !entry.manual).map((entry) => key(source.id, entry.language, entry.quizType)),
-    )
-    const adapted = ADAPTERS.map((adapter) => key(adapter.source, adapter.language, adapter.quizType))
+    const provided = SOURCES.flatMap((source) => source.provides.filter((entry) => !entry.manual).map((entry) => poolKey(poolOf(source, entry))))
+    const adapted = ADAPTERS.map(poolKey)
     expect(provided.filter((entry) => !adapted.includes(entry)), 'provided without an adapter').toEqual([])
-    const declared = SOURCES.flatMap((source) => source.provides.map((entry) => key(source.id, entry.language, entry.quizType)))
+    const declared = SOURCES.flatMap((source) => source.provides.map((entry) => poolKey(poolOf(source, entry))))
     expect(adapted.filter((entry) => !declared.includes(entry)), 'adapters without a provides entry').toEqual([])
   })
 
   it('has one adapter per dataset, and each one in its own source', () => {
-    expect(duplicates(ADAPTERS.map((a) => key(a.source, a.language, a.quizType)))).toEqual([])
+    expect(duplicates(ADAPTERS.map(poolKey))).toEqual([])
     for (const source of SCRAPER_SOURCES) {
       for (const adapter of source.adapters) expect(adapter.source, source.id).toBe(source.id)
     }

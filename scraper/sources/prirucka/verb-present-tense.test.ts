@@ -1,16 +1,11 @@
-import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { ParseError, type HttpGet } from '../../harness/types'
-import { isServerBusy, verbPresentTense } from './verb-present-tense'
-
-const fixture = (name: string) =>
-  readFileSync(new URL(`./fixtures/${name}.html`, import.meta.url), 'utf8')
+import { fixture, SITE } from './test-support'
+import { isServerBusy, verbPageScraper } from './verb-present-tense'
 
 /** Cells as [id, acceptedForms] pairs, for compact assertions. */
 const forms = (html: string, prompt: string) =>
-  verbPresentTense.parse(html, prompt).map((c) => [c.id, c.acceptedForms])
-
-const SITE = 'https://prirucka.ujc.cas.cz/'
+  verbPageScraper.parse(html, prompt).map((c) => [c.id, c.acceptedForms])
 
 /** A fake site: known URLs return their page, anything else returns an empty body. */
 function fakeSite(pages: Record<string, string>, failOn?: RegExp) {
@@ -23,16 +18,16 @@ function fakeSite(pages: Record<string, string>, failOn?: RegExp) {
   return { get, urls }
 }
 
-describe('VerbPresentTense.fetchPage', () => {
+describe('verbPageScraper.fetchPage', () => {
   it('searches for the verb and returns the page, with no further requests', async () => {
     const { get, urls } = fakeSite({ [`${SITE}?slovo=bavit`]: fixture('bavit') })
-    await expect(verbPresentTense.fetchPage('bavit', get)).resolves.toBe(fixture('bavit'))
+    await expect(verbPageScraper.fetchPage('bavit', get)).resolves.toBe(fixture('bavit'))
     expect(urls).toEqual([`${SITE}?slovo=bavit`])
   })
 
   it('url-encodes the search, spaces and diacritics included', async () => {
     const { get, urls } = fakeSite({})
-    await verbPresentTense.fetchPage('bát se', get)
+    await verbPageScraper.fetchPage('bát se', get)
     expect(urls[0]).toBe(`${SITE}?slovo=b%C3%A1t%20se`)
   })
 
@@ -42,7 +37,7 @@ describe('VerbPresentTense.fetchPage', () => {
       [`${SITE}?slovo=st%C3%A1t`]: fixture('stat-disambiguation'),
       [`${SITE}?id=st%C3%A1t_1`]: verbPage,
     })
-    await expect(verbPresentTense.fetchPage('stát', get)).resolves.toBe(verbPage)
+    await expect(verbPageScraper.fetchPage('stát', get)).resolves.toBe(verbPage)
     expect(urls).toEqual([`${SITE}?slovo=st%C3%A1t`, `${SITE}?id=st%C3%A1t_1`])
   })
 
@@ -54,7 +49,7 @@ describe('VerbPresentTense.fetchPage', () => {
         [`${SITE}?slovo=bavit%20si`]: fixture('dat-si-noun'),
         [`${SITE}?slovo=bavit`]: fixture('bavit'),
       })
-      const html = await verbPresentTense.fetchPage('bavit si', get)
+      const html = await verbPageScraper.fetchPage('bavit si', get)
       expect(html).toBe(fixture('bavit'))
       expect(urls).toEqual([`${SITE}?slovo=bavit%20si`, `${SITE}?slovo=bavit`])
       expect(forms(html, 'bavit si')[0]).toEqual(['1sg', ['bavím si']])
@@ -62,27 +57,27 @@ describe('VerbPresentTense.fetchPage', () => {
 
     it('does not search twice when the first page is already the entry', async () => {
       const { get, urls } = fakeSite({ [`${SITE}?slovo=b%C3%A1t%20se`]: fixture('bat-se') })
-      await verbPresentTense.fetchPage('bát se', get)
+      await verbPageScraper.fetchPage('bát se', get)
       expect(urls).toEqual([`${SITE}?slovo=b%C3%A1t%20se`])
     })
 
     it('does not search twice for a verb without a particle', async () => {
       const { get, urls } = fakeSite({ [`${SITE}?slovo=hnat`]: fixture('dat-si-noun') })
-      await verbPresentTense.fetchPage('hnat', get)
+      await verbPageScraper.fetchPage('hnat', get)
       expect(urls).toEqual([`${SITE}?slovo=hnat`])
     })
 
     it('returns the first page when the plain verb has no entry either, so parse reports the real problem', async () => {
       const { get } = fakeSite({ [`${SITE}?slovo=${encodeURIComponent('nechtít se')}`]: fixture('nechtit-se-other-entry') })
-      const html = await verbPresentTense.fetchPage('nechtít se', get)
+      const html = await verbPageScraper.fetchPage('nechtít se', get)
       expect(html).toBe(fixture('nechtit-se-other-entry'))
-      expect(() => verbPresentTense.parse(html, 'nechtít se')).toThrow(ParseError)
+      expect(() => verbPageScraper.parse(html, 'nechtít se')).toThrow(ParseError)
     })
   })
 
   it('does not hide a failed search', async () => {
     const { get } = fakeSite({}, /slovo=/)
-    await expect(verbPresentTense.fetchPage('bavit', get)).rejects.toThrow('HTTP 500')
+    await expect(verbPageScraper.fetchPage('bavit', get)).rejects.toThrow('HTTP 500')
   })
 })
 
@@ -94,7 +89,7 @@ describe('isServerBusy', () => {
   })
 })
 
-describe('VerbPresentTense.parse', () => {
+describe('verbPageScraper.parse', () => {
   it('reads the six present-tense forms of a regular verb', () => {
     expect(forms(fixture('bavit'), 'bavit')).toEqual([
       ['1sg', ['bavím']],
@@ -156,6 +151,6 @@ describe('VerbPresentTense.parse', () => {
     ['nechtit-se-other-entry', 'nechtít se', 'the site returns the entry for "chtít"'],
     ['hnat-se-no-entry', 'hnát se', 'the site has no such headword'],
   ])('refuses a page that is not the verb\'s own entry (%s: %#)', (name, prompt) => {
-    expect(() => verbPresentTense.parse(fixture(name), prompt)).toThrow(ParseError)
+    expect(() => verbPageScraper.parse(fixture(name), prompt)).toThrow(ParseError)
   })
 })

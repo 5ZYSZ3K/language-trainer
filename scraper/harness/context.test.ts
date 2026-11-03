@@ -23,7 +23,7 @@ const contract: Contract<Word> = {
 }
 const target: DataTarget = { language: 'cs', source: 'test', quizType: 'words' }
 
-async function open(overrides: { force?: boolean } = {}) {
+async function open(overrides: { force?: boolean; pauseMs?: number; failCooldownMs?: number } = {}) {
   const lines: string[] = []
   const dataFile = join(dir, 'data', 'cs', 'test', 'words.json')
   const run = await createRunContext<Word>({
@@ -33,7 +33,8 @@ async function open(overrides: { force?: boolean } = {}) {
     tmpFile: join(dir, '.tmp'),
     listsDir: join(dir, 'lists'),
     force: overrides.force ?? false,
-    failCooldownMs: 0,
+    failCooldownMs: overrides.failCooldownMs ?? 0,
+    pauseMs: overrides.pauseMs ?? 1500,
     get: async () => '',
     log: (message) => void lines.push(message),
   })
@@ -78,6 +79,22 @@ describe('createRunContext', () => {
     expect(progress).toEqual({ total: 5, saved: 2 })
     await context.save([{ word: 'a' }, { word: 'b' }, { word: 'c' }])
     expect(progress).toEqual({ total: 5, saved: 3 })
+  })
+
+  it('says what pause is in use once the adapter has planned the run, and nothing before', async () => {
+    const { context, lines } = await open({ pauseMs: 2500 })
+    expect(lines).toEqual([])
+    context.planned(5, 2)
+    expect(lines).toEqual(['Pausing 2500 ms after each request.'])
+  })
+
+  it('also says how it cools down after a failed fetch, when --fail-cooldown is on', async () => {
+    const { context, lines } = await open({ pauseMs: 0, failCooldownMs: 90_000 })
+    context.planned(1, 0)
+    expect(lines).toEqual([
+      'Pausing 0 ms after each request.',
+      'After an item fails to fetch: cooling down for 90 s, then trying it again.',
+    ])
   })
 
   it('throws on a data file that is not valid JSON', async () => {

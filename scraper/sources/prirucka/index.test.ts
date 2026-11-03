@@ -1,16 +1,14 @@
-import { readFileSync } from 'node:fs'
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import type { Item } from '../../../src/core/cell'
 import { verbPresentTenseContract } from '../../../src/quizzes/verb-present-tense'
-import type { RunContext } from '../../harness/context'
+import { testContext } from '../../harness/test-support'
 import type { HttpGet } from '../../harness/types'
 import { prirucka, priruckaPolicy } from '.'
+import { fixture, SITE } from './test-support'
 
-const fixture = (name: string) => readFileSync(new URL(`./fixtures/${name}.html`, import.meta.url), 'utf8')
-const SITE = 'https://prirucka.ujc.cas.cz/'
 
 describe('prirucka request policy', () => {
   it('asks slowly, waits long and retries the busy page', () => {
@@ -46,18 +44,13 @@ describe('prirucka adapters', () => {
       }
       const get: HttpGet = async (url) => pages[url] ?? ''
       const saved: Item[][] = []
-      const context: RunContext<Item> = {
+      const context = testContext<Item>({
         target: { language: 'cs', source: 'prirucka', quizType: 'verb-present-tense' },
         contract: verbPresentTenseContract,
-        existing: [],
-        force: false,
-        failCooldownMs: 0,
         get,
         save: async (items) => void saved.push([...items]),
-        log: () => {},
         listsDir,
-        planned: () => {},
-      }
+      })
       const result = await prirucka.adapters[0]!.run(context)
       expect(result.failures).toEqual([])
       expect(result.items.map((item) => (item as Item).prompt)).toEqual(['bavit', 'bát se'])

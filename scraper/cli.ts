@@ -11,6 +11,7 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { datasetPath } from '../src/datasets/pool'
 import { QUIZ_TYPES } from '../src/quizzes'
+import { findById } from '../src/registry'
 import { parseCliOptions, USAGE } from './cli-options'
 import { createRunContext, type RunProgress, type ScraperSource } from './harness/context'
 import { politeGetter } from './harness/http'
@@ -50,7 +51,7 @@ async function main(): Promise<number> {
   }
   process.on('exit', () => lock.release())
 
-  // What the signal handler reports: the target being scraped, once its data file has been read.
+  // What the signal handler reports: the target being scraped, once its data file has been read (reset between targets).
   let current: { dataFile: string; progress: RunProgress } | undefined
   const onSignal = (code: number) => {
     const total = current?.progress.total
@@ -76,16 +77,16 @@ async function main(): Promise<number> {
   try {
     let exitCode = 0
     for (const [i, adapter] of selected.targets.entries()) {
+      // The previous target is done: an interrupt before this one has read its data file must not report that one.
+      current = undefined
       console.log(`${i > 0 ? '\n' : ''}== ${targetName(adapter)} ==`)
-      const quizType = QUIZ_TYPES.find((q) => q.id === adapter.quizType)
+      const quizType = findById(QUIZ_TYPES, adapter.quizType)
       if (!quizType) throw new Error(`Unknown quiz type ${adapter.quizType}`)
       const target = { language: adapter.language, source: adapter.source, quizType: adapter.quizType }
       const dataFile = resolve(root, 'data', datasetPath(target))
-      const source = SCRAPER_SOURCES.find((s) => s.id === adapter.source)
+      const source = findById(SCRAPER_SOURCES, adapter.source)
       if (!source) throw new Error(`No request policy for source ${adapter.source}`)
       const get = getterFor(source)
-      console.log(`Pausing ${delayMs ?? source.policy.delayMs} ms after each request.`)
-      if (failCooldownMs > 0) console.log(`After an item fails to fetch: cooling down for ${failCooldownMs / 1000} s, then trying it again.`)
 
       const { context, progress } = await createRunContext({
         target,
@@ -95,6 +96,7 @@ async function main(): Promise<number> {
         listsDir,
         force,
         failCooldownMs,
+        pauseMs: delayMs ?? source.policy.delayMs,
         get,
         log: console.log,
       })

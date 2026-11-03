@@ -1,5 +1,6 @@
 import type { Item } from '../../core/cell'
 import type { Contract } from '../../core/contract'
+import { isRecord } from '../../core/is-record'
 import type { Meter, QuizType } from '../quiz-type'
 import { verbPresentCellIds } from './cells'
 import { mountVerbPresentTense } from './mount'
@@ -7,18 +8,16 @@ import { verbPresentTexts, type VerbPresentTextKey } from './texts'
 
 export { verbPresentCellIds, verbPresentCellLabelKeys } from './cells'
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null && !Array.isArray(value)
-
 /**
  * What the quiz needs of an item: a non-empty prompt and exactly the six cells `verbPresentCellIds`, in that order, each
- * with at least one non-empty accepted form. Other properties (an optional `sourceUrl`, say) are ignored.
+ * with at least one non-empty accepted form. An optional `sourceUrl` must be text; other properties are ignored.
  */
 export const verbPresentTenseContract: Contract<Item> = {
   validateItem(value) {
     if (!isRecord(value)) return ['item must be an object']
     const problems: string[] = []
     if (typeof value.prompt !== 'string' || value.prompt.trim() === '') problems.push('missing prompt')
+    if (value.sourceUrl !== undefined && typeof value.sourceUrl !== 'string') problems.push('sourceUrl must be text')
 
     const cells = value.cells
     if (!Array.isArray(cells)) return [...problems, 'cells must be a list']

@@ -51,6 +51,26 @@ export interface ScrapeListOptions<Item> {
   sleep?: (ms: number) => Promise<void>
 }
 
+/** What a run over a list has to do. */
+interface Plan<Item> {
+  /** The distinct entries, in list order. */
+  listed: string[]
+  /** The items of the previous run whose entry is still listed, by entry. */
+  previous: Map<string, Item>
+  /** The entries to fetch: every listed one with `force`, else those without a previous item. */
+  toTry: string[]
+}
+
+/** The one place that tells listed entries from already scraped ones; the run and its first log line both use it. */
+function planRun<Item>(contract: Contract<Item>, entries: readonly string[], existing: readonly Item[], force: boolean): Plan<Item> {
+  const listed = [...new Set(entries)]
+  const inList = new Set(listed)
+  const previous = new Map(
+    existing.filter((item) => inList.has(contract.keyOf(item))).map((item) => [contract.keyOf(item), item]),
+  )
+  return { listed, previous, toTry: force ? listed : listed.filter((entry) => !previous.has(entry)) }
+}
+
 /** Items are in the order of `entries`. Entries that failed are absent unless an earlier item for them existed. */
 export async function scrapeList<Item>(options: ScrapeListOptions<Item>): Promise<RunResult<Item>> {
   const {
@@ -66,11 +86,7 @@ export async function scrapeList<Item>(options: ScrapeListOptions<Item>): Promis
     log = () => {},
     sleep = (ms) => new Promise((r) => setTimeout(r, ms)),
   } = options
-  const listed = [...new Set(entries)]
-  const inList = new Set(listed)
-  const previous = new Map(
-    existing.filter((item) => inList.has(contract.keyOf(item))).map((item) => [contract.keyOf(item), item]),
-  )
+  const { listed, previous, toTry } = planRun(contract, entries, existing, force)
   const scraped = new Map<string, Item>()
   const failures: Failure[] = []
   let fetchFailuresInARow = 0
@@ -89,7 +105,6 @@ export async function scrapeList<Item>(options: ScrapeListOptions<Item>): Promis
     initial.every((item, i) => existing[i] !== undefined && contract.keyOf(item) === contract.keyOf(existing[i]))
   if (!unchanged) await save(initial)
 
-  const toTry = force ? listed : listed.filter((entry) => !previous.has(entry))
   let tried = 0
   for (const entry of toTry) {
     if (fetchFailuresInARow >= maxConsecutiveFetchFailures) {
@@ -140,12 +155,9 @@ export async function scrapeList<Item>(options: ScrapeListOptions<Item>): Promis
 export async function runListDriven<Item>(context: RunContext<Item>, scraper: EntryScraper<Item>): Promise<RunResult<Item>> {
   const { target, contract, existing, force } = context
   const entries = parseList(await readFile(join(context.listsDir, target.language, `${target.quizType}.txt`), 'utf8'))
-  const listed = new Set(entries)
-  const alreadyScraped = existing.filter((item) => listed.has(contract.keyOf(item))).length
-  context.planned(listed.size, alreadyScraped)
-  context.log(
-    `${listed.size} items listed, ${alreadyScraped} already scraped, ${force ? listed.size : listed.size - alreadyScraped} to fetch${force ? ' (--force)' : ''}.`,
-  )
+  const { listed, previous, toTry } = planRun(contract, entries, existing, force)
+  context.log(`${listed.length} items listed, ${previous.size} already scraped, ${toTry.length} to fetch${force ? ' (--force)' : ''}.`)
+  context.planned(listed.length, previous.size)
   return scrapeList({
     scraper,
     contract,

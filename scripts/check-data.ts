@@ -8,8 +8,10 @@ import { realpathSync } from 'node:fs'
 import { readdir, readFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { datasetPath } from '../src/datasets/pool'
+import { isRecord } from '../src/core/is-record'
+import { datasetPath, POOL_FIELDS, type Pool } from '../src/datasets/pool'
 import { QUIZ_TYPES, type QuizType } from '../src/quizzes'
+import { findById } from '../src/registry'
 import { SOURCES, type Source } from '../src/sources'
 
 export interface DataRegistries {
@@ -23,9 +25,6 @@ export interface DataCheck {
   /** The number of items in all datasets together (invalid ones included). */
   readonly items: number
 }
-
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null && !Array.isArray(value)
 
 /**
  * Checks the contents of data/ against what the sources provide. `files` maps each file's path below data/
@@ -67,14 +66,14 @@ export function checkData({ sources, quizTypes }: DataRegistries, files: Readonl
       continue
     }
     if (!isRecord(data)) {
-      problems.push(`${where}: must be a JSON object with language, source, quizType and items`)
+      problems.push(`${where}: must be a JSON object with ${POOL_FIELDS.join(', ')} and items`)
       continue
     }
 
-    const expected = { language: entry.language, source: entry.source.id, quizType: entry.quizType }
-    for (const [field, value] of Object.entries(expected)) {
-      if (data[field] !== value) {
-        problems.push(`${where}: ${field} is ${JSON.stringify(data[field])} but the file location says ${JSON.stringify(value)}`)
+    const expected: Pool = { language: entry.language, source: entry.source.id, quizType: entry.quizType }
+    for (const field of POOL_FIELDS) {
+      if (data[field] !== expected[field]) {
+        problems.push(`${where}: ${field} is ${JSON.stringify(data[field])} but the file location says ${JSON.stringify(expected[field])}`)
       }
     }
 
@@ -84,7 +83,7 @@ export function checkData({ sources, quizTypes }: DataRegistries, files: Readonl
     }
     items += data.items.length
 
-    const quizType = quizTypes.find((candidate) => candidate.id === entry.quizType)
+    const quizType = findById(quizTypes, entry.quizType)
     if (!quizType) {
       problems.push(`${where}: quiz type "${entry.quizType}" is not registered`)
       continue

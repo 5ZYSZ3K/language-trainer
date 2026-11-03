@@ -1,4 +1,4 @@
-import type { TargetFilter } from './harness/targets'
+import { TARGET_FLAGS, type TargetFilter } from './harness/targets'
 
 export const USAGE = `Usage: npm run scrape [-- --source <id>] [--language <id>] [--quiz <id>] [--force] [--delay-ms <ms>] [--fail-cooldown <duration>]
   --source <id>               only the targets of this source (e.g. prirucka)
@@ -6,8 +6,8 @@ export const USAGE = `Usage: npm run scrape [-- --source <id>] [--language <id>]
   --quiz <id>                 only the targets for this quiz type (e.g. verb-present-tense)
                               With no filter the only target runs; if there are several, they are listed instead.
   --force                     re-fetch every item, not only the missing ones
-  --delay-ms <ms>             pause between one request finishing and the next starting (default: the source's own,
-                              1500 for prirucka); can also be set with the SCRAPE_DELAY_MS environment variable, the
+  --delay-ms <ms>             pause between one request finishing and the next starting (default: the source's own
+                              request policy); can also be set with the SCRAPE_DELAY_MS environment variable, the
                               flag wins
   --fail-cooldown <duration>  when an item cannot be fetched (after the usual retries), stop for this long and then
                               try that item again instead of moving on; a number and a unit: 500ms, 90s, 10m, 1h.
@@ -37,48 +37,61 @@ function parseDuration(source: string, value: string): number | string {
   return Number(match[1]) * UNIT_MS[match[2] as keyof typeof UNIT_MS]
 }
 
-/** Each filter flag, the option it sets and an example value for the error message. */
-const FILTER_FLAGS = {
-  '--source': ['source', 'prirucka'],
-  '--language': ['language', 'cs'],
-  '--quiz': ['quizType', 'verb-present-tense'],
-} as const
+/** An example value for each filter, for the error message of a flag given without one. */
+const TARGET_EXAMPLES = { source: 'prirucka', language: 'cs', quizType: 'verb-present-tense' } as const satisfies Record<
+  keyof TargetFilter,
+  string
+>
+
+/** A flag that takes a value, as `--flag value` or `--flag=value`. */
+interface ValueFlag {
+  flag: string
+  /** A complete example, shown when the value is missing. */
+  example: string
+  /** True for a value that is really no value: the filters do not take an empty one or another flag. */
+  isMissing?(value: string): boolean
+  /** Keeps the value. */
+  set(value: string): void
+}
 
 export function parseCliOptions(args: readonly string[], env: Readonly<Record<string, string | undefined>>): ParsedArgs {
   let force = false
-  let delay: number | string | undefined
-  let cooldown: number | string | undefined
+  // The numbers are parsed when the flag is read; a text is the parser's complaint, reported once all arguments are read.
+  const parsed: { delay?: number | string; cooldown?: number | string } = {}
   const filter: TargetFilter = {}
   const unknown: string[] = []
 
+  const valueFlags: readonly ValueFlag[] = [
+    ...(Object.keys(TARGET_FLAGS) as (keyof TargetFilter)[]).map((key) => ({
+      flag: TARGET_FLAGS[key],
+      example: `${TARGET_FLAGS[key]} ${TARGET_EXAMPLES[key]}`,
+      isMissing: (value: string) => value === '' || value.startsWith('--'),
+      set: (value: string) => void (filter[key] = value),
+    })),
+    { flag: '--delay-ms', example: '--delay-ms 3000', set: (value) => void (parsed.delay = parseMilliseconds('--delay-ms', value)) },
+    { flag: '--fail-cooldown', example: '--fail-cooldown 10m', set: (value) => void (parsed.cooldown = parseDuration('--fail-cooldown', value)) },
+  ]
+
   for (let i = 0; i < args.length; i++) {
     const arg = args[i]!
-    const filterFlag = Object.keys(FILTER_FLAGS).find((flag) => arg === flag || arg.startsWith(`${flag}=`)) as
-      | keyof typeof FILTER_FLAGS
-      | undefined
     if (arg === '--force') {
       force = true
-    } else if (filterFlag) {
-      const value = arg === filterFlag ? args[++i] : arg.slice(filterFlag.length + 1)
-      const [key, example] = FILTER_FLAGS[filterFlag]
-      if (value === undefined || value === '' || value.startsWith('--')) return { error: `${filterFlag} needs a value, e.g. ${filterFlag} ${example}` }
-      filter[key] = value
-    } else if (arg === '--delay-ms' || arg.startsWith('--delay-ms=')) {
-      const value = arg === '--delay-ms' ? args[++i] : arg.slice('--delay-ms='.length)
-      if (value === undefined) return { error: '--delay-ms needs a value, e.g. --delay-ms 3000' }
-      delay = parseMilliseconds('--delay-ms', value)
-    } else if (arg === '--fail-cooldown' || arg.startsWith('--fail-cooldown=')) {
-      const value = arg === '--fail-cooldown' ? args[++i] : arg.slice('--fail-cooldown='.length)
-      if (value === undefined) return { error: '--fail-cooldown needs a value, e.g. --fail-cooldown 10m' }
-      cooldown = parseDuration('--fail-cooldown', value)
-    } else {
-      unknown.push(arg)
+      continue
     }
+    const valueFlag = valueFlags.find(({ flag }) => arg === flag || arg.startsWith(`${flag}=`))
+    if (!valueFlag) {
+      unknown.push(arg)
+      continue
+    }
+    const value = arg === valueFlag.flag ? args[++i] : arg.slice(valueFlag.flag.length + 1)
+    if (value === undefined || valueFlag.isMissing?.(value)) return { error: `${valueFlag.flag} needs a value, e.g. ${valueFlag.example}` }
+    valueFlag.set(value)
   }
   if (unknown.length > 0) return { error: `Unknown argument: ${unknown.join(' ')}` }
 
+  let { delay } = parsed
   if (delay === undefined && env.SCRAPE_DELAY_MS) delay = parseMilliseconds('SCRAPE_DELAY_MS', env.SCRAPE_DELAY_MS)
   if (typeof delay === 'string') return { error: delay }
-  if (typeof cooldown === 'string') return { error: cooldown }
-  return { options: { force, delayMs: delay, failCooldownMs: cooldown ?? 0, ...filter } }
+  if (typeof parsed.cooldown === 'string') return { error: parsed.cooldown }
+  return { options: { force, delayMs: delay, failCooldownMs: parsed.cooldown ?? 0, ...filter } }
 }

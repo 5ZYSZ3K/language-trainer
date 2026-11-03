@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest'
-import type { ExerciseData } from '../core/cell'
 import type { Source } from '../sources'
+import type { Dataset } from './dataset'
 import { loadDataset } from './load'
 
 const pool = { language: 'cs', source: 'prirucka', quizType: 'verb-present-tense' }
-const dataset: ExerciseData = { ...pool, items: [{ prompt: 'být', cells: [{ id: '1sg', acceptedForms: ['jsem'] }] }] }
+const dataset: Dataset = { ...pool, items: [{ prompt: 'být', cells: [{ id: '1sg', acceptedForms: ['jsem'] }] }] }
 
 const sourceWith = (delivery: Source['provides'][number]['delivery']): Source => ({
   id: 'prirucka',

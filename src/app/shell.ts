@@ -1,9 +1,10 @@
 import { Scores, type StorageLike } from '../core/scores'
 import { poolKey, type Pool } from '../datasets/pool'
-import { createT, getLanguage, joinTexts, languageLabel, setLanguage, shellTexts, UI_LANGUAGES } from '../i18n'
+import { createT, getUiLanguage, joinTexts, uiLanguageLabel, setUiLanguage, shellTexts, UI_LANGUAGES } from '../i18n'
 import { fillTexts } from '../i18n/dom'
 import type { Language } from '../languages'
 import type { QuizInstance, QuizType } from '../quizzes'
+import { finder } from '../ui'
 
 export interface ShellDeps {
   quizType: QuizType<unknown>
@@ -46,7 +47,7 @@ export async function mountShell(
   { quizType, pool, language, storage, loadData }: ShellDeps,
 ): Promise<void> {
   root.innerHTML = SHELL
-  const find = <E extends HTMLElement>(selector: string) => root.querySelector<E>(selector)!
+  const find = finder(root)
 
   // One translator for everything the shell fills in: its own texts and the quiz type's (their keys never overlap).
   const text = createT(joinTexts(shellTexts, quizType.texts))
@@ -59,11 +60,11 @@ export async function mountShell(
   // ---- text -------------------------------------------------------------------------------------
 
   function applyTexts(): void {
-    document.documentElement.lang = getLanguage()
+    document.documentElement.lang = getUiLanguage()
     document.title = text('title')
     fillTexts(root, text, quizEl)
     root.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach((button) => {
-      button.setAttribute('aria-pressed', String(button.dataset.lang === getLanguage()))
+      button.setAttribute('aria-pressed', String(button.dataset.lang === getUiLanguage()))
     })
     quiz?.applyTexts()
   }
@@ -107,9 +108,9 @@ export async function mountShell(
     const button = document.createElement('button')
     button.type = 'button'
     button.dataset.lang = uiLanguage
-    button.textContent = languageLabel(uiLanguage)
+    button.textContent = uiLanguageLabel(uiLanguage)
     button.addEventListener('click', () => {
-      setLanguage(uiLanguage, storage)
+      setUiLanguage(uiLanguage, storage)
       applyTexts()
     })
     langGroup.append(button)

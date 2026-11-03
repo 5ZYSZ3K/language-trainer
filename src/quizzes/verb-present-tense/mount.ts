@@ -1,9 +1,9 @@
 import type { Cell, Item } from '../../core/cell'
 import { pickNext } from '../../core/pick'
 import { Round } from '../../core/round'
-import { getLanguage } from '../../i18n'
+import { getUiLanguage } from '../../i18n'
 import { fillTexts } from '../../i18n/dom'
-import { enableShortcuts, fillSpecialChars, renderShortcutHelp } from '../../ui'
+import { enableShortcuts, fillSpecialChars, finder, renderShortcutHelp } from '../../ui'
 import type { QuizHost, QuizInstance } from '../quiz-type'
 import { verbPresentCellLabelKeys } from './cells'
 import { t } from './texts'
@@ -35,7 +35,7 @@ const AREA = `
 export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Item>): QuizInstance {
   const { items, language } = host
   container.innerHTML = AREA
-  const find = <E extends HTMLElement>(selector: string) => container.querySelector<E>(selector)!
+  const find = finder(container)
 
   const exerciseEl = find('#exercise')
   const promptEl = find('#prompt')
@@ -51,7 +51,7 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
 
   function applyTexts(): void {
     // The language's shortcut lines come first, then the quiz's own note (the static last list item).
-    renderShortcutHelp(helpList, language.texts[getLanguage()].shortcutHelp)
+    renderShortcutHelp(helpList, language.texts[getUiLanguage()].shortcutHelp)
     fillTexts(container, t)
   }
 

@@ -37,7 +37,10 @@ export interface RunContext<Item> {
   log(message: string): void
   /** The lists folder (lists/<language>/<quiz type>.txt); only adapters that work through a list read it. */
   readonly listsDir: string
-  /** Tells the harness how many items the run aims for and how many of them are already saved. */
+  /**
+   * Tells the harness how many items the run aims for and how many of them are already saved. Call it once, after
+   * logging what the run will do: the harness then adds the pause and the cool-down in use to the log.
+   */
   planned(total: number, saved: number): void
 }
 
@@ -65,6 +68,8 @@ export interface RunContextOptions<Item> {
   listsDir: string
   force: boolean
   failCooldownMs: number
+  /** The pause between requests that `get` keeps (the source's policy or --delay-ms), reported to the log. */
+  pauseMs: number
   get: HttpGet
   log: (message: string) => void
 }
@@ -107,6 +112,10 @@ export async function createRunContext<Item>(
     planned(total, saved) {
       progress.total = total
       progress.saved = saved
+      options.log(`Pausing ${options.pauseMs} ms after each request.`)
+      if (options.failCooldownMs > 0) {
+        options.log(`After an item fails to fetch: cooling down for ${options.failCooldownMs / 1000} s, then trying it again.`)
+      }
     },
   }
   return { context, progress }

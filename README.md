@@ -211,27 +211,33 @@ The tests run the same logic against a temporary git repository; they never touc
 ## Code layout
 
 ```
+index.html, vite.config.ts, tsconfig.json   the page's HTML, the Vite / Vitest and the TypeScript configuration
 lists/<language>/<quiz type>.txt      scraper input (comma-separated entries); only the scraper reads lists
 data/<language>/<source>/<quiz type>.json   the committed datasets
 public/                               .nojekyll only
 src/
-  core/        pure, tested logic: matching, typing shortcuts, Round, Scores, random pick; knows nothing about
-               languages, sources, quiz types or texts
+  core/        pure, tested logic: matching, typing shortcuts, Round, Scores, random pick, the record guard;
+               knows nothing about languages, sources, quiz types or texts
   languages/   the languages that can be learned: characters, typing shortcuts, names (registry in index.ts)
   sources/     the data sources and which datasets each provides (registry in index.ts)
   quizzes/     one folder per quiz type: contract, score meters, texts, mount (the quiz's DOM)
                (registry in index.ts)
-  datasets/    the pool (language, source, quiz type) and the loader of the bundled datasets
+  datasets/    the pool (language, source, quiz type), the dataset file's envelope and the loader of the bundled
+               datasets
+  registry.ts  findById(): how anything looks up an entry of a registry by its id
   selection.ts which pool the page opens on (pure rules for a future selector; no selector is shown)
   i18n/        the UI languages, createT() and the shell's own en / cs dictionaries (a quiz type's and ui/'s
                texts live with them)
-  ui/          shared type-in building blocks: special-character buttons, typing shortcuts on inputs, help list
+  ui/          shared DOM building blocks: special-character buttons, typing shortcuts on inputs, help list, the
+               element look-up (finder)
   app/         shell.ts: header, language switch, scores panel, status line (thin DOM, not unit tested)
   config.ts    repository coordinates
-  main.ts      wiring: storage, language, the default pool, mount
+  main.ts      wiring: storage, UI language, the default pool, mount
+  style.css    the page's styles; fonts/ holds the bundled font files (Comic Relief, OFL)
 scraper/       build-time only, never shipped
   cli.ts, cli-options.ts   entry point; arguments and environment
   harness/     lock, atomic data file, polite requests, run context, target selection, adapter registry
+  list.ts          the word-list reader (comma-separated entries)
   list-driven.ts   the loop over a word list: fetch, parse, validate, save after every item
   sources/prirucka/   request policy, adapter and verb parser; fixtures/ holds trimmed real pages from
                       prirucka.ujc.cas.cz that the parser tests run against
@@ -244,7 +250,8 @@ Rules the layout keeps: `src/` never imports from `scraper/` or `scripts/` (a un
 `scraper/` and `scripts/` may import types, registries and contracts from `src/`. The page never calls a
 source, and no parser or HTML library is in its bundle.
 
-Tests sit next to the code (`*.test.ts`) and run with `npm test`.
+Tests sit next to the code (`*.test.ts`) and run with `npm test`. The `test-support.ts` files hold the little
+helpers that several tests share (a run context, saved pages of the site).
 
 ## Adding things later
 

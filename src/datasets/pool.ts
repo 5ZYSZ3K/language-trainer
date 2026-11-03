@@ -8,6 +8,9 @@ export interface Pool {
   readonly quizType: string
 }
 
+/** The fields of a pool, in the order a dataset file writes them in its envelope. Everything that reads or writes an envelope goes through this list. */
+export const POOL_FIELDS = ['language', 'source', 'quizType'] as const satisfies readonly (keyof Pool)[]
+
 /** The pool's identity as text, e.g. `cs/prirucka/verb-present-tense`. */
 export const poolKey = (pool: Pool): string => `${pool.language}/${pool.source}/${pool.quizType}`
 

@@ -8,7 +8,7 @@ import { REPOSITORY, REPOSITORY_URL } from '../../../src/config'
 import type { Adapter, ScraperSource } from '../../harness/context'
 import type { RequestPolicy } from '../../harness/http'
 import { runListDriven } from '../../list-driven'
-import { isServerBusy, verbPresentTense } from './verb-present-tense'
+import { isServerBusy, verbPageScraper } from './verb-present-tense'
 
 export const priruckaPolicy: RequestPolicy = {
   delayMs: 1500,
@@ -26,8 +26,8 @@ const verbPresentTenseAdapter: Adapter<Item> = {
   quizType: 'verb-present-tense',
   run: (context) =>
     runListDriven(context, {
-      fetchPage: verbPresentTense.fetchPage,
-      parse: (html, entry) => ({ prompt: entry, cells: verbPresentTense.parse(html, entry) }),
+      fetchPage: verbPageScraper.fetchPage,
+      parse: (html, entry) => ({ prompt: entry, cells: verbPageScraper.parse(html, entry) }),
     }),
 }
 

@@ -4,7 +4,8 @@ import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import type { Item } from '../src/core/cell'
 import type { Contract } from '../src/core/contract'
-import type { RunContext } from './harness/context'
+import { createRunContext, type RunContext } from './harness/context'
+import { testContext } from './harness/test-support'
 import { ParseError, type HttpGet } from './harness/types'
 import { runListDriven, scrapeList, type EntryScraper } from './list-driven'
 
@@ -570,19 +571,17 @@ describe('runListDriven', () => {
     const lines: string[] = []
     const plans: [number, number][] = []
     const saved: string[][] = []
-    const ctx: RunContext<Item> = {
+    const ctx = testContext<Item>({
       target: { language: 'cs', source: 'test', quizType: 'quiz' },
       contract: stubContract,
       existing: [stored('a'), stored('gone')],
-      force: false,
-      failCooldownMs: 0,
       get: recordingGet().get,
       save: async (items) => void saved.push(items.map((i) => i.prompt)),
       log: (message) => void lines.push(message),
       listsDir,
       planned: (total, done) => void plans.push([total, done]),
       ...overrides,
-    }
+    })
     return { ctx, lines, plans, saved }
   }
 
@@ -601,6 +600,31 @@ describe('runListDriven', () => {
     await runListDriven(ctx, stub)
     expect(plans).toEqual([[3, 1]])
     expect(lines[0]).toBe('3 items listed, 1 already scraped, 2 to fetch.')
+  })
+
+  it('logs the counts, then the pause and the cool-down in use, then one line per entry', async () => {
+    const lines: string[] = []
+    const { context: real } = await createRunContext<Item>({
+      target: { language: 'cs', source: 'test', quizType: 'quiz' },
+      contract: stubContract,
+      dataFile: join(listsDir, 'out', 'quiz.json'),
+      tmpFile: join(listsDir, '.tmp'),
+      listsDir,
+      force: false,
+      failCooldownMs: 90_000,
+      pauseMs: 1500,
+      get: recordingGet().get,
+      log: (message) => void lines.push(message),
+    })
+    await runListDriven(real, stub)
+    expect(lines).toEqual([
+      '3 items listed, 0 already scraped, 3 to fetch.',
+      'Pausing 1500 ms after each request.',
+      'After an item fails to fetch: cooling down for 90 s, then trying it again.',
+      'ok     a (1/3)',
+      'ok     b (2/3)',
+      'ok     c (3/3)',
+    ])
   })
 
   it('counts every listed entry as to fetch with force', async () => {

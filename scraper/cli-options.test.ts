@@ -1,5 +1,16 @@
 import { describe, expect, it } from 'vitest'
-import { parseCliOptions } from './cli-options'
+import { parseCliOptions, USAGE } from './cli-options'
+import { SCRAPER_SOURCES } from './harness/registry'
+
+describe('USAGE', () => {
+  it("names no source's own numbers: the pause default belongs to the request policy, which can change", () => {
+    for (const { policy } of SCRAPER_SOURCES) {
+      expect(USAGE).not.toContain(String(policy.delayMs))
+      expect(USAGE).not.toContain(String(policy.timeoutMs))
+    }
+    expect(USAGE).toMatch(/default: the source's own\s+request policy/)
+  })
+})
 
 describe('parseCliOptions', () => {
   it("leaves the delay to the source's request policy, and no force, when given nothing", () => {

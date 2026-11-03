@@ -94,7 +94,7 @@ export interface VerbPageScraper {
   parse(html: string, prompt: string): Cell[]
 }
 
-export const verbPresentTense: VerbPageScraper = {
+export const verbPageScraper: VerbPageScraper = {
   async fetchPage(prompt, get) {
     const page = await fetchEntryPage(prompt, get)
     const { base, particle } = splitReflexive(prompt)

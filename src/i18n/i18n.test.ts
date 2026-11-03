@@ -5,12 +5,12 @@ import { QUIZ_TYPES } from '../quizzes'
 import { uiTexts } from '../ui'
 import {
   createT,
-  detectLanguage,
-  getLanguage,
-  initLanguage,
+  detectUiLanguage,
+  getUiLanguage,
+  initUiLanguage,
   joinTexts,
-  languageLabel,
-  setLanguage,
+  uiLanguageLabel,
+  setUiLanguage,
   shellTexts,
   t,
   UI_LANGUAGES,
@@ -26,34 +26,34 @@ function memoryStorage(initial: Record<string, string> = {}) {
   }
 }
 
-describe('detectLanguage', () => {
+describe('detectUiLanguage', () => {
   it('uses Czech when the browser language starts with cs, otherwise English', () => {
-    expect(detectLanguage('cs', null)).toBe('cs')
-    expect(detectLanguage('cs-CZ', null)).toBe('cs')
-    expect(detectLanguage('CS', null)).toBe('cs')
-    expect(detectLanguage('en-US', null)).toBe('en')
-    expect(detectLanguage('sk', null)).toBe('en')
-    expect(detectLanguage(undefined, null)).toBe('en')
+    expect(detectUiLanguage('cs', null)).toBe('cs')
+    expect(detectUiLanguage('cs-CZ', null)).toBe('cs')
+    expect(detectUiLanguage('CS', null)).toBe('cs')
+    expect(detectUiLanguage('en-US', null)).toBe('en')
+    expect(detectUiLanguage('sk', null)).toBe('en')
+    expect(detectUiLanguage(undefined, null)).toBe('en')
   })
 
   it('prefers a saved choice over the browser language', () => {
-    expect(detectLanguage('cs-CZ', 'en')).toBe('en')
-    expect(detectLanguage('en-US', 'cs')).toBe('cs')
+    expect(detectUiLanguage('cs-CZ', 'en')).toBe('en')
+    expect(detectUiLanguage('en-US', 'cs')).toBe('cs')
   })
 
   it('ignores a saved value that is not a known language', () => {
-    expect(detectLanguage('cs-CZ', 'de')).toBe('cs')
-    expect(detectLanguage('en-US', '')).toBe('en')
+    expect(detectUiLanguage('cs-CZ', 'de')).toBe('cs')
+    expect(detectUiLanguage('en-US', '')).toBe('en')
   })
 })
 
-describe('t and setLanguage', () => {
+describe('t and setUiLanguage', () => {
   it('translates into the current language and follows switches', () => {
-    setLanguage('en', memoryStorage())
+    setUiLanguage('en', memoryStorage())
     const english = t('scores.reset')
-    setLanguage('cs', memoryStorage())
+    setUiLanguage('cs', memoryStorage())
     const czech = t('scores.reset')
-    expect(getLanguage()).toBe('cs')
+    expect(getUiLanguage()).toBe('cs')
     expect(english).toBe('Reset scores')
     expect(czech).not.toBe(english)
     expect(czech).not.toBe('')
@@ -70,22 +70,22 @@ describe('createT', () => {
 
   it('translates a dictionary set into the current UI language and follows switches', () => {
     const tGreeting = createT(greetings)
-    setLanguage('en', memoryStorage())
+    setUiLanguage('en', memoryStorage())
     expect(tGreeting('hello')).toBe('Hello')
-    setLanguage('cs', memoryStorage())
+    setUiLanguage('cs', memoryStorage())
     expect(tGreeting('hello')).toBe('Ahoj')
   })
 
   it('serves every dictionary set from the same current language', () => {
     const [tGreeting, tFarewell] = [createT(greetings), createT(farewells)]
-    setLanguage('cs', memoryStorage())
+    setUiLanguage('cs', memoryStorage())
     expect([tGreeting('hello'), tFarewell('bye')]).toEqual(['Ahoj', 'Nashledanou'])
-    setLanguage('en', memoryStorage())
+    setUiLanguage('en', memoryStorage())
     expect([tGreeting('hello'), tFarewell('bye')]).toEqual(['Hello', 'Bye'])
   })
 
   it('shows the key itself rather than nothing when a key is unknown', () => {
-    setLanguage('cs', memoryStorage())
+    setUiLanguage('cs', memoryStorage())
     expect(createT(greetings)('no.such.key' as 'hello')).toBe('no.such.key')
   })
 })
@@ -96,9 +96,9 @@ describe('joinTexts', () => {
 
   it('puts two sets side by side, so one translator serves the keys of both in every UI language', () => {
     const tBoth = createT(joinTexts(greetings, farewells))
-    setLanguage('cs', memoryStorage())
+    setUiLanguage('cs', memoryStorage())
     expect([tBoth('hello'), tBoth('bye')]).toEqual(['Ahoj', 'Nashledanou'])
-    setLanguage('en', memoryStorage())
+    setUiLanguage('en', memoryStorage())
     expect([tBoth('hello'), tBoth('bye')]).toEqual(['Hello', 'Bye'])
   })
 
@@ -109,28 +109,35 @@ describe('joinTexts', () => {
   })
 })
 
-describe('languageLabel', () => {
+describe('uiLanguageLabel', () => {
   it('gives each language its own short label for the switch, independent of the current language', () => {
-    setLanguage('en', memoryStorage())
-    expect(UI_LANGUAGES.map((l) => languageLabel(l))).toEqual(['EN', 'CZ'])
-    setLanguage('cs', memoryStorage())
-    expect(UI_LANGUAGES.map((l) => languageLabel(l))).toEqual(['EN', 'CZ'])
+    setUiLanguage('en', memoryStorage())
+    expect(UI_LANGUAGES.map((l) => uiLanguageLabel(l))).toEqual(['EN', 'CZ'])
+    setUiLanguage('cs', memoryStorage())
+    expect(UI_LANGUAGES.map((l) => uiLanguageLabel(l))).toEqual(['EN', 'CZ'])
   })
 })
 
-describe('initLanguage', () => {
+describe('initUiLanguage', () => {
   it('starts from the browser language and does not save anything yet', () => {
     const storage = memoryStorage()
-    expect(initLanguage(storage, 'cs-CZ')).toBe('cs')
-    expect(getLanguage()).toBe('cs')
+    expect(initUiLanguage(storage, 'cs-CZ')).toBe('cs')
+    expect(getUiLanguage()).toBe('cs')
     expect(storage.getItem('language')).toBeNull()
+  })
+
+  it('keeps the choice in localStorage under the key "language", where the page has always put it', () => {
+    const storage = memoryStorage()
+    setUiLanguage('cs', storage)
+    expect(storage.getItem('language')).toBe('cs')
+    expect(initUiLanguage(memoryStorage({ language: 'en' }), 'cs-CZ')).toBe('en')
   })
 
   it('remembers a manual switch for the next visit', () => {
     const storage = memoryStorage()
-    initLanguage(storage, 'cs-CZ')
-    setLanguage('en', storage)
-    expect(initLanguage(storage, 'cs-CZ')).toBe('en')
+    initUiLanguage(storage, 'cs-CZ')
+    setUiLanguage('en', storage)
+    expect(initUiLanguage(storage, 'cs-CZ')).toBe('en')
   })
 
   it('still works when storage throws', () => {
@@ -145,9 +152,9 @@ describe('initLanguage', () => {
         throw new Error('denied')
       },
     }
-    expect(initLanguage(broken, 'cs')).toBe('cs')
-    expect(() => setLanguage('en', broken)).not.toThrow()
-    expect(getLanguage()).toBe('en')
+    expect(initUiLanguage(broken, 'cs')).toBe('cs')
+    expect(() => setUiLanguage('en', broken)).not.toThrow()
+    expect(getUiLanguage()).toBe('en')
   })
 })
 

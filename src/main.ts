@@ -2,9 +2,10 @@ import './style.css'
 import { mountShell } from './app/shell'
 import type { StorageLike } from './core/scores'
 import { loadDataset } from './datasets/load'
-import { initLanguage } from './i18n'
+import { initUiLanguage } from './i18n'
 import { LANGUAGES } from './languages'
 import { QUIZ_TYPES } from './quizzes'
+import { findById } from './registry'
 import { defaultPool } from './selection'
 import { SOURCES } from './sources'
 
@@ -26,12 +27,12 @@ function pickStorage(): StorageLike {
 }
 
 const storage = pickStorage()
-initLanguage(storage, navigator.language)
+initUiLanguage(storage, navigator.language)
 
 // No selector yet: the page opens on the single default pool of the registries.
 const pool = defaultPool({ languages: LANGUAGES, sources: SOURCES, quizTypes: QUIZ_TYPES })
-const language = LANGUAGES.find((candidate) => candidate.id === pool?.language)
-const quizType = QUIZ_TYPES.find((candidate) => candidate.id === pool?.quizType)
+const language = pool && findById(LANGUAGES, pool.language)
+const quizType = pool && findById(QUIZ_TYPES, pool.quizType)
 if (!pool || !language || !quizType) throw new Error('No pool is registered, so there is nothing to practise.')
 
 mountShell(document.getElementById('app')!, {

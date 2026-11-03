@@ -1,14 +1,10 @@
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises'
 import { dirname } from 'node:path'
-import type { Pool } from '../../src/datasets/pool'
+import type { Dataset } from '../../src/datasets/dataset'
+import { POOL_FIELDS, type Pool } from '../../src/datasets/pool'
 
 /** What a data file is for: one quiz type, for one language, from one source. */
 export type DataTarget = Pool
-
-/** A data file's contents: the envelope naming its target, and the items. */
-export interface DataFile<Item> extends DataTarget {
-  items: Item[]
-}
 
 /**
  * The items in an existing data file, or none if there is no file, it belongs to another target (language,
@@ -24,8 +20,8 @@ export async function readItems<Item>(file: string, target: DataTarget): Promise
     if ((error as NodeJS.ErrnoException).code === 'ENOENT') return []
     throw error
   }
-  const data = JSON.parse(text) as Partial<DataFile<Item>>
-  const sameTarget = data.language === target.language && data.source === target.source && data.quizType === target.quizType
+  const data = JSON.parse(text) as Partial<Dataset<Item>>
+  const sameTarget = POOL_FIELDS.every((field) => data[field] === target[field])
   return sameTarget && Array.isArray(data.items) ? data.items : []
 }
 
@@ -33,11 +29,10 @@ export async function readItems<Item>(file: string, target: DataTarget): Promise
  * The data file as text: valid JSON with one item per line, so that a change to one item is a one-line diff
  * once the file is committed.
  */
-export function serialise<Item>(data: DataFile<Item>): string {
+export function serialise<Item>(data: Dataset<Item>): string {
   const items = data.items.map((item) => JSON.stringify(item)).join(',\n')
-  const { language, source, quizType } = data
-  const head = `{"language":${JSON.stringify(language)},"source":${JSON.stringify(source)},"quizType":${JSON.stringify(quizType)}`
-  return `${head},"items":[\n${items}${items ? '\n' : ''}]}\n`
+  const envelope = POOL_FIELDS.map((field) => `"${field}":${JSON.stringify(data[field])}`).join(',')
+  return `{${envelope},"items":[\n${items}${items ? '\n' : ''}]}\n`
 }
 
 /**
@@ -45,7 +40,7 @@ export function serialise<Item>(data: DataFile<Item>): string {
  * crash or a full disk never leaves a half-written data file. Any error propagates: a failed save is fatal.
  * Both paths must be on the same filesystem.
  */
-export async function writeData<Item>(file: string, tmpFile: string, data: DataFile<Item>): Promise<void> {
+export async function writeData<Item>(file: string, tmpFile: string, data: Dataset<Item>): Promise<void> {
   await mkdir(dirname(file), { recursive: true })
   await writeFile(tmpFile, serialise(data))
   await rename(tmpFile, file)

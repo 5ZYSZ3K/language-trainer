@@ -6,7 +6,8 @@ export default defineConfig({
   test: {
     include: ['src/**/*.test.ts', 'scraper/**/*.test.ts', 'scripts/**/*.test.ts'],
     // The dataset loader's import.meta.glob is expanded when its module is transformed; a cached transform would
-    // not notice a dataset file that was added or removed since.
+    // not notice a dataset file that was added or removed since. Still needed (checked with Vitest 5.0.5): with the
+    // cache on, a dataset file added after an earlier run stays unknown to the real loader, on every run after it.
     fsModuleCache: false,
   },
 })

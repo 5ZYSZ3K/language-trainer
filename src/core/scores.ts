@@ -1,3 +1,5 @@
+import { isRecord } from './is-record'
+
 /** One counter: how many of `total` tries were correct. */
 export interface Tally {
   correct: number
@@ -10,9 +12,6 @@ export type PoolScores = Record<string, Tally>
 export type StorageLike = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>
 
 export const SCORES_KEY = 'scores'
-
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null && !Array.isArray(value)
 
 function isTally(value: unknown): value is Tally {
   return isRecord(value) && Number.isFinite(value.correct) && Number.isFinite(value.total)

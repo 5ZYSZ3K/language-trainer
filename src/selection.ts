@@ -1,6 +1,7 @@
 import type { Pool } from './datasets/pool'
 import type { Language } from './languages'
 import type { QuizType } from './quizzes'
+import { findById } from './registry'
 import type { Source } from './sources'
 
 /**
@@ -56,7 +57,7 @@ const availableLanguages = ({ languages, sources }: Registries) =>
 export function select(registries: Registries, state: SelectionState): Selection {
   const { sources: allSources, quizTypes } = registries
   const languages = availableLanguages(registries)
-  const language = languages.find((candidate) => candidate.id === state.language)
+  const language = findById(languages, state.language)
   if (!language) return { languages, language, sources: [], selected: undefined, others: [] }
 
   const choice = (source: Source): SourceChoice => ({

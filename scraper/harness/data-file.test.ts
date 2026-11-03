@@ -2,7 +2,8 @@ import { mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import type { ExerciseData, Item } from '../../src/core/cell'
+import type { Item } from '../../src/core/cell'
+import type { Dataset } from '../../src/datasets/dataset'
 import { readItems, serialise, writeData, type DataTarget } from './data-file'
 
 let dir: string
@@ -14,7 +15,7 @@ afterEach(async () => {
 })
 
 const target: DataTarget = { language: 'cs', source: 'prirucka', quizType: 'verb-present-tense' }
-const envelope = (items: Item[], overrides: Partial<ExerciseData> = {}): ExerciseData => ({ ...target, ...overrides, items })
+const envelope = (items: Item[], overrides: Partial<Dataset<Item>> = {}): Dataset<Item> => ({ ...target, ...overrides, items })
 
 const item = (prompt: string): Item => ({
   prompt,
