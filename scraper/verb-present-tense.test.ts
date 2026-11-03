@@ -6,9 +6,9 @@ import { isServerBusy, verbPresentTense } from './verb-present-tense'
 const fixture = (name: string) =>
   readFileSync(new URL(`./fixtures/${name}.html`, import.meta.url), 'utf8')
 
-/** Cells as [label, acceptedForms] pairs, for compact assertions. */
+/** Cells as [id, acceptedForms] pairs, for compact assertions. */
 const forms = (html: string, prompt: string) =>
-  verbPresentTense.parse(html, prompt).map((c) => [c.label, c.acceptedForms])
+  verbPresentTense.parse(html, prompt).map((c) => [c.id, c.acceptedForms])
 
 const SITE = 'https://prirucka.ujc.cas.cz/'
 
@@ -57,7 +57,7 @@ describe('VerbPresentTense.fetchPage', () => {
       const html = await verbPresentTense.fetchPage('bavit si', get)
       expect(html).toBe(fixture('bavit'))
       expect(urls).toEqual([`${SITE}?slovo=bavit%20si`, `${SITE}?slovo=bavit`])
-      expect(forms(html, 'bavit si')[0]).toEqual(['verbPresent.1sg', ['bavím si']])
+      expect(forms(html, 'bavit si')[0]).toEqual(['1sg', ['bavím si']])
     })
 
     it('does not search twice when the first page is already the entry', async () => {
@@ -97,20 +97,20 @@ describe('isServerBusy', () => {
 describe('VerbPresentTense.parse', () => {
   it('reads the six present-tense forms of a regular verb', () => {
     expect(forms(fixture('bavit'), 'bavit')).toEqual([
-      ['verbPresent.1sg', ['bavím']],
-      ['verbPresent.1pl', ['bavíme']],
-      ['verbPresent.2sg', ['bavíš']],
-      ['verbPresent.2pl', ['bavíte']],
-      ['verbPresent.3sg', ['baví']],
-      ['verbPresent.3pl', ['baví']],
+      ['1sg', ['bavím']],
+      ['1pl', ['bavíme']],
+      ['2sg', ['bavíš']],
+      ['2pl', ['bavíte']],
+      ['3sg', ['baví']],
+      ['3pl', ['baví']],
     ])
   })
 
   it('accepts every listed variant of a form', () => {
     const cells = Object.fromEntries(forms(fixture('moct'), 'moct') as [string, string[]][])
-    expect(cells['verbPresent.1sg']).toEqual(['mohu', 'můžu'])
-    expect(cells['verbPresent.3pl']).toEqual(['mohou', 'můžou'])
-    expect(cells['verbPresent.2sg']).toEqual(['můžeš'])
+    expect(cells['1sg']).toEqual(['mohu', 'můžu'])
+    expect(cells['3pl']).toEqual(['mohou', 'můžou'])
+    expect(cells['2sg']).toEqual(['můžeš'])
   })
 
   describe('parenthesised parts, which the site uses for optional words ("bání (se)")', () => {
@@ -133,22 +133,22 @@ describe('VerbPresentTense.parse', () => {
 
   it('drops suffix-only clitics such as "-s", which are not words one can type on their own', () => {
     const cells = Object.fromEntries(forms(fixture('byt'), 'být') as [string, string[]][])
-    expect(cells['verbPresent.2sg']).toEqual(['jsi'])
-    expect(cells['verbPresent.3sg']).toEqual(['jest', 'je'])
+    expect(cells['2sg']).toEqual(['jsi'])
+    expect(cells['3sg']).toEqual(['jest', 'je'])
   })
 
   it('ignores the homonym digits in the heading ("být1,2")', () => {
-    expect(forms(fixture('byt'), 'být')[0]).toEqual(['verbPresent.1sg', ['jsem']])
+    expect(forms(fixture('byt'), 'být')[0]).toEqual(['1sg', ['jsem']])
   })
 
   it('keeps the particle when the entry is the reflexive verb itself ("bát se")', () => {
-    expect(forms(fixture('bat-se'), 'bát se')[0]).toEqual(['verbPresent.1sg', ['bojím se']])
+    expect(forms(fixture('bat-se'), 'bát se')[0]).toEqual(['1sg', ['bojím se']])
   })
 
   it('adds the particle to every form when the site only has the plain verb ("myslet si")', () => {
     const cells = Object.fromEntries(forms(fixture('myslet-si'), 'myslet si') as [string, string[]][])
-    expect(cells['verbPresent.1sg']).toEqual(['myslím si'])
-    expect(cells['verbPresent.3pl']).toEqual(['myslí si', 'myslejí si'])
+    expect(cells['1sg']).toEqual(['myslím si'])
+    expect(cells['3pl']).toEqual(['myslí si', 'myslejí si'])
   })
 
   it.each([

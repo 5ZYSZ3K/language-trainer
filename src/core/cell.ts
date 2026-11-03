@@ -1,8 +1,6 @@
-import type { TranslationKey } from '../i18n/en'
-
-/** One input in an exercise: a label to show and every form that counts as correct. */
+/** One input in an exercise: a neutral id (what the page shows for it is the exercise's business) and every form that counts as correct. */
 export interface Cell {
-  label: TranslationKey
+  id: string
   acceptedForms: string[]
 }
 

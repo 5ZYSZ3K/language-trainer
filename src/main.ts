@@ -2,7 +2,7 @@ import './style.css'
 import { mountApp } from './app'
 import type { ExerciseData } from './core/cell'
 import type { StorageLike } from './core/scores'
-import { verbPresentTense } from './exercises/verb-present-tense'
+import { verbPresentCellLabelKeys, verbPresentTense } from './exercises/verb-present-tense'
 import { initLanguage } from './i18n'
 
 /** localStorage can throw on access (blocked cookies, some private modes); fall back to memory. */
@@ -33,6 +33,7 @@ initLanguage(storage, navigator.language)
 
 mountApp(document.getElementById('app')!, {
   exercise: verbPresentTense,
+  cellLabelKeys: verbPresentCellLabelKeys,
   storage,
   loadData: () => loadData(verbPresentTense.type),
 })

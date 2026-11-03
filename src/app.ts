@@ -8,6 +8,8 @@ import { getLanguage, LANGUAGES, languageLabel, setLanguage, t, type Translation
 
 export interface AppDeps {
   exercise: Exercise
+  /** The text key of the visible label for each cell id; data carries only the ids. */
+  cellLabelKeys: Readonly<Record<string, TranslationKey>>
   storage: StorageLike
   loadData: () => Promise<ExerciseData>
 }
@@ -54,7 +56,7 @@ const SHELL = `
   </section>
 `
 
-export async function mountApp(root: HTMLElement, { exercise, storage, loadData }: AppDeps): Promise<void> {
+export async function mountApp(root: HTMLElement, { exercise, cellLabelKeys, storage, loadData }: AppDeps): Promise<void> {
   root.innerHTML = SHELL
   const find = <E extends HTMLElement>(selector: string) => root.querySelector<E>(selector)!
 
@@ -162,8 +164,9 @@ export async function mountApp(root: HTMLElement, { exercise, storage, loadData 
     const label = document.createElement('label')
     label.id = `cell-label-${index}`
     label.htmlFor = `cell-${index}`
-    label.dataset.i18n = cell.label
-    label.textContent = t(cell.label)
+    const labelKey = cellLabelKeys[cell.id]!
+    label.dataset.i18n = labelKey
+    label.textContent = t(labelKey)
 
     const input = document.createElement('input')
     input.id = `cell-${index}`

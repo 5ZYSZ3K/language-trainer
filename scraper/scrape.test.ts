@@ -6,12 +6,12 @@ import { scrape } from './scrape'
 /** A stand-in exercise: the page for "x" is "page:x"; a prompt containing "bad" parses to an error. */
 const stub: ScrapableExercise = {
   type: 'stub',
-  cellLabels: ['verbPresent.1sg', 'verbPresent.1pl'],
+  cellIds: ['1sg', '1pl'],
   fetchPage: (prompt, get) => get(`page:${prompt}`),
   parse(html, prompt) {
     if (prompt.includes('bad')) throw new ParseError('not the right page')
-    if (prompt.includes('empty')) return this.cellLabels.map((label) => ({ label, acceptedForms: [] }))
-    return this.cellLabels.map((label) => ({ label, acceptedForms: [`${html}/${label}`] }))
+    if (prompt.includes('empty')) return this.cellIds.map((id) => ({ id, acceptedForms: [] }))
+    return this.cellIds.map((id) => ({ id, acceptedForms: [`${html}/${id}`] }))
   },
 }
 
@@ -45,8 +45,8 @@ function flakyGet(failures: Record<string, number>) {
 const stored = (prompt: string): Item => ({
   prompt,
   cells: [
-    { label: 'verbPresent.1sg', acceptedForms: ['kept'] },
-    { label: 'verbPresent.1pl', acceptedForms: ['kept'] },
+    { id: '1sg', acceptedForms: ['kept'] },
+    { id: '1pl', acceptedForms: ['kept'] },
   ],
 })
 
@@ -56,7 +56,7 @@ describe('scrape', () => {
     const result = await scrape({ exercise: stub, prompts: ['b', 'a', 'c'], existing: [], force: false, get, save: noSave })
     expect(urls).toEqual(['page:b', 'page:a', 'page:c'])
     expect(result.items.map((i) => i.prompt)).toEqual(['b', 'a', 'c'])
-    expect(result.items[0]!.cells[0]).toEqual({ label: 'verbPresent.1sg', acceptedForms: ['page:b/verbPresent.1sg'] })
+    expect(result.items[0]!.cells[0]).toEqual({ id: '1sg', acceptedForms: ['page:b/1sg'] })
     expect(result.failures).toEqual([])
   })
 
@@ -79,14 +79,14 @@ describe('scrape', () => {
     const { get, urls } = recordingGet()
     const result = await scrape({ exercise: stub, prompts: ['a', 'b'], existing: [stored('a'), stored('b')], force: true, get, save: noSave })
     expect(urls).toEqual(['page:a', 'page:b'])
-    expect(result.items[0]!.cells[0]!.acceptedForms).toEqual(['page:a/verbPresent.1sg'])
+    expect(result.items[0]!.cells[0]!.acceptedForms).toEqual(['page:a/1sg'])
   })
 
   it('keeps the previous item when a forced refresh of it fails, and still reports the failure', async () => {
     const { get } = recordingGet(['page:b'])
     const result = await scrape({ exercise: stub, prompts: ['a', 'b'], existing: [stored('a'), stored('b')], force: true, get, save: noSave })
     expect(result.items.map((i) => i.prompt)).toEqual(['a', 'b'])
-    expect(result.items[0]!.cells[0]!.acceptedForms).toEqual(['page:a/verbPresent.1sg']) // refreshed
+    expect(result.items[0]!.cells[0]!.acceptedForms).toEqual(['page:a/1sg']) // refreshed
     expect(result.items[1]).toEqual(stored('b')) // not lost
     expect(result.failures).toEqual([{ prompt: 'b', reason: 'HTTP 503' }])
   })
@@ -125,7 +125,7 @@ describe('scrape', () => {
     expect(result.items.map((i) => i.prompt)).toEqual(['a'])
     expect(result.failures).toHaveLength(1)
     expect(result.failures[0]).toMatchObject({ prompt: 'empty one' })
-    expect(result.failures[0]!.reason).toMatch(/verbPresent\.1sg/)
+    expect(result.failures[0]!.reason).toBe('no form found for 1sg')
   })
 
   describe('when the site stops answering', () => {
@@ -353,7 +353,7 @@ describe('scrape', () => {
       const { get } = recordingGet()
       const snapshots: Item[][] = []
       await scrape({ exercise: stub, prompts: ['a'], existing: [], force: false, get, save: async (items) => void snapshots.push([...items]) })
-      expect(snapshots[0]![0]!.cells[0]).toEqual({ label: 'verbPresent.1sg', acceptedForms: ['page:a/verbPresent.1sg'] })
+      expect(snapshots[0]![0]!.cells[0]).toEqual({ id: '1sg', acceptedForms: ['page:a/1sg'] })
     })
 
     it('keeps the list order when a verb in the middle is fetched after the ones around it were already scraped', async () => {
@@ -376,7 +376,7 @@ describe('scrape', () => {
       })
       expect(snapshots).toHaveLength(3)
       expect(snapshots[0]!.map((i) => i.prompt)).toEqual(['a', 'b', 'c'])
-      expect(snapshots[0]![0]!.cells[0]!.acceptedForms).toEqual(['page:a/verbPresent.1sg']) // refreshed
+      expect(snapshots[0]![0]!.cells[0]!.acceptedForms).toEqual(['page:a/1sg']) // refreshed
       expect(snapshots[0]![1]).toEqual(stored('b')) // not reached yet
       expect(snapshots[0]![2]).toEqual(stored('c'))
     })
@@ -394,7 +394,7 @@ describe('scrape', () => {
       })
       expect(snapshots).toHaveLength(1) // only b succeeded
       expect(snapshots[0]![0]).toEqual(stored('a'))
-      expect(snapshots[0]![1]!.cells[0]!.acceptedForms).toEqual(['page:b/verbPresent.1sg'])
+      expect(snapshots[0]![1]!.cells[0]!.acceptedForms).toEqual(['page:b/1sg'])
     })
 
     it('does not save for failures: fetch, parse, empty cell, or not attempted', async () => {

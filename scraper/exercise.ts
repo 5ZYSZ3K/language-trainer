@@ -11,6 +11,6 @@ export class ParseError extends Error {}
 export interface ScrapableExercise extends Exercise {
   /** Fetch the page that describes `prompt`, following any redirects or disambiguation. */
   fetchPage(prompt: string, get: HttpGet): Promise<string>
-  /** Turn a fetched page into cells, in `cellLabels` order. Throws ParseError if it is not the right page. */
+  /** Turn a fetched page into cells, in `cellIds` order. Throws ParseError if it is not the right page. */
   parse(html: string, prompt: string): Cell[]
 }

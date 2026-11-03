@@ -1,6 +1,5 @@
 import * as cheerio from 'cheerio'
 import type { Cell } from '../src/core/cell'
-import type { TranslationKey } from '../src/i18n/en'
 import { verbPresentTense as runtime } from '../src/exercises/verb-present-tense'
 import { ParseError, type HttpGet, type ScrapableExercise } from './exercise'
 
@@ -112,7 +111,7 @@ export const verbPresentTense: ScrapableExercise = {
       .first()
     if (!entry.length) throw new ParseError(`no dictionary entry named "${prompt}"`)
 
-    const byLabel = new Map<TranslationKey, string[]>()
+    const byId = new Map<string, string[]>()
     entry
       .nextAll('table.para')
       .first()
@@ -121,12 +120,10 @@ export const verbPresentTense: ScrapableExercise = {
         const tds = $(tr).children('td')
         const person = /^([123])\. osoba$/.exec(collapse($(tds[0]).text()))?.[1] as '1' | '2' | '3' | undefined
         if (!person) return
-        byLabel.set(`verbPresent.${person}sg` as const, expandVariants(cellText($, tds[1]!)))
-        byLabel.set(`verbPresent.${person}pl` as const, expandVariants(cellText($, tds[2]!)))
+        byId.set(`${person}sg`, expandVariants(cellText($, tds[1]!)))
+        byId.set(`${person}pl`, expandVariants(cellText($, tds[2]!)))
       })
     const withParticle = (form: string) => (particle && !form.endsWith(` ${particle}`) ? `${form} ${particle}` : form)
-    return runtime.cellLabels.map(
-      (label): Cell => ({ label, acceptedForms: (byLabel.get(label) ?? []).map(withParticle) }),
-    )
+    return runtime.cellIds.map((id): Cell => ({ id, acceptedForms: (byId.get(id) ?? []).map(withParticle) }))
   },
 }

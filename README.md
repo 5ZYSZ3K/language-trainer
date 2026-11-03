@@ -148,7 +148,7 @@ The tests run the same logic against a temporary git repository; they never touc
 ```
 src/
   core/        pure, tested logic: matching, typing shortcuts, Round, Scores, random pick
-  exercises/   what the page needs to know about an exercise (type id, cell labels)
+  exercises/   what the page needs to know about an exercise (type id, cell ids and their label keys)
   i18n/        typed en / cs dictionaries and the t() helper
   app.ts       the DOM layer (deliberately thin and not unit tested)
 scraper/       build-time only, never shipped: HTTP policy, scrape orchestration, the verb parser
@@ -160,7 +160,7 @@ scripts/       publish-pages.ts: commits dist/ to the local gh-pages branch (tes
 
 ### Extension points (and nothing more)
 
-- A neutral `Cell` model (`label`, `acceptedForms[]`); the UI and scoring never mention persons or verbs.
+- A neutral `Cell` model (`id`, `acceptedForms[]`); the UI and scoring never mention persons or verbs.
 - An `Exercise` interface with `VerbPresentTense` as the only implementation. The page only needs the
   runtime part (`src/core/exercise.ts`); fetching and parsing live in `scraper/` so the parser is not
   bundled.

@@ -8,12 +8,12 @@ const TYPE = 'test-exercise'
 const item: Item = {
   prompt: 'mít',
   cells: [
-    { label: 'verbPresent.1sg', acceptedForms: ['mám'] },
-    { label: 'verbPresent.1pl', acceptedForms: ['máme'] },
-    { label: 'verbPresent.2sg', acceptedForms: ['máš'] },
-    { label: 'verbPresent.2pl', acceptedForms: ['máte'] },
-    { label: 'verbPresent.3sg', acceptedForms: ['má'] },
-    { label: 'verbPresent.3pl', acceptedForms: ['mají', 'měj'] },
+    { id: '1sg', acceptedForms: ['mám'] },
+    { id: '1pl', acceptedForms: ['máme'] },
+    { id: '2sg', acceptedForms: ['máš'] },
+    { id: '2pl', acceptedForms: ['máte'] },
+    { id: '3sg', acceptedForms: ['má'] },
+    { id: '3pl', acceptedForms: ['mají', 'měj'] },
   ],
 }
 const ALL_RIGHT = ['mám', 'máme', 'máš', 'máte', 'má', 'mají']

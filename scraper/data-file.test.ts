@@ -16,8 +16,8 @@ afterEach(async () => {
 const item = (prompt: string): Item => ({
   prompt,
   cells: [
-    { label: 'verbPresent.1sg', acceptedForms: [`${prompt}m`, 'ž"quoted"'] },
-    { label: 'verbPresent.1pl', acceptedForms: [`${prompt}me`] },
+    { id: '1sg', acceptedForms: [`${prompt}m`, 'ž"quoted"'] },
+    { id: '1pl', acceptedForms: [`${prompt}me`] },
   ],
 })
 
@@ -82,8 +82,8 @@ describe('readItems', () => {
 })
 
 describe('writeData', () => {
-  const data: ExerciseData = { exerciseType: 'x', items: [{ prompt: 'a', cells: [{ label: 'verbPresent.1sg', acceptedForms: ['am'] }] }] }
-  const expected = '{"exerciseType":"x","items":[\n{"prompt":"a","cells":[{"label":"verbPresent.1sg","acceptedForms":["am"]}]}\n]}\n'
+  const data: ExerciseData = { exerciseType: 'x', items: [{ prompt: 'a', cells: [{ id: '1sg', acceptedForms: ['am'] }] }] }
+  const expected = '{"exerciseType":"x","items":[\n{"prompt":"a","cells":[{"id":"1sg","acceptedForms":["am"]}]}\n]}\n'
 
   it('creates the data directory and writes the serialised data', async () => {
     const file = join(dir, 'public', 'data', 'x.json')

@@ -90,7 +90,7 @@ export async function scrape(options: ScrapeOptions): Promise<ScrapeResult> {
         fetchFailuresInARow = 0
         const cells = exercise.parse(html, prompt)
         const empty = cells.find((cell) => cell.acceptedForms.length === 0)
-        if (empty) throw new ParseError(`no form found for ${empty.label}`)
+        if (empty) throw new ParseError(`no form found for ${empty.id}`)
         item = { prompt, cells }
       } catch (error) {
         const reason = error instanceof Error ? error.message : String(error)
