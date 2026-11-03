@@ -93,10 +93,10 @@ describe('verbPageScraper.parse', () => {
   it('reads the six present-tense forms of a regular verb', () => {
     expect(forms(fixture('bavit'), 'bavit')).toEqual([
       ['1sg', ['bavím']],
-      ['1pl', ['bavíme']],
       ['2sg', ['bavíš']],
-      ['2pl', ['bavíte']],
       ['3sg', ['baví']],
+      ['1pl', ['bavíme']],
+      ['2pl', ['bavíte']],
       ['3pl', ['baví']],
     ])
   })

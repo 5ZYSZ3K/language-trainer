@@ -1,9 +1,13 @@
 import type { VerbPresentTextKey } from './texts.en'
 
-const CELL_IDS = ['1sg', '1pl', '2sg', '2pl', '3sg', '3pl'] as const
+const CELL_IDS = ['1sg', '2sg', '3sg', '1pl', '2pl', '3pl'] as const
 type CellId = (typeof CELL_IDS)[number]
 
-/** The cells of an item, in display order (rendered as a two-column grid, row by row). */
+/**
+ * The cells of an item, in display order: singular, then plural. This is also the order of Enter and Tab. The page
+ * lays them out in one column, or in two filled column by column (see `.cells` in style.css), so the singular forms
+ * stay together.
+ */
 export const verbPresentCellIds: readonly string[] = CELL_IDS
 
 /**

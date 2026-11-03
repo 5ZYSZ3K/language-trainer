@@ -75,7 +75,7 @@ reads lists; the page picks verbs from the dataset alone.
 - **Shape:** `{ "language": "cs", "source": "prirucka", "quizType": "verb-present-tense", "items": [ ... ] }`.
   The three fields must match the file's location. A `verb-present-tense` item is
   `{ "prompt": "bát se", "cells": [ { "id": "1sg", "acceptedForms": ["bojím se", ...] }, ...6 cells... ] }`
-  with the cell ids `1sg 1pl 2sg 2pl 3sg 3pl` in that order. Cell ids are neutral: the quiz's texts map them to
+  with the cell ids `1sg 2sg 3sg 1pl 2pl 3pl` in that order. Cell ids are neutral: the quiz's texts map them to
   the labels the page shows, so data never mentions UI texts.
 - **Layout:** valid JSON with one item per line, so committing a change to one item gives a one-line diff.
 - **Content rule:** the file only holds items that satisfy the quiz type's contract completely. A failed item is
@@ -286,7 +286,8 @@ still need to be reviewed.
 ## Page behaviour in short
 
 - A random verb each round, never the same one twice in a row (unless there is only one).
-- All six forms are always shown, in a two-column grid. Reflexive particles (`se`, `si`) are typed as part of the
+- All six forms are always shown, singular first, then plural: singular on the left and plural on the right on a
+  wide screen, one after the other on a narrow one. Enter moves to the next form in that order. Reflexive particles (`se`, `si`) are typed as part of the
   answer.
 - Each cell has its own Check button, plus "Check all". Checking locks a cell for the round: correct turns it
   green, wrong turns it red and shows all accepted variants joined by ` / `. A single check on an empty cell is

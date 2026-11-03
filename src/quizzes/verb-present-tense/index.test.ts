@@ -20,8 +20,8 @@ describe('verbPresentTense', () => {
     ])
   })
 
-  it('has six neutral cell ids, in display order', () => {
-    expect(verbPresentCellIds).toEqual(['1sg', '1pl', '2sg', '2pl', '3sg', '3pl'])
+  it('has six neutral cell ids, in display order: singular, then plural', () => {
+    expect(verbPresentCellIds).toEqual(['1sg', '2sg', '3sg', '1pl', '2pl', '3pl'])
   })
 })
 
@@ -49,7 +49,7 @@ describe('the texts of verbPresentTense', () => {
 })
 
 describe('verbPresentTenseContract', () => {
-  const ids = ['1sg', '1pl', '2sg', '2pl', '3sg', '3pl']
+  const ids = ['1sg', '2sg', '3sg', '1pl', '2pl', '3pl']
   const valid = (): Item => ({ prompt: 'bát se', cells: ids.map((id) => ({ id, acceptedForms: [`${id} se`] })) })
   const problems = (value: unknown) => verbPresentTenseContract.validateItem(value)
 
@@ -80,25 +80,25 @@ describe('verbPresentTenseContract', () => {
 
   it('reports a cell without any form as "no form found for <id>"', () => {
     const item = valid()
-    item.cells[1]!.acceptedForms = []
+    item.cells[3]!.acceptedForms = []
     expect(problems(item)).toEqual(['no form found for 1pl'])
   })
 
   it('treats blank forms as no form', () => {
     const item = valid()
-    item.cells[2]!.acceptedForms = ['', '  ']
+    item.cells[1]!.acceptedForms = ['', '  ']
     expect(problems(item)).toEqual(['no form found for 2sg'])
   })
 
   it('accepts a cell that has at least one non-empty form next to blank ones', () => {
     const item = valid()
-    item.cells[2]!.acceptedForms = ['', 'bojíš se']
+    item.cells[1]!.acceptedForms = ['', 'bojíš se']
     expect(problems(item)).toEqual([])
   })
 
   it('reports every cell without a form, in cell order', () => {
     const item = valid()
-    item.cells[3]!.acceptedForms = []
+    item.cells[4]!.acceptedForms = []
     item.cells[0]!.acceptedForms = []
     expect(problems(item)).toEqual(['no form found for 1sg', 'no form found for 2pl'])
   })
@@ -106,7 +106,7 @@ describe('verbPresentTenseContract', () => {
   it('reports a missing or non-list acceptedForms as no form', () => {
     const item = valid() as unknown as { cells: { id: string; acceptedForms?: unknown }[] }
     delete item.cells[0]!.acceptedForms
-    item.cells[1]!.acceptedForms = 'bojím se'
+    item.cells[3]!.acceptedForms = 'bojíme se'
     expect(problems(item)).toEqual(['no form found for 1sg', 'no form found for 1pl'])
   })
 
@@ -126,11 +126,11 @@ describe('verbPresentTenseContract', () => {
   it('requires exactly the six ids, in order', () => {
     const missing = valid()
     missing.cells.pop()
-    expect(problems(missing)).toEqual(['cell ids must be 1sg, 1pl, 2sg, 2pl, 3sg, 3pl in that order, found 1sg, 1pl, 2sg, 2pl, 3sg'])
+    expect(problems(missing)).toEqual(['cell ids must be 1sg, 2sg, 3sg, 1pl, 2pl, 3pl in that order, found 1sg, 2sg, 3sg, 1pl, 2pl'])
 
     const swapped = valid()
     swapped.cells.reverse()
-    expect(problems(swapped)).toEqual(['cell ids must be 1sg, 1pl, 2sg, 2pl, 3sg, 3pl in that order, found 3pl, 3sg, 2pl, 2sg, 1pl, 1sg'])
+    expect(problems(swapped)).toEqual(['cell ids must be 1sg, 2sg, 3sg, 1pl, 2pl, 3pl in that order, found 3pl, 2pl, 1pl, 3sg, 2sg, 1sg'])
 
     const extra = valid()
     extra.cells.push({ id: '4sg', acceptedForms: ['x'] })

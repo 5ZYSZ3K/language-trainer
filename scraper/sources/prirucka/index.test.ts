@@ -56,7 +56,7 @@ describe('prirucka adapters', () => {
       expect(result.items.map((item) => (item as Item).prompt)).toEqual(['bavit', 'bát se'])
       expect(saved.at(-1)).toEqual(result.items)
       const batSe = result.items[1] as Item
-      expect(batSe.cells.map((cell) => cell.id)).toEqual(['1sg', '1pl', '2sg', '2pl', '3sg', '3pl'])
+      expect(batSe.cells.map((cell) => cell.id)).toEqual(['1sg', '2sg', '3sg', '1pl', '2pl', '3pl'])
       expect(batSe.cells[0]!.acceptedForms).toContain('bojím se')
       for (const item of result.items) expect(verbPresentTenseContract.validateItem(item)).toEqual([])
     })

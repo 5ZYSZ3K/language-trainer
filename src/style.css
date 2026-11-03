@@ -223,7 +223,9 @@ button.link {
   margin-left: 0.4rem;
 }
 
-/* minmax(0, 1fr): let a column shrink below its content so a long button label can't widen the grid. */
+/* minmax(0, 1fr): let a column shrink below its content so a long button label can't widen the grid. The cells come
+   singular first, then plural: one column on a narrow screen, and on a wide one two columns filled top to bottom, so
+   singular is on the left, plural on the right, and Enter moves down. */
 .cells {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -233,6 +235,8 @@ button.link {
 @media (min-width: 34rem) {
   .cells {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(3, auto);
+    grid-auto-flow: column;
   }
 }
 
