@@ -12,6 +12,7 @@ export const cs: Record<VerbPresentTextKey, string> = {
   'cell.2pl': 'vy (2. os. mn. č.)',
   'cell.3sg': 'on / ona / ono (3. os. j. č.)',
   'cell.3pl': 'oni / ony / ona (3. os. mn. č.)',
+  'answer.label': 'Všechny správné tvary:',
   next: 'Další sloveso',
   'help.reflexive': 'U zvratných sloves pište i částici (se / si), např. bojím se.',
 

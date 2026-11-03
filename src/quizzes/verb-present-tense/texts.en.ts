@@ -11,6 +11,7 @@ export const en = {
   'cell.2pl': 'you (2nd pl.)',
   'cell.3sg': 'he / she / it (3rd sg.)',
   'cell.3pl': 'they (3rd pl.)',
+  'answer.label': 'All correct forms:',
   next: 'Next verb',
   'help.reflexive': 'For reflexive verbs, type the particle too (se / si), e.g. bojím se.',
 

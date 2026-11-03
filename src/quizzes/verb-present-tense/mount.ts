@@ -127,11 +127,21 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
     row.className = 'row'
     row.append(input, button)
 
+    // Shown once the cell is checked, right or wrong: every accepted form, so a correct variant also teaches the others.
     const answer = document.createElement('div')
     answer.className = 'answer'
     answer.hidden = true
-    answer.lang = language.htmlLang
 
+    const answerLabel = document.createElement('span')
+    answerLabel.className = 'answer-label'
+    answerLabel.dataset.i18n = 'answer.label'
+    answerLabel.textContent = t('answer.label')
+
+    const answerForms = document.createElement('strong')
+    answerForms.className = 'answer-forms'
+    answerForms.lang = language.htmlLang
+
+    answer.append(answerLabel, ' ', answerForms)
     wrap.append(label, row, answer)
     return wrap
   }
@@ -151,8 +161,9 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
     inputs[index]!.readOnly = state !== 'open'
     wrap.querySelector<HTMLButtonElement>('.check')!.disabled = state !== 'open'
     const answer = wrap.querySelector<HTMLElement>('.answer')!
-    answer.hidden = state !== 'wrong'
-    answer.textContent = state === 'wrong' ? item!.cells[index]!.acceptedForms.join(' / ') : ''
+    answer.hidden = state === 'open'
+    wrap.querySelector<HTMLElement>('.answer-forms')!.textContent =
+      state === 'open' ? '' : item!.cells[index]!.acceptedForms.join(' / ')
   }
 
   function focusNextOpen(from: number): void {

@@ -294,7 +294,17 @@ button.link {
 
 .cell .answer {
   margin-top: 0.2rem;
-  font-weight: 600;
+}
+
+.cell .answer-label {
+  color: var(--muted);
+}
+
+.cell[data-state='correct'] .answer-forms {
+  color: var(--ok-border);
+}
+
+.cell[data-state='wrong'] .answer-forms {
   color: var(--bad-border);
 }
 
