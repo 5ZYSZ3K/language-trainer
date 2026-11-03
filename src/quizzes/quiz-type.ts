@@ -1,12 +1,26 @@
 import type { Contract } from '../core/contract'
-import type { TranslationKey } from '../i18n'
+import type { UiLanguage } from '../i18n'
 import type { Language } from '../languages'
 
+/**
+ * The texts a quiz type owns, in one UI language: the keys the shell shows on the quiz's behalf, and any others the
+ * quiz needs inside its own area.
+ */
+export interface QuizTexts {
+  /** The heading of the page and its document title. */
+  readonly title: string
+  /** The sentence under the heading that says what to do. */
+  readonly intro: string
+  /** The shell's status when the pool holds no items yet. */
+  readonly empty: string
+  readonly [key: string]: string
+}
+
 /** One score counter of a quiz type; the scores panel is drawn from these. */
-export interface Meter {
+export interface Meter<Key extends string = string> {
   readonly id: string
-  /** Shown next to the counter. Until a quiz type owns its texts (step 7) this is a shell text key. */
-  readonly label: TranslationKey
+  /** The key of the counter's label in the quiz type's texts. */
+  readonly label: Key
 }
 
 /** What the shell hands a quiz when it mounts it. */
@@ -28,8 +42,8 @@ export interface QuizInstance {
 }
 
 /**
- * One kind of quiz. It owns its contract (the exact shape of data it needs), its score counters, its interaction
- * (`mount`) and, from step 7, its texts.
+ * One kind of quiz. It owns its contract (the exact shape of data it needs), its score counters, its texts and its
+ * interaction (`mount`).
  */
 export interface QuizType<Item> {
   /** Permanent: the data file name and part of the pool key. */
@@ -37,6 +51,8 @@ export interface QuizType<Item> {
   readonly contract: Contract<Item>
   /** Score counters, in display order. */
   readonly meters: readonly Meter[]
+  /** Every text of the quiz, per UI language. A quiz type writes them as typed dictionaries, so a missing key is a compile error. */
+  readonly texts: Record<UiLanguage, QuizTexts>
   /**
    * Builds the quiz inside `container` (which it owns entirely) and starts it. With no items it shows no exercise;
    * the shell says why in its status line.

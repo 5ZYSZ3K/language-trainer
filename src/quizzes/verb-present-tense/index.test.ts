@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Item } from '../../core/cell'
+import { UI_LANGUAGES } from '../../i18n'
+import { uiTexts } from '../../ui'
 import { verbPresentCellIds, verbPresentCellLabelKeys, verbPresentTense, verbPresentTenseContract } from './index'
 
 describe('verbPresentTense', () => {
@@ -13,8 +15,8 @@ describe('verbPresentTense', () => {
 
   it('counts forms and verbs, in that order', () => {
     expect(verbPresentTense.meters).toEqual([
-      { id: 'cells', label: 'scores.cells' },
-      { id: 'items', label: 'scores.items' },
+      { id: 'cells', label: 'meter.cells' },
+      { id: 'items', label: 'meter.items' },
     ])
   })
 
@@ -24,9 +26,32 @@ describe('verbPresentTense', () => {
 })
 
 describe('verbPresentCellLabelKeys', () => {
-  it('maps every cell id, and nothing else, to its text key verbPresent.<id>', () => {
+  it('maps every cell id, and nothing else, to its text key cell.<id>', () => {
     expect(Object.keys(verbPresentCellLabelKeys).sort()).toEqual([...verbPresentCellIds].sort())
-    for (const id of verbPresentCellIds) expect(verbPresentCellLabelKeys[id]).toBe(`verbPresent.${id}`)
+    for (const id of verbPresentCellIds) expect(verbPresentCellLabelKeys[id]).toBe(`cell.${id}`)
+  })
+})
+
+describe('the texts of verbPresentTense', () => {
+  const texts = verbPresentTense.texts
+
+  it('names the page, as heading and document title, in both UI languages', () => {
+    expect(texts.en.title).toBe('Czech verb trainer')
+    expect(texts.cs.title).toBe('Trénink časování českých sloves')
+  })
+
+  it('labels every cell id and every meter in each UI language', () => {
+    for (const language of UI_LANGUAGES) {
+      for (const id of verbPresentCellIds) expect(texts[language][verbPresentCellLabelKeys[id]!], `${language} ${id}`).toBeTruthy()
+      for (const meter of verbPresentTense.meters) expect(texts[language][meter.label], `${language} ${meter.id}`).toBeTruthy()
+    }
+  })
+
+  it('does not reuse a key of the shared type-in texts, which its area is filled in together with', () => {
+    for (const language of UI_LANGUAGES) {
+      const shared = Object.keys(uiTexts[language])
+      expect(Object.keys(texts[language]).filter((key) => shared.includes(key)), language).toEqual([])
+    }
   })
 })
 

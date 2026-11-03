@@ -1,6 +1,21 @@
 import { describe, expect, it } from 'vitest'
 import type { TranslationKey } from './en'
-import { detectLanguage, getLanguage, initLanguage, languageLabel, setLanguage, t, UI_LANGUAGES } from './index'
+import { LANGUAGES } from '../languages'
+import { QUIZ_TYPES } from '../quizzes'
+import { uiTexts } from '../ui'
+import {
+  createT,
+  detectLanguage,
+  getLanguage,
+  initLanguage,
+  joinTexts,
+  languageLabel,
+  setLanguage,
+  shellTexts,
+  t,
+  UI_LANGUAGES,
+  type Dictionaries,
+} from './index'
 
 function memoryStorage(initial: Record<string, string> = {}) {
   const data = new Map(Object.entries(initial))
@@ -49,6 +64,51 @@ describe('t and setLanguage', () => {
   })
 })
 
+describe('createT', () => {
+  const greetings = { en: { hello: 'Hello' }, cs: { hello: 'Ahoj' } }
+  const farewells = { en: { bye: 'Bye' }, cs: { bye: 'Nashledanou' } }
+
+  it('translates a dictionary set into the current UI language and follows switches', () => {
+    const tGreeting = createT(greetings)
+    setLanguage('en', memoryStorage())
+    expect(tGreeting('hello')).toBe('Hello')
+    setLanguage('cs', memoryStorage())
+    expect(tGreeting('hello')).toBe('Ahoj')
+  })
+
+  it('serves every dictionary set from the same current language', () => {
+    const [tGreeting, tFarewell] = [createT(greetings), createT(farewells)]
+    setLanguage('cs', memoryStorage())
+    expect([tGreeting('hello'), tFarewell('bye')]).toEqual(['Ahoj', 'Nashledanou'])
+    setLanguage('en', memoryStorage())
+    expect([tGreeting('hello'), tFarewell('bye')]).toEqual(['Hello', 'Bye'])
+  })
+
+  it('shows the key itself rather than nothing when a key is unknown', () => {
+    setLanguage('cs', memoryStorage())
+    expect(createT(greetings)('no.such.key' as 'hello')).toBe('no.such.key')
+  })
+})
+
+describe('joinTexts', () => {
+  const greetings = { en: { hello: 'Hello' }, cs: { hello: 'Ahoj' } }
+  const farewells = { en: { bye: 'Bye' }, cs: { bye: 'Nashledanou' } }
+
+  it('puts two sets side by side, so one translator serves the keys of both in every UI language', () => {
+    const tBoth = createT(joinTexts(greetings, farewells))
+    setLanguage('cs', memoryStorage())
+    expect([tBoth('hello'), tBoth('bye')]).toEqual(['Ahoj', 'Nashledanou'])
+    setLanguage('en', memoryStorage())
+    expect([tBoth('hello'), tBoth('bye')]).toEqual(['Hello', 'Bye'])
+  })
+
+  it('leaves the sets it joined as they were', () => {
+    joinTexts(greetings, farewells)
+    expect(greetings).toEqual({ en: { hello: 'Hello' }, cs: { hello: 'Ahoj' } })
+    expect(farewells).toEqual({ en: { bye: 'Bye' }, cs: { bye: 'Nashledanou' } })
+  })
+})
+
 describe('languageLabel', () => {
   it('gives each language its own short label for the switch, independent of the current language', () => {
     setLanguage('en', memoryStorage())
@@ -88,5 +148,76 @@ describe('initLanguage', () => {
     expect(initLanguage(broken, 'cs')).toBe('cs')
     expect(() => setLanguage('en', broken)).not.toThrow()
     expect(getLanguage()).toBe('en')
+  })
+})
+
+// Every owner of texts keeps its own dictionaries, one per UI language. The compiler already rejects a key one of them
+// lacks; these tests check what the compiler cannot see (a cast, a registry entry written loosely) and that each key
+// has exactly one owner.
+
+/** What is wrong with a set of dictionaries: a key some UI language lacks, or a text that is empty. */
+function problemsOf(set: Dictionaries<string>): string[] {
+  const keys = new Set(UI_LANGUAGES.flatMap((language) => Object.keys(set[language])))
+  return UI_LANGUAGES.flatMap((language) =>
+    [...keys].flatMap((key) => {
+      const text: unknown = (set[language] as Record<string, unknown>)[key]
+      if (text === undefined) return [`${language} lacks ${key}`]
+      return typeof text === 'string' && text.trim() !== '' ? [] : [`${language} has no text for ${key}`]
+    }),
+  )
+}
+
+interface Owner {
+  name: string
+  texts: Dictionaries<string>
+}
+const shell: Owner = { name: 'the shell', texts: shellTexts }
+const typeIn: Owner = { name: 'the shared type-in blocks (src/ui)', texts: uiTexts }
+/** A quiz type's texts are found through the registry, so a new quiz type is covered without touching this file. */
+const quizzes: Owner[] = QUIZ_TYPES.map((quizType) => ({ name: `the quiz type ${quizType.id}`, texts: quizType.texts }))
+const owners = [shell, typeIn, ...quizzes]
+
+describe('problemsOf', () => {
+  it('reports a key one UI language lacks, and a text that is empty', () => {
+    const gap = { en: { a: 'A', b: 'B' }, cs: { a: 'Á' } }
+    expect(problemsOf(gap as unknown as Dictionaries<string>)).toEqual(['cs lacks b'])
+    expect(problemsOf({ en: { a: 'A' }, cs: { a: ' ' } })).toEqual(['cs has no text for a'])
+    expect(problemsOf({ en: { a: 'A' }, cs: { a: 'Á' } })).toEqual([])
+  })
+})
+
+describe.each(owners.map((owner) => [owner.name, owner.texts] as const))('the texts of %s', (_name, texts) => {
+  it('have every key in every UI language, and no empty text', () => {
+    expect(problemsOf(texts)).toEqual([])
+  })
+})
+
+describe('the texts a quiz type owns', () => {
+  it.each(QUIZ_TYPES.map((quizType) => [quizType.id, quizType] as const))('%s: name every meter in each UI language', (_id, quizType) => {
+    for (const language of UI_LANGUAGES) {
+      for (const meter of quizType.meters) expect(quizType.texts[language][meter.label], `${language} ${meter.id}`).toBeTruthy()
+    }
+  })
+})
+
+describe('the texts of the learned languages', () => {
+  it.each(LANGUAGES.map((language) => [language.id, language] as const))('%s: names itself and lists the same shortcuts in each UI language', (_id, language) => {
+    for (const uiLanguage of UI_LANGUAGES) {
+      expect(language.texts[uiLanguage].name.trim(), uiLanguage).not.toBe('')
+      expect(language.texts[uiLanguage].shortcutHelp.length, uiLanguage).toBe(language.texts.en.shortcutHelp.length)
+      expect(language.texts[uiLanguage].shortcutHelp.every((line) => line.trim() !== ''), uiLanguage).toBe(true)
+    }
+  })
+})
+
+describe('the owners of texts', () => {
+  const keysOf = (texts: Dictionaries<string>) => new Set(UI_LANGUAGES.flatMap((language) => Object.keys(texts[language])))
+
+  it('keep their texts to themselves: the shell, the type-in blocks and each quiz type share no key', () => {
+    // One page fills the shell's elements and a quiz's area from these sets, so a shared key would let one owner
+    // silently override another's text. (Two quiz types are never on one page: they may use the same keys.)
+    const onOnePage: [Owner, Owner][] = [[shell, typeIn], ...quizzes.flatMap((quiz): [Owner, Owner][] => [[shell, quiz], [typeIn, quiz]])]
+    const clashes = onOnePage.flatMap(([a, b]) => [...keysOf(a.texts)].filter((key) => keysOf(b.texts).has(key)).map((key) => `${key}: ${a.name} and ${b.name}`))
+    expect(clashes).toEqual([])
   })
 })

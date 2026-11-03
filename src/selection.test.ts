@@ -12,10 +12,12 @@ const language = (id: string): Language => ({
   texts: { en: { name: id, shortcutHelp: [] }, cs: { name: id, shortcutHelp: [] } },
 })
 
+const noTexts = { title: '', intro: '', empty: '' }
 const quiz = (id: string): QuizType<unknown> => ({
   id,
   contract: { validateItem: () => [], keyOf: () => '' },
   meters: [],
+  texts: { en: noTexts, cs: noTexts },
   mount: () => ({ applyTexts: () => {} }),
 })
 

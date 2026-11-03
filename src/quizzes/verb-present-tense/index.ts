@@ -1,8 +1,9 @@
 import type { Item } from '../../core/cell'
 import type { Contract } from '../../core/contract'
-import type { QuizType } from '../quiz-type'
+import type { Meter, QuizType } from '../quiz-type'
 import { verbPresentCellIds } from './cells'
 import { mountVerbPresentTense } from './mount'
+import { verbPresentTexts, type VerbPresentTextKey } from './texts'
 
 export { verbPresentCellIds, verbPresentCellLabelKeys } from './cells'
 
@@ -41,12 +42,15 @@ export const verbPresentTenseContract: Contract<Item> = {
   keyOf: (item) => item.prompt,
 }
 
+const meters: readonly Meter<VerbPresentTextKey>[] = [
+  { id: 'cells', label: 'meter.cells' },
+  { id: 'items', label: 'meter.items' },
+]
+
 export const verbPresentTense: QuizType<Item> = {
   id: 'verb-present-tense',
   contract: verbPresentTenseContract,
-  meters: [
-    { id: 'cells', label: 'scores.cells' },
-    { id: 'items', label: 'scores.items' },
-  ],
+  meters,
+  texts: verbPresentTexts,
   mount: mountVerbPresentTense,
 }

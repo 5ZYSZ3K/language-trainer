@@ -150,10 +150,10 @@ src/
   core/        pure, tested logic: matching, typing shortcuts, Round, Scores, random pick
   languages/   the languages that can be learned: characters and typing shortcuts (registry in index.ts)
   sources/     the data sources and which datasets each provides (registry in index.ts)
-  quizzes/     the quiz types: id, contract, score meters, mount (the quiz's DOM) (registry in index.ts)
+  quizzes/     the quiz types: id, contract, score meters, texts, mount (the quiz's DOM) (registry in index.ts)
   datasets/    the pool (language, source, quiz type) and the loader of the bundled datasets
   selection.ts which pool the page opens on (pure rules for a future selector)
-  i18n/        typed en / cs dictionaries and the t() helper
+  i18n/        the UI languages, createT() and the shell's own en / cs dictionaries (a quiz type's and ui/'s texts live with them)
   ui/          shared type-in building blocks: special-character buttons, typing shortcuts on inputs, help list
   app/         shell.ts: header, language switch, scores panel, status line (thin DOM, not unit tested)
 scraper/       build-time only, never shipped: cli.ts runs the adapters chosen by --source / --language / --quiz
@@ -178,8 +178,9 @@ public/        .nojekyll only
   `{ correct, total }` counter per meter the quiz type declares, so future tenses, sources or languages
   cannot collide with them. The quiz type id (`verb-present-tense`) is also the data file name and must not
   change.
-- Adding a language means adding a dictionary file typed like `src/i18n/cs.ts` and registering it in
-  `src/i18n/index.ts`; a missing key is a compile error.
+- Adding a UI language means listing it in `UI_LANGUAGES` (`src/i18n/index.ts`) and writing the file the compiler
+  then asks for in each set of texts (the shell's, `src/ui/`'s, each quiz type's, each learned language's); a
+  missing key is a compile error.
 
 Other tenses and parts of speech are out of scope for now.
 

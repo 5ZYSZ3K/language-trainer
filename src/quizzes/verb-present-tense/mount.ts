@@ -1,11 +1,12 @@
 import type { Cell, Item } from '../../core/cell'
 import { pickNext } from '../../core/pick'
 import { Round } from '../../core/round'
-import { getLanguage, t } from '../../i18n'
+import { getLanguage } from '../../i18n'
 import { fillTexts } from '../../i18n/dom'
 import { enableShortcuts, fillSpecialChars, renderShortcutHelp } from '../../ui'
 import type { QuizHost, QuizInstance } from '../quiz-type'
 import { verbPresentCellLabelKeys } from './cells'
+import { t } from './texts'
 
 // The quiz's area of the page. All visible text is filled in by applyTexts() via the data-i18n attributes.
 const AREA = `
@@ -117,8 +118,8 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
     const button = document.createElement('button')
     button.type = 'button'
     button.className = 'check'
-    button.dataset.i18n = 'cell.check'
-    button.textContent = t('cell.check')
+    button.dataset.i18n = 'check'
+    button.textContent = t('check')
     button.setAttribute('aria-describedby', label.id)
     button.addEventListener('click', () => checkOne(index))
 
