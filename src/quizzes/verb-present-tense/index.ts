@@ -1,20 +1,10 @@
 import type { Item } from '../../core/cell'
 import type { Contract } from '../../core/contract'
-import type { TranslationKey } from '../../i18n'
 import type { QuizType } from '../quiz-type'
+import { verbPresentCellIds } from './cells'
+import { mountVerbPresentTense } from './mount'
 
-/** The cells of an item, in display order (rendered as a two-column grid, row by row). */
-export const verbPresentCellIds: readonly string[] = ['1sg', '1pl', '2sg', '2pl', '3sg', '3pl']
-
-/** The text key of the visible label for each cell id. Data holds only the ids; the page looks the label up here. */
-export const verbPresentCellLabelKeys: Readonly<Record<string, TranslationKey>> = {
-  '1sg': 'verbPresent.1sg',
-  '1pl': 'verbPresent.1pl',
-  '2sg': 'verbPresent.2sg',
-  '2pl': 'verbPresent.2pl',
-  '3sg': 'verbPresent.3sg',
-  '3pl': 'verbPresent.3pl',
-}
+export { verbPresentCellIds, verbPresentCellLabelKeys } from './cells'
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -58,4 +48,5 @@ export const verbPresentTense: QuizType<Item> = {
     { id: 'cells', label: 'scores.cells' },
     { id: 'items', label: 'scores.items' },
   ],
+  mount: mountVerbPresentTense,
 }

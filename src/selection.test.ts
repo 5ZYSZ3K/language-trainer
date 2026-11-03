@@ -16,6 +16,7 @@ const quiz = (id: string): QuizType<unknown> => ({
   id,
   contract: { validateItem: () => [], keyOf: () => '' },
   meters: [],
+  mount: () => ({ applyTexts: () => {} }),
 })
 
 type Provides = [language: string, quizType: string]

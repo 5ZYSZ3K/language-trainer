@@ -1,11 +1,10 @@
 import './style.css'
-import { mountApp } from './app'
+import { mountShell } from './app/shell'
 import type { StorageLike } from './core/scores'
 import { loadDataset } from './datasets/load'
 import { initLanguage } from './i18n'
 import { LANGUAGES } from './languages'
 import { QUIZ_TYPES } from './quizzes'
-import { verbPresentCellLabelKeys } from './quizzes/verb-present-tense'
 import { defaultPool } from './selection'
 import { SOURCES } from './sources'
 
@@ -35,11 +34,10 @@ const language = LANGUAGES.find((candidate) => candidate.id === pool?.language)
 const quizType = QUIZ_TYPES.find((candidate) => candidate.id === pool?.quizType)
 if (!pool || !language || !quizType) throw new Error('No pool is registered, so there is nothing to practise.')
 
-mountApp(document.getElementById('app')!, {
+mountShell(document.getElementById('app')!, {
   quizType,
   pool,
   language,
-  cellLabelKeys: verbPresentCellLabelKeys,
   storage,
   loadData: () => loadDataset(pool),
 })

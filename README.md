@@ -150,11 +150,12 @@ src/
   core/        pure, tested logic: matching, typing shortcuts, Round, Scores, random pick
   languages/   the languages that can be learned: characters and typing shortcuts (registry in index.ts)
   sources/     the data sources and which datasets each provides (registry in index.ts)
-  quizzes/     the quiz types: id, contract, score meters (registry in index.ts)
+  quizzes/     the quiz types: id, contract, score meters, mount (the quiz's DOM) (registry in index.ts)
   datasets/    the pool (language, source, quiz type) and the loader of the bundled datasets
   selection.ts which pool the page opens on (pure rules for a future selector)
   i18n/        typed en / cs dictionaries and the t() helper
-  app.ts       the DOM layer (deliberately thin and not unit tested)
+  ui/          shared type-in building blocks: special-character buttons, typing shortcuts on inputs, help list
+  app/         shell.ts: header, language switch, scores panel, status line (thin DOM, not unit tested)
 scraper/       build-time only, never shipped: cli.ts runs the adapters chosen by --source / --language / --quiz
   harness/     lock, atomic data file (one item per line), polite requests, run context, adapter registry
   list-driven.ts the loop over a word list: fetch, parse, validate, save after every item
