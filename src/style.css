@@ -45,6 +45,7 @@
   --border: #c9c9c0;
   --accent: #1d4ed8;
   --accent-text: #ffffff;
+  --highlight: #a02fa0;
   --ok-bg: #e3f4e6;
   --ok-border: #2e7d32;
   --bad-bg: #fde7e7;
@@ -61,6 +62,7 @@
     --border: #44464a;
     --accent: #7aa2ff;
     --accent-text: #0b1020;
+    --highlight: #c444c4;
     --ok-bg: #1d3a22;
     --ok-border: #66bb6a;
     --bad-bg: #432020;
@@ -219,6 +221,7 @@ button.link {
 }
 
 .prompt strong {
+  color: var(--highlight);
   font-size: 1.8rem;
   margin-left: 0.4rem;
 }
