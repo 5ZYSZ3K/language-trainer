@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "check-data": "tsx scripts/check-data.ts",
     "test": "vitest run",
-    "scrape": "tsx scraper/cli.ts",
+    "scrape:cs:verbs": "tsx scraper/cli.ts --language cs --quiz verb-present-tense",
+    "scrape:cs:nouns": "tsx scraper/cli.ts --language cs --quiz noun-declension",
     "publish-pages": "tsx scripts/publish-pages.ts"
   },
   "devDependencies": {

@@ -93,7 +93,7 @@ export function checkData({ sources, quizTypes }: DataRegistries, files: Readonl
     })
   }
 
-  if (items === 0) problems.push('no dataset holds any item, so the site would be empty. Run: npm run scrape')
+  if (items === 0) problems.push('no dataset holds any item, so the site would be empty. Run: npm run scrape:cs:verbs or npm run scrape:cs:nouns')
   return { problems, items }
 }
 

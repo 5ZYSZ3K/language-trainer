@@ -2,12 +2,9 @@ import * as cheerio from 'cheerio'
 import type { Cell } from '../../../src/core/cell'
 import { verbPresentCellIds } from '../../../src/quizzes/verb-present-tense'
 import { ParseError, type HttpGet } from '../../harness/types'
+import { cellText, collapse, expandVariants, SITE } from './page'
 
-const SITE = 'https://prirucka.ujc.cas.cz/'
-
-type El = Parameters<cheerio.CheerioAPI>[0]
-
-const collapse = (s: string) => s.replace(/\s+/g, ' ').trim()
+export { isServerBusy } from './page'
 
 /** "bát se" -> { base: "bát", particle: "se" }; a verb without a particle gives neither. */
 function splitReflexive(prompt: string): { base?: string; particle?: string } {
@@ -30,40 +27,6 @@ function hasEntry(html: string, prompt: string): boolean {
   return $('div.hlavicka h2 strong')
     .toArray()
     .some((el) => headings.has(collapse($(el).text())))
-}
-
-/** Text of a table cell without its footnote markers (<sup>). */
-function cellText($: cheerio.CheerioAPI, td: El): string {
-  return $(td).clone().find('sup').remove().end().text()
-}
-
-/** "bavím (se)" -> ["bavím (se)" with the group opened, then without]; every (...) is an optional part. */
-function expandOptionalParts(variant: string): string[] {
-  const group = /\(([^()]*)\)/.exec(variant)
-  if (!group) return [variant]
-  const [whole, inner] = [group[0], group[1]!]
-  const before = variant.slice(0, group.index)
-  const after = variant.slice(group.index + whole.length)
-  return [...expandOptionalParts(before + inner + after), ...expandOptionalParts(before + after)]
-}
-
-/**
- * Splits a table cell such as "mohu, můžu" into its variants. Parenthesised parts are optional ("bojí (se)"
- * accepts both). Suffix-only clitics ("-s" in "jsi, -s") are dropped: they are not words that can be typed
- * on their own.
- */
-function expandVariants(text: string): string[] {
-  const variants = text
-    .split(',')
-    .flatMap(expandOptionalParts)
-    .map(collapse)
-    .filter((v) => v !== '' && !v.startsWith('-'))
-  return [...new Set(variants)]
-}
-
-/** The site answers 200 with this page when an earlier query from the same address is still open. */
-export function isServerBusy(html: string): boolean {
-  return html.includes('server je přetížen')
 }
 
 /** On a "choose an entry" page, the link to the entry that is the verb itself, if there is exactly one. */

@@ -1,6 +1,7 @@
 /** The quiz's own texts. Its Czech twin is typed against these keys, so a key missing there is a compile error. */
 export const en = {
   title: 'Czech verb trainer',
+  name: 'Verbs: present tense',
   intro: 'Fill in all six present-tense forms of the verb, then check your answers.',
   empty: 'There are no verbs to practise yet.',
 

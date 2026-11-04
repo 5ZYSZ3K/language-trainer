@@ -8,7 +8,9 @@ import { REPOSITORY, REPOSITORY_URL } from '../../../src/config'
 import type { Adapter, ScraperSource } from '../../harness/context'
 import type { RequestPolicy } from '../../harness/http'
 import { runListDriven } from '../../list-driven'
-import { isServerBusy, verbPageScraper } from './verb-present-tense'
+import { nounPageScraper } from './noun-declension'
+import { isServerBusy } from './page'
+import { verbPageScraper } from './verb-present-tense'
 
 export const priruckaPolicy: RequestPolicy = {
   delayMs: 1500,
@@ -31,8 +33,23 @@ const verbPresentTenseAdapter: Adapter<Item> = {
     }),
 }
 
+/**
+ * cs / noun-declension: the nouns of lists/cs/noun-declension.txt, one entry page each. A noun the site cannot give
+ * one entry for (none, or several such as "vedoucí") fails on its own and is left out; the run goes on.
+ */
+const nounDeclensionAdapter: Adapter<Item> = {
+  source: 'prirucka',
+  language: 'cs',
+  quizType: 'noun-declension',
+  run: (context) =>
+    runListDriven(context, {
+      fetchPage: nounPageScraper.fetchPage,
+      parse: (html, entry) => ({ prompt: entry, cells: nounPageScraper.parse(html, entry) }),
+    }),
+}
+
 export const prirucka: ScraperSource = {
   id: 'prirucka',
   policy: priruckaPolicy,
-  adapters: [verbPresentTenseAdapter],
+  adapters: [verbPresentTenseAdapter, nounDeclensionAdapter],
 }

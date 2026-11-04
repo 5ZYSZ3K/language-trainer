@@ -9,6 +9,8 @@ import type { Language } from '../languages'
 export interface QuizTexts {
   /** The heading of the page and its document title. */
   readonly title: string
+  /** A short name for the quiz's tab in the selector. */
+  readonly name: string
   /** The sentence under the heading that says what to do. */
   readonly intro: string
   /** The shell's status when the pool holds no items yet. */
@@ -23,6 +25,14 @@ export interface Meter<Key extends string = string> {
   readonly label: Key
 }
 
+/** What a quiz remembers for itself between visits, for its pool; the shell keeps it in the browser's storage. */
+export interface QuizSettings {
+  /** The value last saved, or undefined. Its shape is the quiz's own business: check it, it may be from an older build. */
+  get(): unknown
+  /** Replaces the saved value; anything that is JSON will do. */
+  set(value: unknown): void
+}
+
 /** What the shell hands a quiz when it mounts it. */
 export interface QuizHost<Item> {
   /** The pool's items, already loaded (possibly none). The shell treats them as opaque. */
@@ -31,6 +41,8 @@ export interface QuizHost<Item> {
   readonly pool: string
   /** The language being learned: its characters, typing shortcuts and `lang` attribute. */
   readonly language: Language
+  /** The quiz's saved settings for this pool. */
+  readonly settings: QuizSettings
   /** Counts one result for one of the quiz type's meters and redraws the scores panel. */
   record(meterId: string, correct: boolean): void
 }

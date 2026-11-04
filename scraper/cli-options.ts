@@ -1,6 +1,8 @@
 import { TARGET_FLAGS, type TargetFilter } from './harness/targets'
 
-export const USAGE = `Usage: npm run scrape [-- --source <id>] [--language <id>] [--quiz <id>] [--force] [--delay-ms <ms>] [--fail-cooldown <duration>]
+export const USAGE = `Usage: npm run scrape:cs:verbs | npm run scrape:cs:nouns [-- --force] [--delay-ms <ms>] [--fail-cooldown <duration>]
+       tsx scraper/cli.ts [--source <id>] [--language <id>] [--quiz <id>] [--force] [--delay-ms <ms>] [--fail-cooldown <duration>]
+  (the two scripts are the second form with --language cs and --quiz verb-present-tense / --quiz noun-declension)
   --source <id>               only the targets of this source (e.g. prirucka)
   --language <id>             only the targets for this learned language (e.g. cs)
   --quiz <id>                 only the targets for this quiz type (e.g. verb-present-tense)

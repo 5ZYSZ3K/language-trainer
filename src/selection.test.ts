@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Language } from './languages'
 import type { QuizType } from './quizzes'
-import { defaultPool, select, type Registries } from './selection'
+import { choose, defaultPool, select, type Registries } from './selection'
 import type { Source } from './sources'
 
 const language = (id: string): Language => ({
@@ -12,7 +12,7 @@ const language = (id: string): Language => ({
   texts: { en: { name: id, shortcutHelp: [] }, cs: { name: id, shortcutHelp: [] } },
 })
 
-const noTexts = { title: '', intro: '', empty: '' }
+const noTexts = { title: '', name: '', intro: '', empty: '' }
 const quiz = (id: string): QuizType<unknown> => ({
   id,
   contract: { validateItem: () => [], keyOf: () => '' },
@@ -187,5 +187,65 @@ describe('defaultPool', () => {
   it('is undefined when nothing is provided, or when no source is trusted', () => {
     expect(defaultPool(registries([]))).toBeUndefined()
     expect(defaultPool(registries([source('x', 'unverified', [['cs', 'verbs']])]))).toBeUndefined()
+  })
+})
+
+describe('choose', () => {
+  const r = registries(
+    [
+      source('main', 'trusted', [['cs', 'verbs'], ['cs', 'nouns'], ['de', 'verbs']], 'Main'),
+      source('extra', 'unverified', [['cs', 'nouns'], ['de', 'nouns']], 'Extra'),
+    ],
+    ['cs', 'de'],
+  )
+
+  it('opens on the default pool when nothing was chosen before', () => {
+    expect(choose(r)?.quiz.pool).toEqual({ language: 'cs', source: 'main', quizType: 'verbs' })
+    expect(choose(r)?.quiz.pool).toEqual(defaultPool(r))
+  })
+
+  it('keeps a saved choice that is still on offer, down to the quiz', () => {
+    expect(choose(r, { language: 'cs', source: 'extra', quizType: 'nouns' })?.quiz.pool).toEqual({
+      language: 'cs',
+      source: 'extra',
+      quizType: 'nouns',
+    })
+  })
+
+  it('keeps what is still on offer and falls back below the first level that is not', () => {
+    // The quiz type is gone from the source: its first quiz instead.
+    expect(choose(r, { language: 'cs', source: 'main', quizType: 'ghost' })?.quiz.pool.quizType).toBe('verbs')
+    // The source has nothing for the language: the default source of the language, and the quiz kept where that source has it.
+    expect(choose(r, { language: 'de', source: 'ghost', quizType: 'nouns' })?.quiz.pool).toEqual({ language: 'de', source: 'main', quizType: 'verbs' })
+    expect(choose(r, { language: 'de', source: 'extra', quizType: 'nouns' })?.quiz.pool).toEqual({ language: 'de', source: 'extra', quizType: 'nouns' })
+    // The language is gone: the first one.
+    expect(choose(r, { language: 'xx', source: 'extra', quizType: 'nouns' })?.quiz.pool).toEqual({ language: 'cs', source: 'extra', quizType: 'nouns' })
+  })
+
+  it('follows a change of one part and keeps the others where it can, as the selector uses it', () => {
+    const current = { language: 'cs', source: 'main', quizType: 'nouns' }
+    expect(choose(r, { ...current, language: 'de' })?.quiz.pool).toEqual({ language: 'de', source: 'main', quizType: 'verbs' })
+    expect(choose(r, { ...current, source: 'extra' })?.quiz.pool).toEqual({ language: 'cs', source: 'extra', quizType: 'nouns' })
+    expect(choose(r, { ...current, quizType: 'verbs' })?.quiz.pool.quizType).toBe('verbs')
+  })
+
+  it('reports the chosen language, source and quiz, and what else is on offer around them', () => {
+    const choice = choose(r, { language: 'cs', source: 'main', quizType: 'nouns' })!
+    expect(choice.language.id).toBe('cs')
+    expect(choice.source.source.id).toBe('main')
+    expect(choice.quiz.quizType.id).toBe('nouns')
+    expect(ids(choice.selection.languages)).toEqual(['cs', 'de'])
+    expect(ids(choice.selection.sources.map((s) => s.source))).toEqual(['main', 'extra'])
+    expect(quizIds(choice.source.quizzes)).toEqual(['verbs', 'nouns'])
+  })
+
+  it('is undefined when nothing is provided, or when no source is trusted and none was chosen', () => {
+    expect(choose(registries([]))).toBeUndefined()
+    expect(choose(registries([source('x', 'unverified', [['cs', 'verbs']])]))).toBeUndefined()
+  })
+
+  it('can choose an untrusted source that the learner picked', () => {
+    const untrusted = registries([source('x', 'unverified', [['cs', 'verbs']])])
+    expect(choose(untrusted, { source: 'x' })?.quiz.pool.source).toBe('x')
   })
 })

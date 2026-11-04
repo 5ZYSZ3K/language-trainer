@@ -6,7 +6,7 @@ import type { Source } from './sources'
 
 /**
  * What a selector would show, as a pure function of the registries and a state. Order of choices: learned
- * language, then source, then quiz type. The page has no selector yet; `defaultPool` is its only user today.
+ * language, then source, then quiz type. `choose` settles on one quiz of it; the shell draws the selector from the rest.
  */
 
 export interface Registries {
@@ -79,9 +79,31 @@ export function select(registries: Registries, state: SelectionState): Selection
   return { languages, language, sources, selected, others }
 }
 
-/** The pool the page opens with: the first available language, its default source, that source's first quiz. */
-export function defaultPool(registries: Registries): Pool | undefined {
-  const [first] = availableLanguages(registries)
-  if (!first) return undefined
-  return select(registries, { language: first.id, includeOtherSources: false }).selected?.quizzes[0]?.pool
+/** What `choose` settles on: the chosen quiz, and everything a selector needs to show around it. */
+export interface Choice {
+  /** The language, source and quiz that were chosen. */
+  readonly language: Language
+  readonly source: SourceChoice
+  readonly quiz: QuizChoice
+  /** The choices on offer for the chosen language. */
+  readonly selection: Selection
 }
+
+/**
+ * The pool to open, given a previous choice. Whatever part of `saved` is still on offer is kept: the language, then
+ * (within it) the source, then (within that) the quiz. A part that is missing or no longer registered falls back to the
+ * default of its level, so an old or hand-edited choice can never leave the page without a pool. Undefined only if
+ * nothing at all is registered.
+ */
+export function choose(registries: Registries, saved: Partial<Pool> = {}): Choice | undefined {
+  const languages = availableLanguages(registries)
+  const language = languages.find((candidate) => candidate.id === saved.language) ?? languages[0]
+  if (!language) return undefined
+  const selection = select(registries, { language: language.id, sourceId: saved.source, includeOtherSources: false })
+  const source = selection.selected
+  const quiz = source?.quizzes.find((candidate) => candidate.quizType.id === saved.quizType) ?? source?.quizzes[0]
+  return source && quiz ? { language, source, quiz, selection } : undefined
+}
+
+/** The pool the page opens with when nothing was chosen before: the first available language, its default source, that source's first quiz. */
+export const defaultPool = (registries: Registries): Pool | undefined => choose(registries)?.quiz.pool

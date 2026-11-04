@@ -1,21 +1,22 @@
 # Language trainer
 
-A small, backendless website for practising how words inflect in a foreign language. Today it has exactly one
-quiz: Czech present-tense verb conjugation, with data from the
-[Internetová jazyková příručka](https://prirucka.ujc.cas.cz/). Each round shows one random verb; you type all
-six forms, check them cell by cell (or all at once), and the scores are kept in your browser.
+A small, backendless website for practising how words inflect in a foreign language. Today it has two quizzes,
+both for Czech and with data from the [Internetová jazyková příručka](https://prirucka.ujc.cas.cz/): present-tense
+verb conjugation and noun declension. Each round shows one random word; you type its forms, check them cell by
+cell (or all at once), and the scores are kept in your browser.
 
 It is built to be hosted as a GitHub Pages project page from the `gh-pages` branch of
 <https://github.com/5ZYSZ3K/language-trainer> (default URL: <https://5zysz3k.github.io/language-trainer/>). The
 architecture lets other quiz types, other learned languages and other data sources be added without touching
-what exists (see *Adding things later*); none of those exists yet, so the page has no selector.
+what exists (see *Adding things later*). The page draws a selector for whatever there is a choice of: today the
+two quizzes (tabs under the heading), and a language or source control as soon as a second one exists.
 
 ## Words used in this repository
 
 - **UI language**: the language of the page's own texts (`en`, `cs`), chosen with the EN / CZ switch.
 - **Language**: the language being learned (`cs`). It defines the special characters and typing shortcuts.
 - **Source**: where data comes from (`prirucka`), with a trust level (`trusted` / `unverified`).
-- **Quiz type**: one kind of quiz (`verb-present-tense`). It owns its data contract, its interaction, its score
+- **Quiz type**: one kind of quiz (`verb-present-tense`, `noun-declension`). It owns its data contract, its interaction, its score
   counters and its texts. Its id is permanent: it is the data file name and part of the score key.
 - **Dataset**: one JSON file with the items of one quiz type, for one language, from one source.
 - **Pool**: (language, source, quiz type), the thing you practise. Items are drawn from one pool's dataset only,
@@ -27,11 +28,14 @@ what exists (see *Adding things later*); none of those exists yet, so the page h
 There is no server, no runtime scraping and no CI: scraping, building and publishing are three steps the
 owner runs by hand.
 
-1. **Scrape.** `npm run scrape` reads [`lists/cs/verb-present-tense.txt`](lists/cs/verb-present-tense.txt),
-   fetches each verb from <https://prirucka.ujc.cas.cz/>, parses the present-tense table and saves
+1. **Scrape.** `npm run scrape:cs:verbs` reads
+   [`lists/cs/verb-present-tense.txt`](lists/cs/verb-present-tense.txt), fetches each verb from
+   <https://prirucka.ujc.cas.cz/>, parses the present-tense table and saves
    [`data/cs/prirucka/verb-present-tense.json`](data/cs/prirucka/verb-present-tense.json) after every verb.
-   That file is **committed to `main`** as scraped source data; it is the only copy, so commit it after a
-   scrape.
+   `npm run scrape:cs:nouns` does the same for the nouns of
+   [`lists/cs/noun-declension.txt`](lists/cs/noun-declension.txt) (the declension table of each) into
+   `data/cs/prirucka/noun-declension.json`. Those files are **committed to `main`** as scraped source data; they
+   are the only copy, so commit them after a scrape.
 2. **Build.** `npm run build` type-checks, runs `scripts/check-data.ts` (it fails the build on an invalid
    dataset or when no dataset holds any item), then Vite builds the page into `dist/`. Each dataset is bundled
    into the page as its own JavaScript chunk; the page fetches no data file and never calls the source site.
@@ -42,32 +46,36 @@ owner runs by hand.
 
 ```sh
 npm ci
-npm run dev           # http://localhost:5173
-npm test              # unit tests (parser tests run against saved HTML fixtures)
+npm run dev               # http://localhost:5173
+npm test                  # unit tests (parser tests run against saved HTML fixtures)
 npm run typecheck
-npm run check-data    # validate data/ against the registries (also the second step of build)
-npm run build         # typecheck + data check + production build into dist/
-npm run preview       # serve dist/ (the build uses a relative base, so it works from a sub-path)
-npm run scrape        # fetch the verbs that are not scraped yet (see "The scraper" below)
+npm run check-data        # validate data/ against the registries (also the second step of build)
+npm run build             # typecheck + data check + production build into dist/
+npm run preview           # serve dist/ (the build uses a relative base, so it works from a sub-path)
+npm run scrape:cs:verbs   # fetch the Czech verbs that are not scraped yet (see "The scraper" below)
+npm run scrape:cs:nouns   # the same for the Czech nouns
 ```
 
 To put a new version on the site:
 
 ```sh
-npm run scrape                        # only if the verb list changed or verbs are missing
+npm run scrape:cs:verbs               # only if a list changed or words are missing
+npm run scrape:cs:nouns               # (one per list)
 git add data && git commit            # the scraped data lives in the repo
 npm run build
 npm run publish-pages                 # commits dist/ to the local gh-pages branch
 git push origin gh-pages
 ```
 
-### Adding verbs
+### Adding verbs and nouns
 
-Add them to [`lists/cs/verb-present-tense.txt`](lists/cs/verb-present-tense.txt) (comma-separated infinitives;
+Add verbs to [`lists/cs/verb-present-tense.txt`](lists/cs/verb-present-tense.txt) (comma-separated infinitives;
 reflexives are written like `bát se`, `dát si`; whitespace is collapsed and empty or repeated entries are
-ignored). That file is the single source of truth for the scraper: a verb that is removed from it is also
-removed from the data when the next scrape starts. The next scrape only fetches the new verbs. Only the scraper
-reads lists; the page picks verbs from the dataset alone.
+ignored). Add nouns to [`lists/cs/noun-declension.txt`](lists/cs/noun-declension.txt) the same way, as plain
+dictionary forms (`pán`, `dveře`). Those files are the single source of truth for the scraper: a word that is
+removed from one is also removed from the data when the next scrape starts. The next scrape only fetches the new
+words. Only the scraper reads lists; the page picks words from the dataset alone. (`lists/cs/vocabulary/` is raw
+material, not read by anything.)
 
 ## Data
 
@@ -75,8 +83,14 @@ reads lists; the page picks verbs from the dataset alone.
 - **Shape:** `{ "language": "cs", "source": "prirucka", "quizType": "verb-present-tense", "items": [ ... ] }`.
   The three fields must match the file's location. A `verb-present-tense` item is
   `{ "prompt": "bát se", "cells": [ { "id": "1sg", "acceptedForms": ["bojím se", ...] }, ...6 cells... ] }`
-  with the cell ids `1sg 2sg 3sg 1pl 2pl 3pl` in that order. Cell ids are neutral: the quiz's texts map them to
-  the labels the page shows, so data never mentions UI texts.
+  with the cell ids `1sg 2sg 3sg 1pl 2pl 3pl` in that order. A `noun-declension` item has the same shape,
+  `{ "prompt": "pán", "cells": [ { "id": "nom-sg", "acceptedForms": ["pán"] }, ... ] }`, with cell ids named after
+  case and number, `nom gen dat acc voc loc ins` (the Czech 1st to 7th case) each as `-sg` and `-pl`, singular
+  first: up to 14 cells, of **only the forms that exist** (*dveře* has just the plural ones). The first cell, the
+  nominative singular (the nominative plural when there is no singular), is the form the page shows locked as
+  given, and at least one more cell must follow it. Cell ids are neutral: the quiz's texts map them to the labels
+  the page shows, so data never mentions UI texts (and the cases are not numbered in data, because the number of a
+  case differs between languages).
 - **Layout:** valid JSON with one item per line, so committing a change to one item gives a one-line diff.
 - **Content rule:** the file only holds items that satisfy the quiz type's contract completely. A failed item is
   never written.
@@ -94,17 +108,23 @@ reads lists; the page picks verbs from the dataset alone.
 ## The scraper
 
 ```
-npm run scrape [-- --source <id>] [--language <id>] [--quiz <id>] [--force] [--delay-ms <ms>] [--fail-cooldown <duration>]
+npm run scrape:cs:verbs | npm run scrape:cs:nouns [-- --force] [--delay-ms <ms>] [--fail-cooldown <duration>]
+tsx scraper/cli.ts [--source <id>] [--language <id>] [--quiz <id>] [--force] [--delay-ms <ms>] [--fail-cooldown <duration>]
 ```
 
+The two scripts in `package.json` (Czech verbs, Czech nouns) are the second form with `--language cs` and
+`--quiz verb-present-tense` / `--quiz noun-declension` already given; anything after `--` is added to it. The rest of this section writes the flags once and applies to both.
+
 - **Targets.** A target is one adapter: one source, language and quiz type. `--source`, `--language` and
-  `--quiz` narrow the registered adapters. With no filter and exactly one adapter registered (today), that one
-  runs. With no filter and several, the command lists them and exits 2, so it never scrapes everything by
-  accident. A filter that matches nothing exits 2 too, e.g. `npm run scrape -- --source nope`. Several matching
-  targets run one after another. A header line per target is printed, e.g.
+  `--quiz` narrow the registered adapters. With no filter and exactly one adapter registered, that one runs. With
+  no filter and several, the command lists them and exits 2, so it never scrapes everything by accident: today
+  there are two (`verb-present-tense` and `noun-declension`), so `tsx scraper/cli.ts` with no filter lists them,
+  which is why the scripts fix `--language` and `--quiz`. A filter that matches nothing exits 2 too, e.g.
+  `npm run scrape:cs:verbs -- --source nope`. Several
+  matching targets run one after another. A header line per target is printed, e.g.
   `== prirucka / cs / verb-present-tense ==`.
 - **Incremental.** Only items missing from the target's data file are fetched, in list order.
-  `npm run scrape -- --force` re-fetches everything (see below).
+  `npm run scrape:cs:verbs -- --force` (or `scrape:cs:nouns`) re-fetches everything (see below).
 - **Saved as it goes.** After every item that was fetched, parsed and validated, the whole data file is
   rewritten (to `.scrape-data.tmp` in the repo root, then renamed over the data file, so it is never
   half-written), in the order of the list. Failures are never written. Items that are no longer in the list are
@@ -118,7 +138,7 @@ npm run scrape [-- --source <id>] [--language <id>] [--quiz <id>] [--force] [--d
   crashed run is ignored. The lock is global: two scrapes never run at once, whatever the sources.
 - **`--force` is not resumable.** It replaces items one by one as they succeed, and a failed refresh keeps the
   old item, but a second `--force` starts again from the first entry. To refresh just a few verbs, delete
-  their items from the data file and run a plain `npm run scrape`.
+  their items from the data file and run the plain script again.
 - **Exit codes.** `0` everything requested is in the data; `1` some items failed or were not attempted, or a
   fatal error such as a failed save; `2` bad usage, an unknown target, or another scrape is running; `130` /
   `143` interrupted.
@@ -130,7 +150,7 @@ npm run scrape [-- --source <id>] [--language <id>] [--quiz <id>] [--force] [--d
   attempted". By default there is no cool-down: wait, then run it again, or use `--fail-cooldown` (next point).
 - **`--fail-cooldown <duration>`.** When an item cannot be fetched (after the request-level retries described
   under *Politeness*), the scrape stops for that long and then tries the same item again instead of moving on,
-  e.g. `npm run scrape -- --fail-cooldown 10m`. The duration needs a unit: `500ms`, `90s`, `10m`, `1h` (a bare
+  e.g. `npm run scrape:cs:nouns -- --fail-cooldown 10m`. The duration needs a unit: `500ms`, `90s`, `10m`, `1h` (a bare
   number is rejected, so it cannot be mistaken for the milliseconds of `--delay-ms`). Only fetch failures
   trigger it; a page that merely fails to parse is not retried, because the site is fine and waiting will not
   change the page. Each failed attempt still counts towards the 5-in-a-row limit, so a site that stays down is
@@ -139,7 +159,8 @@ npm run scrape [-- --source <id>] [--language <id>] [--quiz <id>] [--force] [--d
   cool-down like at any other time.
 - **Validation.** Every item is checked against its quiz type's contract before it is saved. For
   `verb-present-tense` that means six cells in the fixed order, each with at least one non-empty form; an item
-  that falls short fails with `no form found for <id>` and is not written.
+  that falls short fails with `no form found for <id>` and is not written. For `noun-declension` it means cells in
+  display order starting with the nominative, each with a form, and at least one cell besides the first.
 
 ### The prirucka adapter
 
@@ -158,11 +179,19 @@ parser for the verb pages.
 - **Variants.** Forms listed with several variants (`mohu, můžu`) all count as correct. A parenthesised part
   is optional, as on the site itself (`bání (se)`): `bojí (se)` accepts both `bojí se` and `bojí`. Suffix-only
   clitics such as the `-s` in `jsi, -s` are dropped, since they are not words one can type alone.
+- **Nouns.** The parser reads the `rod:` line (`m. živ.`, `m. neživ.`, `ž.`, `s.`) and the table of seven cases
+  × singular / plural. An empty cell (no plural, no singular) is simply not a cell of the item, and a cell that
+  holds only a dash is ignored. Variants (`pánovi, pánu`) all count as correct, as for verbs. A word that has
+  several entries is resolved by following the one entry whose label is a noun gender (`stát, m. neživ.`, not
+  `stát, sloveso`). If there is none, or **more than one** (`vedoucí` is a man, a woman and an adjective), that word
+  fails on its own with a clear message and is left out: the run goes on, like for any word that fails to parse,
+  and ends with the usual summary and exit code 1. There is no way yet to say which entry is meant; see *Words known
+  to fail*. A page whose entry names no gender (a verb, an adjective) is refused the same way.
 - **Politeness.** One request at a time, 30 s timeout, up to 4 retries (the wait before retry n is at least n × 15 s), and
   a pause of 1.5 s by default between one request finishing (answer, error or timeout) and the next one
   starting, so a slow answer never leaves two requests in flight. The requests carry the User-Agent
   `language-trainer-scraper (+https://github.com/5ZYSZ3K/language-trainer)`. Change the pause with
-  `npm run scrape -- --delay-ms 5000` or the `SCRAPE_DELAY_MS` environment variable (the flag wins); the retry
+  `npm run scrape:cs:nouns -- --delay-ms 5000` or the `SCRAPE_DELAY_MS` environment variable (the flag wins); the retry
   waits are never shorter than it. The site keeps an address "busy" while it thinks an earlier query from it is
   still being evaluated, and answers HTTP 200 with a "server is overloaded" page (the scraper recognises it
   and retries after a pause; it never uses the page's "nechci čekat" override). During development this state
@@ -173,12 +202,19 @@ parser for the verb pages.
 > **Not yet verified at full scale.** The parser and the scrape logic are tested against saved real pages, and
 > a good part of the list has been fetched live, but a complete clean run over the whole list has not been
 > checked end to end. Check the log, the failure summary and the produced JSON before relying on the data.
+>
+> The noun adapter has been run live on only a handful of words (*stát*, *kuře*, *zdraví*, *hrad*, *Čech*, plus
+> saved pages of *pán*, *dveře*, *pusa*), all of which worked. `data/cs/prirucka/noun-declension.json` therefore
+> holds just those eight nouns until you run `npm run scrape:cs:nouns` over the whole list.
 
-#### Verbs known to fail
+#### Words known to fail
 
-`nechtít se` cannot be scraped: the site only has *chtít*, and the impersonal *nechce se mi* is a different
-construction, so it would be rejected and appear in the failure summary on every run. It is not on the list;
-leave it off unless an overrides mechanism is added. Any other verb that fails is listed by the run itself.
+`nechtít se` (a verb) cannot be scraped: the site only has *chtít*, and the impersonal *nechce se mi* is a
+different construction, so it would be rejected and appear in the failure summary on every run. It is not on the
+verb list; leave it off unless an overrides mechanism is added. Nouns with more than one noun entry on the site
+(`vedoucí`, and probably some homonyms such as *zámek*) fail on every run until there is a way to name the entry.
+`lists/cs/noun-declension.txt` was seeded with every noun of the vocabulary list and has not yet been scraped in
+full: the first complete run will show which ones fail. Any other word that fails is listed by the run itself.
 
 ## Deployment
 
@@ -216,23 +252,25 @@ lists/<language>/<quiz type>.txt      scraper input (comma-separated entries); o
 data/<language>/<source>/<quiz type>.json   the committed datasets
 public/                               .nojekyll only
 src/
-  core/        pure, tested logic: matching, typing shortcuts, Round, Scores, random pick, the record guard;
-               knows nothing about languages, sources, quiz types or texts
+  core/        pure, tested logic: matching, typing shortcuts, Round, Scores, Settings (what a quiz remembers per
+               pool), random pick, the record guard; knows nothing about languages, sources, quiz types or texts
   languages/   the languages that can be learned: characters, typing shortcuts, names (registry in index.ts)
   sources/     the data sources and which datasets each provides (registry in index.ts)
   quizzes/     one folder per quiz type: contract, score meters, texts, mount (the quiz's DOM)
-               (registry in index.ts)
+               (registry in index.ts); noun-declension also holds its filter (pure, tested) and the filter dialog
   datasets/    the pool (language, source, quiz type), the dataset file's envelope and the loader of the bundled
                datasets
   registry.ts  findById(): how anything looks up an entry of a registry by its id
-  selection.ts which pool the page opens on (pure rules for a future selector; no selector is shown)
+  selection.ts what the selector offers (language, source, quiz type) and `choose`: the pool to open for a saved
+               choice, falling back level by level for whatever is no longer there (pure rules)
   i18n/        the UI languages, createT() and the shell's own en / cs dictionaries (a quiz type's and ui/'s
                texts live with them)
   ui/          shared DOM building blocks: special-character buttons, typing shortcuts on inputs, help list, the
                element look-up (finder)
-  app/         shell.ts: header, language switch, scores panel, status line (thin DOM, not unit tested)
+  app/         shell.ts: header, language switch, selector, scores panel, status line (thin DOM, not unit tested);
+               pool-choice.ts: the saved choice of pool
   config.ts    repository coordinates
-  main.ts      wiring: storage, UI language, the default pool, mount
+  main.ts      wiring: storage, UI language, the registries, mount
   style.css    the page's styles; fonts/ holds the bundled font files (Comic Relief, OFL)
 scraper/       build-time only, never shipped
   cli.ts, cli-options.ts   entry point; arguments and environment
@@ -260,17 +298,20 @@ other quiz types. If one does, the architecture needs fixing first. Languages, s
 typed lists; nothing is discovered dynamically.
 
 - **A quiz type.** Create `src/quizzes/<id>/` with its item type, `Contract` (`validateItem`, `keyOf`), meters,
-  texts (typed `en` / `cs` dictionaries) and `mount`, and add it to `src/quizzes/index.ts`. It may reuse the
-  type-in blocks in `src/ui/` and `src/core/` or bring a different interaction. Its id is permanent.
-- **A source.** Add `src/sources/<id>.ts` (name, url, trust, license, attribution, `provides`) and register it
+  texts (typed `en` / `cs` dictionaries, including `name`, the label of its tab in the selector) and `mount`, and
+  add it to `src/quizzes/index.ts`. It may reuse the type-in blocks in `src/ui/` and `src/core/` or bring a
+  different interaction. A quiz that wants to remember something between visits (a filter, say) saves it through
+  `host.settings`, which the shell keeps per pool. Its id is permanent. The selector picks it up by itself.
+- **A source.** (It shows up in the selector as soon as a second source provides something for the language.)
+  Add `src/sources/<id>.ts` (name, url, trust, license, attribution, `provides`) and register it
   in `src/sources/index.ts`. Add `scraper/sources/<id>/` with a request policy and one adapter per provided
   dataset, and register it in `scraper/harness/registry.ts`. An adapter may use `list-driven` or its own loop;
   it only has to write items that satisfy the contract.
 - **A dataset** (a source covering another language or quiz type): add the `provides` entry and the adapter, run
   the scrape, and commit the file in `data/<language>/<source>/`. `npm run build` and the registry test
   (`scripts/registry.test.ts`) tell you what is missing.
-- **A learned language.** Add `src/languages/<id>.ts` (characters, shortcuts, names) and register it in
-  `src/languages/index.ts`. Quiz types are unaffected; datasets for it live under `data/<id>/`, lists under
+- **A learned language.** (It shows up in the selector once a source provides something for it.) Add
+  `src/languages/<id>.ts` (characters, shortcuts, names) and register it in `src/languages/index.ts`. Quiz types are unaffected; datasets for it live under `data/<id>/`, lists under
   `lists/<id>/`.
 - **A hand-written dataset.** Add the `provides` entry with `manual: true` and commit the file; no adapter is
   needed. The build validates it like any other.
@@ -285,6 +326,14 @@ still need to be reviewed.
 
 ## Page behaviour in short
 
+- **Selector.** Under the heading there is a group of buttons for each thing there is a choice of, in this order:
+  the learned language, the source, the quiz. A group with fewer than two options is not shown, so today only the
+  two quizzes appear. The choice is remembered in `localStorage` under `pool`; a remembered choice that no longer
+  exists falls back to the default (the first language, its first trusted source, that source's first quiz).
+  Scores are kept per pool, and the scores panel shows the meters of the quiz on the page.
+
+### Verbs
+
 - A random verb each round, never the same one twice in a row (unless there is only one).
 - All six forms are always shown, singular first, then plural: singular on the left and plural on the right on a
   wide screen, one after the other on a narrow one. Enter checks the field and moves to the next open form in that order; once every form is checked, Enter starts
@@ -296,6 +345,28 @@ still need to be reviewed.
 - Typing shortcuts: `'` after a vowel → `á é í ó ú ý`, `^` after a letter → `č ď ě ň ř š ť ž`, `u@` → `ů`;
   only plain typing triggers them, not deleting or pasting. There are also buttons for the special characters.
 - Scores (forms correct / checked, verbs fully correct / completed) are kept per pool in `localStorage` under
-  the key `scores`; "Reset scores" asks for confirmation and clears all of them.
+  the key `scores`; "Reset scores" asks for confirmation and clears the scores of every pool, not only the one
+  on the page.
+### Nouns
+
+- A random noun each round, never the same one twice in a row. The dictionary form is shown as the prompt and also
+  put in the table, locked and marked "given" (the nominative singular, or the nominative plural for a noun
+  without a singular such as *dveře*). It is never checked or scored. Everything else is a cell to fill in: seven
+  cases (the Czech 1st to 7th, vocative included) for the singular and the plural, in two columns on a wide screen
+  (singular left) and one after the other on a narrow one. A noun without a singular or a plural has no column for it.
+- Checking, "Check all", "Next noun", Enter and the matching rules work as for verbs, with one difference: "Check
+  all" is disabled whenever no field is left to check, also after the last one was checked.
+- **Filters.** The Filters button opens a dialog with a grid of all 14 forms (7 cases × singular / plural), each a
+  checkbox. A row heading or a column heading switches the whole row or column; "Select all" and "Clear all" do
+  what they say. Closing the dialog (Done, Esc, a click outside) applies the choice and starts a new noun, if
+  anything changed. A cell is shown, and asked, only if its own box is ticked, the given one included; a noun is
+  only picked if at least one cell of it is asked, so a noun with no plural never comes up with only plural boxes
+  ticked. With nothing to ask for (everything cleared, or only the given cell ticked) the page shows no noun:
+  just Filters, "Next noun" and a disabled "Check all". The choice is remembered per pool in `localStorage` under
+  `settings`.
+- Scores: forms correct / checked, nouns fully correct / completed (over the forms that were asked), per pool.
+
+### Both
+
 - Language follows the browser (Czech if it starts with `cs`, otherwise English); the EN / CZ switch in the
   header is remembered in `localStorage` under `language`.

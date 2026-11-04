@@ -1,6 +1,7 @@
 /**
- * Build-time scraper. Usage: npm run scrape [-- --source <id>] [--language <id>] [--quiz <id>] [--force]
- * [--delay-ms <ms>] [--fail-cooldown <duration>] (see USAGE in cli-options.ts)
+ * Build-time scraper. Usage: npm run scrape:cs:verbs | npm run scrape:cs:nouns [-- --force] [--delay-ms <ms>]
+ * [--fail-cooldown <duration>], or tsx scraper/cli.ts with the filters --source, --language and --quiz
+ * (see USAGE in cli-options.ts)
  *
  * Runs the registered adapters the filters select (with no filter, the only one; several are listed instead).
  * Each adapter writes data/<language>/<source>/<quiz type>.json after every item, so stopping the run (Ctrl-C,

@@ -5,5 +5,8 @@ export const prirucka: Source = {
   name: 'Internetová jazyková příručka',
   url: 'https://prirucka.ujc.cas.cz/',
   trust: 'trusted',
-  provides: [{ language: 'cs', quizType: 'verb-present-tense', delivery: { kind: 'bundled' } }],
+  provides: [
+    { language: 'cs', quizType: 'verb-present-tense', delivery: { kind: 'bundled' } },
+    { language: 'cs', quizType: 'noun-declension', delivery: { kind: 'bundled' } },
+  ],
 }

@@ -74,6 +74,11 @@
   box-sizing: border-box;
 }
 
+/* The hidden attribute must win over the display of a class (.chars is a flex row), or a hidden block would still show. */
+[hidden] {
+  display: none !important;
+}
+
 body {
   margin: 0;
   background: var(--bg);
@@ -341,4 +346,150 @@ button.link {
 .help ul {
   margin: 0;
   padding-left: 1.2rem;
+}
+
+/* The selector: one group of buttons per thing there is a choice of (learned language, source, quiz). Shown only
+   when a group has two or more options, so with one quiz type per source there is nothing on the page. */
+.selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.2rem;
+  margin: 0.8rem 0 0;
+}
+
+.choice {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.choice button {
+  border-radius: 0;
+  margin-left: -1px;
+  padding: 0.25rem 0.8rem;
+}
+
+.choice button:first-child {
+  border-radius: 0.4rem 0 0 0.4rem;
+  margin-left: 0;
+}
+
+.choice button:last-child {
+  border-radius: 0 0.4rem 0.4rem 0;
+}
+
+.choice button:only-child {
+  border-radius: 0.4rem;
+}
+
+.choice button[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+/* The noun table: a column per number (singular on the left, plural on the right on a wide screen; one after the
+   other on a narrow one, which is also the order of Enter and Tab). A noun that lacks a number has no column for it. */
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.9rem 1.2rem;
+  align-items: start;
+}
+
+@media (min-width: 34rem) {
+  .columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* minmax(0, 1fr), as for .cells: let the track shrink below its content, or the input's own width keeps the row from
+   fitting the column and the Check button sticks out over the next column. */
+.column {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.9rem;
+}
+
+.column h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.2rem;
+}
+
+/* The given cell: the form the learner starts from. Neutral, not a result, and with a tag where the button would be. */
+.cell[data-state='given'] input {
+  background: var(--bg);
+  border-style: dashed;
+  color: var(--muted);
+}
+
+.cell[data-state='given'] .answer {
+  visibility: hidden;
+}
+
+.given-tag {
+  align-self: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  white-space: nowrap;
+  padding: 0 0.4rem;
+}
+
+/* The filter dialog: a grid with a row per case and a column per number. */
+dialog.filters {
+  max-width: min(32rem, calc(100vw - 2rem));
+  width: 100%;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  padding: 1rem 1.2rem;
+}
+
+dialog.filters::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.filters-hint {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0 0 0.8rem;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) repeat(2, minmax(5.5rem, auto));
+  gap: 0.35rem 0.8rem;
+  align-items: center;
+}
+
+.filter-grid input[type='checkbox'] {
+  justify-self: center;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.filter-heading {
+  text-align: left;
+  border-color: transparent;
+  background: none;
+  padding: 0.2rem 0.4rem;
+}
+
+.filter-grid > .filter-heading:nth-child(-n + 3) {
+  text-align: center;
+  font-weight: 600;
+}
+
+.filters-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+}
+
+.filters-actions .primary {
+  margin-left: auto;
 }

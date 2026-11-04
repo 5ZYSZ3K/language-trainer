@@ -14,7 +14,7 @@ const numbers: QuizType<unknown> = {
     keyOf: (item) => String((item as { n: number }).n),
   },
   meters: [],
-  texts: { en: { title: '', intro: '', empty: '' }, cs: { title: '', intro: '', empty: '' } },
+  texts: { en: { title: '', name: '', intro: '', empty: '' }, cs: { title: '', name: '', intro: '', empty: '' } },
   mount: () => ({ applyTexts: () => {} }),
 }
 const source = (id: string, provides: Source['provides']): Source => ({ id, name: id, url: `https://${id}.test/`, trust: 'trusted', provides })

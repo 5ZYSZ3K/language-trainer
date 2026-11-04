@@ -2,6 +2,7 @@ import type { VerbPresentTextKey } from './texts.en'
 
 export const cs: Record<VerbPresentTextKey, string> = {
   title: 'Trénink časování českých sloves',
+  name: 'Slovesa: přítomný čas',
   intro: 'Doplňte všech šest tvarů přítomného času a potom odpovědi zkontrolujte.',
   empty: 'Zatím tu nejsou žádná slovesa k procvičování.',
 
