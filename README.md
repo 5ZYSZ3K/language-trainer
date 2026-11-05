@@ -180,7 +180,9 @@ parser for the verb pages.
   is optional, as on the site itself (`bání (se)`): `bojí (se)` accepts both `bojí se` and `bojí`. Suffix-only
   clitics such as the `-s` in `jsi, -s` are dropped, since they are not words one can type alone.
 - **Nouns.** The parser reads the `rod:` line (`m. živ.`, `m. neživ.`, `ž.`, `s.`) and the table of seven cases
-  × singular / plural. An empty cell (no plural, no singular) is simply not a cell of the item, and a cell that
+  × singular / plural. The gender is saved with the item as `gender`, worded as the site words it; the quiz does not
+  use it yet. It is optional in the data: nouns scraped before it was kept have none, and are not fetched again
+  for it (only `--force` re-fetches a noun that is already saved). An empty cell (no plural, no singular) is simply not a cell of the item, and a cell that
   holds only a dash is ignored. Variants (`pánovi, pánu`) all count as correct, as for verbs. A word that has
   several entries is resolved by following the one entry whose label is a noun gender (`stát, m. neživ.`, not
   `stát, sloveso`). If there is none, or **more than one** (`vedoucí` is a man, a woman and an adjective), that word

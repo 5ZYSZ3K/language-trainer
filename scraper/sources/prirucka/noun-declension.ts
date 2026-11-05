@@ -22,12 +22,20 @@ function nounEntryLink(html: string, word: string): string | undefined {
   return href ? new URL(href, SITE).href : undefined
 }
 
-/** How to get the cells of one noun from prirucka. */
+/** What a noun's page tells: its gender as the site words it, and its forms. */
+export interface NounPage {
+  /** From the entry's "rod:" line, e.g. "m. živ.", "m. neživ.", "ž.", "s.". */
+  gender: string
+  /** In the quiz type's cell order. */
+  cells: Cell[]
+}
+
+/** How to get the gender and the cells of one noun from prirucka. */
 export interface NounPageScraper {
   /** Fetch the page that describes `word`, following any disambiguation to its one noun entry. */
   fetchPage(word: string, get: HttpGet): Promise<string>
-  /** Turn a fetched page into cells, in the quiz type's cell order. Throws ParseError if it is not the right page. */
-  parse(html: string, word: string): Cell[]
+  /** Turn a fetched page into the noun's gender and cells. Throws ParseError if it is not the right page. */
+  parse(html: string, word: string): NounPage
 }
 
 export const nounPageScraper: NounPageScraper = {
@@ -75,9 +83,10 @@ export const nounPageScraper: NounPageScraper = {
     })
 
     // Only the forms that exist: an empty cell (no plural, no singular) is simply not an item cell.
-    return nounDeclensionCellIds.flatMap((id): Cell[] => {
+    const cells = nounDeclensionCellIds.flatMap((id): Cell[] => {
       const acceptedForms = byId.get(id) ?? []
       return acceptedForms.length > 0 ? [{ id, acceptedForms }] : []
     })
+    return { gender, cells }
   },
 }

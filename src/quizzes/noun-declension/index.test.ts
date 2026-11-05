@@ -92,6 +92,13 @@ describe('nounDeclensionContract', () => {
     expect(problems({ ...valid(), sourceUrl: 42 })).toEqual(['sourceUrl must be text'])
   })
 
+  it('accepts an optional gender that is text, and also an item without one (nouns scraped before it was kept)', () => {
+    expect(problems({ ...valid(), gender: 'm. živ.' })).toEqual([])
+    expect(problems(valid())).toEqual([])
+    expect(problems({ ...valid(), gender: 42 })).toEqual(['gender must be text'])
+    expect(problems({ ...valid(), gender: ' ' })).toEqual(['gender must be text'])
+  })
+
   it('ignores other extra properties', () => {
     expect(problems({ ...valid(), note: 'x' })).toEqual([])
   })

@@ -6,7 +6,7 @@ import { fixture, SITE } from './test-support'
 
 /** Cells as an object of id -> acceptedForms, for compact assertions. */
 const formsById = (html: string, word: string) =>
-  Object.fromEntries(nounPageScraper.parse(html, word).map((cell) => [cell.id, cell.acceptedForms]))
+  Object.fromEntries(nounPageScraper.parse(html, word).cells.map((cell) => [cell.id, cell.acceptedForms]))
 
 /** A fake site: known URLs return their page, anything else returns an empty body. */
 function fakeSite(pages: Record<string, string>, failOn?: RegExp) {
@@ -58,7 +58,7 @@ describe('nounPageScraper.fetchPage', () => {
 
 describe('nounPageScraper.parse', () => {
   it('reads all fourteen forms of a regular noun, singular first, in the order of the cells', () => {
-    const cells = nounPageScraper.parse(fixture('dat-si-noun'), 'pusa')
+    const { cells } = nounPageScraper.parse(fixture('dat-si-noun'), 'pusa')
     expect(cells.map((cell) => cell.id)).toEqual(nounDeclensionCellIds)
     expect(formsById(fixture('dat-si-noun'), 'pusa')).toEqual({
       'nom-sg': ['pusa'],
@@ -87,14 +87,14 @@ describe('nounPageScraper.parse', () => {
   })
 
   it('leaves out the cells of a number the noun does not have ("dveře" has no singular)', () => {
-    const cells = nounPageScraper.parse(fixture('dvere'), 'dveře')
+    const { cells } = nounPageScraper.parse(fixture('dvere'), 'dveře')
     expect(cells.map((cell) => cell.id)).toEqual(['nom-pl', 'gen-pl', 'dat-pl', 'acc-pl', 'voc-pl', 'loc-pl', 'ins-pl'])
     expect(cells[0]).toEqual({ id: 'nom-pl', acceptedForms: ['dveře'] })
     expect(cells.at(-1)).toEqual({ id: 'ins-pl', acceptedForms: ['dveřmi'] })
   })
 
   it('leaves out the cells of a number the noun does not have the other way round ("zdraví" has no plural)', () => {
-    const cells = nounPageScraper.parse(fixture('zdravi'), 'zdraví')
+    const { cells } = nounPageScraper.parse(fixture('zdravi'), 'zdraví')
     expect(cells.map((cell) => cell.id)).toEqual(['nom-sg', 'gen-sg', 'dat-sg', 'acc-sg', 'voc-sg', 'loc-sg', 'ins-sg'])
     expect(cells.at(-1)).toEqual({ id: 'ins-sg', acceptedForms: ['zdravím'] })
   })
@@ -120,6 +120,27 @@ describe('nounPageScraper.parse', () => {
     expect(forms['loc-sg']).toEqual(['státě', 'státu'])
   })
 
+  it.each([
+    ['pan', 'pán', 'm. živ.'],
+    ['stat-noun', 'stát', 'm. neživ.'],
+    ['dat-si-noun', 'pusa', 'ž.'],
+    ['kure', 'kuře', 's.'],
+  ])('reads the gender of "%2$s" as the site words it', (name, word, gender) => {
+    expect(nounPageScraper.parse(fixture(name), word).gender).toBe(gender)
+  })
+
+  it('reads the gender of the entry asked for, not of the one after it', () => {
+    const twoEntries = `<div id='content'><div>
+      <div class='hlavicka'><h2 class='ks'><strong>kakao</strong></h2></div>
+      <p class='polozky'>rod: s.</p>
+      <table class='para'><tr><td>1. pád</td><td>kakao</td><td></td></tr><tr><td>2. pád</td><td>kakaa</td><td></td></tr></table>
+      <div class='hlavicka'><h2 class='ks'><strong>pusa</strong></h2></div>
+      <p class='polozky'>rod: ž.</p>
+      <table class='para'><tr><td>1. pád</td><td>pusa</td><td>pusy</td></tr></table></div></div>`
+    expect(nounPageScraper.parse(twoEntries, 'kakao').gender).toBe('s.')
+    expect(nounPageScraper.parse(twoEntries, 'pusa').gender).toBe('ž.')
+  })
+
   it('leaves out a cell that holds only a dash', () => {
     const html = fixture('pan').replace('>pánech<', '>–<')
     expect(formsById(html, 'pán')).not.toHaveProperty('loc-pl')
@@ -127,7 +148,7 @@ describe('nounPageScraper.parse', () => {
 
   it('makes items the contract accepts', () => {
     for (const [name, word] of [['pan', 'pán'], ['dvere', 'dveře'], ['dat-si-noun', 'pusa'], ['zdravi', 'zdraví'], ['kure', 'kuře'], ['cech', 'Čech'], ['stat-noun', 'stát']] as const) {
-      const item = { prompt: word, cells: nounPageScraper.parse(fixture(name), word) }
+      const item = { prompt: word, ...nounPageScraper.parse(fixture(name), word) }
       expect(nounDeclensionContract.validateItem(item), word).toEqual([])
     }
   })

@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import type { Item } from '../../../src/core/cell'
-import { nounDeclensionContract } from '../../../src/quizzes/noun-declension'
+import { nounDeclensionContract, type NounItem } from '../../../src/quizzes/noun-declension'
 import { verbPresentTenseContract } from '../../../src/quizzes/verb-present-tense'
 import { testContext } from '../../harness/test-support'
 import type { HttpGet } from '../../harness/types'
@@ -83,8 +83,8 @@ describe('prirucka adapters', () => {
         [`${SITE}?slovo=dve%C5%99e`]: fixture('dvere'),
       }
       const get: HttpGet = async (url) => pages[url] ?? ''
-      const saved: Item[][] = []
-      const context = testContext<Item>({
+      const saved: NounItem[][] = []
+      const context = testContext<NounItem>({
         target: { language: 'cs', source: 'prirucka', quizType: 'noun-declension' },
         contract: nounDeclensionContract,
         get,
@@ -97,12 +97,41 @@ describe('prirucka adapters', () => {
       expect(result.failures[0]).toMatchObject({ entry: 'vedoucí' })
       expect(result.failures[0]!.reason).toContain('2 noun entries')
       expect(saved.at(-1)).toEqual(result.items)
-      const pan = result.items[0] as Item
+      const pan = result.items[0] as NounItem
+      expect(pan.gender).toBe('m. živ.')
       expect(pan.cells).toHaveLength(14)
       expect(pan.cells[0]).toEqual({ id: 'nom-sg', acceptedForms: ['pán'] })
-      const dvere = result.items[1] as Item
+      const dvere = result.items[1] as NounItem
+      expect(dvere.gender).toBe('ž.')
       expect(dvere.cells.map((cell) => cell.id)[0]).toBe('nom-pl')
       for (const item of result.items) expect(nounDeclensionContract.validateItem(item)).toEqual([])
+    })
+
+    it('fetches only the nouns it has not scraped yet, and leaves the ones saved without a gender as they are', async () => {
+      const pages: Record<string, string> = {
+        [`${SITE}?slovo=dve%C5%99e`]: fixture('dvere'),
+      }
+      const urls: string[] = []
+      const get: HttpGet = async (url) => {
+        urls.push(url)
+        return pages[url] ?? ''
+      }
+      // "pán" was scraped before the gender was kept: it is not fetched again just to add one.
+      const pan: NounItem = { prompt: 'pán', cells: [{ id: 'nom-sg', acceptedForms: ['pán'] }, { id: 'gen-sg', acceptedForms: ['pána'] }] }
+      const context = testContext<NounItem>({
+        target: { language: 'cs', source: 'prirucka', quizType: 'noun-declension' },
+        contract: nounDeclensionContract,
+        existing: [pan],
+        get,
+        listsDir,
+      })
+      await writeFile(join(listsDir, 'cs', 'noun-declension.txt'), 'pán, dveře')
+      const result = await prirucka.adapters[1]!.run(context)
+      expect(urls).toEqual([`${SITE}?slovo=dve%C5%99e`])
+      expect(result.failures).toEqual([])
+      expect(result.items[0]).toBe(pan)
+      expect(result.items[0]).not.toHaveProperty('gender')
+      expect((result.items[1] as NounItem).gender).toBe('ž.')
     })
   })
 })
