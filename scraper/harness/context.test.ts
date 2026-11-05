@@ -56,7 +56,7 @@ describe('createRunContext', () => {
   it('save writes the whole data file with its envelope, leaving no temporary file', async () => {
     const { context, dataFile } = await open()
     await context.save([{ word: 'a' }, { word: 'b' }])
-    expect(await readFile(dataFile, 'utf8')).toBe(serialise({ ...target, items: [{ word: 'a' }, { word: 'b' }] }))
+    expect(await readFile(dataFile, 'utf8')).toBe(await serialise({ ...target, items: [{ word: 'a' }, { word: 'b' }] }))
     expect(await readdir(dir)).toEqual(['data'])
   })
 

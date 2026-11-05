@@ -1,5 +1,6 @@
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises'
 import { dirname } from 'node:path'
+import { format, resolveConfig, type Options } from 'prettier'
 import type { Dataset } from '../../src/datasets/dataset'
 import { POOL_FIELDS, type Pool } from '../../src/datasets/pool'
 
@@ -26,22 +27,23 @@ export async function readItems<Item>(file: string, target: DataTarget): Promise
 }
 
 /**
- * The data file as text: valid JSON with one item per line, so that a change to one item is a one-line diff
- * once the file is committed.
+ * The data file as text: valid JSON laid out by Prettier, the formatter the editor runs on save, so that
+ * saving the file by hand never changes it. The JSON is handed over compact so the layout never depends on what
+ * the file looked like before (Prettier keeps an object expanded if its source was).
  */
-export function serialise<Item>(data: Dataset<Item>): string {
-  const items = data.items.map((item) => JSON.stringify(item)).join(',\n')
-  const envelope = POOL_FIELDS.map((field) => `"${field}":${JSON.stringify(data[field])}`).join(',')
-  return `{${envelope},"items":[\n${items}${items ? '\n' : ''}]}\n`
+export function serialise<Item>(data: Dataset<Item>, options?: Options): Promise<string> {
+  const envelope = Object.fromEntries(POOL_FIELDS.map((field) => [field, data[field]]))
+  return format(JSON.stringify({ ...envelope, items: data.items }), { ...options, parser: 'json' })
 }
 
 /**
  * Replaces `file` with the serialised data in one step (write `tmpFile`, then rename it over `file`), so a
- * crash or a full disk never leaves a half-written data file. Any error propagates: a failed save is fatal.
+ * crash or a full disk never leaves a half-written data file. The data is formatted with the Prettier config
+ * that applies to `file`, if the repository has one. Any error propagates: a failed save is fatal.
  * Both paths must be on the same filesystem.
  */
 export async function writeData<Item>(file: string, tmpFile: string, data: Dataset<Item>): Promise<void> {
   await mkdir(dirname(file), { recursive: true })
-  await writeFile(tmpFile, serialise(data))
+  await writeFile(tmpFile, await serialise(data, (await resolveConfig(file)) ?? undefined))
   await rename(tmpFile, file)
 }

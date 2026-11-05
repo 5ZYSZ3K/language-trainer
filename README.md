@@ -91,7 +91,9 @@ material, not read by anything.)
   given, and at least one more cell must follow it. Cell ids are neutral: the quiz's texts map them to the labels
   the page shows, so data never mentions UI texts (and the cases are not numbered in data, because the number of a
   case differs between languages).
-- **Layout:** valid JSON with one item per line, so committing a change to one item gives a one-line diff.
+- **Layout:** valid JSON formatted with [Prettier](https://prettier.io/) (the repository's Prettier config, if
+  there is one, otherwise Prettier's defaults). The scraper formats the file as it saves it, so saving it from
+  an editor that formats on save changes nothing.
 - **Content rule:** the file only holds items that satisfy the quiz type's contract completely. A failed item is
   never written.
 - **Missing or foreign file:** a missing file, or one whose language, source or quiz type differs from the

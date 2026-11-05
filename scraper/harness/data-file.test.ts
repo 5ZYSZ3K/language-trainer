@@ -1,6 +1,7 @@
 import { mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { format, type Options } from 'prettier'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import type { Item } from '../../src/core/cell'
 import type { Dataset } from '../../src/datasets/dataset'
@@ -26,39 +27,62 @@ const item = (prompt: string): Item => ({
 })
 
 describe('serialise', () => {
-  it('produces JSON that parses back to the same data', () => {
+  it('produces JSON that parses back to the same data', async () => {
     const data = envelope([item('a'), item('b'), item('c')])
-    expect(JSON.parse(serialise(data))).toEqual(data)
+    expect(JSON.parse(await serialise(data))).toEqual(data)
   })
 
-  it('puts each item on its own line, so a change to one verb is a one-line diff', () => {
-    const text = serialise(envelope([item('a'), item('b')]))
-    const lines = text.split('\n')
-    expect(lines.filter((line) => line.includes('"prompt":"a"'))).toHaveLength(1)
-    expect(lines.filter((line) => line.includes('"prompt":"b"'))).toHaveLength(1)
-    expect(lines.find((line) => line.includes('"prompt":"a"'))).not.toContain('"prompt":"b"')
+  it('is already formatted the way the editor formats it on save, so saving the file by hand changes nothing', async () => {
+    const text = await serialise(envelope([item('a'), item('b')]))
+    expect(await format(text, { parser: 'json' })).toBe(text)
   })
 
-  it('starts with the envelope on its own line: language, source, quiz type, then the items bracket', () => {
-    const [first, ...rest] = serialise(envelope([item('a')])).split('\n')
-    expect(first).toBe('{"language":"cs","source":"prirucka","quizType":"verb-present-tense","items":[')
-    expect(rest.at(-2)).toBe(']}')
+  it('gives the same text when the data is read back from the text and serialised again', async () => {
+    const text = await serialise(envelope([item('a'), item('b')]))
+    expect(await serialise(JSON.parse(text))).toBe(text)
   })
 
-  it('ends with a newline', () => {
-    expect(serialise(envelope([item('a')])).endsWith('\n')).toBe(true)
+  it('writes the envelope first (language, source, quiz type, items) and expands each item', async () => {
+    const lines = (await serialise(envelope([item('a')]))).split('\n')
+    expect(lines.slice(0, 5)).toEqual([
+      '{',
+      '  "language": "cs",',
+      '  "source": "prirucka",',
+      '  "quizType": "verb-present-tense",',
+      '  "items": [',
+    ])
+    expect(lines.slice(5, 14)).toEqual([
+      '    {',
+      '      "prompt": "a",',
+      '      "cells": [',
+      '        { "id": "1sg", "acceptedForms": ["am", "ž\\"quoted\\""] },',
+      '        { "id": "1pl", "acceptedForms": ["ame"] }',
+      '      ]',
+      '    }',
+      '  ]',
+      '}',
+    ])
   })
 
-  it('still produces valid JSON when there are no items', () => {
+  it('ends with a newline', async () => {
+    expect((await serialise(envelope([item('a')]))).endsWith('\n')).toBe(true)
+  })
+
+  it('still produces valid JSON when there are no items', async () => {
     const data = envelope([])
-    expect(JSON.parse(serialise(data))).toEqual(data)
+    expect(JSON.parse(await serialise(data))).toEqual(data)
+  })
+
+  it('uses the Prettier options it is given', async () => {
+    const [, firstLine] = (await serialise(envelope([item('a')]), { tabWidth: 4 })).split('\n')
+    expect(firstLine).toBe('    "language": "cs",')
   })
 })
 
 describe('readItems', () => {
   it('returns the items of a data file of the same language, source and quiz type', async () => {
     const file = join(dir, 'data.json')
-    await writeFile(file, serialise(envelope([item('a'), item('b')])))
+    await writeFile(file, await serialise(envelope([item('a'), item('b')])))
     expect(await readItems(file, target)).toEqual([item('a'), item('b')])
   })
 
@@ -78,7 +102,7 @@ describe('readItems', () => {
     ['quiz type', { quizType: 'other' }],
   ] as const)('returns nothing when the file belongs to another %s', async (_name, override) => {
     const file = join(dir, 'data.json')
-    await writeFile(file, serialise(envelope([item('a')], override)))
+    await writeFile(file, await serialise(envelope([item('a')], override)))
     expect(await readItems(file, target)).toEqual([])
   })
 
@@ -103,12 +127,20 @@ describe('readItems', () => {
 
 describe('writeData', () => {
   const data = envelope([{ prompt: 'a', cells: [{ id: '1sg', acceptedForms: ['am'] }] }])
-  const expected = '{"language":"cs","source":"prirucka","quizType":"verb-present-tense","items":[\n{"prompt":"a","cells":[{"id":"1sg","acceptedForms":["am"]}]}\n]}\n'
+  const expected = (options?: Options) => serialise(data, options)
 
   it('creates the data directory and writes the serialised data', async () => {
     const file = join(dir, 'data', 'cs', 'prirucka', 'x.json')
     await writeData(file, join(dir, '.tmp'), data)
-    expect(await readFile(file, 'utf8')).toBe(expected)
+    expect(await readFile(file, 'utf8')).toBe(await expected())
+  })
+
+  it('formats with the Prettier config of the repository, like the editor does', async () => {
+    await writeFile(join(dir, '.prettierrc'), '{ "tabWidth": 4 }')
+    const file = join(dir, 'x.json')
+    await writeData(file, join(dir, '.tmp'), data)
+    expect(await readFile(file, 'utf8')).toBe(await expected({ tabWidth: 4 }))
+    expect(await readFile(file, 'utf8')).not.toBe(await expected())
   })
 
   it('leaves no temp file behind', async () => {
@@ -120,7 +152,7 @@ describe('writeData', () => {
     const file = join(dir, 'x.json')
     await writeFile(file, 'old contents')
     await writeData(file, join(dir, '.tmp'), data)
-    expect(await readFile(file, 'utf8')).toBe(expected)
+    expect(await readFile(file, 'utf8')).toBe(await expected())
   })
 
   it('rejects and leaves the previous file byte for byte intact when the write fails', async () => {
