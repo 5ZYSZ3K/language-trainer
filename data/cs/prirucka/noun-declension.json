@@ -3011,6 +3011,1178 @@
       ]
     },
     {
+      "prompt": "génius",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["génius"] },
+        { "id": "gen-sg", "acceptedForms": ["génia"] },
+        { "id": "dat-sg", "acceptedForms": ["géniovi", "géniu"] },
+        { "id": "acc-sg", "acceptedForms": ["génia"] },
+        { "id": "voc-sg", "acceptedForms": ["génie"] },
+        { "id": "loc-sg", "acceptedForms": ["géniovi", "géniu"] },
+        { "id": "ins-sg", "acceptedForms": ["géniem"] },
+        { "id": "nom-pl", "acceptedForms": ["géniové"] },
+        { "id": "gen-pl", "acceptedForms": ["géniů"] },
+        { "id": "dat-pl", "acceptedForms": ["géniům"] },
+        { "id": "acc-pl", "acceptedForms": ["génie"] },
+        { "id": "voc-pl", "acceptedForms": ["géniové"] },
+        { "id": "loc-pl", "acceptedForms": ["géniích"] },
+        { "id": "ins-pl", "acceptedForms": ["génii"] }
+      ]
+    },
+    {
+      "prompt": "gentleman",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["gentleman"] },
+        { "id": "gen-sg", "acceptedForms": ["gentlemana"] },
+        { "id": "dat-sg", "acceptedForms": ["gentlemanovi", "gentlemanu"] },
+        { "id": "acc-sg", "acceptedForms": ["gentlemana"] },
+        { "id": "voc-sg", "acceptedForms": ["gentlemane"] },
+        { "id": "loc-sg", "acceptedForms": ["gentlemanovi", "gentlemanu"] },
+        { "id": "ins-sg", "acceptedForms": ["gentlemanem"] },
+        { "id": "nom-pl", "acceptedForms": ["gentlemani"] },
+        { "id": "gen-pl", "acceptedForms": ["gentlemanů"] },
+        { "id": "dat-pl", "acceptedForms": ["gentlemanům"] },
+        { "id": "acc-pl", "acceptedForms": ["gentlemany"] },
+        { "id": "voc-pl", "acceptedForms": ["gentlemani"] },
+        { "id": "loc-pl", "acceptedForms": ["gentlemanech"] },
+        { "id": "ins-pl", "acceptedForms": ["gentlemany"] }
+      ]
+    },
+    {
+      "prompt": "geologie",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["geologie"] },
+        { "id": "gen-sg", "acceptedForms": ["geologie"] },
+        { "id": "dat-sg", "acceptedForms": ["geologii"] },
+        { "id": "acc-sg", "acceptedForms": ["geologii"] },
+        { "id": "voc-sg", "acceptedForms": ["geologie"] },
+        { "id": "loc-sg", "acceptedForms": ["geologii"] },
+        { "id": "ins-sg", "acceptedForms": ["geologií"] },
+        { "id": "nom-pl", "acceptedForms": ["geologie"] },
+        { "id": "gen-pl", "acceptedForms": ["geologií"] },
+        { "id": "dat-pl", "acceptedForms": ["geologiím"] },
+        { "id": "acc-pl", "acceptedForms": ["geologie"] },
+        { "id": "voc-pl", "acceptedForms": ["geologie"] },
+        { "id": "loc-pl", "acceptedForms": ["geologiích"] },
+        { "id": "ins-pl", "acceptedForms": ["geologiemi"] }
+      ]
+    },
+    {
+      "prompt": "germanistika",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["germanistika"] },
+        { "id": "gen-sg", "acceptedForms": ["germanistiky"] },
+        { "id": "dat-sg", "acceptedForms": ["germanistice"] },
+        { "id": "acc-sg", "acceptedForms": ["germanistiku"] },
+        { "id": "voc-sg", "acceptedForms": ["germanistiko"] },
+        { "id": "loc-sg", "acceptedForms": ["germanistice"] },
+        { "id": "ins-sg", "acceptedForms": ["germanistikou"] },
+        { "id": "nom-pl", "acceptedForms": ["germanistiky"] },
+        { "id": "gen-pl", "acceptedForms": ["germanistik"] },
+        { "id": "dat-pl", "acceptedForms": ["germanistikám"] },
+        { "id": "acc-pl", "acceptedForms": ["germanistiky"] },
+        { "id": "voc-pl", "acceptedForms": ["germanistiky"] },
+        { "id": "loc-pl", "acceptedForms": ["germanistikách"] },
+        { "id": "ins-pl", "acceptedForms": ["germanistikami"] }
+      ]
+    },
+    {
+      "prompt": "golf",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["golf"] },
+        { "id": "gen-sg", "acceptedForms": ["golfu"] },
+        { "id": "dat-sg", "acceptedForms": ["golfu"] },
+        { "id": "acc-sg", "acceptedForms": ["golf"] },
+        { "id": "voc-sg", "acceptedForms": ["golfe"] },
+        { "id": "loc-sg", "acceptedForms": ["golfu"] },
+        { "id": "ins-sg", "acceptedForms": ["golfem"] },
+        { "id": "nom-pl", "acceptedForms": ["golfy"] },
+        { "id": "gen-pl", "acceptedForms": ["golfů"] },
+        { "id": "dat-pl", "acceptedForms": ["golfům"] },
+        { "id": "acc-pl", "acceptedForms": ["golfy"] },
+        { "id": "voc-pl", "acceptedForms": ["golfy"] },
+        { "id": "loc-pl", "acceptedForms": ["golfech"] },
+        { "id": "ins-pl", "acceptedForms": ["golfy"] }
+      ]
+    },
+    {
+      "prompt": "gramatika",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["gramatika"] },
+        { "id": "gen-sg", "acceptedForms": ["gramatiky"] },
+        { "id": "dat-sg", "acceptedForms": ["gramatice"] },
+        { "id": "acc-sg", "acceptedForms": ["gramatiku"] },
+        { "id": "voc-sg", "acceptedForms": ["gramatiko"] },
+        { "id": "loc-sg", "acceptedForms": ["gramatice"] },
+        { "id": "ins-sg", "acceptedForms": ["gramatikou"] },
+        { "id": "nom-pl", "acceptedForms": ["gramatiky"] },
+        { "id": "gen-pl", "acceptedForms": ["gramatik"] },
+        { "id": "dat-pl", "acceptedForms": ["gramatikám"] },
+        { "id": "acc-pl", "acceptedForms": ["gramatiky"] },
+        { "id": "voc-pl", "acceptedForms": ["gramatiky"] },
+        { "id": "loc-pl", "acceptedForms": ["gramatikách"] },
+        { "id": "ins-pl", "acceptedForms": ["gramatikami"] }
+      ]
+    },
+    {
+      "prompt": "grog",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["grog"] },
+        { "id": "gen-sg", "acceptedForms": ["grogu"] },
+        { "id": "dat-sg", "acceptedForms": ["grogu"] },
+        { "id": "acc-sg", "acceptedForms": ["grog"] },
+        { "id": "voc-sg", "acceptedForms": ["grogu"] },
+        { "id": "loc-sg", "acceptedForms": ["grogu"] },
+        { "id": "ins-sg", "acceptedForms": ["grogem"] },
+        { "id": "nom-pl", "acceptedForms": ["grogy"] },
+        { "id": "gen-pl", "acceptedForms": ["grogů"] },
+        { "id": "dat-pl", "acceptedForms": ["grogům"] },
+        { "id": "acc-pl", "acceptedForms": ["grogy"] },
+        { "id": "voc-pl", "acceptedForms": ["grogy"] },
+        { "id": "loc-pl", "acceptedForms": ["grozích", "grogách"] },
+        { "id": "ins-pl", "acceptedForms": ["grogy"] }
+      ]
+    },
+    {
+      "prompt": "guláš",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["guláš"] },
+        { "id": "gen-sg", "acceptedForms": ["guláše"] },
+        { "id": "dat-sg", "acceptedForms": ["guláši"] },
+        { "id": "acc-sg", "acceptedForms": ["guláš"] },
+        { "id": "voc-sg", "acceptedForms": ["guláši"] },
+        { "id": "loc-sg", "acceptedForms": ["guláši"] },
+        { "id": "ins-sg", "acceptedForms": ["gulášem"] },
+        { "id": "nom-pl", "acceptedForms": ["guláše"] },
+        { "id": "gen-pl", "acceptedForms": ["gulášů"] },
+        { "id": "dat-pl", "acceptedForms": ["gulášům"] },
+        { "id": "acc-pl", "acceptedForms": ["guláše"] },
+        { "id": "voc-pl", "acceptedForms": ["guláše"] },
+        { "id": "loc-pl", "acceptedForms": ["guláších"] },
+        { "id": "ins-pl", "acceptedForms": ["guláši"] }
+      ]
+    },
+    {
+      "prompt": "gymnázium",
+      "gender": "s.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["gymnázium"] },
+        { "id": "gen-sg", "acceptedForms": ["gymnázia"] },
+        { "id": "dat-sg", "acceptedForms": ["gymnáziu"] },
+        { "id": "acc-sg", "acceptedForms": ["gymnázium"] },
+        { "id": "voc-sg", "acceptedForms": ["gymnázium"] },
+        { "id": "loc-sg", "acceptedForms": ["gymnáziu"] },
+        { "id": "ins-sg", "acceptedForms": ["gymnáziem"] },
+        { "id": "nom-pl", "acceptedForms": ["gymnázia"] },
+        { "id": "gen-pl", "acceptedForms": ["gymnázií"] },
+        { "id": "dat-pl", "acceptedForms": ["gymnáziím"] },
+        { "id": "acc-pl", "acceptedForms": ["gymnázia"] },
+        { "id": "voc-pl", "acceptedForms": ["gymnázia"] },
+        { "id": "loc-pl", "acceptedForms": ["gymnáziích"] },
+        { "id": "ins-pl", "acceptedForms": ["gymnázii"] }
+      ]
+    },
+    {
+      "prompt": "gyps",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["gyps"] },
+        { "id": "gen-sg", "acceptedForms": ["gypsu"] },
+        { "id": "dat-sg", "acceptedForms": ["gypsu"] },
+        { "id": "acc-sg", "acceptedForms": ["gyps"] },
+        { "id": "voc-sg", "acceptedForms": ["gypse"] },
+        { "id": "loc-sg", "acceptedForms": ["gypsu"] },
+        { "id": "ins-sg", "acceptedForms": ["gypsem"] },
+        { "id": "nom-pl", "acceptedForms": ["gypsy"] },
+        { "id": "gen-pl", "acceptedForms": ["gypsů"] },
+        { "id": "dat-pl", "acceptedForms": ["gypsům"] },
+        { "id": "acc-pl", "acceptedForms": ["gypsy"] },
+        { "id": "voc-pl", "acceptedForms": ["gypsy"] },
+        { "id": "loc-pl", "acceptedForms": ["gypsech"] },
+        { "id": "ins-pl", "acceptedForms": ["gypsy"] }
+      ]
+    },
+    {
+      "prompt": "habilitace",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["habilitace"] },
+        { "id": "gen-sg", "acceptedForms": ["habilitace"] },
+        { "id": "dat-sg", "acceptedForms": ["habilitaci"] },
+        { "id": "acc-sg", "acceptedForms": ["habilitaci"] },
+        { "id": "voc-sg", "acceptedForms": ["habilitace"] },
+        { "id": "loc-sg", "acceptedForms": ["habilitaci"] },
+        { "id": "ins-sg", "acceptedForms": ["habilitací"] },
+        { "id": "nom-pl", "acceptedForms": ["habilitace"] },
+        { "id": "gen-pl", "acceptedForms": ["habilitací"] },
+        { "id": "dat-pl", "acceptedForms": ["habilitacím"] },
+        { "id": "acc-pl", "acceptedForms": ["habilitace"] },
+        { "id": "voc-pl", "acceptedForms": ["habilitace"] },
+        { "id": "loc-pl", "acceptedForms": ["habilitacích"] },
+        { "id": "ins-pl", "acceptedForms": ["habilitacemi"] }
+      ]
+    },
+    {
+      "prompt": "hádanka",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hádanka"] },
+        { "id": "gen-sg", "acceptedForms": ["hádanky"] },
+        { "id": "dat-sg", "acceptedForms": ["hádance"] },
+        { "id": "acc-sg", "acceptedForms": ["hádanku"] },
+        { "id": "voc-sg", "acceptedForms": ["hádanko"] },
+        { "id": "loc-sg", "acceptedForms": ["hádance"] },
+        { "id": "ins-sg", "acceptedForms": ["hádankou"] },
+        { "id": "nom-pl", "acceptedForms": ["hádanky"] },
+        { "id": "gen-pl", "acceptedForms": ["hádanek"] },
+        { "id": "dat-pl", "acceptedForms": ["hádankám"] },
+        { "id": "acc-pl", "acceptedForms": ["hádanky"] },
+        { "id": "voc-pl", "acceptedForms": ["hádanky"] },
+        { "id": "loc-pl", "acceptedForms": ["hádankách"] },
+        { "id": "ins-pl", "acceptedForms": ["hádankami"] }
+      ]
+    },
+    {
+      "prompt": "hadice",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hadice"] },
+        { "id": "gen-sg", "acceptedForms": ["hadice"] },
+        { "id": "dat-sg", "acceptedForms": ["hadici"] },
+        { "id": "acc-sg", "acceptedForms": ["hadici"] },
+        { "id": "voc-sg", "acceptedForms": ["hadice"] },
+        { "id": "loc-sg", "acceptedForms": ["hadici"] },
+        { "id": "ins-sg", "acceptedForms": ["hadicí"] },
+        { "id": "nom-pl", "acceptedForms": ["hadice"] },
+        { "id": "gen-pl", "acceptedForms": ["hadic"] },
+        { "id": "dat-pl", "acceptedForms": ["hadicím"] },
+        { "id": "acc-pl", "acceptedForms": ["hadice"] },
+        { "id": "voc-pl", "acceptedForms": ["hadice"] },
+        { "id": "loc-pl", "acceptedForms": ["hadicích"] },
+        { "id": "ins-pl", "acceptedForms": ["hadicemi"] }
+      ]
+    },
+    {
+      "prompt": "hajný",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hajný"] },
+        { "id": "gen-sg", "acceptedForms": ["hajného"] },
+        { "id": "dat-sg", "acceptedForms": ["hajnému"] },
+        { "id": "acc-sg", "acceptedForms": ["hajného"] },
+        { "id": "voc-sg", "acceptedForms": ["hajný"] },
+        { "id": "loc-sg", "acceptedForms": ["hajném"] },
+        { "id": "ins-sg", "acceptedForms": ["hajným"] },
+        { "id": "nom-pl", "acceptedForms": ["hajní"] },
+        { "id": "gen-pl", "acceptedForms": ["hajných"] },
+        { "id": "dat-pl", "acceptedForms": ["hajným"] },
+        { "id": "acc-pl", "acceptedForms": ["hajné"] },
+        { "id": "voc-pl", "acceptedForms": ["hajní"] },
+        { "id": "loc-pl", "acceptedForms": ["hajných"] },
+        { "id": "ins-pl", "acceptedForms": ["hajnými"] }
+      ]
+    },
+    {
+      "prompt": "hájovna",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hájovna"] },
+        { "id": "gen-sg", "acceptedForms": ["hájovny"] },
+        { "id": "dat-sg", "acceptedForms": ["hájovně"] },
+        { "id": "acc-sg", "acceptedForms": ["hájovnu"] },
+        { "id": "voc-sg", "acceptedForms": ["hájovno"] },
+        { "id": "loc-sg", "acceptedForms": ["hájovně"] },
+        { "id": "ins-sg", "acceptedForms": ["hájovnou"] },
+        { "id": "nom-pl", "acceptedForms": ["hájovny"] },
+        { "id": "gen-pl", "acceptedForms": ["hájoven"] },
+        { "id": "dat-pl", "acceptedForms": ["hájovnám"] },
+        { "id": "acc-pl", "acceptedForms": ["hájovny"] },
+        { "id": "voc-pl", "acceptedForms": ["hájovny"] },
+        { "id": "loc-pl", "acceptedForms": ["hájovnách"] },
+        { "id": "ins-pl", "acceptedForms": ["hájovnami"] }
+      ]
+    },
+    {
+      "prompt": "hala",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hala"] },
+        { "id": "gen-sg", "acceptedForms": ["haly"] },
+        { "id": "dat-sg", "acceptedForms": ["hale"] },
+        { "id": "acc-sg", "acceptedForms": ["halu"] },
+        { "id": "voc-sg", "acceptedForms": ["halo"] },
+        { "id": "loc-sg", "acceptedForms": ["hale"] },
+        { "id": "ins-sg", "acceptedForms": ["halou"] },
+        { "id": "nom-pl", "acceptedForms": ["haly"] },
+        { "id": "gen-pl", "acceptedForms": ["hal"] },
+        { "id": "dat-pl", "acceptedForms": ["halám"] },
+        { "id": "acc-pl", "acceptedForms": ["haly"] },
+        { "id": "voc-pl", "acceptedForms": ["haly"] },
+        { "id": "loc-pl", "acceptedForms": ["halách"] },
+        { "id": "ins-pl", "acceptedForms": ["halami"] }
+      ]
+    },
+    {
+      "prompt": "halas",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["halas"] },
+        { "id": "gen-sg", "acceptedForms": ["halasu"] },
+        { "id": "dat-sg", "acceptedForms": ["halasu"] },
+        { "id": "acc-sg", "acceptedForms": ["halas"] },
+        { "id": "voc-sg", "acceptedForms": ["halase"] },
+        { "id": "loc-sg", "acceptedForms": ["halasu"] },
+        { "id": "ins-sg", "acceptedForms": ["halasem"] },
+        { "id": "nom-pl", "acceptedForms": ["halasy"] },
+        { "id": "gen-pl", "acceptedForms": ["halasů"] },
+        { "id": "dat-pl", "acceptedForms": ["halasům"] },
+        { "id": "acc-pl", "acceptedForms": ["halasy"] },
+        { "id": "voc-pl", "acceptedForms": ["halasy"] },
+        { "id": "loc-pl", "acceptedForms": ["halasech"] },
+        { "id": "ins-pl", "acceptedForms": ["halasy"] }
+      ]
+    },
+    {
+      "prompt": "haléř",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["haléř"] },
+        { "id": "gen-sg", "acceptedForms": ["haléře"] },
+        { "id": "dat-sg", "acceptedForms": ["haléři"] },
+        { "id": "acc-sg", "acceptedForms": ["haléř"] },
+        { "id": "voc-sg", "acceptedForms": ["haléři"] },
+        { "id": "loc-sg", "acceptedForms": ["haléři"] },
+        { "id": "ins-sg", "acceptedForms": ["haléřem"] },
+        { "id": "nom-pl", "acceptedForms": ["haléře"] },
+        { "id": "gen-pl", "acceptedForms": ["haléřů"] },
+        { "id": "dat-pl", "acceptedForms": ["haléřům"] },
+        { "id": "acc-pl", "acceptedForms": ["haléře"] },
+        { "id": "voc-pl", "acceptedForms": ["haléře"] },
+        { "id": "loc-pl", "acceptedForms": ["haléřích"] },
+        { "id": "ins-pl", "acceptedForms": ["haléři"] }
+      ]
+    },
+    {
+      "prompt": "halogen",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["halogen"] },
+        { "id": "gen-sg", "acceptedForms": ["halogenu"] },
+        { "id": "dat-sg", "acceptedForms": ["halogenu"] },
+        { "id": "acc-sg", "acceptedForms": ["halogen"] },
+        { "id": "voc-sg", "acceptedForms": ["halogene"] },
+        { "id": "loc-sg", "acceptedForms": ["halogenu"] },
+        { "id": "ins-sg", "acceptedForms": ["halogenem"] },
+        { "id": "nom-pl", "acceptedForms": ["halogeny"] },
+        { "id": "gen-pl", "acceptedForms": ["halogenů"] },
+        { "id": "dat-pl", "acceptedForms": ["halogenům"] },
+        { "id": "acc-pl", "acceptedForms": ["halogeny"] },
+        { "id": "voc-pl", "acceptedForms": ["halogeny"] },
+        { "id": "loc-pl", "acceptedForms": ["halogenech"] },
+        { "id": "ins-pl", "acceptedForms": ["halogeny"] }
+      ]
+    },
+    {
+      "prompt": "halucinace",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["halucinace"] },
+        { "id": "gen-sg", "acceptedForms": ["halucinace"] },
+        { "id": "dat-sg", "acceptedForms": ["halucinaci"] },
+        { "id": "acc-sg", "acceptedForms": ["halucinaci"] },
+        { "id": "voc-sg", "acceptedForms": ["halucinace"] },
+        { "id": "loc-sg", "acceptedForms": ["halucinaci"] },
+        { "id": "ins-sg", "acceptedForms": ["halucinací"] },
+        { "id": "nom-pl", "acceptedForms": ["halucinace"] },
+        { "id": "gen-pl", "acceptedForms": ["halucinací"] },
+        { "id": "dat-pl", "acceptedForms": ["halucinacím"] },
+        { "id": "acc-pl", "acceptedForms": ["halucinace"] },
+        { "id": "voc-pl", "acceptedForms": ["halucinace"] },
+        { "id": "loc-pl", "acceptedForms": ["halucinacích"] },
+        { "id": "ins-pl", "acceptedForms": ["halucinacemi"] }
+      ]
+    },
+    {
+      "prompt": "hanba",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hanba"] },
+        { "id": "gen-sg", "acceptedForms": ["hanby"] },
+        { "id": "dat-sg", "acceptedForms": ["hanbě"] },
+        { "id": "acc-sg", "acceptedForms": ["hanbu"] },
+        { "id": "voc-sg", "acceptedForms": ["hanbo"] },
+        { "id": "loc-sg", "acceptedForms": ["hanbě"] },
+        { "id": "ins-sg", "acceptedForms": ["hanbou"] },
+        { "id": "nom-pl", "acceptedForms": ["hanby"] },
+        { "id": "gen-pl", "acceptedForms": ["hanb", "haneb"] },
+        { "id": "dat-pl", "acceptedForms": ["hanbám"] },
+        { "id": "acc-pl", "acceptedForms": ["hanby"] },
+        { "id": "voc-pl", "acceptedForms": ["hanby"] },
+        { "id": "loc-pl", "acceptedForms": ["hanbách"] },
+        { "id": "ins-pl", "acceptedForms": ["hanbami"] }
+      ]
+    },
+    {
+      "prompt": "hangár",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hangár"] },
+        { "id": "gen-sg", "acceptedForms": ["hangáru"] },
+        { "id": "dat-sg", "acceptedForms": ["hangáru"] },
+        { "id": "acc-sg", "acceptedForms": ["hangár"] },
+        { "id": "voc-sg", "acceptedForms": ["hangáre"] },
+        { "id": "loc-sg", "acceptedForms": ["hangáru"] },
+        { "id": "ins-sg", "acceptedForms": ["hangárem"] },
+        { "id": "nom-pl", "acceptedForms": ["hangáry"] },
+        { "id": "gen-pl", "acceptedForms": ["hangárů"] },
+        { "id": "dat-pl", "acceptedForms": ["hangárům"] },
+        { "id": "acc-pl", "acceptedForms": ["hangáry"] },
+        { "id": "voc-pl", "acceptedForms": ["hangáry"] },
+        { "id": "loc-pl", "acceptedForms": ["hangárech"] },
+        { "id": "ins-pl", "acceptedForms": ["hangáry"] }
+      ]
+    },
+    {
+      "prompt": "harfa",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["harfa"] },
+        { "id": "gen-sg", "acceptedForms": ["harfy"] },
+        { "id": "dat-sg", "acceptedForms": ["harfě"] },
+        { "id": "acc-sg", "acceptedForms": ["harfu"] },
+        { "id": "voc-sg", "acceptedForms": ["harfo"] },
+        { "id": "loc-sg", "acceptedForms": ["harfě"] },
+        { "id": "ins-sg", "acceptedForms": ["harfou"] },
+        { "id": "nom-pl", "acceptedForms": ["harfy"] },
+        { "id": "gen-pl", "acceptedForms": ["harf"] },
+        { "id": "dat-pl", "acceptedForms": ["harfám"] },
+        { "id": "acc-pl", "acceptedForms": ["harfy"] },
+        { "id": "voc-pl", "acceptedForms": ["harfy"] },
+        { "id": "loc-pl", "acceptedForms": ["harfách"] },
+        { "id": "ins-pl", "acceptedForms": ["harfami"] }
+      ]
+    },
+    {
+      "prompt": "harlekýn",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["harlekýn"] },
+        { "id": "gen-sg", "acceptedForms": ["harlekýna"] },
+        { "id": "dat-sg", "acceptedForms": ["harlekýnovi", "harlekýnu"] },
+        { "id": "acc-sg", "acceptedForms": ["harlekýna"] },
+        { "id": "voc-sg", "acceptedForms": ["harlekýne"] },
+        { "id": "loc-sg", "acceptedForms": ["harlekýnovi", "harlekýnu"] },
+        { "id": "ins-sg", "acceptedForms": ["harlekýnem"] },
+        { "id": "nom-pl", "acceptedForms": ["harlekýni"] },
+        { "id": "gen-pl", "acceptedForms": ["harlekýnů"] },
+        { "id": "dat-pl", "acceptedForms": ["harlekýnům"] },
+        { "id": "acc-pl", "acceptedForms": ["harlekýny"] },
+        { "id": "voc-pl", "acceptedForms": ["harlekýni"] },
+        { "id": "loc-pl", "acceptedForms": ["harlekýnech"] },
+        { "id": "ins-pl", "acceptedForms": ["harlekýny"] }
+      ]
+    },
+    {
+      "prompt": "harmonogram",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["harmonogram"] },
+        { "id": "gen-sg", "acceptedForms": ["harmonogramu"] },
+        { "id": "dat-sg", "acceptedForms": ["harmonogramu"] },
+        { "id": "acc-sg", "acceptedForms": ["harmonogram"] },
+        { "id": "voc-sg", "acceptedForms": ["harmonograme"] },
+        { "id": "loc-sg", "acceptedForms": ["harmonogramu"] },
+        { "id": "ins-sg", "acceptedForms": ["harmonogramem"] },
+        { "id": "nom-pl", "acceptedForms": ["harmonogramy"] },
+        { "id": "gen-pl", "acceptedForms": ["harmonogramů"] },
+        { "id": "dat-pl", "acceptedForms": ["harmonogramům"] },
+        { "id": "acc-pl", "acceptedForms": ["harmonogramy"] },
+        { "id": "voc-pl", "acceptedForms": ["harmonogramy"] },
+        { "id": "loc-pl", "acceptedForms": ["harmonogramech"] },
+        { "id": "ins-pl", "acceptedForms": ["harmonogramy"] }
+      ]
+    },
+    {
+      "prompt": "hašiš",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hašiš"] },
+        { "id": "gen-sg", "acceptedForms": ["hašiše"] },
+        { "id": "dat-sg", "acceptedForms": ["hašiši"] },
+        { "id": "acc-sg", "acceptedForms": ["hašiš"] },
+        { "id": "voc-sg", "acceptedForms": ["hašiši"] },
+        { "id": "loc-sg", "acceptedForms": ["hašiši"] },
+        { "id": "ins-sg", "acceptedForms": ["hašišem"] }
+      ]
+    },
+    {
+      "prompt": "havárie",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["havárie"] },
+        { "id": "gen-sg", "acceptedForms": ["havárie"] },
+        { "id": "dat-sg", "acceptedForms": ["havárii"] },
+        { "id": "acc-sg", "acceptedForms": ["havárii"] },
+        { "id": "voc-sg", "acceptedForms": ["havárie"] },
+        { "id": "loc-sg", "acceptedForms": ["havárii"] },
+        { "id": "ins-sg", "acceptedForms": ["havárií"] },
+        { "id": "nom-pl", "acceptedForms": ["havárie"] },
+        { "id": "gen-pl", "acceptedForms": ["havárií"] },
+        { "id": "dat-pl", "acceptedForms": ["haváriím"] },
+        { "id": "acc-pl", "acceptedForms": ["havárie"] },
+        { "id": "voc-pl", "acceptedForms": ["havárie"] },
+        { "id": "loc-pl", "acceptedForms": ["haváriích"] },
+        { "id": "ins-pl", "acceptedForms": ["haváriemi"] }
+      ]
+    },
+    {
+      "prompt": "hazard",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hazard"] },
+        { "id": "gen-sg", "acceptedForms": ["hazardu"] },
+        { "id": "dat-sg", "acceptedForms": ["hazardu"] },
+        { "id": "acc-sg", "acceptedForms": ["hazard"] },
+        { "id": "voc-sg", "acceptedForms": ["hazarde"] },
+        { "id": "loc-sg", "acceptedForms": ["hazardu"] },
+        { "id": "ins-sg", "acceptedForms": ["hazardem"] },
+        { "id": "nom-pl", "acceptedForms": ["hazardy"] },
+        { "id": "gen-pl", "acceptedForms": ["hazardů"] },
+        { "id": "dat-pl", "acceptedForms": ["hazardům"] },
+        { "id": "acc-pl", "acceptedForms": ["hazardy"] },
+        { "id": "voc-pl", "acceptedForms": ["hazardy"] },
+        { "id": "loc-pl", "acceptedForms": ["hazardech"] },
+        { "id": "ins-pl", "acceptedForms": ["hazardy"] }
+      ]
+    },
+    {
+      "prompt": "hektar",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hektar"] },
+        { "id": "gen-sg", "acceptedForms": ["hektaru"] },
+        { "id": "dat-sg", "acceptedForms": ["hektaru"] },
+        { "id": "acc-sg", "acceptedForms": ["hektar"] },
+        { "id": "voc-sg", "acceptedForms": ["hektare"] },
+        { "id": "loc-sg", "acceptedForms": ["hektaru"] },
+        { "id": "ins-sg", "acceptedForms": ["hektarem"] },
+        { "id": "nom-pl", "acceptedForms": ["hektary"] },
+        { "id": "gen-pl", "acceptedForms": ["hektarů"] },
+        { "id": "dat-pl", "acceptedForms": ["hektarům"] },
+        { "id": "acc-pl", "acceptedForms": ["hektary"] },
+        { "id": "voc-pl", "acceptedForms": ["hektary"] },
+        { "id": "loc-pl", "acceptedForms": ["hektarech"] },
+        { "id": "ins-pl", "acceptedForms": ["hektary"] }
+      ]
+    },
+    {
+      "prompt": "herec",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["herec"] },
+        { "id": "gen-sg", "acceptedForms": ["herce"] },
+        { "id": "dat-sg", "acceptedForms": ["herci", "hercovi"] },
+        { "id": "acc-sg", "acceptedForms": ["herce"] },
+        { "id": "voc-sg", "acceptedForms": ["herče"] },
+        { "id": "loc-sg", "acceptedForms": ["herci", "hercovi"] },
+        { "id": "ins-sg", "acceptedForms": ["hercem"] },
+        { "id": "nom-pl", "acceptedForms": ["herci"] },
+        { "id": "gen-pl", "acceptedForms": ["herců"] },
+        { "id": "dat-pl", "acceptedForms": ["hercům"] },
+        { "id": "acc-pl", "acceptedForms": ["herce"] },
+        { "id": "voc-pl", "acceptedForms": ["herci"] },
+        { "id": "loc-pl", "acceptedForms": ["hercích"] },
+        { "id": "ins-pl", "acceptedForms": ["herci"] }
+      ]
+    },
+    {
+      "prompt": "herečka",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["herečka"] },
+        { "id": "gen-sg", "acceptedForms": ["herečky"] },
+        { "id": "dat-sg", "acceptedForms": ["herečce"] },
+        { "id": "acc-sg", "acceptedForms": ["herečku"] },
+        { "id": "voc-sg", "acceptedForms": ["herečko"] },
+        { "id": "loc-sg", "acceptedForms": ["herečce"] },
+        { "id": "ins-sg", "acceptedForms": ["herečkou"] },
+        { "id": "nom-pl", "acceptedForms": ["herečky"] },
+        { "id": "gen-pl", "acceptedForms": ["hereček"] },
+        { "id": "dat-pl", "acceptedForms": ["herečkám"] },
+        { "id": "acc-pl", "acceptedForms": ["herečky"] },
+        { "id": "voc-pl", "acceptedForms": ["herečky"] },
+        { "id": "loc-pl", "acceptedForms": ["herečkách"] },
+        { "id": "ins-pl", "acceptedForms": ["herečkami"] }
+      ]
+    },
+    {
+      "prompt": "heretik",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["heretik"] },
+        { "id": "gen-sg", "acceptedForms": ["heretika"] },
+        { "id": "dat-sg", "acceptedForms": ["heretikovi", "heretiku"] },
+        { "id": "acc-sg", "acceptedForms": ["heretika"] },
+        { "id": "voc-sg", "acceptedForms": ["heretiku"] },
+        { "id": "loc-sg", "acceptedForms": ["heretikovi", "heretiku"] },
+        { "id": "ins-sg", "acceptedForms": ["heretikem"] },
+        { "id": "nom-pl", "acceptedForms": ["heretici", "heretikové"] },
+        { "id": "gen-pl", "acceptedForms": ["heretiků"] },
+        { "id": "dat-pl", "acceptedForms": ["heretikům"] },
+        { "id": "acc-pl", "acceptedForms": ["heretiky"] },
+        { "id": "voc-pl", "acceptedForms": ["heretici", "heretikové"] },
+        { "id": "loc-pl", "acceptedForms": ["hereticích"] },
+        { "id": "ins-pl", "acceptedForms": ["heretiky"] }
+      ]
+    },
+    {
+      "prompt": "heslo",
+      "gender": "s.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["heslo"] },
+        { "id": "gen-sg", "acceptedForms": ["hesla"] },
+        { "id": "dat-sg", "acceptedForms": ["heslu"] },
+        { "id": "acc-sg", "acceptedForms": ["heslo"] },
+        { "id": "voc-sg", "acceptedForms": ["heslo"] },
+        { "id": "loc-sg", "acceptedForms": ["hesle", "heslu"] },
+        { "id": "ins-sg", "acceptedForms": ["heslem"] },
+        { "id": "nom-pl", "acceptedForms": ["hesla"] },
+        { "id": "gen-pl", "acceptedForms": ["hesel"] },
+        { "id": "dat-pl", "acceptedForms": ["heslům"] },
+        { "id": "acc-pl", "acceptedForms": ["hesla"] },
+        { "id": "voc-pl", "acceptedForms": ["hesla"] },
+        { "id": "loc-pl", "acceptedForms": ["heslech"] },
+        { "id": "ins-pl", "acceptedForms": ["hesly"] }
+      ]
+    },
+    {
+      "prompt": "historie",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["historie"] },
+        { "id": "gen-sg", "acceptedForms": ["historie"] },
+        { "id": "dat-sg", "acceptedForms": ["historii"] },
+        { "id": "acc-sg", "acceptedForms": ["historii"] },
+        { "id": "voc-sg", "acceptedForms": ["historie"] },
+        { "id": "loc-sg", "acceptedForms": ["historii"] },
+        { "id": "ins-sg", "acceptedForms": ["historií"] },
+        { "id": "nom-pl", "acceptedForms": ["historie"] },
+        { "id": "gen-pl", "acceptedForms": ["historií"] },
+        { "id": "dat-pl", "acceptedForms": ["historiím"] },
+        { "id": "acc-pl", "acceptedForms": ["historie"] },
+        { "id": "voc-pl", "acceptedForms": ["historie"] },
+        { "id": "loc-pl", "acceptedForms": ["historiích"] },
+        { "id": "ins-pl", "acceptedForms": ["historiemi"] }
+      ]
+    },
+    {
+      "prompt": "hit",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hit"] },
+        { "id": "gen-sg", "acceptedForms": ["hitu"] },
+        { "id": "dat-sg", "acceptedForms": ["hitu"] },
+        { "id": "acc-sg", "acceptedForms": ["hit"] },
+        { "id": "voc-sg", "acceptedForms": ["hite"] },
+        { "id": "loc-sg", "acceptedForms": ["hitu"] },
+        { "id": "ins-sg", "acceptedForms": ["hitem"] },
+        { "id": "nom-pl", "acceptedForms": ["hity"] },
+        { "id": "gen-pl", "acceptedForms": ["hitů"] },
+        { "id": "dat-pl", "acceptedForms": ["hitům"] },
+        { "id": "acc-pl", "acceptedForms": ["hity"] },
+        { "id": "voc-pl", "acceptedForms": ["hity"] },
+        { "id": "loc-pl", "acceptedForms": ["hitech"] },
+        { "id": "ins-pl", "acceptedForms": ["hity"] }
+      ]
+    },
+    {
+      "prompt": "hlad",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hlad"] },
+        { "id": "gen-sg", "acceptedForms": ["hladu"] },
+        { "id": "dat-sg", "acceptedForms": ["hladu"] },
+        { "id": "acc-sg", "acceptedForms": ["hlad"] },
+        { "id": "voc-sg", "acceptedForms": ["hlade"] },
+        { "id": "loc-sg", "acceptedForms": ["hladu"] },
+        { "id": "ins-sg", "acceptedForms": ["hladem"] },
+        { "id": "nom-pl", "acceptedForms": ["hlady"] },
+        { "id": "gen-pl", "acceptedForms": ["hladů"] },
+        { "id": "dat-pl", "acceptedForms": ["hladům"] },
+        { "id": "acc-pl", "acceptedForms": ["hlady"] },
+        { "id": "voc-pl", "acceptedForms": ["hlady"] },
+        { "id": "loc-pl", "acceptedForms": ["hladech"] },
+        { "id": "ins-pl", "acceptedForms": ["hlady"] }
+      ]
+    },
+    {
+      "prompt": "hlas",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hlas"] },
+        { "id": "gen-sg", "acceptedForms": ["hlasu"] },
+        { "id": "dat-sg", "acceptedForms": ["hlasu"] },
+        { "id": "acc-sg", "acceptedForms": ["hlas"] },
+        { "id": "voc-sg", "acceptedForms": ["hlase"] },
+        { "id": "loc-sg", "acceptedForms": ["hlase", "hlasu"] },
+        { "id": "ins-sg", "acceptedForms": ["hlasem"] },
+        { "id": "nom-pl", "acceptedForms": ["hlasy"] },
+        { "id": "gen-pl", "acceptedForms": ["hlasů"] },
+        { "id": "dat-pl", "acceptedForms": ["hlasům"] },
+        { "id": "acc-pl", "acceptedForms": ["hlasy"] },
+        { "id": "voc-pl", "acceptedForms": ["hlasy"] },
+        { "id": "loc-pl", "acceptedForms": ["hlasech"] },
+        { "id": "ins-pl", "acceptedForms": ["hlasy"] }
+      ]
+    },
+    {
+      "prompt": "hláska",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hláska"] },
+        { "id": "gen-sg", "acceptedForms": ["hlásky"] },
+        { "id": "dat-sg", "acceptedForms": ["hlásce"] },
+        { "id": "acc-sg", "acceptedForms": ["hlásku"] },
+        { "id": "voc-sg", "acceptedForms": ["hlásko"] },
+        { "id": "loc-sg", "acceptedForms": ["hlásce"] },
+        { "id": "ins-sg", "acceptedForms": ["hláskou"] },
+        { "id": "nom-pl", "acceptedForms": ["hlásky"] },
+        { "id": "gen-pl", "acceptedForms": ["hlásek"] },
+        { "id": "dat-pl", "acceptedForms": ["hláskám"] },
+        { "id": "acc-pl", "acceptedForms": ["hlásky"] },
+        { "id": "voc-pl", "acceptedForms": ["hlásky"] },
+        { "id": "loc-pl", "acceptedForms": ["hláskách"] },
+        { "id": "ins-pl", "acceptedForms": ["hláskami"] }
+      ]
+    },
+    {
+      "prompt": "hlemýžď",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hlemýžď"] },
+        { "id": "gen-sg", "acceptedForms": ["hlemýždě"] },
+        { "id": "dat-sg", "acceptedForms": ["hlemýždi", "hlemýžďovi"] },
+        { "id": "acc-sg", "acceptedForms": ["hlemýždě"] },
+        { "id": "voc-sg", "acceptedForms": ["hlemýždi"] },
+        { "id": "loc-sg", "acceptedForms": ["hlemýždi", "hlemýžďovi"] },
+        { "id": "ins-sg", "acceptedForms": ["hlemýžděm"] },
+        { "id": "nom-pl", "acceptedForms": ["hlemýždi"] },
+        { "id": "gen-pl", "acceptedForms": ["hlemýžďů"] },
+        { "id": "dat-pl", "acceptedForms": ["hlemýžďům"] },
+        { "id": "acc-pl", "acceptedForms": ["hlemýždě"] },
+        { "id": "voc-pl", "acceptedForms": ["hlemýždi"] },
+        { "id": "loc-pl", "acceptedForms": ["hlemýždích"] },
+        { "id": "ins-pl", "acceptedForms": ["hlemýždi"] }
+      ]
+    },
+    {
+      "prompt": "hlína",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hlína"] },
+        { "id": "gen-sg", "acceptedForms": ["hlíny"] },
+        { "id": "dat-sg", "acceptedForms": ["hlíně"] },
+        { "id": "acc-sg", "acceptedForms": ["hlínu"] },
+        { "id": "voc-sg", "acceptedForms": ["hlíno"] },
+        { "id": "loc-sg", "acceptedForms": ["hlíně"] },
+        { "id": "ins-sg", "acceptedForms": ["hlínou"] },
+        { "id": "nom-pl", "acceptedForms": ["hlíny"] },
+        { "id": "gen-pl", "acceptedForms": ["hlín"] },
+        { "id": "dat-pl", "acceptedForms": ["hlínám"] },
+        { "id": "acc-pl", "acceptedForms": ["hlíny"] },
+        { "id": "voc-pl", "acceptedForms": ["hlíny"] },
+        { "id": "loc-pl", "acceptedForms": ["hlínách"] },
+        { "id": "ins-pl", "acceptedForms": ["hlínami"] }
+      ]
+    },
+    {
+      "prompt": "hlt",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hlt"] },
+        { "id": "gen-sg", "acceptedForms": ["hltu"] },
+        { "id": "dat-sg", "acceptedForms": ["hltu"] },
+        { "id": "acc-sg", "acceptedForms": ["hlt"] },
+        { "id": "voc-sg", "acceptedForms": ["hlte"] },
+        { "id": "loc-sg", "acceptedForms": ["hltu"] },
+        { "id": "ins-sg", "acceptedForms": ["hltem"] },
+        { "id": "nom-pl", "acceptedForms": ["hlty"] },
+        { "id": "gen-pl", "acceptedForms": ["hltů"] },
+        { "id": "dat-pl", "acceptedForms": ["hltům"] },
+        { "id": "acc-pl", "acceptedForms": ["hlty"] },
+        { "id": "voc-pl", "acceptedForms": ["hlty"] },
+        { "id": "loc-pl", "acceptedForms": ["hltech"] },
+        { "id": "ins-pl", "acceptedForms": ["hlty"] }
+      ]
+    },
+    {
+      "prompt": "hluk",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hluk"] },
+        { "id": "gen-sg", "acceptedForms": ["hluku"] },
+        { "id": "dat-sg", "acceptedForms": ["hluku"] },
+        { "id": "acc-sg", "acceptedForms": ["hluk"] },
+        { "id": "voc-sg", "acceptedForms": ["hluku"] },
+        { "id": "loc-sg", "acceptedForms": ["hluku"] },
+        { "id": "ins-sg", "acceptedForms": ["hlukem"] },
+        { "id": "nom-pl", "acceptedForms": ["hluky"] },
+        { "id": "gen-pl", "acceptedForms": ["hluků"] },
+        { "id": "dat-pl", "acceptedForms": ["hlukům"] },
+        { "id": "acc-pl", "acceptedForms": ["hluky"] },
+        { "id": "voc-pl", "acceptedForms": ["hluky"] },
+        { "id": "loc-pl", "acceptedForms": ["hlucích"] },
+        { "id": "ins-pl", "acceptedForms": ["hluky"] }
+      ]
+    },
+    {
+      "prompt": "hmota",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hmota"] },
+        { "id": "gen-sg", "acceptedForms": ["hmoty"] },
+        { "id": "dat-sg", "acceptedForms": ["hmotě"] },
+        { "id": "acc-sg", "acceptedForms": ["hmotu"] },
+        { "id": "voc-sg", "acceptedForms": ["hmoto"] },
+        { "id": "loc-sg", "acceptedForms": ["hmotě"] },
+        { "id": "ins-sg", "acceptedForms": ["hmotou"] },
+        { "id": "nom-pl", "acceptedForms": ["hmoty"] },
+        { "id": "gen-pl", "acceptedForms": ["hmot"] },
+        { "id": "dat-pl", "acceptedForms": ["hmotám"] },
+        { "id": "acc-pl", "acceptedForms": ["hmoty"] },
+        { "id": "voc-pl", "acceptedForms": ["hmoty"] },
+        { "id": "loc-pl", "acceptedForms": ["hmotách"] },
+        { "id": "ins-pl", "acceptedForms": ["hmotami"] }
+      ]
+    },
+    {
+      "prompt": "hodina",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hodina"] },
+        { "id": "gen-sg", "acceptedForms": ["hodiny"] },
+        { "id": "dat-sg", "acceptedForms": ["hodině"] },
+        { "id": "acc-sg", "acceptedForms": ["hodinu"] },
+        { "id": "voc-sg", "acceptedForms": ["hodino"] },
+        { "id": "loc-sg", "acceptedForms": ["hodině"] },
+        { "id": "ins-sg", "acceptedForms": ["hodinou"] },
+        { "id": "nom-pl", "acceptedForms": ["hodiny"] },
+        { "id": "gen-pl", "acceptedForms": ["hodin"] },
+        { "id": "dat-pl", "acceptedForms": ["hodinám"] },
+        { "id": "acc-pl", "acceptedForms": ["hodiny"] },
+        { "id": "voc-pl", "acceptedForms": ["hodiny"] },
+        { "id": "loc-pl", "acceptedForms": ["hodinách"] },
+        { "id": "ins-pl", "acceptedForms": ["hodinami"] }
+      ]
+    },
+    {
+      "prompt": "hodiny",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-pl", "acceptedForms": ["hodiny"] },
+        { "id": "gen-pl", "acceptedForms": ["hodin"] },
+        { "id": "dat-pl", "acceptedForms": ["hodinám"] },
+        { "id": "acc-pl", "acceptedForms": ["hodiny"] },
+        { "id": "voc-pl", "acceptedForms": ["hodiny"] },
+        { "id": "loc-pl", "acceptedForms": ["hodinách"] },
+        { "id": "ins-pl", "acceptedForms": ["hodinami"] }
+      ]
+    },
+    {
+      "prompt": "hoch",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hoch"] },
+        { "id": "gen-sg", "acceptedForms": ["hocha"] },
+        { "id": "dat-sg", "acceptedForms": ["hochovi", "hochu"] },
+        { "id": "acc-sg", "acceptedForms": ["hocha"] },
+        { "id": "voc-sg", "acceptedForms": ["hochu"] },
+        { "id": "loc-sg", "acceptedForms": ["hochovi", "hochu"] },
+        { "id": "ins-sg", "acceptedForms": ["hochem"] },
+        { "id": "nom-pl", "acceptedForms": ["hoši"] },
+        { "id": "gen-pl", "acceptedForms": ["hochů"] },
+        { "id": "dat-pl", "acceptedForms": ["hochům"] },
+        { "id": "acc-pl", "acceptedForms": ["hochy"] },
+        { "id": "voc-pl", "acceptedForms": ["hoši"] },
+        { "id": "loc-pl", "acceptedForms": ["hoších"] },
+        { "id": "ins-pl", "acceptedForms": ["hochy"] }
+      ]
+    },
+    {
+      "prompt": "hokej",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hokej"] },
+        { "id": "gen-sg", "acceptedForms": ["hokeje"] },
+        { "id": "dat-sg", "acceptedForms": ["hokeji"] },
+        { "id": "acc-sg", "acceptedForms": ["hokej"] },
+        { "id": "voc-sg", "acceptedForms": ["hokeji"] },
+        { "id": "loc-sg", "acceptedForms": ["hokeji"] },
+        { "id": "ins-sg", "acceptedForms": ["hokejem"] },
+        { "id": "nom-pl", "acceptedForms": ["hokeje"] },
+        { "id": "gen-pl", "acceptedForms": ["hokejů"] },
+        { "id": "dat-pl", "acceptedForms": ["hokejům"] },
+        { "id": "acc-pl", "acceptedForms": ["hokeje"] },
+        { "id": "voc-pl", "acceptedForms": ["hokeje"] },
+        { "id": "loc-pl", "acceptedForms": ["hokejích"] },
+        { "id": "ins-pl", "acceptedForms": ["hokeji"] }
+      ]
+    },
+    {
+      "prompt": "holič",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["holič"] },
+        { "id": "gen-sg", "acceptedForms": ["holiče"] },
+        { "id": "dat-sg", "acceptedForms": ["holiči", "holičovi"] },
+        { "id": "acc-sg", "acceptedForms": ["holiče"] },
+        { "id": "voc-sg", "acceptedForms": ["holiči"] },
+        { "id": "loc-sg", "acceptedForms": ["holiči", "holičovi"] },
+        { "id": "ins-sg", "acceptedForms": ["holičem"] },
+        { "id": "nom-pl", "acceptedForms": ["holiči"] },
+        { "id": "gen-pl", "acceptedForms": ["holičů"] },
+        { "id": "dat-pl", "acceptedForms": ["holičům"] },
+        { "id": "acc-pl", "acceptedForms": ["holiče"] },
+        { "id": "voc-pl", "acceptedForms": ["holiči"] },
+        { "id": "loc-pl", "acceptedForms": ["holičích"] },
+        { "id": "ins-pl", "acceptedForms": ["holiči"] }
+      ]
+    },
+    {
+      "prompt": "holka",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["holka"] },
+        { "id": "gen-sg", "acceptedForms": ["holky"] },
+        { "id": "dat-sg", "acceptedForms": ["holce"] },
+        { "id": "acc-sg", "acceptedForms": ["holku"] },
+        { "id": "voc-sg", "acceptedForms": ["holko"] },
+        { "id": "loc-sg", "acceptedForms": ["holce"] },
+        { "id": "ins-sg", "acceptedForms": ["holkou"] },
+        { "id": "nom-pl", "acceptedForms": ["holky"] },
+        { "id": "gen-pl", "acceptedForms": ["holek"] },
+        { "id": "dat-pl", "acceptedForms": ["holkám"] },
+        { "id": "acc-pl", "acceptedForms": ["holky"] },
+        { "id": "voc-pl", "acceptedForms": ["holky"] },
+        { "id": "loc-pl", "acceptedForms": ["holkách"] },
+        { "id": "ins-pl", "acceptedForms": ["holkami"] }
+      ]
+    },
+    {
+      "prompt": "hora",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hora"] },
+        { "id": "gen-sg", "acceptedForms": ["hory"] },
+        { "id": "dat-sg", "acceptedForms": ["hoře"] },
+        { "id": "acc-sg", "acceptedForms": ["horu"] },
+        { "id": "voc-sg", "acceptedForms": ["horo"] },
+        { "id": "loc-sg", "acceptedForms": ["hoře"] },
+        { "id": "ins-sg", "acceptedForms": ["horou"] },
+        { "id": "nom-pl", "acceptedForms": ["hory"] },
+        { "id": "gen-pl", "acceptedForms": ["hor"] },
+        { "id": "dat-pl", "acceptedForms": ["horám"] },
+        { "id": "acc-pl", "acceptedForms": ["hory"] },
+        { "id": "voc-pl", "acceptedForms": ["hory"] },
+        { "id": "loc-pl", "acceptedForms": ["horách"] },
+        { "id": "ins-pl", "acceptedForms": ["horami"] }
+      ]
+    },
+    {
+      "prompt": "horník",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["horník"] },
+        { "id": "gen-sg", "acceptedForms": ["horníka"] },
+        { "id": "dat-sg", "acceptedForms": ["horníkovi", "horníku"] },
+        { "id": "acc-sg", "acceptedForms": ["horníka"] },
+        { "id": "voc-sg", "acceptedForms": ["horníku"] },
+        { "id": "loc-sg", "acceptedForms": ["horníkovi", "horníku"] },
+        { "id": "ins-sg", "acceptedForms": ["horníkem"] },
+        { "id": "nom-pl", "acceptedForms": ["horníci"] },
+        { "id": "gen-pl", "acceptedForms": ["horníků"] },
+        { "id": "dat-pl", "acceptedForms": ["horníkům"] },
+        { "id": "acc-pl", "acceptedForms": ["horníky"] },
+        { "id": "voc-pl", "acceptedForms": ["horníci"] },
+        { "id": "loc-pl", "acceptedForms": ["hornících"] },
+        { "id": "ins-pl", "acceptedForms": ["horníky"] }
+      ]
+    },
+    {
+      "prompt": "horolezec",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["horolezec"] },
+        { "id": "gen-sg", "acceptedForms": ["horolezce"] },
+        { "id": "dat-sg", "acceptedForms": ["horolezci", "horolezcovi"] },
+        { "id": "acc-sg", "acceptedForms": ["horolezce"] },
+        { "id": "voc-sg", "acceptedForms": ["horolezče"] },
+        { "id": "loc-sg", "acceptedForms": ["horolezci", "horolezcovi"] },
+        { "id": "ins-sg", "acceptedForms": ["horolezcem"] },
+        { "id": "nom-pl", "acceptedForms": ["horolezci"] },
+        { "id": "gen-pl", "acceptedForms": ["horolezců"] },
+        { "id": "dat-pl", "acceptedForms": ["horolezcům"] },
+        { "id": "acc-pl", "acceptedForms": ["horolezce"] },
+        { "id": "voc-pl", "acceptedForms": ["horolezci"] },
+        { "id": "loc-pl", "acceptedForms": ["horolezcích"] },
+        { "id": "ins-pl", "acceptedForms": ["horolezci"] }
+      ]
+    },
+    {
+      "prompt": "hospoda",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hospoda"] },
+        { "id": "gen-sg", "acceptedForms": ["hospody"] },
+        { "id": "dat-sg", "acceptedForms": ["hospodě"] },
+        { "id": "acc-sg", "acceptedForms": ["hospodu"] },
+        { "id": "voc-sg", "acceptedForms": ["hospodo"] },
+        { "id": "loc-sg", "acceptedForms": ["hospodě"] },
+        { "id": "ins-sg", "acceptedForms": ["hospodou"] },
+        { "id": "nom-pl", "acceptedForms": ["hospody"] },
+        { "id": "gen-pl", "acceptedForms": ["hospod"] },
+        { "id": "dat-pl", "acceptedForms": ["hospodám"] },
+        { "id": "acc-pl", "acceptedForms": ["hospody"] },
+        { "id": "voc-pl", "acceptedForms": ["hospody"] },
+        { "id": "loc-pl", "acceptedForms": ["hospodách"] },
+        { "id": "ins-pl", "acceptedForms": ["hospodami"] }
+      ]
+    },
+    {
+      "prompt": "host",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["host"] },
+        { "id": "gen-sg", "acceptedForms": ["hosta"] },
+        { "id": "dat-sg", "acceptedForms": ["hostovi", "hostu"] },
+        { "id": "acc-sg", "acceptedForms": ["hosta"] },
+        { "id": "voc-sg", "acceptedForms": ["hoste"] },
+        { "id": "loc-sg", "acceptedForms": ["hostovi", "hostu"] },
+        { "id": "ins-sg", "acceptedForms": ["hostem"] },
+        { "id": "nom-pl", "acceptedForms": ["hosté", "hosti"] },
+        { "id": "gen-pl", "acceptedForms": ["hostů", "hostí"] },
+        { "id": "dat-pl", "acceptedForms": ["hostům"] },
+        { "id": "acc-pl", "acceptedForms": ["hosty"] },
+        { "id": "voc-pl", "acceptedForms": ["hosté", "hosti"] },
+        { "id": "loc-pl", "acceptedForms": ["hostech"] },
+        { "id": "ins-pl", "acceptedForms": ["hosty"] }
+      ]
+    },
+    {
+      "prompt": "hotel",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hotel"] },
+        { "id": "gen-sg", "acceptedForms": ["hotelu"] },
+        { "id": "dat-sg", "acceptedForms": ["hotelu"] },
+        { "id": "acc-sg", "acceptedForms": ["hotel"] },
+        { "id": "voc-sg", "acceptedForms": ["hotele"] },
+        { "id": "loc-sg", "acceptedForms": ["hotelu"] },
+        { "id": "ins-sg", "acceptedForms": ["hotelem"] },
+        { "id": "nom-pl", "acceptedForms": ["hotely"] },
+        { "id": "gen-pl", "acceptedForms": ["hotelů"] },
+        { "id": "dat-pl", "acceptedForms": ["hotelům"] },
+        { "id": "acc-pl", "acceptedForms": ["hotely"] },
+        { "id": "voc-pl", "acceptedForms": ["hotely"] },
+        { "id": "loc-pl", "acceptedForms": ["hotelech", "hotelích"] },
+        { "id": "ins-pl", "acceptedForms": ["hotely"] }
+      ]
+    },
+    {
+      "prompt": "housle",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-pl", "acceptedForms": ["housle"] },
+        { "id": "gen-pl", "acceptedForms": ["houslí"] },
+        { "id": "dat-pl", "acceptedForms": ["houslím"] },
+        { "id": "acc-pl", "acceptedForms": ["housle"] },
+        { "id": "voc-pl", "acceptedForms": ["housle"] },
+        { "id": "loc-pl", "acceptedForms": ["houslích"] },
+        { "id": "ins-pl", "acceptedForms": ["houslemi"] }
+      ]
+    },
+    {
+      "prompt": "houslista",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["houslista"] },
+        { "id": "gen-sg", "acceptedForms": ["houslisty"] },
+        { "id": "dat-sg", "acceptedForms": ["houslistovi"] },
+        { "id": "acc-sg", "acceptedForms": ["houslistu"] },
+        { "id": "voc-sg", "acceptedForms": ["houslisto"] },
+        { "id": "loc-sg", "acceptedForms": ["houslistovi"] },
+        { "id": "ins-sg", "acceptedForms": ["houslistou"] },
+        { "id": "nom-pl", "acceptedForms": ["houslisté"] },
+        { "id": "gen-pl", "acceptedForms": ["houslistů"] },
+        { "id": "dat-pl", "acceptedForms": ["houslistům"] },
+        { "id": "acc-pl", "acceptedForms": ["houslisty"] },
+        { "id": "voc-pl", "acceptedForms": ["houslisté"] },
+        { "id": "loc-pl", "acceptedForms": ["houslistech"] },
+        { "id": "ins-pl", "acceptedForms": ["houslisty"] }
+      ]
+    },
+    {
+      "prompt": "hra",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hra"] },
+        { "id": "gen-sg", "acceptedForms": ["hry"] },
+        { "id": "dat-sg", "acceptedForms": ["hře"] },
+        { "id": "acc-sg", "acceptedForms": ["hru"] },
+        { "id": "voc-sg", "acceptedForms": ["hro"] },
+        { "id": "loc-sg", "acceptedForms": ["hře"] },
+        { "id": "ins-sg", "acceptedForms": ["hrou"] },
+        { "id": "nom-pl", "acceptedForms": ["hry"] },
+        { "id": "gen-pl", "acceptedForms": ["her"] },
+        { "id": "dat-pl", "acceptedForms": ["hrám"] },
+        { "id": "acc-pl", "acceptedForms": ["hry"] },
+        { "id": "voc-pl", "acceptedForms": ["hry"] },
+        { "id": "loc-pl", "acceptedForms": ["hrách"] },
+        { "id": "ins-pl", "acceptedForms": ["hrami"] }
+      ]
+    },
+    {
+      "prompt": "hrábě",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-pl", "acceptedForms": ["hrábě"] },
+        { "id": "gen-pl", "acceptedForms": ["hrábí"] },
+        { "id": "dat-pl", "acceptedForms": ["hrábím"] },
+        { "id": "acc-pl", "acceptedForms": ["hrábě"] },
+        { "id": "voc-pl", "acceptedForms": ["hrábě"] },
+        { "id": "loc-pl", "acceptedForms": ["hrábích"] },
+        { "id": "ins-pl", "acceptedForms": ["hráběmi"] }
+      ]
+    },
+    {
+      "prompt": "hráč",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hráč"] },
+        { "id": "gen-sg", "acceptedForms": ["hráče"] },
+        { "id": "dat-sg", "acceptedForms": ["hráči", "hráčovi"] },
+        { "id": "acc-sg", "acceptedForms": ["hráče"] },
+        { "id": "voc-sg", "acceptedForms": ["hráči"] },
+        { "id": "loc-sg", "acceptedForms": ["hráči", "hráčovi"] },
+        { "id": "ins-sg", "acceptedForms": ["hráčem"] },
+        { "id": "nom-pl", "acceptedForms": ["hráči"] },
+        { "id": "gen-pl", "acceptedForms": ["hráčů"] },
+        { "id": "dat-pl", "acceptedForms": ["hráčům"] },
+        { "id": "acc-pl", "acceptedForms": ["hráče"] },
+        { "id": "voc-pl", "acceptedForms": ["hráči"] },
+        { "id": "loc-pl", "acceptedForms": ["hráčích"] },
+        { "id": "ins-pl", "acceptedForms": ["hráči"] }
+      ]
+    },
+    {
       "prompt": "hrad",
       "cells": [
         { "id": "nom-sg", "acceptedForms": ["hrad"] },
@@ -3027,6 +4199,686 @@
         { "id": "voc-pl", "acceptedForms": ["hrady"] },
         { "id": "loc-pl", "acceptedForms": ["hradech"] },
         { "id": "ins-pl", "acceptedForms": ["hrady"] }
+      ]
+    },
+    {
+      "prompt": "hrách",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hrách"] },
+        { "id": "gen-sg", "acceptedForms": ["hrachu"] },
+        { "id": "dat-sg", "acceptedForms": ["hrachu"] },
+        { "id": "acc-sg", "acceptedForms": ["hrách"] },
+        { "id": "voc-sg", "acceptedForms": ["hrachu"] },
+        { "id": "loc-sg", "acceptedForms": ["hrachu"] },
+        { "id": "ins-sg", "acceptedForms": ["hrachem"] },
+        { "id": "nom-pl", "acceptedForms": ["hrachy", "hráchy"] },
+        { "id": "gen-pl", "acceptedForms": ["hrachů"] },
+        { "id": "dat-pl", "acceptedForms": ["hrachům"] },
+        { "id": "acc-pl", "acceptedForms": ["hrachy", "hráchy"] },
+        { "id": "voc-pl", "acceptedForms": ["hrachy", "hráchy"] },
+        { "id": "loc-pl", "acceptedForms": ["hraších"] },
+        { "id": "ins-pl", "acceptedForms": ["hrachy"] }
+      ]
+    },
+    {
+      "prompt": "hrdina",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hrdina"] },
+        { "id": "gen-sg", "acceptedForms": ["hrdiny"] },
+        { "id": "dat-sg", "acceptedForms": ["hrdinovi"] },
+        { "id": "acc-sg", "acceptedForms": ["hrdinu"] },
+        { "id": "voc-sg", "acceptedForms": ["hrdino"] },
+        { "id": "loc-sg", "acceptedForms": ["hrdinovi"] },
+        { "id": "ins-sg", "acceptedForms": ["hrdinou"] },
+        { "id": "nom-pl", "acceptedForms": ["hrdinové"] },
+        { "id": "gen-pl", "acceptedForms": ["hrdinů"] },
+        { "id": "dat-pl", "acceptedForms": ["hrdinům"] },
+        { "id": "acc-pl", "acceptedForms": ["hrdiny"] },
+        { "id": "voc-pl", "acceptedForms": ["hrdinové"] },
+        { "id": "loc-pl", "acceptedForms": ["hrdinech"] },
+        { "id": "ins-pl", "acceptedForms": ["hrdiny"] }
+      ]
+    },
+    {
+      "prompt": "hrnec",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hrnec"] },
+        { "id": "gen-sg", "acceptedForms": ["hrnce"] },
+        { "id": "dat-sg", "acceptedForms": ["hrnci"] },
+        { "id": "acc-sg", "acceptedForms": ["hrnec"] },
+        { "id": "voc-sg", "acceptedForms": ["hrnci"] },
+        { "id": "loc-sg", "acceptedForms": ["hrnci"] },
+        { "id": "ins-sg", "acceptedForms": ["hrncem"] },
+        { "id": "nom-pl", "acceptedForms": ["hrnce"] },
+        { "id": "gen-pl", "acceptedForms": ["hrnců"] },
+        { "id": "dat-pl", "acceptedForms": ["hrncům"] },
+        { "id": "acc-pl", "acceptedForms": ["hrnce"] },
+        { "id": "voc-pl", "acceptedForms": ["hrnce"] },
+        { "id": "loc-pl", "acceptedForms": ["hrncích"] },
+        { "id": "ins-pl", "acceptedForms": ["hrnci"] }
+      ]
+    },
+    {
+      "prompt": "hroch",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hroch"] },
+        { "id": "gen-sg", "acceptedForms": ["hrocha"] },
+        { "id": "dat-sg", "acceptedForms": ["hrochovi", "hrochu"] },
+        { "id": "acc-sg", "acceptedForms": ["hrocha"] },
+        { "id": "voc-sg", "acceptedForms": ["hrochu"] },
+        { "id": "loc-sg", "acceptedForms": ["hrochovi", "hrochu"] },
+        { "id": "ins-sg", "acceptedForms": ["hrochem"] },
+        { "id": "nom-pl", "acceptedForms": ["hroši"] },
+        { "id": "gen-pl", "acceptedForms": ["hrochů"] },
+        { "id": "dat-pl", "acceptedForms": ["hrochům"] },
+        { "id": "acc-pl", "acceptedForms": ["hrochy"] },
+        { "id": "voc-pl", "acceptedForms": ["hroši"] },
+        { "id": "loc-pl", "acceptedForms": ["hroších"] },
+        { "id": "ins-pl", "acceptedForms": ["hrochy"] }
+      ]
+    },
+    {
+      "prompt": "hrot",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hrot"] },
+        { "id": "gen-sg", "acceptedForms": ["hrotu"] },
+        { "id": "dat-sg", "acceptedForms": ["hrotu"] },
+        { "id": "acc-sg", "acceptedForms": ["hrot"] },
+        { "id": "voc-sg", "acceptedForms": ["hrote"] },
+        { "id": "loc-sg", "acceptedForms": ["hrotě", "hrotu"] },
+        { "id": "ins-sg", "acceptedForms": ["hrotem"] },
+        { "id": "nom-pl", "acceptedForms": ["hroty"] },
+        { "id": "gen-pl", "acceptedForms": ["hrotů"] },
+        { "id": "dat-pl", "acceptedForms": ["hrotům"] },
+        { "id": "acc-pl", "acceptedForms": ["hroty"] },
+        { "id": "voc-pl", "acceptedForms": ["hroty"] },
+        { "id": "loc-pl", "acceptedForms": ["hrotech"] },
+        { "id": "ins-pl", "acceptedForms": ["hroty"] }
+      ]
+    },
+    {
+      "prompt": "hrouda",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hrouda"] },
+        { "id": "gen-sg", "acceptedForms": ["hroudy"] },
+        { "id": "dat-sg", "acceptedForms": ["hroudě"] },
+        { "id": "acc-sg", "acceptedForms": ["hroudu"] },
+        { "id": "voc-sg", "acceptedForms": ["hroudo"] },
+        { "id": "loc-sg", "acceptedForms": ["hroudě"] },
+        { "id": "ins-sg", "acceptedForms": ["hroudou"] },
+        { "id": "nom-pl", "acceptedForms": ["hroudy"] },
+        { "id": "gen-pl", "acceptedForms": ["hrud"] },
+        { "id": "dat-pl", "acceptedForms": ["hroudám"] },
+        { "id": "acc-pl", "acceptedForms": ["hroudy"] },
+        { "id": "voc-pl", "acceptedForms": ["hroudy"] },
+        { "id": "loc-pl", "acceptedForms": ["hroudách"] },
+        { "id": "ins-pl", "acceptedForms": ["hroudami"] }
+      ]
+    },
+    {
+      "prompt": "hruška",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hruška"] },
+        { "id": "gen-sg", "acceptedForms": ["hrušky"] },
+        { "id": "dat-sg", "acceptedForms": ["hrušce"] },
+        { "id": "acc-sg", "acceptedForms": ["hrušku"] },
+        { "id": "voc-sg", "acceptedForms": ["hruško"] },
+        { "id": "loc-sg", "acceptedForms": ["hrušce"] },
+        { "id": "ins-sg", "acceptedForms": ["hruškou"] },
+        { "id": "nom-pl", "acceptedForms": ["hrušky"] },
+        { "id": "gen-pl", "acceptedForms": ["hrušek"] },
+        { "id": "dat-pl", "acceptedForms": ["hruškám"] },
+        { "id": "acc-pl", "acceptedForms": ["hrušky"] },
+        { "id": "voc-pl", "acceptedForms": ["hrušky"] },
+        { "id": "loc-pl", "acceptedForms": ["hruškách"] },
+        { "id": "ins-pl", "acceptedForms": ["hruškami"] }
+      ]
+    },
+    {
+      "prompt": "hřad",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hřad"] },
+        { "id": "gen-sg", "acceptedForms": ["hřadu"] },
+        { "id": "dat-sg", "acceptedForms": ["hřadu"] },
+        { "id": "acc-sg", "acceptedForms": ["hřad"] },
+        { "id": "voc-sg", "acceptedForms": ["hřade"] },
+        { "id": "loc-sg", "acceptedForms": ["hřadě", "hřadu"] },
+        { "id": "ins-sg", "acceptedForms": ["hřadem"] },
+        { "id": "nom-pl", "acceptedForms": ["hřady"] },
+        { "id": "gen-pl", "acceptedForms": ["hřadů"] },
+        { "id": "dat-pl", "acceptedForms": ["hřadům"] },
+        { "id": "acc-pl", "acceptedForms": ["hřady"] },
+        { "id": "voc-pl", "acceptedForms": ["hřady"] },
+        { "id": "loc-pl", "acceptedForms": ["hřadech"] },
+        { "id": "ins-pl", "acceptedForms": ["hřady"] }
+      ]
+    },
+    {
+      "prompt": "hřbet",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hřbet"] },
+        { "id": "gen-sg", "acceptedForms": ["hřbetu"] },
+        { "id": "dat-sg", "acceptedForms": ["hřbetu"] },
+        { "id": "acc-sg", "acceptedForms": ["hřbet"] },
+        { "id": "voc-sg", "acceptedForms": ["hřbete"] },
+        { "id": "loc-sg", "acceptedForms": ["hřbetě", "hřbetu"] },
+        { "id": "ins-sg", "acceptedForms": ["hřbetem"] },
+        { "id": "nom-pl", "acceptedForms": ["hřbety"] },
+        { "id": "gen-pl", "acceptedForms": ["hřbetů"] },
+        { "id": "dat-pl", "acceptedForms": ["hřbetům"] },
+        { "id": "acc-pl", "acceptedForms": ["hřbety"] },
+        { "id": "voc-pl", "acceptedForms": ["hřbety"] },
+        { "id": "loc-pl", "acceptedForms": ["hřbetech"] },
+        { "id": "ins-pl", "acceptedForms": ["hřbety"] }
+      ]
+    },
+    {
+      "prompt": "hřib",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hřib"] },
+        { "id": "gen-sg", "acceptedForms": ["hřiba", "hřibu"] },
+        { "id": "dat-sg", "acceptedForms": ["hřibu"] },
+        { "id": "acc-sg", "acceptedForms": ["hřib", "hřiba"] },
+        { "id": "voc-sg", "acceptedForms": ["hřibe"] },
+        { "id": "loc-sg", "acceptedForms": ["hřibu"] },
+        { "id": "ins-sg", "acceptedForms": ["hřibem"] },
+        { "id": "nom-pl", "acceptedForms": ["hřiby"] },
+        { "id": "gen-pl", "acceptedForms": ["hřibů"] },
+        { "id": "dat-pl", "acceptedForms": ["hřibům"] },
+        { "id": "acc-pl", "acceptedForms": ["hřiby"] },
+        { "id": "voc-pl", "acceptedForms": ["hřiby"] },
+        { "id": "loc-pl", "acceptedForms": ["hřibech"] },
+        { "id": "ins-pl", "acceptedForms": ["hřiby"] }
+      ]
+    },
+    {
+      "prompt": "hříbě",
+      "gender": "s.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hříbě"] },
+        { "id": "gen-sg", "acceptedForms": ["hříběte"] },
+        { "id": "dat-sg", "acceptedForms": ["hříběti"] },
+        { "id": "acc-sg", "acceptedForms": ["hříbě"] },
+        { "id": "voc-sg", "acceptedForms": ["hříbě"] },
+        { "id": "loc-sg", "acceptedForms": ["hříběti"] },
+        { "id": "ins-sg", "acceptedForms": ["hříbětem"] },
+        { "id": "nom-pl", "acceptedForms": ["hříbata"] },
+        { "id": "gen-pl", "acceptedForms": ["hříbat"] },
+        { "id": "dat-pl", "acceptedForms": ["hříbatům"] },
+        { "id": "acc-pl", "acceptedForms": ["hříbata"] },
+        { "id": "voc-pl", "acceptedForms": ["hříbata"] },
+        { "id": "loc-pl", "acceptedForms": ["hříbatech"] },
+        { "id": "ins-pl", "acceptedForms": ["hříbaty"] }
+      ]
+    },
+    {
+      "prompt": "hříbek",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hříbek"] },
+        { "id": "gen-sg", "acceptedForms": ["hříbku", "hříbka"] },
+        { "id": "dat-sg", "acceptedForms": ["hříbku"] },
+        { "id": "acc-sg", "acceptedForms": ["hříbek", "hříbka"] },
+        { "id": "voc-sg", "acceptedForms": ["hříbku"] },
+        { "id": "loc-sg", "acceptedForms": ["hříbku"] },
+        { "id": "ins-sg", "acceptedForms": ["hříbkem"] },
+        { "id": "nom-pl", "acceptedForms": ["hříbky", "hříbci"] },
+        { "id": "gen-pl", "acceptedForms": ["hříbků"] },
+        { "id": "dat-pl", "acceptedForms": ["hříbkům"] },
+        { "id": "acc-pl", "acceptedForms": ["hříbky"] },
+        { "id": "voc-pl", "acceptedForms": ["hříbky", "hříbci"] },
+        { "id": "loc-pl", "acceptedForms": ["hříbcích", "hříbkách"] },
+        { "id": "ins-pl", "acceptedForms": ["hříbky"] }
+      ]
+    },
+    {
+      "prompt": "hříčka",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hříčka"] },
+        { "id": "gen-sg", "acceptedForms": ["hříčky"] },
+        { "id": "dat-sg", "acceptedForms": ["hříčce"] },
+        { "id": "acc-sg", "acceptedForms": ["hříčku"] },
+        { "id": "voc-sg", "acceptedForms": ["hříčko"] },
+        { "id": "loc-sg", "acceptedForms": ["hříčce"] },
+        { "id": "ins-sg", "acceptedForms": ["hříčkou"] },
+        { "id": "nom-pl", "acceptedForms": ["hříčky"] },
+        { "id": "gen-pl", "acceptedForms": ["hříček"] },
+        { "id": "dat-pl", "acceptedForms": ["hříčkám"] },
+        { "id": "acc-pl", "acceptedForms": ["hříčky"] },
+        { "id": "voc-pl", "acceptedForms": ["hříčky"] },
+        { "id": "loc-pl", "acceptedForms": ["hříčkách"] },
+        { "id": "ins-pl", "acceptedForms": ["hříčkami"] }
+      ]
+    },
+    {
+      "prompt": "hříšník",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hříšník"] },
+        { "id": "gen-sg", "acceptedForms": ["hříšníka"] },
+        { "id": "dat-sg", "acceptedForms": ["hříšníkovi", "hříšníku"] },
+        { "id": "acc-sg", "acceptedForms": ["hříšníka"] },
+        { "id": "voc-sg", "acceptedForms": ["hříšníku"] },
+        { "id": "loc-sg", "acceptedForms": ["hříšníkovi", "hříšníku"] },
+        { "id": "ins-sg", "acceptedForms": ["hříšníkem"] },
+        { "id": "nom-pl", "acceptedForms": ["hříšníci"] },
+        { "id": "gen-pl", "acceptedForms": ["hříšníků"] },
+        { "id": "dat-pl", "acceptedForms": ["hříšníkům"] },
+        { "id": "acc-pl", "acceptedForms": ["hříšníky"] },
+        { "id": "voc-pl", "acceptedForms": ["hříšníci"] },
+        { "id": "loc-pl", "acceptedForms": ["hříšnících"] },
+        { "id": "ins-pl", "acceptedForms": ["hříšníky"] }
+      ]
+    },
+    {
+      "prompt": "hřiště",
+      "gender": "s.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hřiště"] },
+        { "id": "gen-sg", "acceptedForms": ["hřiště"] },
+        { "id": "dat-sg", "acceptedForms": ["hřišti"] },
+        { "id": "acc-sg", "acceptedForms": ["hřiště"] },
+        { "id": "voc-sg", "acceptedForms": ["hřiště"] },
+        { "id": "loc-sg", "acceptedForms": ["hřišti"] },
+        { "id": "ins-sg", "acceptedForms": ["hřištěm"] },
+        { "id": "nom-pl", "acceptedForms": ["hřiště"] },
+        { "id": "gen-pl", "acceptedForms": ["hřišť"] },
+        { "id": "dat-pl", "acceptedForms": ["hřištím"] },
+        { "id": "acc-pl", "acceptedForms": ["hřiště"] },
+        { "id": "voc-pl", "acceptedForms": ["hřiště"] },
+        { "id": "loc-pl", "acceptedForms": ["hřištích"] },
+        { "id": "ins-pl", "acceptedForms": ["hřišti"] }
+      ]
+    },
+    {
+      "prompt": "hudba",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hudba"] },
+        { "id": "gen-sg", "acceptedForms": ["hudby"] },
+        { "id": "dat-sg", "acceptedForms": ["hudbě"] },
+        { "id": "acc-sg", "acceptedForms": ["hudbu"] },
+        { "id": "voc-sg", "acceptedForms": ["hudbo"] },
+        { "id": "loc-sg", "acceptedForms": ["hudbě"] },
+        { "id": "ins-sg", "acceptedForms": ["hudbou"] },
+        { "id": "nom-pl", "acceptedForms": ["hudby"] },
+        { "id": "gen-pl", "acceptedForms": ["hudeb"] },
+        { "id": "dat-pl", "acceptedForms": ["hudbám"] },
+        { "id": "acc-pl", "acceptedForms": ["hudby"] },
+        { "id": "voc-pl", "acceptedForms": ["hudby"] },
+        { "id": "loc-pl", "acceptedForms": ["hudbách"] },
+        { "id": "ins-pl", "acceptedForms": ["hudbami"] }
+      ]
+    },
+    {
+      "prompt": "hudebník",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hudebník"] },
+        { "id": "gen-sg", "acceptedForms": ["hudebníka"] },
+        { "id": "dat-sg", "acceptedForms": ["hudebníkovi", "hudebníku"] },
+        { "id": "acc-sg", "acceptedForms": ["hudebníka"] },
+        { "id": "voc-sg", "acceptedForms": ["hudebníku"] },
+        { "id": "loc-sg", "acceptedForms": ["hudebníkovi", "hudebníku"] },
+        { "id": "ins-sg", "acceptedForms": ["hudebníkem"] },
+        { "id": "nom-pl", "acceptedForms": ["hudebníci"] },
+        { "id": "gen-pl", "acceptedForms": ["hudebníků"] },
+        { "id": "dat-pl", "acceptedForms": ["hudebníkům"] },
+        { "id": "acc-pl", "acceptedForms": ["hudebníky"] },
+        { "id": "voc-pl", "acceptedForms": ["hudebníci"] },
+        { "id": "loc-pl", "acceptedForms": ["hudebnících"] },
+        { "id": "ins-pl", "acceptedForms": ["hudebníky"] }
+      ]
+    },
+    {
+      "prompt": "hůl",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hůl"] },
+        { "id": "gen-sg", "acceptedForms": ["hole"] },
+        { "id": "dat-sg", "acceptedForms": ["holi"] },
+        { "id": "acc-sg", "acceptedForms": ["hůl"] },
+        { "id": "voc-sg", "acceptedForms": ["holi"] },
+        { "id": "loc-sg", "acceptedForms": ["holi"] },
+        { "id": "ins-sg", "acceptedForms": ["holí"] },
+        { "id": "nom-pl", "acceptedForms": ["hole"] },
+        { "id": "gen-pl", "acceptedForms": ["holí"] },
+        { "id": "dat-pl", "acceptedForms": ["holím"] },
+        { "id": "acc-pl", "acceptedForms": ["hole"] },
+        { "id": "voc-pl", "acceptedForms": ["hole"] },
+        { "id": "loc-pl", "acceptedForms": ["holích"] },
+        { "id": "ins-pl", "acceptedForms": ["holemi"] }
+      ]
+    },
+    {
+      "prompt": "humor",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["humor"] },
+        { "id": "gen-sg", "acceptedForms": ["humoru"] },
+        { "id": "dat-sg", "acceptedForms": ["humoru"] },
+        { "id": "acc-sg", "acceptedForms": ["humor"] },
+        { "id": "voc-sg", "acceptedForms": ["humore"] },
+        { "id": "loc-sg", "acceptedForms": ["humoru"] },
+        { "id": "ins-sg", "acceptedForms": ["humorem"] },
+        { "id": "nom-pl", "acceptedForms": ["humory"] },
+        { "id": "gen-pl", "acceptedForms": ["humorů"] },
+        { "id": "dat-pl", "acceptedForms": ["humorům"] },
+        { "id": "acc-pl", "acceptedForms": ["humory"] },
+        { "id": "voc-pl", "acceptedForms": ["humory"] },
+        { "id": "loc-pl", "acceptedForms": ["humorech"] },
+        { "id": "ins-pl", "acceptedForms": ["humory"] }
+      ]
+    },
+    {
+      "prompt": "husa",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["husa"] },
+        { "id": "gen-sg", "acceptedForms": ["husy"] },
+        { "id": "dat-sg", "acceptedForms": ["huse"] },
+        { "id": "acc-sg", "acceptedForms": ["husu"] },
+        { "id": "voc-sg", "acceptedForms": ["huso"] },
+        { "id": "loc-sg", "acceptedForms": ["huse"] },
+        { "id": "ins-sg", "acceptedForms": ["husou"] },
+        { "id": "nom-pl", "acceptedForms": ["husy"] },
+        { "id": "gen-pl", "acceptedForms": ["hus", "husí"] },
+        { "id": "dat-pl", "acceptedForms": ["husám"] },
+        { "id": "acc-pl", "acceptedForms": ["husy"] },
+        { "id": "voc-pl", "acceptedForms": ["husy"] },
+        { "id": "loc-pl", "acceptedForms": ["husách"] },
+        { "id": "ins-pl", "acceptedForms": ["husami"] }
+      ]
+    },
+    {
+      "prompt": "huť",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["huť"] },
+        { "id": "gen-sg", "acceptedForms": ["hutě", "huti"] },
+        { "id": "dat-sg", "acceptedForms": ["huti"] },
+        { "id": "acc-sg", "acceptedForms": ["huť"] },
+        { "id": "voc-sg", "acceptedForms": ["huti"] },
+        { "id": "loc-sg", "acceptedForms": ["huti"] },
+        { "id": "ins-sg", "acceptedForms": ["hutí"] },
+        { "id": "nom-pl", "acceptedForms": ["hutě", "huti"] },
+        { "id": "gen-pl", "acceptedForms": ["hutí"] },
+        { "id": "dat-pl", "acceptedForms": ["hutím"] },
+        { "id": "acc-pl", "acceptedForms": ["hutě", "huti"] },
+        { "id": "voc-pl", "acceptedForms": ["hutě", "huti"] },
+        { "id": "loc-pl", "acceptedForms": ["hutích"] },
+        { "id": "ins-pl", "acceptedForms": ["hutěmi"] }
+      ]
+    },
+    {
+      "prompt": "hvězda",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hvězda"] },
+        { "id": "gen-sg", "acceptedForms": ["hvězdy"] },
+        { "id": "dat-sg", "acceptedForms": ["hvězdě"] },
+        { "id": "acc-sg", "acceptedForms": ["hvězdu"] },
+        { "id": "voc-sg", "acceptedForms": ["hvězdo"] },
+        { "id": "loc-sg", "acceptedForms": ["hvězdě"] },
+        { "id": "ins-sg", "acceptedForms": ["hvězdou"] },
+        { "id": "nom-pl", "acceptedForms": ["hvězdy"] },
+        { "id": "gen-pl", "acceptedForms": ["hvězd"] },
+        { "id": "dat-pl", "acceptedForms": ["hvězdám"] },
+        { "id": "acc-pl", "acceptedForms": ["hvězdy"] },
+        { "id": "voc-pl", "acceptedForms": ["hvězdy"] },
+        { "id": "loc-pl", "acceptedForms": ["hvězdách"] },
+        { "id": "ins-pl", "acceptedForms": ["hvězdami"] }
+      ]
+    },
+    {
+      "prompt": "hvězdárna",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hvězdárna"] },
+        { "id": "gen-sg", "acceptedForms": ["hvězdárny"] },
+        { "id": "dat-sg", "acceptedForms": ["hvězdárně"] },
+        { "id": "acc-sg", "acceptedForms": ["hvězdárnu"] },
+        { "id": "voc-sg", "acceptedForms": ["hvězdárno"] },
+        { "id": "loc-sg", "acceptedForms": ["hvězdárně"] },
+        { "id": "ins-sg", "acceptedForms": ["hvězdárnou"] },
+        { "id": "nom-pl", "acceptedForms": ["hvězdárny"] },
+        { "id": "gen-pl", "acceptedForms": ["hvězdáren"] },
+        { "id": "dat-pl", "acceptedForms": ["hvězdárnám"] },
+        { "id": "acc-pl", "acceptedForms": ["hvězdárny"] },
+        { "id": "voc-pl", "acceptedForms": ["hvězdárny"] },
+        { "id": "loc-pl", "acceptedForms": ["hvězdárnách"] },
+        { "id": "ins-pl", "acceptedForms": ["hvězdárnami"] }
+      ]
+    },
+    {
+      "prompt": "hvozd",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hvozd"] },
+        { "id": "gen-sg", "acceptedForms": ["hvozdu"] },
+        { "id": "dat-sg", "acceptedForms": ["hvozdu"] },
+        { "id": "acc-sg", "acceptedForms": ["hvozd"] },
+        { "id": "voc-sg", "acceptedForms": ["hvozde"] },
+        { "id": "loc-sg", "acceptedForms": ["hvozdě", "hvozdu"] },
+        { "id": "ins-sg", "acceptedForms": ["hvozdem"] },
+        { "id": "nom-pl", "acceptedForms": ["hvozdy"] },
+        { "id": "gen-pl", "acceptedForms": ["hvozdů"] },
+        { "id": "dat-pl", "acceptedForms": ["hvozdům"] },
+        { "id": "acc-pl", "acceptedForms": ["hvozdy"] },
+        { "id": "voc-pl", "acceptedForms": ["hvozdy"] },
+        { "id": "loc-pl", "acceptedForms": ["hvozdech"] },
+        { "id": "ins-pl", "acceptedForms": ["hvozdy"] }
+      ]
+    },
+    {
+      "prompt": "hydrant",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hydrant"] },
+        { "id": "gen-sg", "acceptedForms": ["hydrantu"] },
+        { "id": "dat-sg", "acceptedForms": ["hydrantu"] },
+        { "id": "acc-sg", "acceptedForms": ["hydrant"] },
+        { "id": "voc-sg", "acceptedForms": ["hydrante"] },
+        { "id": "loc-sg", "acceptedForms": ["hydrantu"] },
+        { "id": "ins-sg", "acceptedForms": ["hydrantem"] },
+        { "id": "nom-pl", "acceptedForms": ["hydranty"] },
+        { "id": "gen-pl", "acceptedForms": ["hydrantů"] },
+        { "id": "dat-pl", "acceptedForms": ["hydrantům"] },
+        { "id": "acc-pl", "acceptedForms": ["hydranty"] },
+        { "id": "voc-pl", "acceptedForms": ["hydranty"] },
+        { "id": "loc-pl", "acceptedForms": ["hydrantech"] },
+        { "id": "ins-pl", "acceptedForms": ["hydranty"] }
+      ]
+    },
+    {
+      "prompt": "hygiena",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hygiena"] },
+        { "id": "gen-sg", "acceptedForms": ["hygieny"] },
+        { "id": "dat-sg", "acceptedForms": ["hygieně"] },
+        { "id": "acc-sg", "acceptedForms": ["hygienu"] },
+        { "id": "voc-sg", "acceptedForms": ["hygieno"] },
+        { "id": "loc-sg", "acceptedForms": ["hygieně"] },
+        { "id": "ins-sg", "acceptedForms": ["hygienou"] },
+        { "id": "nom-pl", "acceptedForms": ["hygieny"] },
+        { "id": "gen-pl", "acceptedForms": ["hygien"] },
+        { "id": "dat-pl", "acceptedForms": ["hygienám"] },
+        { "id": "acc-pl", "acceptedForms": ["hygieny"] },
+        { "id": "voc-pl", "acceptedForms": ["hygieny"] },
+        { "id": "loc-pl", "acceptedForms": ["hygienách"] },
+        { "id": "ins-pl", "acceptedForms": ["hygienami"] }
+      ]
+    },
+    {
+      "prompt": "hýl",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hýl"] },
+        { "id": "gen-sg", "acceptedForms": ["hýla"] },
+        { "id": "dat-sg", "acceptedForms": ["hýlovi", "hýlu"] },
+        { "id": "acc-sg", "acceptedForms": ["hýla"] },
+        { "id": "voc-sg", "acceptedForms": ["hýle"] },
+        { "id": "loc-sg", "acceptedForms": ["hýlovi", "hýlu"] },
+        { "id": "ins-sg", "acceptedForms": ["hýlem"] },
+        { "id": "nom-pl", "acceptedForms": ["hýlové", "hýli"] },
+        { "id": "gen-pl", "acceptedForms": ["hýlů"] },
+        { "id": "dat-pl", "acceptedForms": ["hýlům"] },
+        { "id": "acc-pl", "acceptedForms": ["hýly"] },
+        { "id": "voc-pl", "acceptedForms": ["hýlové", "hýli"] },
+        { "id": "loc-pl", "acceptedForms": ["hýlech"] },
+        { "id": "ins-pl", "acceptedForms": ["hýly"] }
+      ]
+    },
+    {
+      "prompt": "hypnóza",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hypnóza"] },
+        { "id": "gen-sg", "acceptedForms": ["hypnózy"] },
+        { "id": "dat-sg", "acceptedForms": ["hypnóze"] },
+        { "id": "acc-sg", "acceptedForms": ["hypnózu"] },
+        { "id": "voc-sg", "acceptedForms": ["hypnózo"] },
+        { "id": "loc-sg", "acceptedForms": ["hypnóze"] },
+        { "id": "ins-sg", "acceptedForms": ["hypnózou"] },
+        { "id": "nom-pl", "acceptedForms": ["hypnózy"] },
+        { "id": "gen-pl", "acceptedForms": ["hypnóz"] },
+        { "id": "dat-pl", "acceptedForms": ["hypnózám"] },
+        { "id": "acc-pl", "acceptedForms": ["hypnózy"] },
+        { "id": "voc-pl", "acceptedForms": ["hypnózy"] },
+        { "id": "loc-pl", "acceptedForms": ["hypnózách"] },
+        { "id": "ins-pl", "acceptedForms": ["hypnózami"] }
+      ]
+    },
+    {
+      "prompt": "hypochondr",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hypochondr"] },
+        { "id": "gen-sg", "acceptedForms": ["hypochondra"] },
+        { "id": "dat-sg", "acceptedForms": ["hypochondrovi", "hypochondru"] },
+        { "id": "acc-sg", "acceptedForms": ["hypochondra"] },
+        { "id": "voc-sg", "acceptedForms": ["hypochondře"] },
+        { "id": "loc-sg", "acceptedForms": ["hypochondrovi", "hypochondru"] },
+        { "id": "ins-sg", "acceptedForms": ["hypochondrem"] },
+        { "id": "nom-pl", "acceptedForms": ["hypochondři"] },
+        { "id": "gen-pl", "acceptedForms": ["hypochondrů"] },
+        { "id": "dat-pl", "acceptedForms": ["hypochondrům"] },
+        { "id": "acc-pl", "acceptedForms": ["hypochondry"] },
+        { "id": "voc-pl", "acceptedForms": ["hypochondři"] },
+        { "id": "loc-pl", "acceptedForms": ["hypochondrech"] },
+        { "id": "ins-pl", "acceptedForms": ["hypochondry"] }
+      ]
+    },
+    {
+      "prompt": "hypotéka",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["hypotéka"] },
+        { "id": "gen-sg", "acceptedForms": ["hypotéky"] },
+        { "id": "dat-sg", "acceptedForms": ["hypotéce"] },
+        { "id": "acc-sg", "acceptedForms": ["hypotéku"] },
+        { "id": "voc-sg", "acceptedForms": ["hypotéko"] },
+        { "id": "loc-sg", "acceptedForms": ["hypotéce"] },
+        { "id": "ins-sg", "acceptedForms": ["hypotékou"] },
+        { "id": "nom-pl", "acceptedForms": ["hypotéky"] },
+        { "id": "gen-pl", "acceptedForms": ["hypoték"] },
+        { "id": "dat-pl", "acceptedForms": ["hypotékám"] },
+        { "id": "acc-pl", "acceptedForms": ["hypotéky"] },
+        { "id": "voc-pl", "acceptedForms": ["hypotéky"] },
+        { "id": "loc-pl", "acceptedForms": ["hypotékách"] },
+        { "id": "ins-pl", "acceptedForms": ["hypotékami"] }
+      ]
+    },
+    {
+      "prompt": "chata",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["chata"] },
+        { "id": "gen-sg", "acceptedForms": ["chaty"] },
+        { "id": "dat-sg", "acceptedForms": ["chatě"] },
+        { "id": "acc-sg", "acceptedForms": ["chatu"] },
+        { "id": "voc-sg", "acceptedForms": ["chato"] },
+        { "id": "loc-sg", "acceptedForms": ["chatě"] },
+        { "id": "ins-sg", "acceptedForms": ["chatou"] },
+        { "id": "nom-pl", "acceptedForms": ["chaty"] },
+        { "id": "gen-pl", "acceptedForms": ["chat"] },
+        { "id": "dat-pl", "acceptedForms": ["chatám"] },
+        { "id": "acc-pl", "acceptedForms": ["chaty"] },
+        { "id": "voc-pl", "acceptedForms": ["chaty"] },
+        { "id": "loc-pl", "acceptedForms": ["chatách"] },
+        { "id": "ins-pl", "acceptedForms": ["chatami"] }
+      ]
+    },
+    {
+      "prompt": "chemik",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["chemik"] },
+        { "id": "gen-sg", "acceptedForms": ["chemika"] },
+        { "id": "dat-sg", "acceptedForms": ["chemikovi", "chemiku"] },
+        { "id": "acc-sg", "acceptedForms": ["chemika"] },
+        { "id": "voc-sg", "acceptedForms": ["chemiku"] },
+        { "id": "loc-sg", "acceptedForms": ["chemikovi", "chemiku"] },
+        { "id": "ins-sg", "acceptedForms": ["chemikem"] },
+        { "id": "nom-pl", "acceptedForms": ["chemici", "chemikové"] },
+        { "id": "gen-pl", "acceptedForms": ["chemiků"] },
+        { "id": "dat-pl", "acceptedForms": ["chemikům"] },
+        { "id": "acc-pl", "acceptedForms": ["chemiky"] },
+        { "id": "voc-pl", "acceptedForms": ["chemici", "chemikové"] },
+        { "id": "loc-pl", "acceptedForms": ["chemicích"] },
+        { "id": "ins-pl", "acceptedForms": ["chemiky"] }
+      ]
+    },
+    {
+      "prompt": "chichot",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["chichot"] },
+        { "id": "gen-sg", "acceptedForms": ["chichotu"] },
+        { "id": "dat-sg", "acceptedForms": ["chichotu"] },
+        { "id": "acc-sg", "acceptedForms": ["chichot"] },
+        { "id": "voc-sg", "acceptedForms": ["chichote"] },
+        { "id": "loc-sg", "acceptedForms": ["chichotu"] },
+        { "id": "ins-sg", "acceptedForms": ["chichotem"] },
+        { "id": "nom-pl", "acceptedForms": ["chichoty"] },
+        { "id": "gen-pl", "acceptedForms": ["chichotů"] },
+        { "id": "dat-pl", "acceptedForms": ["chichotům"] },
+        { "id": "acc-pl", "acceptedForms": ["chichoty"] },
+        { "id": "voc-pl", "acceptedForms": ["chichoty"] },
+        { "id": "loc-pl", "acceptedForms": ["chichotech"] },
+        { "id": "ins-pl", "acceptedForms": ["chichoty"] }
+      ]
+    },
+    {
+      "prompt": "chips",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["chips"] },
+        { "id": "gen-sg", "acceptedForms": ["chipsu"] },
+        { "id": "dat-sg", "acceptedForms": ["chipsu"] },
+        { "id": "acc-sg", "acceptedForms": ["chips"] },
+        { "id": "voc-sg", "acceptedForms": ["chipse"] },
+        { "id": "loc-sg", "acceptedForms": ["chipsu"] },
+        { "id": "ins-sg", "acceptedForms": ["chipsem"] },
+        { "id": "nom-pl", "acceptedForms": ["chipsy"] },
+        { "id": "gen-pl", "acceptedForms": ["chipsů"] },
+        { "id": "dat-pl", "acceptedForms": ["chipsům"] },
+        { "id": "acc-pl", "acceptedForms": ["chipsy"] },
+        { "id": "voc-pl", "acceptedForms": ["chipsy"] },
+        { "id": "loc-pl", "acceptedForms": ["chipsech"] },
+        { "id": "ins-pl", "acceptedForms": ["chipsy"] }
       ]
     },
     {
