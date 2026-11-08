@@ -7660,6 +7660,345 @@
       ]
     },
     {
+      "prompt": "lektor",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["lektor"] },
+        { "id": "gen-sg", "acceptedForms": ["lektora"] },
+        { "id": "dat-sg", "acceptedForms": ["lektorovi", "lektoru"] },
+        { "id": "acc-sg", "acceptedForms": ["lektora"] },
+        { "id": "voc-sg", "acceptedForms": ["lektore"] },
+        { "id": "loc-sg", "acceptedForms": ["lektorovi", "lektoru"] },
+        { "id": "ins-sg", "acceptedForms": ["lektorem"] },
+        { "id": "nom-pl", "acceptedForms": ["lektoři"] },
+        { "id": "gen-pl", "acceptedForms": ["lektorů"] },
+        { "id": "dat-pl", "acceptedForms": ["lektorům"] },
+        { "id": "acc-pl", "acceptedForms": ["lektory"] },
+        { "id": "voc-pl", "acceptedForms": ["lektoři"] },
+        { "id": "loc-pl", "acceptedForms": ["lektorech"] },
+        { "id": "ins-pl", "acceptedForms": ["lektory"] }
+      ]
+    },
+    {
+      "prompt": "lektorát",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["lektorát"] },
+        { "id": "gen-sg", "acceptedForms": ["lektorátu"] },
+        { "id": "dat-sg", "acceptedForms": ["lektorátu"] },
+        { "id": "acc-sg", "acceptedForms": ["lektorát"] },
+        { "id": "voc-sg", "acceptedForms": ["lektoráte"] },
+        { "id": "loc-sg", "acceptedForms": ["lektorátě", "lektorátu"] },
+        { "id": "ins-sg", "acceptedForms": ["lektorátem"] },
+        { "id": "nom-pl", "acceptedForms": ["lektoráty"] },
+        { "id": "gen-pl", "acceptedForms": ["lektorátů"] },
+        { "id": "dat-pl", "acceptedForms": ["lektorátům"] },
+        { "id": "acc-pl", "acceptedForms": ["lektoráty"] },
+        { "id": "voc-pl", "acceptedForms": ["lektoráty"] },
+        { "id": "loc-pl", "acceptedForms": ["lektorátech"] },
+        { "id": "ins-pl", "acceptedForms": ["lektoráty"] }
+      ]
+    },
+    {
+      "prompt": "les",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["les"] },
+        { "id": "gen-sg", "acceptedForms": ["lesa"] },
+        { "id": "dat-sg", "acceptedForms": ["lesu"] },
+        { "id": "acc-sg", "acceptedForms": ["les"] },
+        { "id": "voc-sg", "acceptedForms": ["lese"] },
+        { "id": "loc-sg", "acceptedForms": ["lese"] },
+        { "id": "ins-sg", "acceptedForms": ["lesem"] },
+        { "id": "nom-pl", "acceptedForms": ["lesy"] },
+        { "id": "gen-pl", "acceptedForms": ["lesů"] },
+        { "id": "dat-pl", "acceptedForms": ["lesům"] },
+        { "id": "acc-pl", "acceptedForms": ["lesy"] },
+        { "id": "voc-pl", "acceptedForms": ["lesy"] },
+        { "id": "loc-pl", "acceptedForms": ["lesích"] },
+        { "id": "ins-pl", "acceptedForms": ["lesy"] }
+      ]
+    },
+    {
+      "prompt": "letadlo",
+      "gender": "s.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["letadlo"] },
+        { "id": "gen-sg", "acceptedForms": ["letadla"] },
+        { "id": "dat-sg", "acceptedForms": ["letadlu"] },
+        { "id": "acc-sg", "acceptedForms": ["letadlo"] },
+        { "id": "voc-sg", "acceptedForms": ["letadlo"] },
+        { "id": "loc-sg", "acceptedForms": ["letadle", "letadlu"] },
+        { "id": "ins-sg", "acceptedForms": ["letadlem"] },
+        { "id": "nom-pl", "acceptedForms": ["letadla"] },
+        { "id": "gen-pl", "acceptedForms": ["letadel"] },
+        { "id": "dat-pl", "acceptedForms": ["letadlům"] },
+        { "id": "acc-pl", "acceptedForms": ["letadla"] },
+        { "id": "voc-pl", "acceptedForms": ["letadla"] },
+        { "id": "loc-pl", "acceptedForms": ["letadlech"] },
+        { "id": "ins-pl", "acceptedForms": ["letadly"] }
+      ]
+    },
+    {
+      "prompt": "letiště",
+      "gender": "s.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["letiště"] },
+        { "id": "gen-sg", "acceptedForms": ["letiště"] },
+        { "id": "dat-sg", "acceptedForms": ["letišti"] },
+        { "id": "acc-sg", "acceptedForms": ["letiště"] },
+        { "id": "voc-sg", "acceptedForms": ["letiště"] },
+        { "id": "loc-sg", "acceptedForms": ["letišti"] },
+        { "id": "ins-sg", "acceptedForms": ["letištěm"] },
+        { "id": "nom-pl", "acceptedForms": ["letiště"] },
+        { "id": "gen-pl", "acceptedForms": ["letišť"] },
+        { "id": "dat-pl", "acceptedForms": ["letištím"] },
+        { "id": "acc-pl", "acceptedForms": ["letiště"] },
+        { "id": "voc-pl", "acceptedForms": ["letiště"] },
+        { "id": "loc-pl", "acceptedForms": ["letištích"] },
+        { "id": "ins-pl", "acceptedForms": ["letišti"] }
+      ]
+    },
+    {
+      "prompt": "léto",
+      "gender": "s.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["léto"] },
+        { "id": "gen-sg", "acceptedForms": ["léta"] },
+        { "id": "dat-sg", "acceptedForms": ["létu"] },
+        { "id": "acc-sg", "acceptedForms": ["léto"] },
+        { "id": "voc-sg", "acceptedForms": ["léto"] },
+        { "id": "loc-sg", "acceptedForms": ["létě", "létu"] },
+        { "id": "ins-sg", "acceptedForms": ["létem"] },
+        { "id": "nom-pl", "acceptedForms": ["léta"] },
+        { "id": "gen-pl", "acceptedForms": ["let"] },
+        { "id": "dat-pl", "acceptedForms": ["letům", "létům"] },
+        { "id": "acc-pl", "acceptedForms": ["léta"] },
+        { "id": "voc-pl", "acceptedForms": ["léta"] },
+        { "id": "loc-pl", "acceptedForms": ["letech", "létech"] },
+        { "id": "ins-pl", "acceptedForms": ["lety", "léty"] }
+      ]
+    },
+    {
+      "prompt": "liána",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["liána"] },
+        { "id": "gen-sg", "acceptedForms": ["liány"] },
+        { "id": "dat-sg", "acceptedForms": ["liáně"] },
+        { "id": "acc-sg", "acceptedForms": ["liánu"] },
+        { "id": "voc-sg", "acceptedForms": ["liáno"] },
+        { "id": "loc-sg", "acceptedForms": ["liáně"] },
+        { "id": "ins-sg", "acceptedForms": ["liánou"] },
+        { "id": "nom-pl", "acceptedForms": ["liány"] },
+        { "id": "gen-pl", "acceptedForms": ["lián"] },
+        { "id": "dat-pl", "acceptedForms": ["liánám"] },
+        { "id": "acc-pl", "acceptedForms": ["liány"] },
+        { "id": "voc-pl", "acceptedForms": ["liány"] },
+        { "id": "loc-pl", "acceptedForms": ["liánách"] },
+        { "id": "ins-pl", "acceptedForms": ["liánami"] }
+      ]
+    },
+    {
+      "prompt": "lichokopytník",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["lichokopytník"] },
+        { "id": "gen-sg", "acceptedForms": ["lichokopytníka"] },
+        {
+          "id": "dat-sg",
+          "acceptedForms": ["lichokopytníkovi", "lichokopytníku"]
+        },
+        { "id": "acc-sg", "acceptedForms": ["lichokopytníka"] },
+        { "id": "voc-sg", "acceptedForms": ["lichokopytníku"] },
+        {
+          "id": "loc-sg",
+          "acceptedForms": ["lichokopytníkovi", "lichokopytníku"]
+        },
+        { "id": "ins-sg", "acceptedForms": ["lichokopytníkem"] },
+        { "id": "nom-pl", "acceptedForms": ["lichokopytníci"] },
+        { "id": "gen-pl", "acceptedForms": ["lichokopytníků"] },
+        { "id": "dat-pl", "acceptedForms": ["lichokopytníkům"] },
+        { "id": "acc-pl", "acceptedForms": ["lichokopytníky"] },
+        { "id": "voc-pl", "acceptedForms": ["lichokopytníci"] },
+        { "id": "loc-pl", "acceptedForms": ["lichokopytnících"] },
+        { "id": "ins-pl", "acceptedForms": ["lichokopytníky"] }
+      ]
+    },
+    {
+      "prompt": "likvidace",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["likvidace"] },
+        { "id": "gen-sg", "acceptedForms": ["likvidace"] },
+        { "id": "dat-sg", "acceptedForms": ["likvidaci"] },
+        { "id": "acc-sg", "acceptedForms": ["likvidaci"] },
+        { "id": "voc-sg", "acceptedForms": ["likvidace"] },
+        { "id": "loc-sg", "acceptedForms": ["likvidaci"] },
+        { "id": "ins-sg", "acceptedForms": ["likvidací"] },
+        { "id": "nom-pl", "acceptedForms": ["likvidace"] },
+        { "id": "gen-pl", "acceptedForms": ["likvidací"] },
+        { "id": "dat-pl", "acceptedForms": ["likvidacím"] },
+        { "id": "acc-pl", "acceptedForms": ["likvidace"] },
+        { "id": "voc-pl", "acceptedForms": ["likvidace"] },
+        { "id": "loc-pl", "acceptedForms": ["likvidacích"] },
+        { "id": "ins-pl", "acceptedForms": ["likvidacemi"] }
+      ]
+    },
+    {
+      "prompt": "linie",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["linie"] },
+        { "id": "gen-sg", "acceptedForms": ["linie"] },
+        { "id": "dat-sg", "acceptedForms": ["linii"] },
+        { "id": "acc-sg", "acceptedForms": ["linii"] },
+        { "id": "voc-sg", "acceptedForms": ["linie"] },
+        { "id": "loc-sg", "acceptedForms": ["linii"] },
+        { "id": "ins-sg", "acceptedForms": ["linií"] },
+        { "id": "nom-pl", "acceptedForms": ["linie"] },
+        { "id": "gen-pl", "acceptedForms": ["linií"] },
+        { "id": "dat-pl", "acceptedForms": ["liniím"] },
+        { "id": "acc-pl", "acceptedForms": ["linie"] },
+        { "id": "voc-pl", "acceptedForms": ["linie"] },
+        { "id": "loc-pl", "acceptedForms": ["liniích"] },
+        { "id": "ins-pl", "acceptedForms": ["liniemi"] }
+      ]
+    },
+    {
+      "prompt": "lístek",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["lístek"] },
+        { "id": "gen-sg", "acceptedForms": ["lístku"] },
+        { "id": "dat-sg", "acceptedForms": ["lístku"] },
+        { "id": "acc-sg", "acceptedForms": ["lístek"] },
+        { "id": "voc-sg", "acceptedForms": ["lístku"] },
+        { "id": "loc-sg", "acceptedForms": ["lístku"] },
+        { "id": "ins-sg", "acceptedForms": ["lístkem"] },
+        { "id": "nom-pl", "acceptedForms": ["lístky"] },
+        { "id": "gen-pl", "acceptedForms": ["lístků"] },
+        { "id": "dat-pl", "acceptedForms": ["lístkům"] },
+        { "id": "acc-pl", "acceptedForms": ["lístky"] },
+        { "id": "voc-pl", "acceptedForms": ["lístky"] },
+        { "id": "loc-pl", "acceptedForms": ["lístcích", "lístkách"] },
+        { "id": "ins-pl", "acceptedForms": ["lístky"] }
+      ]
+    },
+    {
+      "prompt": "listí",
+      "gender": "s.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["listí"] },
+        { "id": "gen-sg", "acceptedForms": ["listí"] },
+        { "id": "dat-sg", "acceptedForms": ["listí"] },
+        { "id": "acc-sg", "acceptedForms": ["listí"] },
+        { "id": "voc-sg", "acceptedForms": ["listí"] },
+        { "id": "loc-sg", "acceptedForms": ["listí"] },
+        { "id": "ins-sg", "acceptedForms": ["listím"] }
+      ]
+    },
+    {
+      "prompt": "literatura",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["literatura"] },
+        { "id": "gen-sg", "acceptedForms": ["literatury"] },
+        { "id": "dat-sg", "acceptedForms": ["literatuře"] },
+        { "id": "acc-sg", "acceptedForms": ["literaturu"] },
+        { "id": "voc-sg", "acceptedForms": ["literaturo"] },
+        { "id": "loc-sg", "acceptedForms": ["literatuře"] },
+        { "id": "ins-sg", "acceptedForms": ["literaturou"] },
+        { "id": "nom-pl", "acceptedForms": ["literatury"] },
+        { "id": "gen-pl", "acceptedForms": ["literatur"] },
+        { "id": "dat-pl", "acceptedForms": ["literaturám"] },
+        { "id": "acc-pl", "acceptedForms": ["literatury"] },
+        { "id": "voc-pl", "acceptedForms": ["literatury"] },
+        { "id": "loc-pl", "acceptedForms": ["literaturách"] },
+        { "id": "ins-pl", "acceptedForms": ["literaturami"] }
+      ]
+    },
+    {
+      "prompt": "litr",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["litr"] },
+        { "id": "gen-sg", "acceptedForms": ["litru"] },
+        { "id": "dat-sg", "acceptedForms": ["litru"] },
+        { "id": "acc-sg", "acceptedForms": ["litr"] },
+        { "id": "voc-sg", "acceptedForms": ["litre", "litře"] },
+        { "id": "loc-sg", "acceptedForms": ["litru"] },
+        { "id": "ins-sg", "acceptedForms": ["litrem"] },
+        { "id": "nom-pl", "acceptedForms": ["litry"] },
+        { "id": "gen-pl", "acceptedForms": ["litrů"] },
+        { "id": "dat-pl", "acceptedForms": ["litrům"] },
+        { "id": "acc-pl", "acceptedForms": ["litry"] },
+        { "id": "voc-pl", "acceptedForms": ["litry"] },
+        { "id": "loc-pl", "acceptedForms": ["litrech"] },
+        { "id": "ins-pl", "acceptedForms": ["litry"] }
+      ]
+    },
+    {
+      "prompt": "loď",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["loď"] },
+        { "id": "gen-sg", "acceptedForms": ["lodě", "lodi"] },
+        { "id": "dat-sg", "acceptedForms": ["lodi"] },
+        { "id": "acc-sg", "acceptedForms": ["loď"] },
+        { "id": "voc-sg", "acceptedForms": ["lodi"] },
+        { "id": "loc-sg", "acceptedForms": ["lodi"] },
+        { "id": "ins-sg", "acceptedForms": ["lodí"] },
+        { "id": "nom-pl", "acceptedForms": ["lodě", "lodi"] },
+        { "id": "gen-pl", "acceptedForms": ["lodí"] },
+        { "id": "dat-pl", "acceptedForms": ["lodím"] },
+        { "id": "acc-pl", "acceptedForms": ["lodě", "lodi"] },
+        { "id": "voc-pl", "acceptedForms": ["lodě", "lodi"] },
+        { "id": "loc-pl", "acceptedForms": ["lodích"] },
+        { "id": "ins-pl", "acceptedForms": ["loděmi", "loďmi"] }
+      ]
+    },
+    {
+      "prompt": "lokál",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["lokál"] },
+        { "id": "gen-sg", "acceptedForms": ["lokálu"] },
+        { "id": "dat-sg", "acceptedForms": ["lokálu"] },
+        { "id": "acc-sg", "acceptedForms": ["lokál"] },
+        { "id": "voc-sg", "acceptedForms": ["lokále"] },
+        { "id": "loc-sg", "acceptedForms": ["lokále", "lokálu"] },
+        { "id": "ins-sg", "acceptedForms": ["lokálem"] },
+        { "id": "nom-pl", "acceptedForms": ["lokály"] },
+        { "id": "gen-pl", "acceptedForms": ["lokálů"] },
+        { "id": "dat-pl", "acceptedForms": ["lokálům"] },
+        { "id": "acc-pl", "acceptedForms": ["lokály"] },
+        { "id": "voc-pl", "acceptedForms": ["lokály"] },
+        { "id": "loc-pl", "acceptedForms": ["lokálech"] },
+        { "id": "ins-pl", "acceptedForms": ["lokály"] }
+      ]
+    },
+    {
+      "prompt": "lokomotiva",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["lokomotiva"] },
+        { "id": "gen-sg", "acceptedForms": ["lokomotivy"] },
+        { "id": "dat-sg", "acceptedForms": ["lokomotivě"] },
+        { "id": "acc-sg", "acceptedForms": ["lokomotivu"] },
+        { "id": "voc-sg", "acceptedForms": ["lokomotivo"] },
+        { "id": "loc-sg", "acceptedForms": ["lokomotivě"] },
+        { "id": "ins-sg", "acceptedForms": ["lokomotivou"] },
+        { "id": "nom-pl", "acceptedForms": ["lokomotivy"] },
+        { "id": "gen-pl", "acceptedForms": ["lokomotiv"] },
+        { "id": "dat-pl", "acceptedForms": ["lokomotivám"] },
+        { "id": "acc-pl", "acceptedForms": ["lokomotivy"] },
+        { "id": "voc-pl", "acceptedForms": ["lokomotivy"] },
+        { "id": "loc-pl", "acceptedForms": ["lokomotivách"] },
+        { "id": "ins-pl", "acceptedForms": ["lokomotivami"] }
+      ]
+    },
+    {
       "prompt": "pán",
       "cells": [
         { "id": "nom-sg", "acceptedForms": ["pán"] },
