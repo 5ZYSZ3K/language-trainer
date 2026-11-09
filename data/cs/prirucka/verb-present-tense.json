@@ -2067,6 +2067,28 @@
       ]
     },
     {
+      "prompt": "pohodit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["pohodím"] },
+        { "id": "2sg", "acceptedForms": ["pohodíš"] },
+        { "id": "3sg", "acceptedForms": ["pohodí"] },
+        { "id": "1pl", "acceptedForms": ["pohodíme"] },
+        { "id": "2pl", "acceptedForms": ["pohodíte"] },
+        { "id": "3pl", "acceptedForms": ["pohodí"] }
+      ]
+    },
+    {
+      "prompt": "pohoupat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["pohoupám", "pohoupu"] },
+        { "id": "2sg", "acceptedForms": ["pohoupáš", "pohoupeš"] },
+        { "id": "3sg", "acceptedForms": ["pohoupá", "pohoupe"] },
+        { "id": "1pl", "acceptedForms": ["pohoupáme", "pohoupeme"] },
+        { "id": "2pl", "acceptedForms": ["pohoupáte", "pohoupete"] },
+        { "id": "3pl", "acceptedForms": ["pohoupají", "pohoupou"] }
+      ]
+    },
+    {
       "prompt": "pohrabovat",
       "cells": [
         { "id": "1sg", "acceptedForms": ["pohrabuji", "pohrabuju"] },
@@ -2221,6 +2243,28 @@
       ]
     },
     {
+      "prompt": "poslat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["pošlu"] },
+        { "id": "2sg", "acceptedForms": ["pošleš"] },
+        { "id": "3sg", "acceptedForms": ["pošle"] },
+        { "id": "1pl", "acceptedForms": ["pošleme"] },
+        { "id": "2pl", "acceptedForms": ["pošlete"] },
+        { "id": "3pl", "acceptedForms": ["pošlou"] }
+      ]
+    },
+    {
+      "prompt": "poslechnout si",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["poslechnu si"] },
+        { "id": "2sg", "acceptedForms": ["poslechneš si"] },
+        { "id": "3sg", "acceptedForms": ["poslechne si"] },
+        { "id": "1pl", "acceptedForms": ["poslechneme si"] },
+        { "id": "2pl", "acceptedForms": ["poslechnete si"] },
+        { "id": "3pl", "acceptedForms": ["poslechnou si"] }
+      ]
+    },
+    {
       "prompt": "poslouchat",
       "cells": [
         { "id": "1sg", "acceptedForms": ["poslouchám"] },
@@ -2265,6 +2309,28 @@
       ]
     },
     {
+      "prompt": "potkat se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["potkám se"] },
+        { "id": "2sg", "acceptedForms": ["potkáš se"] },
+        { "id": "3sg", "acceptedForms": ["potká se"] },
+        { "id": "1pl", "acceptedForms": ["potkáme se"] },
+        { "id": "2pl", "acceptedForms": ["potkáte se"] },
+        { "id": "3pl", "acceptedForms": ["potkají se"] }
+      ]
+    },
+    {
+      "prompt": "potrkat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["potrkám"] },
+        { "id": "2sg", "acceptedForms": ["potrkáš"] },
+        { "id": "3sg", "acceptedForms": ["potrká"] },
+        { "id": "1pl", "acceptedForms": ["potrkáme"] },
+        { "id": "2pl", "acceptedForms": ["potrkáte"] },
+        { "id": "3pl", "acceptedForms": ["potrkají"] }
+      ]
+    },
+    {
       "prompt": "potřebovat",
       "cells": [
         { "id": "1sg", "acceptedForms": ["potřebuji", "potřebuju"] },
@@ -2284,6 +2350,50 @@
         { "id": "1pl", "acceptedForms": ["pouštíme"] },
         { "id": "2pl", "acceptedForms": ["pouštíte"] },
         { "id": "3pl", "acceptedForms": ["pouštějí", "pouští"] }
+      ]
+    },
+    {
+      "prompt": "použít",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["použiji", "použiju"] },
+        { "id": "2sg", "acceptedForms": ["použiješ"] },
+        { "id": "3sg", "acceptedForms": ["použije"] },
+        { "id": "1pl", "acceptedForms": ["použijeme"] },
+        { "id": "2pl", "acceptedForms": ["použijete"] },
+        { "id": "3pl", "acceptedForms": ["použijí", "použijou"] }
+      ]
+    },
+    {
+      "prompt": "používat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["používám"] },
+        { "id": "2sg", "acceptedForms": ["používáš"] },
+        { "id": "3sg", "acceptedForms": ["používá"] },
+        { "id": "1pl", "acceptedForms": ["používáme"] },
+        { "id": "2pl", "acceptedForms": ["používáte"] },
+        { "id": "3pl", "acceptedForms": ["používají"] }
+      ]
+    },
+    {
+      "prompt": "povážit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["povážím"] },
+        { "id": "2sg", "acceptedForms": ["povážíš"] },
+        { "id": "3sg", "acceptedForms": ["pováží"] },
+        { "id": "1pl", "acceptedForms": ["povážíme"] },
+        { "id": "2pl", "acceptedForms": ["povážíte"] },
+        { "id": "3pl", "acceptedForms": ["pováží"] }
+      ]
+    },
+    {
+      "prompt": "pověsit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["pověsím"] },
+        { "id": "2sg", "acceptedForms": ["pověsíš"] },
+        { "id": "3sg", "acceptedForms": ["pověsí"] },
+        { "id": "1pl", "acceptedForms": ["pověsíme"] },
+        { "id": "2pl", "acceptedForms": ["pověsíte"] },
+        { "id": "3pl", "acceptedForms": ["pověsí"] }
       ]
     },
     {
@@ -2375,6 +2485,28 @@
       ]
     },
     {
+      "prompt": "proměnit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["proměním"] },
+        { "id": "2sg", "acceptedForms": ["proměníš"] },
+        { "id": "3sg", "acceptedForms": ["promění"] },
+        { "id": "1pl", "acceptedForms": ["proměníme"] },
+        { "id": "2pl", "acceptedForms": ["proměníte"] },
+        { "id": "3pl", "acceptedForms": ["promění"] }
+      ]
+    },
+    {
+      "prompt": "prominout",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["prominu"] },
+        { "id": "2sg", "acceptedForms": ["promineš"] },
+        { "id": "3sg", "acceptedForms": ["promine"] },
+        { "id": "1pl", "acceptedForms": ["promineme"] },
+        { "id": "2pl", "acceptedForms": ["prominete"] },
+        { "id": "3pl", "acceptedForms": ["prominou"] }
+      ]
+    },
+    {
       "prompt": "prosit",
       "cells": [
         { "id": "1sg", "acceptedForms": ["prosím"] },
@@ -2383,6 +2515,17 @@
         { "id": "1pl", "acceptedForms": ["prosíme"] },
         { "id": "2pl", "acceptedForms": ["prosíte"] },
         { "id": "3pl", "acceptedForms": ["prosí"] }
+      ]
+    },
+    {
+      "prompt": "proslout",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["prosluji", "prosluju"] },
+        { "id": "2sg", "acceptedForms": ["prosluješ"] },
+        { "id": "3sg", "acceptedForms": ["prosluje"] },
+        { "id": "1pl", "acceptedForms": ["proslujeme"] },
+        { "id": "2pl", "acceptedForms": ["proslujete"] },
+        { "id": "3pl", "acceptedForms": ["proslují", "proslujou"] }
       ]
     },
     {
@@ -2474,6 +2617,17 @@
       ]
     },
     {
+      "prompt": "přepsat se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["přepíšu se", "přepíši se"] },
+        { "id": "2sg", "acceptedForms": ["přepíšeš se"] },
+        { "id": "3sg", "acceptedForms": ["přepíše se"] },
+        { "id": "1pl", "acceptedForms": ["přepíšeme se"] },
+        { "id": "2pl", "acceptedForms": ["přepíšete se"] },
+        { "id": "3pl", "acceptedForms": ["přepíšou se", "přepíší se"] }
+      ]
+    },
+    {
       "prompt": "přestupovat",
       "cells": [
         { "id": "1sg", "acceptedForms": ["přestupuji", "přestupuju"] },
@@ -2529,6 +2683,17 @@
       ]
     },
     {
+      "prompt": "přihlásit se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["přihlásím se"] },
+        { "id": "2sg", "acceptedForms": ["přihlásíš se"] },
+        { "id": "3sg", "acceptedForms": ["přihlásí se"] },
+        { "id": "1pl", "acceptedForms": ["přihlásíme se"] },
+        { "id": "2pl", "acceptedForms": ["přihlásíte se"] },
+        { "id": "3pl", "acceptedForms": ["přihlásí se"] }
+      ]
+    },
+    {
       "prompt": "přihnout si",
       "cells": [
         { "id": "1sg", "acceptedForms": ["přihnu si"] },
@@ -2581,6 +2746,50 @@
         { "id": "1pl", "acceptedForms": ["přijíždíme"] },
         { "id": "2pl", "acceptedForms": ["přijíždíte"] },
         { "id": "3pl", "acceptedForms": ["přijíždějí", "přijíždí"] }
+      ]
+    },
+    {
+      "prompt": "přikrýt se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["přikryji se", "přikryju se"] },
+        { "id": "2sg", "acceptedForms": ["přikryješ se"] },
+        { "id": "3sg", "acceptedForms": ["přikryje se"] },
+        { "id": "1pl", "acceptedForms": ["přikryjeme se"] },
+        { "id": "2pl", "acceptedForms": ["přikryjete se"] },
+        { "id": "3pl", "acceptedForms": ["přikryjí se", "přikryjou se"] }
+      ]
+    },
+    {
+      "prompt": "připojit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["připojím"] },
+        { "id": "2sg", "acceptedForms": ["připojíš"] },
+        { "id": "3sg", "acceptedForms": ["připojí"] },
+        { "id": "1pl", "acceptedForms": ["připojíme"] },
+        { "id": "2pl", "acceptedForms": ["připojíte"] },
+        { "id": "3pl", "acceptedForms": ["připojí"] }
+      ]
+    },
+    {
+      "prompt": "připravit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["připravím"] },
+        { "id": "2sg", "acceptedForms": ["připravíš"] },
+        { "id": "3sg", "acceptedForms": ["připraví"] },
+        { "id": "1pl", "acceptedForms": ["připravíme"] },
+        { "id": "2pl", "acceptedForms": ["připravíte"] },
+        { "id": "3pl", "acceptedForms": ["připraví"] }
+      ]
+    },
+    {
+      "prompt": "připravit se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["připravím se"] },
+        { "id": "2sg", "acceptedForms": ["připravíš se"] },
+        { "id": "3sg", "acceptedForms": ["připraví se"] },
+        { "id": "1pl", "acceptedForms": ["připravíme se"] },
+        { "id": "2pl", "acceptedForms": ["připravíte se"] },
+        { "id": "3pl", "acceptedForms": ["připraví se"] }
       ]
     },
     {
@@ -2804,6 +3013,28 @@
       ]
     },
     {
+      "prompt": "řídit se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["řídím se"] },
+        { "id": "2sg", "acceptedForms": ["řídíš se"] },
+        { "id": "3sg", "acceptedForms": ["řídí se"] },
+        { "id": "1pl", "acceptedForms": ["řídíme se"] },
+        { "id": "2pl", "acceptedForms": ["řídíte se"] },
+        { "id": "3pl", "acceptedForms": ["řídí se"] }
+      ]
+    },
+    {
+      "prompt": "říhat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["říhám"] },
+        { "id": "2sg", "acceptedForms": ["říháš"] },
+        { "id": "3sg", "acceptedForms": ["říhá"] },
+        { "id": "1pl", "acceptedForms": ["říháme"] },
+        { "id": "2pl", "acceptedForms": ["říháte"] },
+        { "id": "3pl", "acceptedForms": ["říhají"] }
+      ]
+    },
+    {
       "prompt": "říkat",
       "cells": [
         { "id": "1sg", "acceptedForms": ["říkám"] },
@@ -2812,6 +3043,28 @@
         { "id": "1pl", "acceptedForms": ["říkáme"] },
         { "id": "2pl", "acceptedForms": ["říkáte"] },
         { "id": "3pl", "acceptedForms": ["říkají"] }
+      ]
+    },
+    {
+      "prompt": "říkat si",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["říkám si"] },
+        { "id": "2sg", "acceptedForms": ["říkáš si"] },
+        { "id": "3sg", "acceptedForms": ["říká si"] },
+        { "id": "1pl", "acceptedForms": ["říkáme si"] },
+        { "id": "2pl", "acceptedForms": ["říkáte si"] },
+        { "id": "3pl", "acceptedForms": ["říkají si"] }
+      ]
+    },
+    {
+      "prompt": "sálat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["sálám"] },
+        { "id": "2sg", "acceptedForms": ["sáláš"] },
+        { "id": "3sg", "acceptedForms": ["sálá"] },
+        { "id": "1pl", "acceptedForms": ["sáláme"] },
+        { "id": "2pl", "acceptedForms": ["sáláte"] },
+        { "id": "3pl", "acceptedForms": ["sálají"] }
       ]
     },
     {
@@ -2845,6 +3098,39 @@
         { "id": "1pl", "acceptedForms": ["sedneme"] },
         { "id": "2pl", "acceptedForms": ["sednete"] },
         { "id": "3pl", "acceptedForms": ["sednou"] }
+      ]
+    },
+    {
+      "prompt": "sejít se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["sejdu se"] },
+        { "id": "2sg", "acceptedForms": ["sejdeš se"] },
+        { "id": "3sg", "acceptedForms": ["sejde se"] },
+        { "id": "1pl", "acceptedForms": ["sejdeme se"] },
+        { "id": "2pl", "acceptedForms": ["sejdete se"] },
+        { "id": "3pl", "acceptedForms": ["sejdou se"] }
+      ]
+    },
+    {
+      "prompt": "setkat se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["setkám se"] },
+        { "id": "2sg", "acceptedForms": ["setkáš se"] },
+        { "id": "3sg", "acceptedForms": ["setká se"] },
+        { "id": "1pl", "acceptedForms": ["setkáme se"] },
+        { "id": "2pl", "acceptedForms": ["setkáte se"] },
+        { "id": "3pl", "acceptedForms": ["setkají se"] }
+      ]
+    },
+    {
+      "prompt": "seznámit se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["seznámím se"] },
+        { "id": "2sg", "acceptedForms": ["seznámíš se"] },
+        { "id": "3sg", "acceptedForms": ["seznámí se"] },
+        { "id": "1pl", "acceptedForms": ["seznámíme se"] },
+        { "id": "2pl", "acceptedForms": ["seznámíte se"] },
+        { "id": "3pl", "acceptedForms": ["seznámí se"] }
       ]
     },
     {
@@ -2944,6 +3230,17 @@
         { "id": "1pl", "acceptedForms": ["smažíme"] },
         { "id": "2pl", "acceptedForms": ["smažíte"] },
         { "id": "3pl", "acceptedForms": ["smaží"] }
+      ]
+    },
+    {
+      "prompt": "smět",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["smím"] },
+        { "id": "2sg", "acceptedForms": ["smíš"] },
+        { "id": "3sg", "acceptedForms": ["smí"] },
+        { "id": "1pl", "acceptedForms": ["smíme"] },
+        { "id": "2pl", "acceptedForms": ["smíte"] },
+        { "id": "3pl", "acceptedForms": ["smějí", "smí"] }
       ]
     },
     {
@@ -3057,6 +3354,17 @@
       ]
     },
     {
+      "prompt": "sportovat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["sportuji", "sportuju"] },
+        { "id": "2sg", "acceptedForms": ["sportuješ"] },
+        { "id": "3sg", "acceptedForms": ["sportuje"] },
+        { "id": "1pl", "acceptedForms": ["sportujeme"] },
+        { "id": "2pl", "acceptedForms": ["sportujete"] },
+        { "id": "3pl", "acceptedForms": ["sportují", "sportujou"] }
+      ]
+    },
+    {
       "prompt": "spravovat",
       "cells": [
         { "id": "1sg", "acceptedForms": ["spravuji", "spravuju"] },
@@ -3090,6 +3398,28 @@
       ]
     },
     {
+      "prompt": "stávat se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["stávám se"] },
+        { "id": "2sg", "acceptedForms": ["stáváš se"] },
+        { "id": "3sg", "acceptedForms": ["stává se"] },
+        { "id": "1pl", "acceptedForms": ["stáváme se"] },
+        { "id": "2pl", "acceptedForms": ["stáváte se"] },
+        { "id": "3pl", "acceptedForms": ["stávají se"] }
+      ]
+    },
+    {
+      "prompt": "stavět se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["stavím se"] },
+        { "id": "2sg", "acceptedForms": ["stavíš se"] },
+        { "id": "3sg", "acceptedForms": ["staví se"] },
+        { "id": "1pl", "acceptedForms": ["stavíme se"] },
+        { "id": "2pl", "acceptedForms": ["stavíte se"] },
+        { "id": "3pl", "acceptedForms": ["stavějí se", "staví se"] }
+      ]
+    },
+    {
       "prompt": "stávkovat",
       "cells": [
         { "id": "1sg", "acceptedForms": ["stávkuji", "stávkuju"] },
@@ -3101,6 +3431,17 @@
       ]
     },
     {
+      "prompt": "stihnout",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["stihnu"] },
+        { "id": "2sg", "acceptedForms": ["stihneš"] },
+        { "id": "3sg", "acceptedForms": ["stihne"] },
+        { "id": "1pl", "acceptedForms": ["stihneme"] },
+        { "id": "2pl", "acceptedForms": ["stihnete"] },
+        { "id": "3pl", "acceptedForms": ["stihnou"] }
+      ]
+    },
+    {
       "prompt": "strávit",
       "cells": [
         { "id": "1sg", "acceptedForms": ["strávím"] },
@@ -3109,6 +3450,17 @@
         { "id": "1pl", "acceptedForms": ["strávíme"] },
         { "id": "2pl", "acceptedForms": ["strávíte"] },
         { "id": "3pl", "acceptedForms": ["stráví"] }
+      ]
+    },
+    {
+      "prompt": "strčit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["strčím"] },
+        { "id": "2sg", "acceptedForms": ["strčíš"] },
+        { "id": "3sg", "acceptedForms": ["strčí"] },
+        { "id": "1pl", "acceptedForms": ["strčíme"] },
+        { "id": "2pl", "acceptedForms": ["strčíte"] },
+        { "id": "3pl", "acceptedForms": ["strčí"] }
       ]
     },
     {
@@ -3142,6 +3494,39 @@
         { "id": "1pl", "acceptedForms": ["studujeme"] },
         { "id": "2pl", "acceptedForms": ["studujete"] },
         { "id": "3pl", "acceptedForms": ["studují", "studujou"] }
+      ]
+    },
+    {
+      "prompt": "stydět se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["stydím se"] },
+        { "id": "2sg", "acceptedForms": ["stydíš se"] },
+        { "id": "3sg", "acceptedForms": ["stydí se"] },
+        { "id": "1pl", "acceptedForms": ["stydíme se"] },
+        { "id": "2pl", "acceptedForms": ["stydíte se"] },
+        { "id": "3pl", "acceptedForms": ["stydí se"] }
+      ]
+    },
+    {
+      "prompt": "svázat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["svážu"] },
+        { "id": "2sg", "acceptedForms": ["svážeš"] },
+        { "id": "3sg", "acceptedForms": ["sváže"] },
+        { "id": "1pl", "acceptedForms": ["svážeme"] },
+        { "id": "2pl", "acceptedForms": ["svážete"] },
+        { "id": "3pl", "acceptedForms": ["svážou"] }
+      ]
+    },
+    {
+      "prompt": "svítit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["svítím"] },
+        { "id": "2sg", "acceptedForms": ["svítíš"] },
+        { "id": "3sg", "acceptedForms": ["svítí"] },
+        { "id": "1pl", "acceptedForms": ["svítíme"] },
+        { "id": "2pl", "acceptedForms": ["svítíte"] },
+        { "id": "3pl", "acceptedForms": ["svítí"] }
       ]
     },
     {
@@ -3189,6 +3574,28 @@
       ]
     },
     {
+      "prompt": "tancovat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["tancuji", "tancuju"] },
+        { "id": "2sg", "acceptedForms": ["tancuješ"] },
+        { "id": "3sg", "acceptedForms": ["tancuje"] },
+        { "id": "1pl", "acceptedForms": ["tancujeme"] },
+        { "id": "2pl", "acceptedForms": ["tancujete"] },
+        { "id": "3pl", "acceptedForms": ["tancují", "tancujou"] }
+      ]
+    },
+    {
+      "prompt": "tančit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["tančím"] },
+        { "id": "2sg", "acceptedForms": ["tančíš"] },
+        { "id": "3sg", "acceptedForms": ["tančí"] },
+        { "id": "1pl", "acceptedForms": ["tančíme"] },
+        { "id": "2pl", "acceptedForms": ["tančíte"] },
+        { "id": "3pl", "acceptedForms": ["tančí"] }
+      ]
+    },
+    {
       "prompt": "telefonovat",
       "cells": [
         { "id": "1sg", "acceptedForms": ["telefonuji", "telefonuju"] },
@@ -3200,6 +3607,17 @@
       ]
     },
     {
+      "prompt": "těšit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["těším"] },
+        { "id": "2sg", "acceptedForms": ["těšíš"] },
+        { "id": "3sg", "acceptedForms": ["těší"] },
+        { "id": "1pl", "acceptedForms": ["těšíme"] },
+        { "id": "2pl", "acceptedForms": ["těšíte"] },
+        { "id": "3pl", "acceptedForms": ["těší"] }
+      ]
+    },
+    {
       "prompt": "těšit se",
       "cells": [
         { "id": "1sg", "acceptedForms": ["těším se"] },
@@ -3208,6 +3626,17 @@
         { "id": "1pl", "acceptedForms": ["těšíme se"] },
         { "id": "2pl", "acceptedForms": ["těšíte se"] },
         { "id": "3pl", "acceptedForms": ["těší se"] }
+      ]
+    },
+    {
+      "prompt": "tikat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["tikám"] },
+        { "id": "2sg", "acceptedForms": ["tikáš"] },
+        { "id": "3sg", "acceptedForms": ["tiká"] },
+        { "id": "1pl", "acceptedForms": ["tikáme"] },
+        { "id": "2pl", "acceptedForms": ["tikáte"] },
+        { "id": "3pl", "acceptedForms": ["tikají"] }
       ]
     },
     {
@@ -3266,6 +3695,28 @@
       ]
     },
     {
+      "prompt": "ťuknout se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["ťuknu se"] },
+        { "id": "2sg", "acceptedForms": ["ťukneš se"] },
+        { "id": "3sg", "acceptedForms": ["ťukne se"] },
+        { "id": "1pl", "acceptedForms": ["ťukneme se"] },
+        { "id": "2pl", "acceptedForms": ["ťuknete se"] },
+        { "id": "3pl", "acceptedForms": ["ťuknou se"] }
+      ]
+    },
+    {
+      "prompt": "tvrdnout",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["tvrdnu"] },
+        { "id": "2sg", "acceptedForms": ["tvrdneš"] },
+        { "id": "3sg", "acceptedForms": ["tvrdne"] },
+        { "id": "1pl", "acceptedForms": ["tvrdneme"] },
+        { "id": "2pl", "acceptedForms": ["tvrdnete"] },
+        { "id": "3pl", "acceptedForms": ["tvrdnou"] }
+      ]
+    },
+    {
       "prompt": "týkat se",
       "cells": [
         { "id": "1sg", "acceptedForms": ["týči se", "týču se", "týkám se"] },
@@ -3310,6 +3761,28 @@
       ]
     },
     {
+      "prompt": "udělat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["udělám"] },
+        { "id": "2sg", "acceptedForms": ["uděláš"] },
+        { "id": "3sg", "acceptedForms": ["udělá"] },
+        { "id": "1pl", "acceptedForms": ["uděláme"] },
+        { "id": "2pl", "acceptedForms": ["uděláte"] },
+        { "id": "3pl", "acceptedForms": ["udělají"] }
+      ]
+    },
+    {
+      "prompt": "uhádnout",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["uhádnu"] },
+        { "id": "2sg", "acceptedForms": ["uhádneš"] },
+        { "id": "3sg", "acceptedForms": ["uhádne"] },
+        { "id": "1pl", "acceptedForms": ["uhádneme"] },
+        { "id": "2pl", "acceptedForms": ["uhádnete"] },
+        { "id": "3pl", "acceptedForms": ["uhádnou"] }
+      ]
+    },
+    {
       "prompt": "uhánět",
       "cells": [
         { "id": "1sg", "acceptedForms": ["uháním"] },
@@ -3340,6 +3813,17 @@
         { "id": "1pl", "acceptedForms": ["uhneme"] },
         { "id": "2pl", "acceptedForms": ["uhnete"] },
         { "id": "3pl", "acceptedForms": ["uhnou"] }
+      ]
+    },
+    {
+      "prompt": "ukázat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["ukážu"] },
+        { "id": "2sg", "acceptedForms": ["ukážeš"] },
+        { "id": "3sg", "acceptedForms": ["ukáže"] },
+        { "id": "1pl", "acceptedForms": ["ukážeme"] },
+        { "id": "2pl", "acceptedForms": ["ukážete"] },
+        { "id": "3pl", "acceptedForms": ["ukážou"] }
       ]
     },
     {
@@ -3406,6 +3890,17 @@
         { "id": "1pl", "acceptedForms": ["umyjeme"] },
         { "id": "2pl", "acceptedForms": ["umyjete"] },
         { "id": "3pl", "acceptedForms": ["umyjí", "umyjou"] }
+      ]
+    },
+    {
+      "prompt": "upravit se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["upravím se"] },
+        { "id": "2sg", "acceptedForms": ["upravíš se"] },
+        { "id": "3sg", "acceptedForms": ["upraví se"] },
+        { "id": "1pl", "acceptedForms": ["upravíme se"] },
+        { "id": "2pl", "acceptedForms": ["upravíte se"] },
+        { "id": "3pl", "acceptedForms": ["upraví se"] }
       ]
     },
     {
@@ -3508,6 +4003,17 @@
       ]
     },
     {
+      "prompt": "utvořit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["utvořím"] },
+        { "id": "2sg", "acceptedForms": ["utvoříš"] },
+        { "id": "3sg", "acceptedForms": ["utvoří"] },
+        { "id": "1pl", "acceptedForms": ["utvoříme"] },
+        { "id": "2pl", "acceptedForms": ["utvoříte"] },
+        { "id": "3pl", "acceptedForms": ["utvoří"] }
+      ]
+    },
+    {
       "prompt": "uvažovat",
       "cells": [
         { "id": "1sg", "acceptedForms": ["uvažuji", "uvažuju"] },
@@ -3574,6 +4080,17 @@
       ]
     },
     {
+      "prompt": "vést se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["vedu se"] },
+        { "id": "2sg", "acceptedForms": ["vedeš se"] },
+        { "id": "3sg", "acceptedForms": ["vede se"] },
+        { "id": "1pl", "acceptedForms": ["vedeme se"] },
+        { "id": "2pl", "acceptedForms": ["vedete se"] },
+        { "id": "3pl", "acceptedForms": ["vedou se"] }
+      ]
+    },
+    {
       "prompt": "větřit",
       "cells": [
         { "id": "1sg", "acceptedForms": ["větřím"] },
@@ -3604,6 +4121,17 @@
         { "id": "1pl", "acceptedForms": ["vidíme"] },
         { "id": "2pl", "acceptedForms": ["vidíte"] },
         { "id": "3pl", "acceptedForms": ["vidí"] }
+      ]
+    },
+    {
+      "prompt": "viset",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["visím"] },
+        { "id": "2sg", "acceptedForms": ["visíš"] },
+        { "id": "3sg", "acceptedForms": ["visí"] },
+        { "id": "1pl", "acceptedForms": ["visíme"] },
+        { "id": "2pl", "acceptedForms": ["visíte"] },
+        { "id": "3pl", "acceptedForms": ["visí"] }
       ]
     },
     {
@@ -3670,6 +4198,17 @@
         { "id": "1pl", "acceptedForms": ["vrkáme"] },
         { "id": "2pl", "acceptedForms": ["vrkáte"] },
         { "id": "3pl", "acceptedForms": ["vrkají"] }
+      ]
+    },
+    {
+      "prompt": "vřískat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["vřískám"] },
+        { "id": "2sg", "acceptedForms": ["vřískáš"] },
+        { "id": "3sg", "acceptedForms": ["vříská"] },
+        { "id": "1pl", "acceptedForms": ["vřískáme"] },
+        { "id": "2pl", "acceptedForms": ["vřískáte"] },
+        { "id": "3pl", "acceptedForms": ["vřískají"] }
       ]
     },
     {
@@ -3794,6 +4333,28 @@
       ]
     },
     {
+      "prompt": "vychodit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["vychodím"] },
+        { "id": "2sg", "acceptedForms": ["vychodíš"] },
+        { "id": "3sg", "acceptedForms": ["vychodí"] },
+        { "id": "1pl", "acceptedForms": ["vychodíme"] },
+        { "id": "2pl", "acceptedForms": ["vychodíte"] },
+        { "id": "3pl", "acceptedForms": ["vychodí"] }
+      ]
+    },
+    {
+      "prompt": "vyjet",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["vyjedu"] },
+        { "id": "2sg", "acceptedForms": ["vyjedeš"] },
+        { "id": "3sg", "acceptedForms": ["vyjede"] },
+        { "id": "1pl", "acceptedForms": ["vyjedeme"] },
+        { "id": "2pl", "acceptedForms": ["vyjedete"] },
+        { "id": "3pl", "acceptedForms": ["vyjedou"] }
+      ]
+    },
+    {
       "prompt": "vyjít",
       "cells": [
         { "id": "1sg", "acceptedForms": ["vyjdu"] },
@@ -3890,6 +4451,17 @@
         { "id": "1pl", "acceptedForms": ["vyřídíme"] },
         { "id": "2pl", "acceptedForms": ["vyřídíte"] },
         { "id": "3pl", "acceptedForms": ["vyřídí"] }
+      ]
+    },
+    {
+      "prompt": "vysávat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["vysávám"] },
+        { "id": "2sg", "acceptedForms": ["vysáváš"] },
+        { "id": "3sg", "acceptedForms": ["vysává"] },
+        { "id": "1pl", "acceptedForms": ["vysáváme"] },
+        { "id": "2pl", "acceptedForms": ["vysáváte"] },
+        { "id": "3pl", "acceptedForms": ["vysávají"] }
       ]
     },
     {
@@ -3992,6 +4564,17 @@
       ]
     },
     {
+      "prompt": "začínat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["začínám"] },
+        { "id": "2sg", "acceptedForms": ["začínáš"] },
+        { "id": "3sg", "acceptedForms": ["začíná"] },
+        { "id": "1pl", "acceptedForms": ["začínáme"] },
+        { "id": "2pl", "acceptedForms": ["začínáte"] },
+        { "id": "3pl", "acceptedForms": ["začínají"] }
+      ]
+    },
+    {
       "prompt": "začít",
       "cells": [
         { "id": "1sg", "acceptedForms": ["začnu"] },
@@ -4014,6 +4597,28 @@
       ]
     },
     {
+      "prompt": "zahřát",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["zahřeji", "zahřeju"] },
+        { "id": "2sg", "acceptedForms": ["zahřeješ"] },
+        { "id": "3sg", "acceptedForms": ["zahřeje"] },
+        { "id": "1pl", "acceptedForms": ["zahřejeme"] },
+        { "id": "2pl", "acceptedForms": ["zahřejete"] },
+        { "id": "3pl", "acceptedForms": ["zahřejí", "zahřejou"] }
+      ]
+    },
+    {
+      "prompt": "zajímat se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["zajímám se"] },
+        { "id": "2sg", "acceptedForms": ["zajímáš se"] },
+        { "id": "3sg", "acceptedForms": ["zajímá se"] },
+        { "id": "1pl", "acceptedForms": ["zajímáme se"] },
+        { "id": "2pl", "acceptedForms": ["zajímáte se"] },
+        { "id": "3pl", "acceptedForms": ["zajímají se"] }
+      ]
+    },
+    {
       "prompt": "zakazovat",
       "cells": [
         { "id": "1sg", "acceptedForms": ["zakazuji", "zakazuju"] },
@@ -4033,6 +4638,28 @@
         { "id": "1pl", "acceptedForms": ["zakryjeme"] },
         { "id": "2pl", "acceptedForms": ["zakryjete"] },
         { "id": "3pl", "acceptedForms": ["zakryjí", "zakryjou"] }
+      ]
+    },
+    {
+      "prompt": "zamrkat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["zamrkám"] },
+        { "id": "2sg", "acceptedForms": ["zamrkáš"] },
+        { "id": "3sg", "acceptedForms": ["zamrká"] },
+        { "id": "1pl", "acceptedForms": ["zamrkáme"] },
+        { "id": "2pl", "acceptedForms": ["zamrkáte"] },
+        { "id": "3pl", "acceptedForms": ["zamrkají"] }
+      ]
+    },
+    {
+      "prompt": "zanikat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["zanikám"] },
+        { "id": "2sg", "acceptedForms": ["zanikáš"] },
+        { "id": "3sg", "acceptedForms": ["zaniká"] },
+        { "id": "1pl", "acceptedForms": ["zanikáme"] },
+        { "id": "2pl", "acceptedForms": ["zanikáte"] },
+        { "id": "3pl", "acceptedForms": ["zanikají"] }
       ]
     },
     {
@@ -4069,6 +4696,28 @@
       ]
     },
     {
+      "prompt": "zastavovat se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["zastavuji se", "zastavuju se"] },
+        { "id": "2sg", "acceptedForms": ["zastavuješ se"] },
+        { "id": "3sg", "acceptedForms": ["zastavuje se"] },
+        { "id": "1pl", "acceptedForms": ["zastavujeme se"] },
+        { "id": "2pl", "acceptedForms": ["zastavujete se"] },
+        { "id": "3pl", "acceptedForms": ["zastavují se", "zastavujou se"] }
+      ]
+    },
+    {
+      "prompt": "zavařit se",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["zavařím se"] },
+        { "id": "2sg", "acceptedForms": ["zavaříš se"] },
+        { "id": "3sg", "acceptedForms": ["zavaří se"] },
+        { "id": "1pl", "acceptedForms": ["zavaříme se"] },
+        { "id": "2pl", "acceptedForms": ["zavaříte se"] },
+        { "id": "3pl", "acceptedForms": ["zavaří se"] }
+      ]
+    },
+    {
       "prompt": "zavinit",
       "cells": [
         { "id": "1sg", "acceptedForms": ["zaviním"] },
@@ -4077,6 +4726,50 @@
         { "id": "1pl", "acceptedForms": ["zaviníme"] },
         { "id": "2pl", "acceptedForms": ["zaviníte"] },
         { "id": "3pl", "acceptedForms": ["zaviní"] }
+      ]
+    },
+    {
+      "prompt": "zavolat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["zavolám"] },
+        { "id": "2sg", "acceptedForms": ["zavoláš"] },
+        { "id": "3sg", "acceptedForms": ["zavolá"] },
+        { "id": "1pl", "acceptedForms": ["zavoláme"] },
+        { "id": "2pl", "acceptedForms": ["zavoláte"] },
+        { "id": "3pl", "acceptedForms": ["zavolají"] }
+      ]
+    },
+    {
+      "prompt": "zavraždit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["zavraždím"] },
+        { "id": "2sg", "acceptedForms": ["zavraždíš"] },
+        { "id": "3sg", "acceptedForms": ["zavraždí"] },
+        { "id": "1pl", "acceptedForms": ["zavraždíme"] },
+        { "id": "2pl", "acceptedForms": ["zavraždíte"] },
+        { "id": "3pl", "acceptedForms": ["zavraždí"] }
+      ]
+    },
+    {
+      "prompt": "zavrnět",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["zavrním"] },
+        { "id": "2sg", "acceptedForms": ["zavrníš"] },
+        { "id": "3sg", "acceptedForms": ["zavrní"] },
+        { "id": "1pl", "acceptedForms": ["zavrníme"] },
+        { "id": "2pl", "acceptedForms": ["zavrníte"] },
+        { "id": "3pl", "acceptedForms": ["zavrní"] }
+      ]
+    },
+    {
+      "prompt": "zazpívat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["zazpívám"] },
+        { "id": "2sg", "acceptedForms": ["zazpíváš"] },
+        { "id": "3sg", "acceptedForms": ["zazpívá"] },
+        { "id": "1pl", "acceptedForms": ["zazpíváme"] },
+        { "id": "2pl", "acceptedForms": ["zazpíváte"] },
+        { "id": "3pl", "acceptedForms": ["zazpívají"] }
       ]
     },
     {
@@ -4113,6 +4806,17 @@
       ]
     },
     {
+      "prompt": "zjistit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["zjistím"] },
+        { "id": "2sg", "acceptedForms": ["zjistíš"] },
+        { "id": "3sg", "acceptedForms": ["zjistí"] },
+        { "id": "1pl", "acceptedForms": ["zjistíme"] },
+        { "id": "2pl", "acceptedForms": ["zjistíte"] },
+        { "id": "3pl", "acceptedForms": ["zjistí"] }
+      ]
+    },
+    {
       "prompt": "zkoušet",
       "cells": [
         { "id": "1sg", "acceptedForms": ["zkouším"] },
@@ -4121,6 +4825,17 @@
         { "id": "1pl", "acceptedForms": ["zkoušíme"] },
         { "id": "2pl", "acceptedForms": ["zkoušíte"] },
         { "id": "3pl", "acceptedForms": ["zkoušejí", "zkouší"] }
+      ]
+    },
+    {
+      "prompt": "změnit",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["změním"] },
+        { "id": "2sg", "acceptedForms": ["změníš"] },
+        { "id": "3sg", "acceptedForms": ["změní"] },
+        { "id": "1pl", "acceptedForms": ["změníme"] },
+        { "id": "2pl", "acceptedForms": ["změníte"] },
+        { "id": "3pl", "acceptedForms": ["změní"] }
       ]
     },
     {
@@ -4223,6 +4938,17 @@
       ]
     },
     {
+      "prompt": "zůstat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["zůstanu"] },
+        { "id": "2sg", "acceptedForms": ["zůstaneš"] },
+        { "id": "3sg", "acceptedForms": ["zůstane"] },
+        { "id": "1pl", "acceptedForms": ["zůstaneme"] },
+        { "id": "2pl", "acceptedForms": ["zůstanete"] },
+        { "id": "3pl", "acceptedForms": ["zůstanou"] }
+      ]
+    },
+    {
       "prompt": "zvát",
       "cells": [
         { "id": "1sg", "acceptedForms": ["zvu"] },
@@ -4245,6 +4971,17 @@
       ]
     },
     {
+      "prompt": "žádat",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["žádám"] },
+        { "id": "2sg", "acceptedForms": ["žádáš"] },
+        { "id": "3sg", "acceptedForms": ["žádá"] },
+        { "id": "1pl", "acceptedForms": ["žádáme"] },
+        { "id": "2pl", "acceptedForms": ["žádáte"] },
+        { "id": "3pl", "acceptedForms": ["žádají"] }
+      ]
+    },
+    {
       "prompt": "žíhat",
       "cells": [
         { "id": "1sg", "acceptedForms": ["žíhám"] },
@@ -4264,6 +5001,17 @@
         { "id": "1pl", "acceptedForms": ["žijeme"] },
         { "id": "2pl", "acceptedForms": ["žijete"] },
         { "id": "3pl", "acceptedForms": ["žijí", "žijou"] }
+      ]
+    },
+    {
+      "prompt": "žrát",
+      "cells": [
+        { "id": "1sg", "acceptedForms": ["žeru"] },
+        { "id": "2sg", "acceptedForms": ["žereš"] },
+        { "id": "3sg", "acceptedForms": ["žere"] },
+        { "id": "1pl", "acceptedForms": ["žereme"] },
+        { "id": "2pl", "acceptedForms": ["žerete"] },
+        { "id": "3pl", "acceptedForms": ["žerou"] }
       ]
     }
   ]
