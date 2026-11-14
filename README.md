@@ -1,23 +1,26 @@
 # Language trainer
 
-A small, backendless website for practising how words inflect in a foreign language. Today it has two quizzes,
-both for Czech and with data from the [Internetová jazyková příručka](https://prirucka.ujc.cas.cz/): present-tense
-verb conjugation and noun declension. Each round shows one random word; you type its forms, check them cell by
-cell (or all at once), and the scores are kept in your browser.
+A small, backendless website for practising how words inflect in a foreign language. Today it has three quizzes,
+all for Czech. Two have data from the [Internetová jazyková příručka](https://prirucka.ujc.cas.cz/): present-tense
+verb conjugation and noun declension; each round shows one random word, you type its forms and check them cell by
+cell (or all at once). The third, numerals, asks you to write a random number in words and accepts every version
+the site's own rules allow (an *unverified* source, and the page says so). The scores are kept in your browser.
 
 It is built to be hosted as a GitHub Pages project page from the `gh-pages` branch of
 <https://github.com/5ZYSZ3K/language-trainer> (default URL: <https://5zysz3k.github.io/language-trainer/>). The
 architecture lets other quiz types, other learned languages and other data sources be added without touching
-what exists (see *Adding things later*). The page draws a selector for whatever there is a choice of: today the
-two quizzes (tabs under the heading), and a language or source control as soon as a second one exists.
+what exists (see *Adding things later*). The page draws a selector for whatever there is a choice of: today one
+dropdown under the heading with the three quizzes grouped by source, and a language dropdown as soon as a second
+learned language exists.
 
 ## Words used in this repository
 
 - **UI language**: the language of the page's own texts (`en`, `cs`), chosen with the EN / CZ switch.
 - **Language**: the language being learned (`cs`). It defines the special characters and typing shortcuts.
-- **Source**: where data comes from (`prirucka`), with a trust level (`trusted` / `unverified`).
-- **Quiz type**: one kind of quiz (`verb-present-tense`, `noun-declension`). It owns its data contract, its interaction, its score
-  counters and its texts. Its id is permanent: it is the data file name and part of the score key.
+- **Source**: where data comes from (`prirucka`; `language-trainer`, the site's own rules), with a trust level
+  (`trusted` / `unverified`).
+- **Quiz type**: one kind of quiz (`verb-present-tense`, `noun-declension`, `numerals`). It owns its data contract, its
+  interaction, its score counters and its texts. Its id is permanent: it is the data file name and part of the score key.
 - **Dataset**: one JSON file with the items of one quiz type, for one language, from one source.
 - **Pool**: (language, source, quiz type), the thing you practise. Items are drawn from one pool's dataset only,
   and scores are kept per pool.
@@ -91,6 +94,12 @@ material, not read by anything.)
   given, and at least one more cell must follow it. Cell ids are neutral: the quiz's texts map them to the labels
   the page shows, so data never mentions UI texts (and the cases are not numbered in data, because the number of a
   case differs between languages).
+- **Numerals** (`data/cs/language-trainer/numerals.json`, hand-written, `manual: true`): an item is a range of numbers,
+  `{ "id": "0-100", "min": 0, "max": 100, "spread": "uniform" }`, with whole numbers 0 ≤ min ≤ max < 10¹² and a
+  `spread` of `uniform` (every number equally likely) or `log` (every order of magnitude equally likely; needs min ≥ 1).
+  Each round picks a range, all equally likely, then a number in it. The four ranges are 0–100 (uniform), 101–2 000,
+  2 001–1 000 000 and 1 000 001–999 999 999 999 (log). The accepted versions of a number are not data: the
+  language's numeral generator writes them (`src/quizzes/numerals/cs.ts` for Czech).
 - **Layout:** valid JSON formatted with [Prettier](https://prettier.io/) (the repository's Prettier config, if
   there is one, otherwise Prettier's defaults). The scraper formats the file as it saves it, so saving it from
   an editor that formats on save changes nothing.
@@ -101,8 +110,8 @@ material, not read by anything.)
   would otherwise start over and send the whole list to the site again).
 - **Build-time check** (`npm run check-data`, also run by `npm run build`): fails, listing every problem, if a
   dataset a source provides with `bundled` delivery has no file, a file under `data/` is not provided by any
-  source, a file's envelope does not match its location, an item violates its quiz type's contract, or no
-  dataset holds any item. A dataset with zero items is valid; its pool shows the "nothing to practise yet"
+  source, a file's envelope does not match its location, an item violates its quiz type's contract, two
+  items of one file have the same key (the contract's `keyOf`), or no dataset holds any item. A dataset with zero items is valid; its pool shows the "nothing to practise yet"
   status.
 - **Delivery.** The only implemented delivery is `bundled` (above). A `github` delivery is typed in
   `src/sources/source.ts` but has no loader: `loadDataset` rejects it with a clear error, and no source uses it.
@@ -261,7 +270,9 @@ src/
   languages/   the languages that can be learned: characters, typing shortcuts, names (registry in index.ts)
   sources/     the data sources and which datasets each provides (registry in index.ts)
   quizzes/     one folder per quiz type: contract, score meters, texts, mount (the quiz's DOM)
-               (registry in index.ts); noun-declension also holds its filter (pure, tested) and the filter dialog
+               (registry in index.ts); noun-declension also holds its filter (pure, tested) and the filter dialog;
+               numerals holds its ranges and picking, the version list rules and the numeral generator of each
+               learned language (cs.ts), all pure and tested
   datasets/    the pool (language, source, quiz type), the dataset file's envelope and the loader of the bundled
                datasets
   registry.ts  findById(): how anything looks up an entry of a registry by its id
@@ -302,7 +313,7 @@ other quiz types. If one does, the architecture needs fixing first. Languages, s
 typed lists; nothing is discovered dynamically.
 
 - **A quiz type.** Create `src/quizzes/<id>/` with its item type, `Contract` (`validateItem`, `keyOf`), meters,
-  texts (typed `en` / `cs` dictionaries, including `name`, the label of its tab in the selector) and `mount`, and
+  texts (typed `en` / `cs` dictionaries, including `name`, its label in the selector) and `mount`, and
   add it to `src/quizzes/index.ts`. It may reuse the type-in blocks in `src/ui/` and `src/core/` or bring a
   different interaction. A quiz that wants to remember something between visits (a filter, say) saves it through
   `host.settings`, which the shell keeps per pool. Its id is permanent. The selector picks it up by itself.
@@ -330,11 +341,15 @@ still need to be reviewed.
 
 ## Page behaviour in short
 
-- **Selector.** Under the heading there is a group of buttons for each thing there is a choice of, in this order:
-  the learned language, the source, the quiz. A group with fewer than two options is not shown, so today only the
-  two quizzes appear. The choice is remembered in `localStorage` under `pool`; a remembered choice that no longer
-  exists falls back to the default (the first language, its first trusted source, that source's first quiz).
-  Scores are kept per pool, and the scores panel shows the meters of the quiz on the page.
+- **Selector.** Under the heading there is a native dropdown for each thing there is a choice of: the learned
+  language (only once there are two), then the exercise. The exercise dropdown lists every quiz of the language,
+  grouped by source (trusted sources first, then by name; an unverified one is labelled `· unverified`). A dropdown
+  with fewer than two options is not shown. It is styled like the page's other controls, so it does not stand out.
+  The choice is remembered in `localStorage` under `pool`; a remembered choice that no longer exists falls back to
+  the default (the first language, its first trusted source, that source's first quiz). Scores are kept per pool,
+  and the scores panel shows the meters of the quiz on the page.
+- **Unverified sources.** While a quiz of an unverified source is open, a warning under the intro says that its
+  answers have not been checked against an authoritative reference, and links to the source.
 
 ### Verbs
 
@@ -370,7 +385,21 @@ still need to be reviewed.
   `settings`.
 - Scores: forms correct / checked, nouns fully correct / completed (over the forms that were asked), per pool.
 
-### Both
+### Numerals
+
+- A random number each round (never the same one twice in a row), shown with Czech digit grouping (`2137`,
+  `21 375`). Type it in words in one field; the special characters and typing shortcuts work as for verbs.
+- Enter or Check checks it once; an empty field counts as wrong (it is the way to see the answers). Every version
+  the generator accepts is correct, the less common ones included; the matching rules are those of the other quizzes.
+  Enter again, or "Next number", gives the next number.
+- After a check: a correct answer turns green and shows your version with its remarks, then the other versions; a
+  wrong one turns red and shows all versions. Versions without remarks come first, then by number of remarks; the
+  first 10 are shown, the rest behind "Show all". Remarks are tags in the UI language (*less common*, *inverted
+  order*, *mixed order*, *masculine*, …), with the part of the number they are about in brackets (*inverted order
+  (tisíc)*), and a legend explains the ones on screen.
+- Scores: numbers correct / checked, per pool.
+
+### All quizzes
 
 - Language follows the browser (Czech if it starts with `cs`, otherwise English); the EN / CZ switch in the
   header is remembered in `localStorage` under `language`.

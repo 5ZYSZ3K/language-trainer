@@ -50,6 +50,8 @@
   --ok-border: #2e7d32;
   --bad-bg: #fde7e7;
   --bad-border: #c62828;
+  --warn-bg: #fff4d6;
+  --warn-border: #b26a00;
   color-scheme: light dark;
 }
 
@@ -67,6 +69,8 @@
     --ok-border: #66bb6a;
     --bad-bg: #432020;
     --bad-border: #ef5350;
+    --warn-bg: #3a2f12;
+    --warn-border: #f0b429;
   }
 }
 
@@ -348,8 +352,9 @@ button.link {
   padding-left: 1.2rem;
 }
 
-/* The selector: one group of buttons per thing there is a choice of (learned language, source, quiz). Shown only
-   when a group has two or more options, so with one quiz type per source there is nothing on the page. */
+/* The selector: a labelled dropdown per thing there is a choice of (the learned language; the exercise, grouped by
+   source). Shown only when a dropdown has two or more options. Deliberately quiet: it looks like the page's other
+   controls (same border, radius and font), with a muted label and arrow instead of the browser's own widget. */
 .selector {
   display: flex;
   flex-wrap: wrap;
@@ -359,32 +364,72 @@ button.link {
 
 .choice {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  max-width: 100%;
 }
 
-.choice button {
-  border-radius: 0;
-  margin-left: -1px;
-  padding: 0.25rem 0.8rem;
+.choice label {
+  color: var(--muted);
+  font-size: 0.9rem;
+  white-space: nowrap;
 }
 
-.choice button:first-child {
-  border-radius: 0.4rem 0 0 0.4rem;
-  margin-left: 0;
+.select {
+  position: relative;
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
 }
 
-.choice button:last-child {
-  border-radius: 0 0.4rem 0.4rem 0;
-}
-
-.choice button:only-child {
+.select select {
+  appearance: none;
+  min-width: 0;
+  max-width: 100%;
+  font: inherit;
+  font-size: 0.95rem;
+  color: inherit;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 0.4rem;
+  padding: 0.2rem 1.9rem 0.2rem 0.6rem;
+  text-overflow: ellipsis;
+  cursor: pointer;
 }
 
-.choice button[aria-pressed='true'] {
-  background: var(--accent);
+.select select:hover {
   border-color: var(--accent);
-  color: var(--accent-text);
+}
+
+.select::after {
+  content: '▾';
+  position: absolute;
+  right: 0.65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* The open list follows the page's colours where the browser lets it (dark mode included). */
+.select optgroup,
+.select option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* Shown while the pool's source is unverified. */
+.notice {
+  background: var(--warn-bg);
+  border-left: 4px solid var(--warn-border);
+  border-radius: 0.4rem;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.95rem;
+}
+
+.notice a {
+  color: inherit;
 }
 
 /* The noun table: a column per number (singular on the left, plural on the right on a wide screen; one after the
@@ -492,4 +537,101 @@ dialog.filters::backdrop {
 
 .filters-actions .primary {
   margin-left: auto;
+}
+
+/* The numerals result: the learner's own version (if it was one), then the others, each with its remarks as small tags,
+   and a legend of the remarks shown. */
+.result {
+  margin-top: 1.5rem;
+}
+
+.result h2 {
+  margin: 0 0 0.4rem;
+}
+
+.yours {
+  margin: 0 0 1rem;
+}
+
+.yours strong {
+  color: var(--ok-border);
+}
+
+.remarks {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.versions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.versions li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.4rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.versions li:last-child {
+  border-bottom: 0;
+}
+
+.version {
+  font-weight: 600;
+}
+
+.remark {
+  color: var(--muted);
+  font-size: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0 0.5rem;
+  white-space: nowrap;
+}
+
+#show-all {
+  margin-top: 0.4rem;
+}
+
+.legend {
+  margin-top: 1.2rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.legend h3 {
+  font-size: 0.9rem;
+  margin: 0 0 0.3rem;
+}
+
+.legend dl {
+  margin: 0;
+}
+
+.legend dl > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.4rem;
+}
+
+.legend dt {
+  font-weight: 600;
+}
+
+.legend dt::after {
+  content: ':';
+}
+
+.legend dd {
+  margin: 0;
+}
+
+.legend p {
+  margin: 0.4rem 0 0;
 }

@@ -5,8 +5,12 @@ export const cs: Record<TranslationKey, string> = {
   'language.switchLabel': 'CZ',
 
   'selector.language': 'Učený jazyk',
-  'selector.source': 'Zdroj',
   'selector.quiz': 'Cvičení',
+
+  'source.unverified': 'neověřeno',
+  'notice.title': 'Neověřený zdroj:',
+  'notice.text': 'tyto odpovědi nebyly ověřeny podle autoritativního zdroje.',
+  'notice.source': 'Zdroj:',
 
   'scores.title': 'Skóre',
   'scores.reset': 'Vynulovat skóre',

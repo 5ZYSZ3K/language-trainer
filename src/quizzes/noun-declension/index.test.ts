@@ -38,7 +38,7 @@ describe('nounDeclension', () => {
 describe('the texts of nounDeclension', () => {
   const texts = nounDeclension.texts
 
-  it('names the page, as heading and document title, and its tab, in both UI languages', () => {
+  it('names the page, as heading and document title, and in the selector, in both UI languages', () => {
     expect(texts.en.title).toBe('Czech noun trainer')
     expect(texts.cs.title).toBe('Trénink skloňování českých podstatných jmen')
     for (const language of UI_LANGUAGES) expect(texts[language].name, language).toBeTruthy()

@@ -1,0 +1,497 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`numberToCzechNumeral > writes 1 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [
+      "masculine",
+    ],
+    "value": "jeden",
+  },
+  {
+    "remarks": [
+      "feminine",
+      "counting-form",
+    ],
+    "value": "jedna",
+  },
+  {
+    "remarks": [
+      "neuter",
+    ],
+    "value": "jedno",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 14 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "čtrnáct",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 101 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [
+      "masculine",
+    ],
+    "value": "sto jeden",
+  },
+  {
+    "remarks": [
+      "feminine",
+      "counting-form",
+    ],
+    "value": "sto jedna",
+  },
+  {
+    "remarks": [
+      "neuter",
+    ],
+    "value": "sto jedno",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 125 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "sto dvacet pět",
+  },
+  {
+    "remarks": [
+      "inverted-form",
+    ],
+    "value": "sto pětadvacet",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 1984 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "tisíc devět set osmdesát čtyři",
+  },
+  {
+    "remarks": [
+      "inverted-form",
+    ],
+    "value": "tisíc devět set čtyřiaosmdesát",
+  },
+  {
+    "remarks": [],
+    "value": "jeden tisíc devět set osmdesát čtyři",
+  },
+  {
+    "remarks": [
+      "inverted-form",
+    ],
+    "value": "jeden tisíc devět set čtyřiaosmdesát",
+  },
+  {
+    "remarks": [
+      "less-commonly-used",
+    ],
+    "value": "devatenáct set osmdesát čtyři",
+  },
+  {
+    "remarks": [
+      "less-commonly-used",
+      "inverted-form",
+    ],
+    "value": "devatenáct set čtyřiaosmdesát",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 2000 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "dva tisíce",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 2137 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "dva tisíce sto třicet sedm",
+  },
+  {
+    "remarks": [
+      "inverted-form",
+    ],
+    "value": "dva tisíce sto sedmatřicet",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 21375 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "dvacet jeden tisíc tři sta sedmdesát pět",
+  },
+  {
+    "remarks": [
+      "inverted-form",
+      "mixed-form",
+    ],
+    "value": "dvacet jeden tisíc tři sta pětasedmdesát",
+  },
+  {
+    "remarks": [],
+    "value": "dvacet jedna tisíc tři sta sedmdesát pět",
+  },
+  {
+    "remarks": [
+      "inverted-form",
+      "mixed-form",
+    ],
+    "value": "dvacet jedna tisíc tři sta pětasedmdesát",
+  },
+  {
+    "remarks": [
+      "tisíc:inverted-form",
+      "mixed-form",
+    ],
+    "value": "jedenadvacet tisíc tři sta sedmdesát pět",
+  },
+  {
+    "remarks": [
+      "tisíc:inverted-form",
+      "inverted-form",
+    ],
+    "value": "jedenadvacet tisíc tři sta pětasedmdesát",
+  },
+  {
+    "remarks": [
+      "tisíc:inverted-form",
+      "mixed-form",
+    ],
+    "value": "jednadvacet tisíc tři sta sedmdesát pět",
+  },
+  {
+    "remarks": [
+      "tisíc:inverted-form",
+      "inverted-form",
+    ],
+    "value": "jednadvacet tisíc tři sta pětasedmdesát",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 23000 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "dvacet tři tisíc",
+  },
+  {
+    "remarks": [
+      "tisíc:inverted-form",
+    ],
+    "value": "třiadvacet tisíc",
+  },
+  {
+    "remarks": [
+      "tisíc:less-commonly-used",
+    ],
+    "value": "dvacet tři tisíce",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 213758 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "dvě stě třináct tisíc sedm set padesát osm",
+  },
+  {
+    "remarks": [
+      "inverted-form",
+    ],
+    "value": "dvě stě třináct tisíc sedm set osmapadesát",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 2137589 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "dva miliony sto třicet sedm tisíc pět set osmdesát devět",
+  },
+  {
+    "remarks": [
+      "inverted-form",
+      "mixed-form",
+    ],
+    "value": "dva miliony sto třicet sedm tisíc pět set devětaosmdesát",
+  },
+  {
+    "remarks": [
+      "tisíc:inverted-form",
+      "mixed-form",
+    ],
+    "value": "dva miliony sto sedmatřicet tisíc pět set osmdesát devět",
+  },
+  {
+    "remarks": [
+      "tisíc:inverted-form",
+      "inverted-form",
+    ],
+    "value": "dva miliony sto sedmatřicet tisíc pět set devětaosmdesát",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+    ],
+    "value": "dva milióny sto třicet sedm tisíc pět set osmdesát devět",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+      "inverted-form",
+      "mixed-form",
+    ],
+    "value": "dva milióny sto třicet sedm tisíc pět set devětaosmdesát",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+      "tisíc:inverted-form",
+      "mixed-form",
+    ],
+    "value": "dva milióny sto sedmatřicet tisíc pět set osmdesát devět",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+      "tisíc:inverted-form",
+      "inverted-form",
+    ],
+    "value": "dva milióny sto sedmatřicet tisíc pět set devětaosmdesát",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 21000000 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "dvacet jeden milion",
+  },
+  {
+    "remarks": [],
+    "value": "dvacet jedna milionů",
+  },
+  {
+    "remarks": [
+      "milion:inverted-form",
+    ],
+    "value": "jedenadvacet milionů",
+  },
+  {
+    "remarks": [
+      "milion:inverted-form",
+    ],
+    "value": "jednadvacet milionů",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+    ],
+    "value": "dvacet jeden milión",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+    ],
+    "value": "dvacet jedna miliónů",
+  },
+  {
+    "remarks": [
+      "milión:inverted-form",
+      "milión:less-commonly-used",
+    ],
+    "value": "jedenadvacet miliónů",
+  },
+  {
+    "remarks": [
+      "milión:inverted-form",
+      "milión:less-commonly-used",
+    ],
+    "value": "jednadvacet miliónů",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 22000000 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "dvacet dva milionů",
+  },
+  {
+    "remarks": [
+      "milion:inverted-form",
+    ],
+    "value": "dvaadvacet milionů",
+  },
+  {
+    "remarks": [
+      "milion:less-commonly-used",
+    ],
+    "value": "dvacet dva miliony",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+    ],
+    "value": "dvacet dva miliónů",
+  },
+  {
+    "remarks": [
+      "milión:inverted-form",
+      "milión:less-commonly-used",
+    ],
+    "value": "dvaadvacet miliónů",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+    ],
+    "value": "dvacet dva milióny",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 101000000 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "sto jeden milion",
+  },
+  {
+    "remarks": [],
+    "value": "sto jedna milionů",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+    ],
+    "value": "sto jeden milión",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+    ],
+    "value": "sto jedna miliónů",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 220000001 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [
+      "masculine",
+    ],
+    "value": "dvě stě dvacet milionů jeden",
+  },
+  {
+    "remarks": [
+      "feminine",
+      "counting-form",
+    ],
+    "value": "dvě stě dvacet milionů jedna",
+  },
+  {
+    "remarks": [
+      "neuter",
+    ],
+    "value": "dvě stě dvacet milionů jedno",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+      "masculine",
+    ],
+    "value": "dvě stě dvacet miliónů jeden",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+      "feminine",
+      "counting-form",
+    ],
+    "value": "dvě stě dvacet miliónů jedna",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+      "neuter",
+    ],
+    "value": "dvě stě dvacet miliónů jedno",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 2200000014 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "dvě miliardy dvě stě milionů čtrnáct",
+  },
+  {
+    "remarks": [
+      "milión:less-commonly-used",
+    ],
+    "value": "dvě miliardy dvě stě miliónů čtrnáct",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 22000000014 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "dvacet dva miliard čtrnáct",
+  },
+  {
+    "remarks": [
+      "miliarda:inverted-form",
+    ],
+    "value": "dvaadvacet miliard čtrnáct",
+  },
+  {
+    "remarks": [
+      "miliarda:less-commonly-used",
+    ],
+    "value": "dvacet dvě miliardy čtrnáct",
+  },
+]
+`;
+
+exports[`numberToCzechNumeral > writes 101000000000 as it did when the quiz was added 1`] = `
+[
+  {
+    "remarks": [],
+    "value": "sto jedna miliarda",
+  },
+  {
+    "remarks": [],
+    "value": "sto jedna miliard",
+  },
+]
+`;

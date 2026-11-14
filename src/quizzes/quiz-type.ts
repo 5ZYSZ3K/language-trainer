@@ -9,7 +9,7 @@ import type { Language } from '../languages'
 export interface QuizTexts {
   /** The heading of the page and its document title. */
   readonly title: string
-  /** A short name for the quiz's tab in the selector. */
+  /** A short name for the quiz: its option in the selector. */
   readonly name: string
   /** The sentence under the heading that says what to do. */
   readonly intro: string

@@ -5,6 +5,7 @@ import { createT, getUiLanguage, joinTexts, uiLanguageLabel, setUiLanguage, shel
 import { fillTexts } from '../i18n/dom'
 import type { QuizInstance } from '../quizzes'
 import { choose, type Choice, type Registries } from '../selection'
+import type { Source } from '../sources'
 import { finder } from '../ui'
 import { loadPoolChoice, savePoolChoice } from './pool-choice'
 
@@ -26,6 +27,10 @@ const SHELL = `
   </header>
   <div class="selector" id="selector" hidden></div>
   <p class="intro" data-i18n="intro"></p>
+  <p class="notice" id="notice" hidden>
+    <strong data-i18n="notice.title"></strong> <span data-i18n="notice.text"></span>
+    <span data-i18n="notice.source"></span> <a id="notice-source" target="_blank" rel="noopener"></a>
+  </p>
 
   <section class="scores" aria-labelledby="scores-title">
     <h2 id="scores-title" data-i18n="scores.title"></h2>
@@ -38,18 +43,25 @@ const SHELL = `
   <div id="quiz"></div>
 `
 
-/** One button of a selector group. */
+/** One option of a selector dropdown. */
 interface Option {
   label: string
   active: boolean
   choose(): void
 }
 
+/** Options shown together in a dropdown, under a heading (an `<optgroup>`) when `label` is given. */
+interface OptionGroup {
+  label?: string
+  options: readonly Option[]
+}
+
 /**
- * The page around a quiz: header with the UI-language switch, the selector (a group of buttons each for the learned
- * language, the source and the quiz, shown only where there is something to choose between), the scores panel
- * (drawn from the quiz type's meters), the status line, and the container the quiz is mounted into once the pool's
- * items are loaded. Choosing something else in the selector opens that pool in place, and is remembered.
+ * The page around a quiz: header with the UI-language switch, the selector (a dropdown for the learned language, and
+ * one for the exercise whose options are grouped by source; each shown only where there is something to choose
+ * between), the notice for a source that is not trusted, the scores panel (drawn from the quiz type's meters), the
+ * status line, and the container the quiz is mounted into once the pool's items are loaded. Choosing something else in
+ * the selector opens that pool in place, and is remembered.
  */
 export async function mountShell(root: HTMLElement, { registries, storage, loadData }: ShellDeps): Promise<void> {
   const first = choose(registries, loadPoolChoice(storage))
@@ -79,7 +91,22 @@ export async function mountShell(root: HTMLElement, { registries, storage, loadD
       button.setAttribute('aria-pressed', String(button.dataset.lang === getUiLanguage()))
     })
     renderSelector()
+    renderNotice()
     quiz?.applyTexts()
+  }
+
+  /** A source's name as the selector shows it: with the trust word after it, unless the source is trusted. */
+  function sourceLabel(source: Source): string {
+    return source.trust === 'trusted' ? source.name : `${source.name} · ${text('source.unverified')}`
+  }
+
+  /** Says so while the pool's source is unverified, and links to it; hidden for a trusted source. */
+  function renderNotice(): void {
+    const { source } = choice.source
+    find('#notice').hidden = source.trust !== 'unverified'
+    const link = find<HTMLAnchorElement>('#notice-source')
+    link.href = source.url
+    link.textContent = source.name
   }
 
   function showStatus(key: 'status.loading' | 'status.loadError' | 'empty' | null): void {
@@ -121,68 +148,75 @@ export async function mountShell(root: HTMLElement, { registries, storage, loadD
     void openChoice(next)
   }
 
-  /** A labelled group of buttons, one per option, of which the active one is pressed. */
-  function optionGroup(labelKey: string, options: readonly Option[]): HTMLElement {
-    const group = document.createElement('div')
-    group.className = 'choice'
-    group.setAttribute('role', 'group')
-    group.setAttribute('aria-label', text(labelKey))
-    for (const option of options) {
-      const button = document.createElement('button')
-      button.type = 'button'
-      button.textContent = option.label
-      button.setAttribute('aria-pressed', String(option.active))
-      button.addEventListener('click', () => {
-        if (!option.active) option.choose()
-      })
-      group.append(button)
+  /**
+   * A labelled native dropdown of `groups`' options, with the active one selected; choosing another one calls its
+   * `choose`. A group with a label becomes an `<optgroup>`.
+   */
+  function dropdown(id: string, labelKey: string, groups: readonly OptionGroup[]): HTMLElement {
+    const label = document.createElement('label')
+    label.htmlFor = id
+    label.textContent = text(labelKey)
+
+    const select = document.createElement('select')
+    select.id = id
+    const options = groups.flatMap((group) => group.options)
+    for (const group of groups) {
+      let parent: HTMLSelectElement | HTMLOptGroupElement = select
+      if (group.label !== undefined) {
+        parent = document.createElement('optgroup')
+        parent.label = group.label
+        select.append(parent)
+      }
+      for (const option of group.options) {
+        const element = document.createElement('option')
+        element.value = String(options.indexOf(option))
+        element.textContent = option.label
+        element.selected = option.active
+        parent.append(element)
+      }
     }
-    return group
+    select.addEventListener('change', () => options[Number(select.value)]?.choose())
+
+    // The wrapper draws the arrow (the native one is hidden, so that the dropdown looks like the page's other controls).
+    const wrapper = document.createElement('span')
+    wrapper.className = 'select'
+    wrapper.append(select)
+
+    const choiceEl = document.createElement('div')
+    choiceEl.className = 'choice'
+    choiceEl.append(label, wrapper)
+    return choiceEl
   }
 
   /**
-   * Draws the groups that have a choice in them: the learned language, then the source, then the quiz. They are
+   * Draws the dropdowns that have a choice in them: the learned language, then the exercise, whose options are grouped
+   * by source (trusted sources first, an unverified one marked as such) once there is more than one source. They are
    * redrawn on every choice and on every change of the UI language, whose names they show.
    */
   function renderSelector(): void {
     const uiLanguage = getUiLanguage()
-    const { selection, language, source, quiz: chosen } = choice
+    const { selection, language, quiz: chosen } = choice
     const groups: HTMLElement[] = []
     if (selection.languages.length > 1) {
-      groups.push(
-        optionGroup(
-          'selector.language',
-          selection.languages.map((option) => ({
-            label: option.texts[uiLanguage].name,
-            active: option === language,
-            choose: () => switchTo({ language: option.id }),
-          })),
-        ),
-      )
+      const languages = selection.languages.map((option) => ({
+        label: option.texts[uiLanguage].name,
+        active: option === language,
+        choose: () => switchTo({ language: option.id }),
+      }))
+      groups.push(dropdown('selector-language', 'selector.language', [{ options: languages }]))
     }
-    if (selection.sources.length > 1) {
-      groups.push(
-        optionGroup(
-          'selector.source',
-          selection.sources.map((option) => ({
-            label: option.source.name,
-            active: option === source,
-            choose: () => switchTo({ source: option.source.id }),
-          })),
-        ),
-      )
-    }
-    if (source.quizzes.length > 1) {
-      groups.push(
-        optionGroup(
-          'selector.quiz',
-          source.quizzes.map((option) => ({
-            label: option.quizType.texts[uiLanguage].name,
-            active: option === chosen,
-            choose: () => switchTo({ quizType: option.quizType.id }),
-          })),
-        ),
-      )
+
+    const bySource = selection.sources.length > 1
+    const exercises: OptionGroup[] = selection.sources.map(({ source, quizzes }) => ({
+      label: bySource ? sourceLabel(source) : undefined,
+      options: quizzes.map((option) => ({
+        label: option.quizType.texts[uiLanguage].name,
+        active: poolKey(option.pool) === poolKey(chosen.pool),
+        choose: () => switchTo({ source: source.id, quizType: option.quizType.id }),
+      })),
+    }))
+    if (exercises.flatMap((group) => group.options).length > 1) {
+      groups.push(dropdown('selector-quiz', 'selector.quiz', exercises))
     }
     selectorEl.replaceChildren(...groups)
     selectorEl.hidden = groups.length === 0

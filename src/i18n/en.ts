@@ -7,8 +7,13 @@ export const en = {
   'language.switchLabel': 'EN',
 
   'selector.language': 'Language to learn',
-  'selector.source': 'Source',
   'selector.quiz': 'Exercise',
+
+  /** After the name of a source that is not trusted, in the selector. */
+  'source.unverified': 'unverified',
+  'notice.title': 'Unverified source:',
+  'notice.text': 'these answers have not been checked against an authoritative reference.',
+  'notice.source': 'Source:',
 
   'scores.title': 'Score',
   'scores.reset': 'Reset scores',

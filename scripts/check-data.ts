@@ -31,7 +31,8 @@ export interface DataCheck {
  * (slash-separated, e.g. `cs/prirucka/verb-present-tense.json`) to its text. A problem is reported if:
  * a dataset provided with `bundled` delivery has no file; a file is not provided by any source; a file's
  * envelope (language, source, quiz type) does not match its location; an item violates its quiz type's
- * contract; or no dataset holds any item at all (an empty site). A dataset with zero items is valid.
+ * contract, or repeats the key (`keyOf`) of an earlier item of its file; or no dataset holds any item at all (an
+ * empty site). A dataset with zero items is valid.
  */
 export function checkData({ sources, quizTypes }: DataRegistries, files: Readonly<Record<string, string>>): DataCheck {
   const problems: string[] = []
@@ -88,8 +89,15 @@ export function checkData({ sources, quizTypes }: DataRegistries, files: Readonl
       problems.push(`${where}: quiz type "${entry.quizType}" is not registered`)
       continue
     }
+    // Valid items must also differ in their key (the contract's identity of an item); an invalid one may have no key.
+    const keys = new Set<string>()
     data.items.forEach((item: unknown, i) => {
-      for (const problem of quizType.contract.validateItem(item)) problems.push(`${where}: item ${i + 1}: ${problem}`)
+      const itemProblems = quizType.contract.validateItem(item)
+      for (const problem of itemProblems) problems.push(`${where}: item ${i + 1}: ${problem}`)
+      if (itemProblems.length > 0) return
+      const key = quizType.contract.keyOf(item)
+      if (keys.has(key)) problems.push(`${where}: item ${i + 1}: repeats the key ${JSON.stringify(key)} of an earlier item`)
+      keys.add(key)
     })
   }
 

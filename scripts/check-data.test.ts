@@ -89,6 +89,15 @@ describe('checkData', () => {
     ])
   })
 
+  it('reports a valid item whose key repeats an earlier one, but does not key an invalid item', () => {
+    const { problems } = run({ [OK_PATH]: file([{ n: 1 }, { n: 2 }, { n: 1 }, {}, {}]) })
+    expect(problems).toEqual([
+      'data/cs/alpha/numbers.json: item 3: repeats the key "1" of an earlier item',
+      'data/cs/alpha/numbers.json: item 4: n is missing',
+      'data/cs/alpha/numbers.json: item 5: n is missing',
+    ])
+  })
+
   it('reports an empty site: no dataset holds any item', () => {
     const { problems } = run({ [OK_PATH]: file([]) })
     expect(problems.join('\n')).toMatch(/no dataset holds any item/)
