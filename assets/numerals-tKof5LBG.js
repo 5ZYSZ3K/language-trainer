@@ -1,0 +1,1 @@
+var e={language:`cs`,source:`language-trainer`,quizType:`numerals`,items:[{id:`0-100`,min:0,max:100,spread:`uniform`},{id:`101-2000`,min:101,max:2e3,spread:`log`},{id:`2001-1000000`,min:2001,max:1e6,spread:`log`},{id:`1000001-999999999999`,min:1000001,max:999999999999,spread:`log`}]};export{e as default};
