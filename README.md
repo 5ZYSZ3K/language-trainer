@@ -359,7 +359,9 @@ still need to be reviewed.
   the next verb. Reflexive particles (`se`, `si`) are typed as part of the answer.
 - Each cell has its own Check button, plus "Check all". Checking locks a cell for the round: correct turns it
   green, wrong turns it red and shows all accepted variants joined by ` / `. A single check on an empty cell is
-  ignored; "Check all" counts empty cells as wrong. "Next verb" starts a new round.
+  ignored; "Check all" counts empty cells as wrong. While any cell is still open, "Check all" is the highlighted
+  button and the other one reads "Skip" (a new verb, this one left unfinished); once every cell is checked, "Check
+  all" is disabled and the highlighted button is "Next verb".
 - Matching ignores case and surrounding / repeated whitespace; nothing else is forgiven, diacritics included.
 - Typing shortcuts: `'` after a vowel → `á é í ó ú ý`, `^` after a letter → `č ď ě ň ř š ť ž`, `u@` → `ů`;
   only plain typing triggers them, not deleting or pasting. There are also buttons for the special characters.
@@ -373,8 +375,7 @@ still need to be reviewed.
   without a singular such as *dveře*). It is never checked or scored. Everything else is a cell to fill in: seven
   cases (the Czech 1st to 7th, vocative included) for the singular and the plural, in two columns on a wide screen
   (singular left) and one after the other on a narrow one. A noun without a singular or a plural has no column for it.
-- Checking, "Check all", "Next noun", Enter and the matching rules work as for verbs, with one difference: "Check
-  all" is disabled whenever no field is left to check, also after the last one was checked.
+- Checking, "Check all", "Skip" / "Next noun", Enter and the matching rules work as for verbs.
 - **Filters.** The Filters button opens a dialog with a grid of all 14 forms (7 cases × singular / plural), each a
   checkbox. A row heading or a column heading switches the whole row or column; "Select all" and "Clear all" do
   what they say. Closing the dialog (Done, Esc, a click outside) applies the choice and starts a new noun, if
@@ -391,7 +392,9 @@ still need to be reviewed.
   `21 375`). Type it in words in one field; the special characters and typing shortcuts work as for verbs.
 - Enter or Check checks it once; an empty field counts as wrong (it is the way to see the answers). Every version
   the generator accepts is correct, the less common ones included; the matching rules are those of the other quizzes.
-  Enter again, or "Next number", gives the next number.
+  Until then Check is the highlighted button and the one below reads "Skip" (a new number, this one unanswered);
+  after the check, Check is disabled and the one below becomes the highlighted "Next number". Enter again, or that
+  button, gives the next number.
 - After a check: a correct answer turns green and shows your version with its remarks, then the other versions; a
   wrong one turns red and shows all versions. Versions without remarks come first, then by number of remarks; the
   first 10 are shown, the rest behind "Show all". Remarks are tags in the UI language (*less common*, *inverted

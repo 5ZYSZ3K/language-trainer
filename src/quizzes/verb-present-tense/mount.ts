@@ -3,7 +3,7 @@ import { pickNext } from '../../core/pick'
 import { Round } from '../../core/round'
 import { getUiLanguage } from '../../i18n'
 import { fillTexts } from '../../i18n/dom'
-import { enableShortcuts, fillSpecialChars, finder, renderShortcutHelp } from '../../ui'
+import { enableShortcuts, fillSpecialChars, finder, renderShortcutHelp, syncRoundActions } from '../../ui'
 import type { QuizHost, QuizInstance } from '../quiz-type'
 import { verbPresentCellLabelKeys } from './cells'
 import { t } from './texts'
@@ -16,7 +16,7 @@ const AREA = `
     <div id="chars" class="chars" role="group" data-i18n-label="chars.label"></div>
     <div class="actions">
       <button type="button" id="check-all" data-i18n="checkAll"></button>
-      <button type="button" id="next" class="primary" data-i18n="next"></button>
+      <button type="button" id="next"></button>
     </div>
   </main>
 
@@ -30,7 +30,7 @@ const AREA = `
 
 /**
  * The type-in grid: one random verb per round, six cells to fill in, a Check button per cell, "Check all" and
- * "Next verb". Records into the meters `cells` (per checked cell) and `items` (per completed verb).
+ * "Skip", which turns into "Next verb" once every cell is checked. Records into the meters `cells` (per checked cell) and `items` (per completed verb).
  */
 export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Item>): QuizInstance {
   const { items, language } = host
@@ -41,6 +41,8 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
   const promptEl = find('#prompt')
   const cellsEl = find('#cells')
   const helpList = find('#help-list')
+  const checkAllEl = find<HTMLButtonElement>('#check-all')
+  const nextEl = find<HTMLButtonElement>('#next')
   promptEl.lang = language.htmlLang
 
   let item: Item | undefined
@@ -64,11 +66,12 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
       : inputs.find((input) => !input.readOnly),
   )
 
-  find('#check-all').addEventListener('click', () => {
+  checkAllEl.addEventListener('click', () => {
     round.checkAll(inputs.map((input) => input.value))
     cellEls.forEach((_, i) => syncCell(i))
+    syncActions()
   })
-  find('#next').addEventListener('click', startRound)
+  nextEl.addEventListener('click', startRound)
 
   // Enter on a finished round starts the next verb, wherever in the exercise the focus is. This listens while the event
   // is still on its way down (capture), before any field or button sees it: so the Enter that checks the last cell
@@ -98,6 +101,7 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
     cellsEl.replaceChildren(...cellEls)
     inputs = cellEls.map((el) => el.querySelector('input')!)
     lastFocused = undefined
+    syncActions()
     inputs[0]?.focus()
   }
 
@@ -166,6 +170,7 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
     // An empty check is ignored by the round; send the user back to the field instead.
     if (round.state(index) === 'open') inputs[index]!.focus()
     syncCell(index)
+    syncActions()
   }
 
   /** Mirrors the round's state for one cell into the DOM. */
@@ -177,6 +182,10 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
     wrap.querySelector<HTMLButtonElement>('.check')!.disabled = state !== 'open'
     wrap.querySelector<HTMLElement>('.answer-forms')!.textContent =
       state === 'open' ? '' : item!.cells[index]!.acceptedForms.join(' / ')
+  }
+
+  function syncActions(): void {
+    syncRoundActions(checkAllEl, nextEl, round.complete, t)
   }
 
   function focusNextOpen(from: number): void {

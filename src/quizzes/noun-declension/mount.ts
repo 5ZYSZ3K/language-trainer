@@ -3,7 +3,7 @@ import { pickNext } from '../../core/pick'
 import { Round } from '../../core/round'
 import { getUiLanguage } from '../../i18n'
 import { fillTexts } from '../../i18n/dom'
-import { enableShortcuts, fillSpecialChars, finder, renderShortcutHelp } from '../../ui'
+import { enableShortcuts, fillSpecialChars, finder, renderShortcutHelp, syncRoundActions } from '../../ui'
 import type { QuizHost, QuizInstance } from '../quiz-type'
 import { nounCaseLabelKey, nounNumberLabelKey, nounNumbers, partsOf, type GrammaticalNumber } from './cells'
 import { createFilterDialog } from './filter-dialog'
@@ -19,7 +19,7 @@ const AREA = `
     <div class="actions">
       <button type="button" id="filters" data-i18n="filters.open"></button>
       <button type="button" id="check-all" data-i18n="checkAll"></button>
-      <button type="button" id="next" class="primary" data-i18n="next"></button>
+      <button type="button" id="next"></button>
     </div>
   </main>
 
@@ -35,7 +35,7 @@ const NO_EVENTS = { cellChecked: () => {}, itemCompleted: () => {} }
 
 /**
  * The type-in table: one random noun per round, a field for each form the filter asks for, a Check button per field,
- * "Check all", "Filters" and "Next noun". The first form (the nominative singular, or plural for a noun without a
+ * "Check all", "Filters" and "Skip", which turns into "Next noun" once every field is checked. The first form (the nominative singular, or plural for a noun without a
  * singular) is put in the table locked, as given. Records into the meters `cells` (per checked field) and `items` (per
  * completed noun). If the filter leaves nothing to ask for, the area shows no noun, just the three buttons.
  */
@@ -51,6 +51,7 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
   const charsEl = find('#chars')
   const helpList = find('#help-list')
   const checkAllEl = find<HTMLButtonElement>('#check-all')
+  const nextEl = find<HTMLButtonElement>('#next')
   promptEl.lang = language.htmlLang
 
   let filter: CellFilter = readFilter(host.settings.get())
@@ -86,9 +87,9 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
   checkAllEl.addEventListener('click', () => {
     round.checkAll(inputs.map((input) => input.value))
     cellEls.forEach((_, i) => syncCell(i))
-    syncCheckAll()
+    syncActions()
   })
-  find('#next').addEventListener('click', startRound)
+  nextEl.addEventListener('click', startRound)
 
   // Enter on a finished round starts the next noun, wherever in the exercise the focus is. This listens while the event
   // is still on its way down (capture), before any field or button sees it: so the Enter that checks the last cell
@@ -131,7 +132,7 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
     inputs = []
     lastFocused = undefined
     cellsEl.replaceChildren(...nounNumbers.flatMap(buildColumn))
-    syncCheckAll()
+    syncActions()
     inputs[0]?.focus()
   }
 
@@ -230,7 +231,7 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
     // An empty check is ignored by the round; send the user back to the field instead.
     if (round.state(index) === 'open') inputs[index]!.focus()
     syncCell(index)
-    syncCheckAll()
+    syncActions()
   }
 
   /** Mirrors the round's state for one cell into the DOM. */
@@ -245,8 +246,8 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
   }
 
   /** "Check all" is only there to use while some field is still open: not with nothing to ask, nor once everything is checked. */
-  function syncCheckAll(): void {
-    checkAllEl.disabled = round.complete
+  function syncActions(): void {
+    syncRoundActions(checkAllEl, nextEl, round.complete, t)
   }
 
   function focusNextOpen(from: number): void {

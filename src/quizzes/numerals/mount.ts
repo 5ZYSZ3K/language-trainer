@@ -1,6 +1,6 @@
 import { getUiLanguage } from '../../i18n'
 import { fillTexts } from '../../i18n/dom'
-import { enableShortcuts, fillSpecialChars, finder, renderShortcutHelp } from '../../ui'
+import { enableShortcuts, fillSpecialChars, finder, renderShortcutHelp, syncRoundActions } from '../../ui'
 import type { QuizHost, QuizInstance } from '../quiz-type'
 import { NUMERAL_GENERATORS } from './generators'
 import { pickNumber, type NumberRange } from './ranges'
@@ -24,7 +24,7 @@ const AREA = `
     </div>
     <div id="chars" class="chars" role="group" data-i18n-label="chars.label"></div>
     <div class="actions">
-      <button type="button" id="next" class="primary" data-i18n="next"></button>
+      <button type="button" id="next"></button>
     </div>
     <section id="result" class="result" aria-live="polite" hidden>
       <p id="yours" class="yours"><span data-i18n="result.yours"></span> <strong id="yours-value"></strong> <span id="yours-remarks" class="remarks"></span></p>
@@ -52,7 +52,8 @@ type State = 'open' | 'correct' | 'wrong'
 /**
  * One random number per round, to be written in words in one field. Any version the language's generator accepts is
  * correct; once checked, the page lists the versions (the learner's own first, if it was one of them) with their
- * remarks. Records into the meter `numbers` (per checked number).
+ * remarks. Below the field, "Skip" gives another number unanswered; once the number is checked it becomes "Next number".
+ * Records into the meter `numbers` (per checked number).
  */
 export function mountNumerals(container: HTMLElement, host: QuizHost<NumberRange>): QuizInstance {
   const { items, language } = host
@@ -64,6 +65,7 @@ export function mountNumerals(container: HTMLElement, host: QuizHost<NumberRange
   const cellEl = find('#cell')
   const inputEl = find<HTMLInputElement>('#answer')
   const checkEl = find<HTMLButtonElement>('#check')
+  const nextEl = find<HTMLButtonElement>('#next')
   const resultEl = find('#result')
   const helpList = find('#help-list')
   promptEl.lang = language.htmlLang
@@ -97,7 +99,7 @@ export function mountNumerals(container: HTMLElement, host: QuizHost<NumberRange
     check()
     inputEl.focus()
   })
-  find('#next').addEventListener('click', startRound)
+  nextEl.addEventListener('click', startRound)
   find('#show-all').addEventListener('click', () => {
     expanded = !expanded
     renderResult()
@@ -139,7 +141,8 @@ export function mountNumerals(container: HTMLElement, host: QuizHost<NumberRange
   function sync(): void {
     cellEl.dataset.state = state
     inputEl.readOnly = state !== 'open'
-    checkEl.disabled = state !== 'open'
+    // Check is the button to press until the number is checked, then "Next number" (until then it reads "Skip").
+    syncRoundActions(checkEl, nextEl, state !== 'open', t)
     renderResult()
   }
 
