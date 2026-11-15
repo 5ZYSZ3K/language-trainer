@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Item } from '../../core/cell'
 import { nounDeclensionCellIds } from './cells'
-import { allCells, cellsOfCase, cellsOfNumber, practiceOf, readFilter, sameFilter, saveFilter, toggleGroup } from './filter'
+import { allCells, cellsOfCase, cellsOfNumber, pickNoun, practiceOf, readFilter, sameFilter, saveFilter, toggleGroup } from './filter'
 
 const item = (ids: readonly string[]): Item => ({ prompt: 'x', cells: ids.map((id) => ({ id, acceptedForms: [id] })) })
 const regular = item(nounDeclensionCellIds)
@@ -113,5 +113,26 @@ describe('the saved filter', () => {
     expect(sameFilter(new Set(['a', 'b']), new Set(['b', 'a']))).toBe(true)
     expect(sameFilter(new Set(['a']), new Set(['a', 'b']))).toBe(false)
     expect(sameFilter(new Set(['a', 'c']), new Set(['a', 'b']))).toBe(false)
+  })
+})
+
+describe('pickNoun', () => {
+  const first = () => 0
+  const last = () => 0.999
+
+  it('picks only among the nouns that have something to ask', () => {
+    const singularTicks = new Set(cellsOfNumber('sg'))
+    expect(pickNoun([pluralOnly, singularOnly], singularTicks, undefined, first)).toBe(singularOnly)
+    expect(pickNoun([pluralOnly, singularOnly], singularTicks, undefined, last)).toBe(singularOnly)
+  })
+
+  it('does not pick the previous noun again while another one has something to ask', () => {
+    expect(pickNoun([regular, singularOnly], allCells(), regular, first)).toBe(singularOnly)
+  })
+
+  it('picks any noun when none has anything to ask', () => {
+    const nothing = new Set<string>()
+    expect(pickNoun([pluralOnly, singularOnly], nothing, undefined, first)).toBe(pluralOnly)
+    expect(pickNoun([pluralOnly, singularOnly], nothing, pluralOnly, first)).toBe(singularOnly)
   })
 })

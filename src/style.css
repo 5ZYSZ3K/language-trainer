@@ -235,6 +235,11 @@ button.link {
   margin-left: 0.4rem;
 }
 
+/* In place of the fields, when the filters leave nothing to ask of the noun in the prompt. */
+.nothing {
+  color: var(--muted);
+}
+
 /* minmax(0, 1fr): let a column shrink below its content so a long button label can't widen the grid. The cells come
    singular first, then plural: one column on a narrow screen, and on a wide one two columns filled top to bottom, so
    singular is on the left, plural on the right, and Enter moves down. */

@@ -1,5 +1,4 @@
 import type { Cell, Item } from '../../core/cell'
-import { pickNext } from '../../core/pick'
 import { Round } from '../../core/round'
 import { getUiLanguage } from '../../i18n'
 import { fillTexts } from '../../i18n/dom'
@@ -7,13 +6,14 @@ import { enableShortcuts, fillSpecialChars, finder, renderShortcutHelp, syncRoun
 import type { QuizHost, QuizInstance } from '../quiz-type'
 import { nounCaseLabelKey, nounNumberLabelKey, nounNumbers, partsOf, type GrammaticalNumber } from './cells'
 import { createFilterDialog } from './filter-dialog'
-import { practiceOf, readFilter, saveFilter, type CellFilter, type Practice } from './filter'
+import { pickNoun, practiceOf, readFilter, saveFilter, type CellFilter, type Practice } from './filter'
 import { t } from './texts'
 
 // The quiz's area of the page. All visible text is filled in by applyTexts() via the data-i18n attributes.
 const AREA = `
   <main id="exercise" hidden>
-    <p class="prompt" id="prompt-line"><span data-i18n="prompt.label"></span> <strong id="prompt"></strong></p>
+    <p class="prompt"><span data-i18n="prompt.label"></span> <strong id="prompt"></strong></p>
+    <p id="nothing" class="nothing" data-i18n="nothing" hidden></p>
     <div id="cells" class="columns"></div>
     <div id="chars" class="chars" role="group" data-i18n-label="chars.label"></div>
     <div class="actions">
@@ -37,7 +37,8 @@ const NO_EVENTS = { cellChecked: () => {}, itemCompleted: () => {} }
  * The type-in table: one random noun per round, a field for each form the filter asks for, a Check button per field,
  * "Check all", "Filters" and "Skip", which turns into "Next noun" once every field is checked. The first form (the nominative singular, or plural for a noun without a
  * singular) is put in the table locked, as given. Records into the meters `cells` (per checked field) and `items` (per
- * completed noun). If the filter leaves nothing to ask for, the area shows no noun, just the three buttons.
+ * completed noun). A noun the filter leaves nothing to ask for is still shown, with a message instead of fields; that
+ * happens to a random noun only when no noun has anything to ask. Changing the filter starts the same noun again.
  */
 export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>): QuizInstance {
   const { items, language } = host
@@ -45,9 +46,9 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
   const find = finder(container)
 
   const exerciseEl = find('#exercise')
-  const promptLine = find('#prompt-line')
   const promptEl = find('#prompt')
   const cellsEl = find('#cells')
+  const nothingEl = find('#nothing')
   const charsEl = find('#chars')
   const helpList = find('#help-list')
   const checkAllEl = find<HTMLButtonElement>('#check-all')
@@ -66,7 +67,7 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
   const filterDialog = createFilterDialog(find<HTMLDialogElement>('#filter-dialog'), (chosen) => {
     filter = chosen
     host.settings.set(saveFilter(filter))
-    startRound()
+    startRound(item)
   })
 
   function applyTexts(): void {
@@ -89,7 +90,7 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
     cellEls.forEach((_, i) => syncCell(i))
     syncActions()
   })
-  nextEl.addEventListener('click', startRound)
+  nextEl.addEventListener('click', () => startRound())
 
   // Enter on a finished round starts the next noun, wherever in the exercise the focus is. This listens while the event
   // is still on its way down (capture), before any field or button sees it: so the Enter that checks the last cell
@@ -108,30 +109,31 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
 
   // ---- rounds -----------------------------------------------------------------------------------
 
-  function startRound(): void {
-    // Only nouns with something to ask under the current filter come up.
-    const eligible = items.filter((candidate) => practiceOf(candidate, filter).asked.length > 0)
-    item = eligible.length > 0 ? pickNext(eligible, item, Math.random) : undefined
-    practice = item ? practiceOf(item, filter) : { asked: [], shown: [] }
+  /** Starts a round on `next`, or on a random noun (see pickNoun) if none is given. */
+  function startRound(next?: Item): void {
+    const noun = next ?? pickNoun(items, filter, item, Math.random)
+    item = noun
+    practice = practiceOf(noun, filter)
+    // A round with nothing to ask is complete from the start, so it never reports anything to the scores.
     round = new Round(
-      { prompt: item?.prompt ?? '', cells: practice.asked },
-      item
-        ? {
-            cellChecked: (correct) => host.record('cells', correct),
-            itemCompleted: (fullyCorrect) => host.record('items', fullyCorrect),
-          }
-        : NO_EVENTS,
+      { prompt: noun.prompt, cells: practice.asked },
+      {
+        cellChecked: (correct) => host.record('cells', correct),
+        itemCompleted: (fullyCorrect) => host.record('items', fullyCorrect),
+      },
     )
 
-    promptLine.hidden = !item
-    cellsEl.hidden = !item
-    charsEl.hidden = !item
-    promptEl.textContent = item?.prompt ?? ''
+    // With nothing to ask, the noun stays in the prompt (what the filters would ask of it) and a message replaces the fields.
+    const nothingAsked = practice.asked.length === 0
+    nothingEl.hidden = !nothingAsked
+    cellsEl.hidden = nothingAsked
+    charsEl.hidden = nothingAsked
+    promptEl.textContent = noun.prompt
 
     cellEls = []
     inputs = []
     lastFocused = undefined
-    cellsEl.replaceChildren(...nounNumbers.flatMap(buildColumn))
+    cellsEl.replaceChildren(...(nothingAsked ? [] : nounNumbers.flatMap(buildColumn)))
     syncActions()
     inputs[0]?.focus()
   }

@@ -378,12 +378,14 @@ still need to be reviewed.
 - Checking, "Check all", "Skip" / "Next noun", Enter and the matching rules work as for verbs.
 - **Filters.** The Filters button opens a dialog with a grid of all 14 forms (7 cases × singular / plural), each a
   checkbox. A row heading or a column heading switches the whole row or column; "Select all" and "Clear all" do
-  what they say. Closing the dialog (Done, Esc, a click outside) applies the choice and starts a new noun, if
-  anything changed. A cell is shown, and asked, only if its own box is ticked, the given one included; a noun is
-  only picked if at least one cell of it is asked, so a noun with no plural never comes up with only plural boxes
-  ticked. With nothing to ask for (everything cleared, or only the given cell ticked) the page shows no noun:
-  just Filters, "Next noun" and a disabled "Check all". The choice is remembered per pool in `localStorage` under
-  `settings`.
+  what they say. Closing the dialog (Done, Esc, a click outside) applies the choice, if anything changed, and starts
+  the same noun again with empty fields. A cell is shown, and asked, only if its own box is ticked, the given one
+  included; a random noun is only picked if at least one cell of it is asked, so a noun with no plural never comes
+  up with only plural boxes ticked. A noun with nothing to ask for is still shown in the prompt, with *The current
+  filters leave nothing to ask for.* instead of the fields; it counts as done ("Next noun" highlighted, "Check all"
+  disabled, nothing scored). That is what you get after a filter change that leaves the noun nothing, and, for a
+  random noun, when no noun has anything to ask (everything cleared, or only the given cell ticked). The choice is
+  remembered per pool in `localStorage` under `settings`.
 - Scores: forms correct / checked, nouns fully correct / completed (over the forms that were asked), per pool.
 
 ### Numerals

@@ -16,6 +16,7 @@ export const cs: Record<NounDeclensionTextKey, string> = {
   'case.ins': '7. pád – instrumentál',
   'number.sg': 'Jednotné číslo',
   'number.pl': 'Množné číslo',
+  nothing: 'Současné filtry nenechávají nic k procvičení.',
   'given.label': 'zadáno',
   'answer.label': 'Všechny správné tvary:',
   next: 'Další podstatné jméno',

@@ -1,5 +1,6 @@
 import type { Cell, Item } from '../../core/cell'
 import { isRecord } from '../../core/is-record'
+import { pickNext } from '../../core/pick'
 import { nounCaseIds, nounCellId, nounDeclensionCellIds, nounNumbers, type CaseId, type GrammaticalNumber } from './cells'
 
 /**
@@ -64,4 +65,13 @@ export function practiceOf(item: Item, filter: CellFilter): Practice {
   const [given, ...rest] = item.cells
   const asked = rest.filter((cell) => filter.has(cell.id))
   return { asked, shown: given && filter.has(given.id) ? [given, ...asked] : asked }
+}
+
+/**
+ * The noun for a new round: a random one with something to ask under `filter`, never `previous` twice in a row (unless
+ * it is the only choice). If no noun has anything to ask, any noun: the page then shows it with nothing to fill in.
+ */
+export function pickNoun<T extends Item>(items: readonly T[], filter: CellFilter, previous: T | undefined, random: () => number): T {
+  const eligible = items.filter((candidate) => practiceOf(candidate, filter).asked.length > 0)
+  return pickNext(eligible.length > 0 ? eligible : items, previous, random)
 }

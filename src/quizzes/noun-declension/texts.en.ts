@@ -15,6 +15,7 @@ export const en = {
   'case.ins': '7. instrumental',
   'number.sg': 'Singular',
   'number.pl': 'Plural',
+  nothing: 'The current filters leave nothing to ask for.',
   'given.label': 'given',
   'answer.label': 'All correct forms:',
   next: 'Next noun',
