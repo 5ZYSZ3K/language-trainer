@@ -3,6 +3,7 @@ export const en = {
   check: 'Check',
   checkAll: 'Check all',
   skip: 'Skip',
+  'goTo.button': 'Go',
   'chars.label': 'Insert special character',
   'help.title': 'Typing shortcuts',
 }

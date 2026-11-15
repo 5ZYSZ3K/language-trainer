@@ -14,6 +14,8 @@ export const en = {
   'cell.3pl': 'they (3rd pl.)',
   'answer.label': 'All correct forms:',
   next: 'Next verb',
+  'goTo.label': 'Go to verb:',
+  'goTo.notFound': 'No verb “{word}” in this list.',
   'help.reflexive': 'For reflexive verbs, type the particle too (se / si), e.g. bojím se.',
 
   'meter.cells': 'Forms correct',

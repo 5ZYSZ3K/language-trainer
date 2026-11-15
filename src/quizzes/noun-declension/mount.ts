@@ -2,7 +2,7 @@ import type { Cell, Item } from '../../core/cell'
 import { Round } from '../../core/round'
 import { getUiLanguage } from '../../i18n'
 import { fillTexts } from '../../i18n/dom'
-import { enableShortcuts, fillSpecialChars, finder, renderShortcutHelp, syncRoundActions } from '../../ui'
+import { createGoTo, enableShortcuts, fillSpecialChars, finder, renderShortcutHelp, syncRoundActions } from '../../ui'
 import type { QuizHost, QuizInstance } from '../quiz-type'
 import { nounCaseLabelKey, nounNumberLabelKey, nounNumbers, partsOf, type GrammaticalNumber } from './cells'
 import { createFilterDialog } from './filter-dialog'
@@ -21,6 +21,7 @@ const AREA = `
       <button type="button" id="check-all" data-i18n="checkAll"></button>
       <button type="button" id="next"></button>
     </div>
+    <form id="go-to" class="go-to"></form>
   </main>
 
   <dialog id="filter-dialog" class="filters"></dialog>
@@ -38,7 +39,8 @@ const NO_EVENTS = { cellChecked: () => {}, itemCompleted: () => {} }
  * "Check all", "Filters" and "Skip", which turns into "Next noun" once every field is checked. The first form (the nominative singular, or plural for a noun without a
  * singular) is put in the table locked, as given. Records into the meters `cells` (per checked field) and `items` (per
  * completed noun). A noun the filter leaves nothing to ask for is still shown, with a message instead of fields; that
- * happens to a random noun only when no noun has anything to ask. Changing the filter starts the same noun again.
+ * happens to a random noun only when no noun has anything to ask. Changing the filter starts the same noun again. Under
+ * the buttons, a line to open a noun by its dictionary form, whatever the filter.
  */
 export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>): QuizInstance {
   const { items, language } = host
@@ -75,11 +77,16 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
     renderShortcutHelp(helpList, language.texts[getUiLanguage()].shortcutHelp)
     fillTexts(container, t)
     filterDialog.applyTexts()
+    goTo.applyTexts()
   }
 
   // ---- static controls --------------------------------------------------------------------------
 
-  // Characters go into the field last typed in, or the first one still open.
+  const goToEl = find<HTMLFormElement>('#go-to')
+  const goTo = createGoTo(goToEl, items, language, t, (found) => startRound(found))
+  goTo.input.addEventListener('focus', () => (lastFocused = goTo.input))
+
+  // Characters go into the field last typed in (the go-to field included), or the first one still open.
   fillSpecialChars(charsEl, language, () =>
     lastFocused && lastFocused.isConnected && !lastFocused.readOnly ? lastFocused : inputs.find((input) => !input.readOnly),
   )
@@ -94,11 +101,12 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
 
   // Enter on a finished round starts the next noun, wherever in the exercise the focus is. This listens while the event
   // is still on its way down (capture), before any field or button sees it: so the Enter that checks the last cell
-  // (round not complete yet) is left to the field, and only a later Enter gets here with the round complete.
+  // (round not complete yet) is left to the field, and only a later Enter gets here with the round complete. An Enter in
+  // the go-to line is always left to it.
   exerciseEl.addEventListener(
     'keydown',
     (event) => {
-      if (event.key !== 'Enter' || !round.complete) return
+      if (event.key !== 'Enter' || !round.complete || goToEl.contains(event.target as Node)) return
       // Stop here: the old fields are about to be replaced, and a button must not also be activated by this Enter.
       event.preventDefault()
       event.stopPropagation()
@@ -127,7 +135,6 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
     const nothingAsked = practice.asked.length === 0
     nothingEl.hidden = !nothingAsked
     cellsEl.hidden = nothingAsked
-    charsEl.hidden = nothingAsked
     promptEl.textContent = noun.prompt
 
     cellEls = []

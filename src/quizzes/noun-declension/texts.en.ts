@@ -19,6 +19,8 @@ export const en = {
   'given.label': 'given',
   'answer.label': 'All correct forms:',
   next: 'Next noun',
+  'goTo.label': 'Go to noun:',
+  'goTo.notFound': 'No noun “{word}” in this list.',
 
   'filters.open': 'Filters',
   'filters.title': 'Forms to practise',

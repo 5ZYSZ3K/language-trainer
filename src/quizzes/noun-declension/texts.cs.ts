@@ -20,6 +20,8 @@ export const cs: Record<NounDeclensionTextKey, string> = {
   'given.label': 'zadáno',
   'answer.label': 'Všechny správné tvary:',
   next: 'Další podstatné jméno',
+  'goTo.label': 'Přejít na podstatné jméno:',
+  'goTo.notFound': 'Podstatné jméno „{word}“ v seznamu není.',
 
   'filters.open': 'Filtry',
   'filters.title': 'Tvary k procvičování',

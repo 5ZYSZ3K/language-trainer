@@ -362,6 +362,12 @@ still need to be reviewed.
   ignored; "Check all" counts empty cells as wrong. While any cell is still open, "Check all" is the highlighted
   button and the other one reads "Skip" (a new verb, this one left unfinished); once every cell is checked, "Check
   all" is disabled and the highlighted button is "Next verb".
+- **Going to a verb.** Under the buttons, *Go to verb:* opens one particular verb: type its infinitive as the prompt
+  shows it, reflexive particle included (`bát se`; `bát` finds nothing), and press Go or Enter. Case and spaces are
+  forgiven as in answers, diacritics are not, and nothing is suggested. The verb opens as if it had come up at random
+  (and is scored the same); Next then goes back to random verbs. A word that is not in the list gets *No verb "…" in
+  this list.* and stays in the field, to be corrected. The special-character buttons and the typing shortcuts work
+  in that field too.
 - Matching ignores case and surrounding / repeated whitespace; nothing else is forgiven, diacritics included.
 - Typing shortcuts: `'` after a vowel → `á é í ó ú ý`, `^` after a letter → `č ď ě ň ř š ť ž`, `u@` → `ů`;
   only plain typing triggers them, not deleting or pasting. There are also buttons for the special characters.
@@ -383,9 +389,12 @@ still need to be reviewed.
   included; a random noun is only picked if at least one cell of it is asked, so a noun with no plural never comes
   up with only plural boxes ticked. A noun with nothing to ask for is still shown in the prompt, with *The current
   filters leave nothing to ask for.* instead of the fields; it counts as done ("Next noun" highlighted, "Check all"
-  disabled, nothing scored). That is what you get after a filter change that leaves the noun nothing, and, for a
-  random noun, when no noun has anything to ask (everything cleared, or only the given cell ticked). The choice is
-  remembered per pool in `localStorage` under `settings`.
+  disabled, nothing scored). That is what you get after a filter change that leaves the noun nothing, for a noun
+  opened with *Go to noun:* that the filters leave nothing, and, for a random noun, when no noun has anything to ask
+  (everything cleared, or only the given cell ticked). The choice is remembered per pool in `localStorage` under
+  `settings`.
+- **Going to a noun** works as for verbs, by the dictionary form the prompt shows (`dveře`, `Čech`), whatever the
+  filters say.
 - Scores: forms correct / checked, nouns fully correct / completed (over the forms that were asked), per pool.
 
 ### Numerals

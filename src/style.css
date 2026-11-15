@@ -257,14 +257,16 @@ button.link {
   }
 }
 
-.cell label {
+.cell label,
+.go-to label {
   display: block;
   color: var(--muted);
   font-size: 0.9rem;
   padding: 0.1em 0;
 }
 
-.cell .row {
+.cell .row,
+.go-to .row {
   display: flex;
   gap: 0.4rem;
   padding: 0.1em 0;
@@ -274,7 +276,8 @@ button.link {
   white-space: nowrap;
 }
 
-.cell input {
+.cell input,
+.go-to input {
   flex: 1;
   min-width: 0;
   font: inherit;
@@ -344,6 +347,16 @@ button.link {
   flex-wrap: wrap;
   gap: 0.6rem;
   margin-top: 1.2rem;
+}
+
+/* The line to open one particular word, under the actions: label, field and Go as in a cell. */
+.go-to {
+  margin-top: 1.2rem;
+}
+
+.go-to-miss {
+  margin: 0.3rem 0 0;
+  color: var(--bad-border);
 }
 
 .help {

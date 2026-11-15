@@ -3,7 +3,7 @@ import { pickNext } from '../../core/pick'
 import { Round } from '../../core/round'
 import { getUiLanguage } from '../../i18n'
 import { fillTexts } from '../../i18n/dom'
-import { enableShortcuts, fillSpecialChars, finder, renderShortcutHelp, syncRoundActions } from '../../ui'
+import { createGoTo, enableShortcuts, fillSpecialChars, finder, renderShortcutHelp, syncRoundActions } from '../../ui'
 import type { QuizHost, QuizInstance } from '../quiz-type'
 import { verbPresentCellLabelKeys } from './cells'
 import { t } from './texts'
@@ -18,6 +18,7 @@ const AREA = `
       <button type="button" id="check-all" data-i18n="checkAll"></button>
       <button type="button" id="next"></button>
     </div>
+    <form id="go-to" class="go-to"></form>
   </main>
 
   <section class="help" aria-labelledby="help-title">
@@ -30,7 +31,8 @@ const AREA = `
 
 /**
  * The type-in grid: one random verb per round, six cells to fill in, a Check button per cell, "Check all" and
- * "Skip", which turns into "Next verb" once every cell is checked. Records into the meters `cells` (per checked cell) and `items` (per completed verb).
+ * "Skip", which turns into "Next verb" once every cell is checked. Under them, a line to open a verb by its infinitive.
+ * Records into the meters `cells` (per checked cell) and `items` (per completed verb).
  */
 export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Item>): QuizInstance {
   const { items, language } = host
@@ -55,11 +57,16 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
     // The language's shortcut lines come first, then the quiz's own note (the static last list item).
     renderShortcutHelp(helpList, language.texts[getUiLanguage()].shortcutHelp)
     fillTexts(container, t)
+    goTo.applyTexts()
   }
 
   // ---- static controls --------------------------------------------------------------------------
 
-  // Characters go into the field last typed in, or the first one still open.
+  const goToEl = find<HTMLFormElement>('#go-to')
+  const goTo = createGoTo(goToEl, items, language, t, (found) => startRound(found))
+  goTo.input.addEventListener('focus', () => (lastFocused = goTo.input))
+
+  // Characters go into the field last typed in (the go-to field included), or the first one still open.
   fillSpecialChars(find('#chars'), language, () =>
     lastFocused && lastFocused.isConnected && !lastFocused.readOnly
       ? lastFocused
@@ -71,15 +78,16 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
     cellEls.forEach((_, i) => syncCell(i))
     syncActions()
   })
-  nextEl.addEventListener('click', startRound)
+  nextEl.addEventListener('click', () => startRound())
 
   // Enter on a finished round starts the next verb, wherever in the exercise the focus is. This listens while the event
   // is still on its way down (capture), before any field or button sees it: so the Enter that checks the last cell
-  // (round not complete yet) is left to the field, and only a later Enter gets here with the round complete.
+  // (round not complete yet) is left to the field, and only a later Enter gets here with the round complete. An Enter in
+  // the go-to line is always left to it.
   exerciseEl.addEventListener(
     'keydown',
     (event) => {
-      if (event.key !== 'Enter' || !round.complete) return
+      if (event.key !== 'Enter' || !round.complete || goToEl.contains(event.target as Node)) return
       // Stop here: the old fields are about to be replaced, and a button must not also be activated by this Enter.
       event.preventDefault()
       event.stopPropagation()
@@ -90,8 +98,9 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
 
   // ---- rounds -----------------------------------------------------------------------------------
 
-  function startRound(): void {
-    item = pickNext(items, item, Math.random)
+  /** Starts a round on `next`, or on a random verb if none is given. */
+  function startRound(next?: Item): void {
+    item = next ?? pickNext(items, item, Math.random)
     round = new Round(item, {
       cellChecked: (correct) => host.record('cells', correct),
       itemCompleted: (fullyCorrect) => host.record('items', fullyCorrect),
