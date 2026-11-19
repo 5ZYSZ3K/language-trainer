@@ -1244,6 +1244,66 @@
       ]
     },
     {
+      "prompt": "časopis",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["časopis"] },
+        { "id": "gen-sg", "acceptedForms": ["časopisu"] },
+        { "id": "dat-sg", "acceptedForms": ["časopisu"] },
+        { "id": "acc-sg", "acceptedForms": ["časopis"] },
+        { "id": "voc-sg", "acceptedForms": ["časopise"] },
+        { "id": "loc-sg", "acceptedForms": ["časopise", "časopisu"] },
+        { "id": "ins-sg", "acceptedForms": ["časopisem"] },
+        { "id": "nom-pl", "acceptedForms": ["časopisy"] },
+        { "id": "gen-pl", "acceptedForms": ["časopisů"] },
+        { "id": "dat-pl", "acceptedForms": ["časopisům"] },
+        { "id": "acc-pl", "acceptedForms": ["časopisy"] },
+        { "id": "voc-pl", "acceptedForms": ["časopisy"] },
+        { "id": "loc-pl", "acceptedForms": ["časopisech"] },
+        { "id": "ins-pl", "acceptedForms": ["časopisy"] }
+      ]
+    },
+    {
+      "prompt": "část",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["část"] },
+        { "id": "gen-sg", "acceptedForms": ["části"] },
+        { "id": "dat-sg", "acceptedForms": ["části"] },
+        { "id": "acc-sg", "acceptedForms": ["část"] },
+        { "id": "voc-sg", "acceptedForms": ["části"] },
+        { "id": "loc-sg", "acceptedForms": ["části"] },
+        { "id": "ins-sg", "acceptedForms": ["částí"] },
+        { "id": "nom-pl", "acceptedForms": ["části"] },
+        { "id": "gen-pl", "acceptedForms": ["částí"] },
+        { "id": "dat-pl", "acceptedForms": ["částem"] },
+        { "id": "acc-pl", "acceptedForms": ["části"] },
+        { "id": "voc-pl", "acceptedForms": ["části"] },
+        { "id": "loc-pl", "acceptedForms": ["částech"] },
+        { "id": "ins-pl", "acceptedForms": ["částmi"] }
+      ]
+    },
+    {
+      "prompt": "částice",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["částice"] },
+        { "id": "gen-sg", "acceptedForms": ["částice"] },
+        { "id": "dat-sg", "acceptedForms": ["částici"] },
+        { "id": "acc-sg", "acceptedForms": ["částici"] },
+        { "id": "voc-sg", "acceptedForms": ["částice"] },
+        { "id": "loc-sg", "acceptedForms": ["částici"] },
+        { "id": "ins-sg", "acceptedForms": ["částicí"] },
+        { "id": "nom-pl", "acceptedForms": ["částice"] },
+        { "id": "gen-pl", "acceptedForms": ["částic"] },
+        { "id": "dat-pl", "acceptedForms": ["částicím"] },
+        { "id": "acc-pl", "acceptedForms": ["částice"] },
+        { "id": "voc-pl", "acceptedForms": ["částice"] },
+        { "id": "loc-pl", "acceptedForms": ["částicích"] },
+        { "id": "ins-pl", "acceptedForms": ["částicemi"] }
+      ]
+    },
+    {
       "prompt": "Čech",
       "gender": "m. živ.",
       "cells": [
@@ -1264,6 +1324,206 @@
       ]
     },
     {
+      "prompt": "čelo",
+      "gender": "s.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["čelo"] },
+        { "id": "gen-sg", "acceptedForms": ["čela"] },
+        { "id": "dat-sg", "acceptedForms": ["čelu"] },
+        { "id": "acc-sg", "acceptedForms": ["čelo"] },
+        { "id": "voc-sg", "acceptedForms": ["čelo"] },
+        { "id": "loc-sg", "acceptedForms": ["čele"] },
+        { "id": "ins-sg", "acceptedForms": ["čelem"] },
+        { "id": "nom-pl", "acceptedForms": ["čela"] },
+        { "id": "gen-pl", "acceptedForms": ["čel"] },
+        { "id": "dat-pl", "acceptedForms": ["čelům"] },
+        { "id": "acc-pl", "acceptedForms": ["čela"] },
+        { "id": "voc-pl", "acceptedForms": ["čela"] },
+        { "id": "loc-pl", "acceptedForms": ["čelech"] },
+        { "id": "ins-pl", "acceptedForms": ["čely"] }
+      ]
+    },
+    {
+      "prompt": "čepice",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["čepice"] },
+        { "id": "gen-sg", "acceptedForms": ["čepice"] },
+        { "id": "dat-sg", "acceptedForms": ["čepici"] },
+        { "id": "acc-sg", "acceptedForms": ["čepici"] },
+        { "id": "voc-sg", "acceptedForms": ["čepice"] },
+        { "id": "loc-sg", "acceptedForms": ["čepici"] },
+        { "id": "ins-sg", "acceptedForms": ["čepicí"] },
+        { "id": "nom-pl", "acceptedForms": ["čepice"] },
+        { "id": "gen-pl", "acceptedForms": ["čepic"] },
+        { "id": "dat-pl", "acceptedForms": ["čepicím"] },
+        { "id": "acc-pl", "acceptedForms": ["čepice"] },
+        { "id": "voc-pl", "acceptedForms": ["čepice"] },
+        { "id": "loc-pl", "acceptedForms": ["čepicích"] },
+        { "id": "ins-pl", "acceptedForms": ["čepicemi"] }
+      ]
+    },
+    {
+      "prompt": "čert",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["čert"] },
+        { "id": "gen-sg", "acceptedForms": ["čerta"] },
+        { "id": "dat-sg", "acceptedForms": ["čertovi", "čertu"] },
+        { "id": "acc-sg", "acceptedForms": ["čerta"] },
+        { "id": "voc-sg", "acceptedForms": ["čerte"] },
+        { "id": "loc-sg", "acceptedForms": ["čertovi", "čertu"] },
+        { "id": "ins-sg", "acceptedForms": ["čertem"] },
+        { "id": "nom-pl", "acceptedForms": ["čerti"] },
+        { "id": "gen-pl", "acceptedForms": ["čertů"] },
+        { "id": "dat-pl", "acceptedForms": ["čertům"] },
+        { "id": "acc-pl", "acceptedForms": ["čerty"] },
+        { "id": "voc-pl", "acceptedForms": ["čerti"] },
+        { "id": "loc-pl", "acceptedForms": ["čertech"] },
+        { "id": "ins-pl", "acceptedForms": ["čerty"] }
+      ]
+    },
+    {
+      "prompt": "česnek",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["česnek"] },
+        { "id": "gen-sg", "acceptedForms": ["česneku"] },
+        { "id": "dat-sg", "acceptedForms": ["česneku"] },
+        { "id": "acc-sg", "acceptedForms": ["česnek"] },
+        { "id": "voc-sg", "acceptedForms": ["česneku"] },
+        { "id": "loc-sg", "acceptedForms": ["česneku"] },
+        { "id": "ins-sg", "acceptedForms": ["česnekem"] },
+        { "id": "nom-pl", "acceptedForms": ["česneky"] },
+        { "id": "gen-pl", "acceptedForms": ["česneků"] },
+        { "id": "dat-pl", "acceptedForms": ["česnekům"] },
+        { "id": "acc-pl", "acceptedForms": ["česneky"] },
+        { "id": "voc-pl", "acceptedForms": ["česneky"] },
+        { "id": "loc-pl", "acceptedForms": ["česnecích"] },
+        { "id": "ins-pl", "acceptedForms": ["česneky"] }
+      ]
+    },
+    {
+      "prompt": "čeština",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["čeština"] },
+        { "id": "gen-sg", "acceptedForms": ["češtiny"] },
+        { "id": "dat-sg", "acceptedForms": ["češtině"] },
+        { "id": "acc-sg", "acceptedForms": ["češtinu"] },
+        { "id": "voc-sg", "acceptedForms": ["češtino"] },
+        { "id": "loc-sg", "acceptedForms": ["češtině"] },
+        { "id": "ins-sg", "acceptedForms": ["češtinou"] },
+        { "id": "nom-pl", "acceptedForms": ["češtiny"] },
+        { "id": "gen-pl", "acceptedForms": ["češtin"] },
+        { "id": "dat-pl", "acceptedForms": ["češtinám"] },
+        { "id": "acc-pl", "acceptedForms": ["češtiny"] },
+        { "id": "voc-pl", "acceptedForms": ["češtiny"] },
+        { "id": "loc-pl", "acceptedForms": ["češtinách"] },
+        { "id": "ins-pl", "acceptedForms": ["češtinami"] }
+      ]
+    },
+    {
+      "prompt": "čich",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["čich"] },
+        { "id": "gen-sg", "acceptedForms": ["čichu"] },
+        { "id": "dat-sg", "acceptedForms": ["čichu"] },
+        { "id": "acc-sg", "acceptedForms": ["čich"] },
+        { "id": "voc-sg", "acceptedForms": ["čichu"] },
+        { "id": "loc-sg", "acceptedForms": ["čichu"] },
+        { "id": "ins-sg", "acceptedForms": ["čichem"] },
+        { "id": "nom-pl", "acceptedForms": ["čichy"] },
+        { "id": "gen-pl", "acceptedForms": ["čichů"] },
+        { "id": "dat-pl", "acceptedForms": ["čichům"] },
+        { "id": "acc-pl", "acceptedForms": ["čichy"] },
+        { "id": "voc-pl", "acceptedForms": ["čichy"] },
+        { "id": "loc-pl", "acceptedForms": ["čiších", "čichách"] },
+        { "id": "ins-pl", "acceptedForms": ["čichy"] }
+      ]
+    },
+    {
+      "prompt": "číslo",
+      "gender": "s.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["číslo"] },
+        { "id": "gen-sg", "acceptedForms": ["čísla"] },
+        { "id": "dat-sg", "acceptedForms": ["číslu"] },
+        { "id": "acc-sg", "acceptedForms": ["číslo"] },
+        { "id": "voc-sg", "acceptedForms": ["číslo"] },
+        { "id": "loc-sg", "acceptedForms": ["čísle", "číslu"] },
+        { "id": "ins-sg", "acceptedForms": ["číslem"] },
+        { "id": "nom-pl", "acceptedForms": ["čísla"] },
+        { "id": "gen-pl", "acceptedForms": ["čísel"] },
+        { "id": "dat-pl", "acceptedForms": ["číslům"] },
+        { "id": "acc-pl", "acceptedForms": ["čísla"] },
+        { "id": "voc-pl", "acceptedForms": ["čísla"] },
+        { "id": "loc-pl", "acceptedForms": ["číslech"] },
+        { "id": "ins-pl", "acceptedForms": ["čísly"] }
+      ]
+    },
+    {
+      "prompt": "číslovka",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["číslovka"] },
+        { "id": "gen-sg", "acceptedForms": ["číslovky"] },
+        { "id": "dat-sg", "acceptedForms": ["číslovce"] },
+        { "id": "acc-sg", "acceptedForms": ["číslovku"] },
+        { "id": "voc-sg", "acceptedForms": ["číslovko"] },
+        { "id": "loc-sg", "acceptedForms": ["číslovce"] },
+        { "id": "ins-sg", "acceptedForms": ["číslovkou"] },
+        { "id": "nom-pl", "acceptedForms": ["číslovky"] },
+        { "id": "gen-pl", "acceptedForms": ["číslovek"] },
+        { "id": "dat-pl", "acceptedForms": ["číslovkám"] },
+        { "id": "acc-pl", "acceptedForms": ["číslovky"] },
+        { "id": "voc-pl", "acceptedForms": ["číslovky"] },
+        { "id": "loc-pl", "acceptedForms": ["číslovkách"] },
+        { "id": "ins-pl", "acceptedForms": ["číslovkami"] }
+      ]
+    },
+    {
+      "prompt": "člověk",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["člověk"] },
+        { "id": "gen-sg", "acceptedForms": ["člověka"] },
+        { "id": "dat-sg", "acceptedForms": ["člověkovi", "člověku"] },
+        { "id": "acc-sg", "acceptedForms": ["člověka"] },
+        { "id": "voc-sg", "acceptedForms": ["člověče"] },
+        { "id": "loc-sg", "acceptedForms": ["člověkovi", "člověku"] },
+        { "id": "ins-sg", "acceptedForms": ["člověkem"] },
+        { "id": "nom-pl", "acceptedForms": ["lidé", "lidi"] },
+        { "id": "gen-pl", "acceptedForms": ["lidí"] },
+        { "id": "dat-pl", "acceptedForms": ["lidem"] },
+        { "id": "acc-pl", "acceptedForms": ["lidi"] },
+        { "id": "voc-pl", "acceptedForms": ["lidé", "lidi"] },
+        { "id": "loc-pl", "acceptedForms": ["lidech"] },
+        { "id": "ins-pl", "acceptedForms": ["lidmi"] }
+      ]
+    },
+    {
+      "prompt": "čokoláda",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["čokoláda"] },
+        { "id": "gen-sg", "acceptedForms": ["čokolády"] },
+        { "id": "dat-sg", "acceptedForms": ["čokoládě"] },
+        { "id": "acc-sg", "acceptedForms": ["čokoládu"] },
+        { "id": "voc-sg", "acceptedForms": ["čokoládo"] },
+        { "id": "loc-sg", "acceptedForms": ["čokoládě"] },
+        { "id": "ins-sg", "acceptedForms": ["čokoládou"] },
+        { "id": "nom-pl", "acceptedForms": ["čokolády"] },
+        { "id": "gen-pl", "acceptedForms": ["čokolád"] },
+        { "id": "dat-pl", "acceptedForms": ["čokoládám"] },
+        { "id": "acc-pl", "acceptedForms": ["čokolády"] },
+        { "id": "voc-pl", "acceptedForms": ["čokolády"] },
+        { "id": "loc-pl", "acceptedForms": ["čokoládách"] },
+        { "id": "ins-pl", "acceptedForms": ["čokoládami"] }
+      ]
+    },
+    {
       "prompt": "čtvrtek",
       "gender": "m. neživ.",
       "cells": [
@@ -1281,6 +1541,86 @@
         { "id": "voc-pl", "acceptedForms": ["čtvrtky"] },
         { "id": "loc-pl", "acceptedForms": ["čtvrtcích"] },
         { "id": "ins-pl", "acceptedForms": ["čtvrtky"] }
+      ]
+    },
+    {
+      "prompt": "ďábel",
+      "gender": "m. živ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["ďábel"] },
+        { "id": "gen-sg", "acceptedForms": ["ďábla"] },
+        { "id": "dat-sg", "acceptedForms": ["ďáblovi", "ďáblu"] },
+        { "id": "acc-sg", "acceptedForms": ["ďábla"] },
+        { "id": "voc-sg", "acceptedForms": ["ďáble"] },
+        { "id": "loc-sg", "acceptedForms": ["ďáblovi", "ďáblu"] },
+        { "id": "ins-sg", "acceptedForms": ["ďáblem"] },
+        { "id": "nom-pl", "acceptedForms": ["ďáblové", "ďábli"] },
+        { "id": "gen-pl", "acceptedForms": ["ďáblů"] },
+        { "id": "dat-pl", "acceptedForms": ["ďáblům"] },
+        { "id": "acc-pl", "acceptedForms": ["ďábly"] },
+        { "id": "voc-pl", "acceptedForms": ["ďáblové", "ďábli"] },
+        { "id": "loc-pl", "acceptedForms": ["ďáblech"] },
+        { "id": "ins-pl", "acceptedForms": ["ďábly"] }
+      ]
+    },
+    {
+      "prompt": "dáma",
+      "gender": "ž.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["dáma"] },
+        { "id": "gen-sg", "acceptedForms": ["dámy"] },
+        { "id": "dat-sg", "acceptedForms": ["dámě"] },
+        { "id": "acc-sg", "acceptedForms": ["dámu"] },
+        { "id": "voc-sg", "acceptedForms": ["dámo"] },
+        { "id": "loc-sg", "acceptedForms": ["dámě"] },
+        { "id": "ins-sg", "acceptedForms": ["dámou"] },
+        { "id": "nom-pl", "acceptedForms": ["dámy"] },
+        { "id": "gen-pl", "acceptedForms": ["dam", "dám"] },
+        { "id": "dat-pl", "acceptedForms": ["dámám"] },
+        { "id": "acc-pl", "acceptedForms": ["dámy"] },
+        { "id": "voc-pl", "acceptedForms": ["dámy"] },
+        { "id": "loc-pl", "acceptedForms": ["dámách"] },
+        { "id": "ins-pl", "acceptedForms": ["dámami"] }
+      ]
+    },
+    {
+      "prompt": "dárek",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["dárek"] },
+        { "id": "gen-sg", "acceptedForms": ["dárku"] },
+        { "id": "dat-sg", "acceptedForms": ["dárku"] },
+        { "id": "acc-sg", "acceptedForms": ["dárek"] },
+        { "id": "voc-sg", "acceptedForms": ["dárku"] },
+        { "id": "loc-sg", "acceptedForms": ["dárku"] },
+        { "id": "ins-sg", "acceptedForms": ["dárkem"] },
+        { "id": "nom-pl", "acceptedForms": ["dárky"] },
+        { "id": "gen-pl", "acceptedForms": ["dárků"] },
+        { "id": "dat-pl", "acceptedForms": ["dárkům"] },
+        { "id": "acc-pl", "acceptedForms": ["dárky"] },
+        { "id": "voc-pl", "acceptedForms": ["dárky"] },
+        { "id": "loc-pl", "acceptedForms": ["dárcích"] },
+        { "id": "ins-pl", "acceptedForms": ["dárky"] }
+      ]
+    },
+    {
+      "prompt": "dativ",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["dativ"] },
+        { "id": "gen-sg", "acceptedForms": ["dativu"] },
+        { "id": "dat-sg", "acceptedForms": ["dativu"] },
+        { "id": "acc-sg", "acceptedForms": ["dativ"] },
+        { "id": "voc-sg", "acceptedForms": ["dative"] },
+        { "id": "loc-sg", "acceptedForms": ["dativu"] },
+        { "id": "ins-sg", "acceptedForms": ["dativem"] },
+        { "id": "nom-pl", "acceptedForms": ["dativy"] },
+        { "id": "gen-pl", "acceptedForms": ["dativů"] },
+        { "id": "dat-pl", "acceptedForms": ["dativům"] },
+        { "id": "acc-pl", "acceptedForms": ["dativy"] },
+        { "id": "voc-pl", "acceptedForms": ["dativy"] },
+        { "id": "loc-pl", "acceptedForms": ["dativech"] },
+        { "id": "ins-pl", "acceptedForms": ["dativy"] }
       ]
     },
     {
@@ -1321,6 +1661,46 @@
         { "id": "voc-pl", "acceptedForms": ["dědečkové", "dědečci"] },
         { "id": "loc-pl", "acceptedForms": ["dědečcích"] },
         { "id": "ins-pl", "acceptedForms": ["dědečky"] }
+      ]
+    },
+    {
+      "prompt": "děj",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["děj"] },
+        { "id": "gen-sg", "acceptedForms": ["děje"] },
+        { "id": "dat-sg", "acceptedForms": ["ději"] },
+        { "id": "acc-sg", "acceptedForms": ["děj"] },
+        { "id": "voc-sg", "acceptedForms": ["ději"] },
+        { "id": "loc-sg", "acceptedForms": ["ději"] },
+        { "id": "ins-sg", "acceptedForms": ["dějem"] },
+        { "id": "nom-pl", "acceptedForms": ["děje"] },
+        { "id": "gen-pl", "acceptedForms": ["dějů"] },
+        { "id": "dat-pl", "acceptedForms": ["dějům"] },
+        { "id": "acc-pl", "acceptedForms": ["děje"] },
+        { "id": "voc-pl", "acceptedForms": ["děje"] },
+        { "id": "loc-pl", "acceptedForms": ["dějích"] },
+        { "id": "ins-pl", "acceptedForms": ["ději"] }
+      ]
+    },
+    {
+      "prompt": "dějepis",
+      "gender": "m. neživ.",
+      "cells": [
+        { "id": "nom-sg", "acceptedForms": ["dějepis"] },
+        { "id": "gen-sg", "acceptedForms": ["dějepisu"] },
+        { "id": "dat-sg", "acceptedForms": ["dějepisu"] },
+        { "id": "acc-sg", "acceptedForms": ["dějepis"] },
+        { "id": "voc-sg", "acceptedForms": ["dějepise"] },
+        { "id": "loc-sg", "acceptedForms": ["dějepise", "dějepisu"] },
+        { "id": "ins-sg", "acceptedForms": ["dějepisem"] },
+        { "id": "nom-pl", "acceptedForms": ["dějepisy"] },
+        { "id": "gen-pl", "acceptedForms": ["dějepisů"] },
+        { "id": "dat-pl", "acceptedForms": ["dějepisům"] },
+        { "id": "acc-pl", "acceptedForms": ["dějepisy"] },
+        { "id": "voc-pl", "acceptedForms": ["dějepisy"] },
+        { "id": "loc-pl", "acceptedForms": ["dějepisech"] },
+        { "id": "ins-pl", "acceptedForms": ["dějepisy"] }
       ]
     },
     {
@@ -1366,6 +1746,7 @@
     {
       "prompt": "dítě",
       "gender": "s.",
+      "plural-gender": "ž.",
       "cells": [
         { "id": "nom-sg", "acceptedForms": ["dítě"] },
         { "id": "gen-sg", "acceptedForms": ["dítěte"] },
@@ -1825,6 +2206,7 @@
     },
     {
       "prompt": "dveře",
+      "gender": "ž.",
       "cells": [
         { "id": "nom-pl", "acceptedForms": ["dveře"] },
         { "id": "gen-pl", "acceptedForms": ["dveří"] },
@@ -3588,6 +3970,7 @@
     },
     {
       "prompt": "hrad",
+      "gender": "m. neživ.",
       "cells": [
         { "id": "nom-sg", "acceptedForms": ["hrad"] },
         { "id": "gen-sg", "acceptedForms": ["hradu"] },
@@ -6673,6 +7056,7 @@
     },
     {
       "prompt": "kuře",
+      "gender": "s.",
       "cells": [
         { "id": "nom-sg", "acceptedForms": ["kuře"] },
         { "id": "gen-sg", "acceptedForms": ["kuřete"] },
@@ -10415,6 +10799,7 @@
     },
     {
       "prompt": "pán",
+      "gender": "m. živ.",
       "cells": [
         { "id": "nom-sg", "acceptedForms": ["pán"] },
         { "id": "gen-sg", "acceptedForms": ["pána"] },
@@ -12433,6 +12818,7 @@
     },
     {
       "prompt": "zdraví",
+      "gender": "s.",
       "cells": [
         { "id": "nom-sg", "acceptedForms": ["zdraví"] },
         { "id": "gen-sg", "acceptedForms": ["zdraví"] },
