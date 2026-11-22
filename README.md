@@ -15,16 +15,11 @@ learned language exists.
 
 ## Words used in this repository
 
-- **UI language**: the language of the page's own texts (`en`, `cs`), chosen with the EN / CZ switch.
-- **Language**: the language being learned (`cs`). It defines the special characters and typing shortcuts.
-- **Source**: where data comes from (`prirucka`; `language-trainer`, the site's own rules), with a trust level
-  (`trusted` / `unverified`).
-- **Quiz type**: one kind of quiz (`verb-present-tense`, `noun-declension`, `numerals`). It owns its data contract, its
-  interaction, its score counters and its texts. Its id is permanent: it is the data file name and part of the score key.
-- **Dataset**: one JSON file with the items of one quiz type, for one language, from one source.
-- **Pool**: (language, source, quiz type), the thing you practise. Items are drawn from one pool's dataset only,
-  and scores are kept per pool.
-- **Adapter**: build-time code in `scraper/` that produces one dataset from one source. Never shipped.
+The words this README and the code use for the domain (language, UI language, source, quiz type, dataset, pool,
+item, cell, adapter and the rest) are defined in [GLOSSARY.md](GLOSSARY.md). The ids behind them: languages `cs`;
+UI languages `en`, `cs`; sources `prirucka` (trusted) and `language-trainer`, the site's own rules (unverified); quiz
+types `verb-present-tense`, `noun-declension`, `numerals`. A quiz type's id is permanent: it is the data file name and
+part of the score key. A dataset is one JSON file, and an adapter is build-time code in `scraper/`.
 
 ## How it works
 
