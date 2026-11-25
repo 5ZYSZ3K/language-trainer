@@ -21,8 +21,8 @@ const envelope = (items: Item[], overrides: Partial<Dataset<Item>> = {}): Datase
 const item = (prompt: string): Item => ({
   prompt,
   cells: [
-    { id: '1sg', acceptedForms: [`${prompt}m`, 'ž"quoted"'] },
-    { id: '1pl', acceptedForms: [`${prompt}me`] },
+    { id: '1sg', acceptedForms: [{ value: `${prompt}m` }, { value: 'ž"quoted"' }] },
+    { id: '1pl', acceptedForms: [{ value: `${prompt}me` }] },
   ],
 })
 
@@ -51,12 +51,15 @@ describe('serialise', () => {
       '  "quizType": "verb-present-tense",',
       '  "items": [',
     ])
-    expect(lines.slice(5, 14)).toEqual([
+    expect(lines.slice(5, 17)).toEqual([
       '    {',
       '      "prompt": "a",',
       '      "cells": [',
-      '        { "id": "1sg", "acceptedForms": ["am", "ž\\"quoted\\""] },',
-      '        { "id": "1pl", "acceptedForms": ["ame"] }',
+      '        {',
+      '          "id": "1sg",',
+      '          "acceptedForms": [{ "value": "am" }, { "value": "ž\\"quoted\\"" }]',
+      '        },',
+      '        { "id": "1pl", "acceptedForms": [{ "value": "ame" }] }',
       '      ]',
       '    }',
       '  ]',
@@ -126,7 +129,7 @@ describe('readItems', () => {
 })
 
 describe('writeData', () => {
-  const data = envelope([{ prompt: 'a', cells: [{ id: '1sg', acceptedForms: ['am'] }] }])
+  const data = envelope([{ prompt: 'a', cells: [{ id: '1sg', acceptedForms: [{ value: 'am' }] }] }])
   const expected = (options?: Options) => serialise(data, options)
 
   it('creates the data directory and writes the serialised data', async () => {

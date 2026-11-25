@@ -60,11 +60,12 @@ that counts as correct for it.
 _Avoid_: field, slot, input (those are the page's controls)
 
 **Accepted form**:
-A form that counts as a correct answer for a cell. A cell has at least one.
+A form that counts as a correct answer for a cell: the value of one of its variants. A cell has at least one.
 _Avoid_: answer, solution
 
 **Variant**:
-One of several forms a source lists for the same cell (`mohu, můžu`). Every variant is an accepted form.
+One of the forms a source lists for a cell (`mohu, můžu`): its value, which is an accepted form, plus optional
+remarks.
 _Avoid_: version (that is a numeral's)
 
 **Given cell**:

@@ -3,7 +3,7 @@ import type { Item } from '../../core/cell'
 import { nounDeclensionCellIds } from './cells'
 import { allCells, cellsOfCase, cellsOfNumber, pickNoun, practiceOf, readFilter, sameFilter, saveFilter, toggleGroup } from './filter'
 
-const item = (ids: readonly string[]): Item => ({ prompt: 'x', cells: ids.map((id) => ({ id, acceptedForms: [id] })) })
+const item = (ids: readonly string[]): Item => ({ prompt: 'x', cells: ids.map((id) => ({ id, acceptedForms: [{ value: id }] })) })
 const regular = item(nounDeclensionCellIds)
 const pluralOnly = item(['nom-pl', 'gen-pl', 'dat-pl'])
 const singularOnly = item(['nom-sg', 'gen-sg'])

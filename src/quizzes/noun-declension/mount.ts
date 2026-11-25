@@ -202,7 +202,7 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
 
     if (given) {
       // The form the learner starts from: locked, kept out of the tab order, never checked or scored.
-      input.value = cell.acceptedForms[0] ?? ''
+      input.value = cell.acceptedForms[0]?.value ?? ''
       input.readOnly = true
       input.tabIndex = -1
       const tag = document.createElement('span')
@@ -251,7 +251,7 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
     inputs[index]!.readOnly = state !== 'open'
     wrap.querySelector<HTMLButtonElement>('.check')!.disabled = state !== 'open'
     wrap.querySelector<HTMLElement>('.answer-forms')!.textContent =
-      state === 'open' ? '' : practice.asked[index]!.acceptedForms.join(' / ')
+      state === 'open' ? '' : practice.asked[index]!.acceptedForms.map((variant) => variant.value).join(' / ')
   }
 
   /** "Check all" is only there to use while some field is still open: not with nothing to ask, nor once everything is checked. */

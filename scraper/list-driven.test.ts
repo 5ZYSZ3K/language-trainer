@@ -15,8 +15,8 @@ const stub: EntryScraper<Item> = {
   fetchPage: (entry, get) => get(`page:${entry}`),
   parse(html, entry) {
     if (entry.includes('bad')) throw new ParseError('not the right page')
-    if (entry.includes('empty')) return { prompt: entry, cells: cellIds.map((id, i) => ({ id, acceptedForms: i === 0 ? [] : [`${html}/${id}`] })) }
-    return { prompt: entry, cells: cellIds.map((id) => ({ id, acceptedForms: [`${html}/${id}`] })) }
+    if (entry.includes('empty')) return { prompt: entry, cells: cellIds.map((id, i) => ({ id, acceptedForms: i === 0 ? [] : [{ value: `${html}/${id}` }] })) }
+    return { prompt: entry, cells: cellIds.map((id) => ({ id, acceptedForms: [{ value: `${html}/${id}` }] })) }
   },
 }
 
@@ -57,8 +57,8 @@ function flakyGet(failures: Record<string, number>) {
 const stored = (prompt: string): Item => ({
   prompt,
   cells: [
-    { id: '1sg', acceptedForms: ['kept'] },
-    { id: '1pl', acceptedForms: ['kept'] },
+    { id: '1sg', acceptedForms: [{ value: 'kept' }] },
+    { id: '1pl', acceptedForms: [{ value: 'kept' }] },
   ],
 })
 
@@ -68,7 +68,7 @@ describe('scrapeList', () => {
     const result = await scrapeList({ scraper: stub, contract: stubContract, entries: ['b', 'a', 'c'], existing: [], force: false, get, save: noSave })
     expect(urls).toEqual(['page:b', 'page:a', 'page:c'])
     expect(result.items.map((i) => i.prompt)).toEqual(['b', 'a', 'c'])
-    expect(result.items[0]!.cells[0]).toEqual({ id: '1sg', acceptedForms: ['page:b/1sg'] })
+    expect(result.items[0]!.cells[0]).toEqual({ id: '1sg', acceptedForms: [{ value: 'page:b/1sg' }] })
     expect(result.failures).toEqual([])
   })
 
@@ -91,14 +91,14 @@ describe('scrapeList', () => {
     const { get, urls } = recordingGet()
     const result = await scrapeList({ scraper: stub, contract: stubContract, entries: ['a', 'b'], existing: [stored('a'), stored('b')], force: true, get, save: noSave })
     expect(urls).toEqual(['page:a', 'page:b'])
-    expect(result.items[0]!.cells[0]!.acceptedForms).toEqual(['page:a/1sg'])
+    expect(result.items[0]!.cells[0]!.acceptedForms).toEqual([{ value: 'page:a/1sg' }])
   })
 
   it('keeps the previous item when a forced refresh of it fails, and still reports the failure', async () => {
     const { get } = recordingGet(['page:b'])
     const result = await scrapeList({ scraper: stub, contract: stubContract, entries: ['a', 'b'], existing: [stored('a'), stored('b')], force: true, get, save: noSave })
     expect(result.items.map((i) => i.prompt)).toEqual(['a', 'b'])
-    expect(result.items[0]!.cells[0]!.acceptedForms).toEqual(['page:a/1sg']) // refreshed
+    expect(result.items[0]!.cells[0]!.acceptedForms).toEqual([{ value: 'page:a/1sg' }]) // refreshed
     expect(result.items[1]).toEqual(stored('b')) // not lost
     expect(result.failures).toEqual([{ entry: 'b', reason: 'HTTP 503' }])
   })
@@ -392,7 +392,7 @@ describe('scrapeList', () => {
       const { get } = recordingGet()
       const snapshots: Item[][] = []
       await scrapeList({ scraper: stub, contract: stubContract, entries: ['a'], existing: [], force: false, get, save: async (items) => void snapshots.push([...items]) })
-      expect(snapshots[0]![0]!.cells[0]).toEqual({ id: '1sg', acceptedForms: ['page:a/1sg'] })
+      expect(snapshots[0]![0]!.cells[0]).toEqual({ id: '1sg', acceptedForms: [{ value: 'page:a/1sg' }] })
     })
 
     it('keeps the list order when a verb in the middle is fetched after the ones around it were already scraped', async () => {
@@ -415,7 +415,7 @@ describe('scrapeList', () => {
       })
       expect(snapshots).toHaveLength(3)
       expect(snapshots[0]!.map((i) => i.prompt)).toEqual(['a', 'b', 'c'])
-      expect(snapshots[0]![0]!.cells[0]!.acceptedForms).toEqual(['page:a/1sg']) // refreshed
+      expect(snapshots[0]![0]!.cells[0]!.acceptedForms).toEqual([{ value: 'page:a/1sg' }]) // refreshed
       expect(snapshots[0]![1]).toEqual(stored('b')) // not reached yet
       expect(snapshots[0]![2]).toEqual(stored('c'))
     })
@@ -433,7 +433,7 @@ describe('scrapeList', () => {
       })
       expect(snapshots).toHaveLength(1) // only b succeeded
       expect(snapshots[0]![0]).toEqual(stored('a'))
-      expect(snapshots[0]![1]!.cells[0]!.acceptedForms).toEqual(['page:b/1sg'])
+      expect(snapshots[0]![1]!.cells[0]!.acceptedForms).toEqual([{ value: 'page:b/1sg' }])
     })
 
     it('does not save for failures: fetch, parse, empty cell, or not attempted', async () => {

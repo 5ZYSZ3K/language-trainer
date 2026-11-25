@@ -68,11 +68,11 @@ describe('the texts of nounDeclension', () => {
 })
 
 describe('nounDeclensionContract', () => {
-  const cellsFor = (ids: readonly string[]) => ids.map((id) => ({ id, acceptedForms: [`${id} form`] }))
+  const cellsFor = (ids: readonly string[]) => ids.map((id) => ({ id, acceptedForms: [{ value: `${id} form` }] }))
   const valid = (): Item => ({ prompt: 'pán', cells: cellsFor(nounDeclensionCellIds) })
   const problems = (value: unknown) => nounDeclensionContract.validateItem(value)
 
-  it('accepts an item with all fourteen cells, in order, each with a form', () => {
+  it('accepts an item with all fourteen cells, in order, each with a variant', () => {
     expect(problems(valid())).toEqual([])
   })
 
@@ -81,9 +81,9 @@ describe('nounDeclensionContract', () => {
     expect(problems({ prompt: 'dveře', cells: cellsFor(['nom-pl', 'gen-pl']) })).toEqual([])
   })
 
-  it('accepts several forms per cell', () => {
+  it('accepts several variants per cell', () => {
     const item = valid()
-    item.cells[2]!.acceptedForms = ['pánovi', 'pánu']
+    item.cells[2]!.acceptedForms = [{ value: 'pánovi' }, { value: 'pánu' }]
     expect(problems(item)).toEqual([])
   })
 
@@ -140,16 +140,37 @@ describe('nounDeclensionContract', () => {
     expect(problems({ prompt: 'pán', cells: cellsFor(['nom-sg']) })).toEqual(['needs at least one form besides the given one'])
   })
 
-  it('reports a cell without a form, or with a form that is not text', () => {
+  it('reports a cell without a variant', () => {
     const empty = valid()
-    empty.cells[3]!.acceptedForms = ['  ']
+    empty.cells[3]!.acceptedForms = []
     expect(problems(empty)).toEqual(['no form found for acc-sg'])
     const missing = valid() as unknown as { cells: Record<string, unknown>[] }
     delete missing.cells[1]!.acceptedForms
     expect(problems(missing)).toEqual(['no form found for gen-sg'])
-    const notText = valid() as unknown as { cells: Record<string, unknown>[] }
-    notText.cells[1]!.acceptedForms = ['pána', 7]
-    expect(problems(notText)).toEqual(['cell gen-sg has a form that is not text'])
+  })
+
+  it('reports a variant that is not an object, such as a bare form (the shape before variants)', () => {
+    const item = valid() as unknown as { cells: Record<string, unknown>[] }
+    item.cells[1]!.acceptedForms = ['pána']
+    expect(problems(item)).toEqual(['cell gen-sg has a variant that is not an object'])
+  })
+
+  it('reports a variant whose value is missing, not text or blank, even next to one that has a value', () => {
+    const item = valid() as unknown as { cells: Record<string, unknown>[] }
+    item.cells[1]!.acceptedForms = [{ value: 'pána' }, { value: 7 }]
+    item.cells[2]!.acceptedForms = [{}]
+    item.cells[3]!.acceptedForms = [{ value: '  ' }, { value: 'pána' }]
+    expect(problems(item)).toEqual([
+      'cell gen-sg has a variant without a text value',
+      'cell dat-sg has a variant without a text value',
+      'cell acc-sg has a variant without a text value',
+    ])
+  })
+
+  it('refuses remarks on a variant for now', () => {
+    const item = valid()
+    item.cells[2]!.acceptedForms = [{ value: 'pánovi' }, { value: 'pánu', remarks: ['less-commonly-used'] }]
+    expect(problems(item)).toEqual(['cell dat-sg has a variant with remarks, which this quiz type does not take'])
   })
 
   it('identifies an item by its prompt', () => {

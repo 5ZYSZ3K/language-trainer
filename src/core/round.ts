@@ -1,5 +1,5 @@
 import type { Item } from './cell'
-import { isCorrect } from './matching'
+import { matchesSomeVariant } from './matching'
 
 export type CellState = 'open' | 'correct' | 'wrong'
 
@@ -40,7 +40,7 @@ export class Round {
   private lock(index: number, input: string): void {
     const cell = this.item.cells[index]
     if (!cell || this.states[index] !== 'open') return
-    const correct = isCorrect(input, cell.acceptedForms)
+    const correct = matchesSomeVariant(input, cell.acceptedForms)
     this.states[index] = correct ? 'correct' : 'wrong'
     this.events.cellChecked(correct)
     if (this.complete) this.events.itemCompleted(this.states.every((s) => s === 'correct'))

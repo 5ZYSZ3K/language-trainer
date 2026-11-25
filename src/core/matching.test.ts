@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Item } from './cell'
-import { findByPrompt, isCorrect } from './matching'
+import { findByPrompt, isCorrect, matchesSomeVariant } from './matching'
 
 describe('isCorrect', () => {
   it('accepts an exact form and rejects a different word', () => {
@@ -21,13 +21,36 @@ describe('isCorrect', () => {
     expect(isCorrect('muzu', ['můžu'])).toBe(false)
   })
 
-  it('accepts any listed variant', () => {
+  it('accepts any of the forms it is given', () => {
     expect(isCorrect('můžu', ['mohu', 'můžu'])).toBe(true)
     expect(isCorrect('mohu', ['mohu', 'můžu'])).toBe(true)
   })
 
   it('does not tell a precomposed letter from the same letter typed as base + combining mark', () => {
     expect(isCorrect('bavím', ['bavím'])).toBe(true)
+  })
+})
+
+describe('matchesSomeVariant', () => {
+  const variants = [{ value: 'mohu' }, { value: 'můžu' }]
+
+  it('accepts the value of any variant of a cell, and nothing else', () => {
+    expect(matchesSomeVariant('můžu', variants)).toBe(true)
+    expect(matchesSomeVariant('mohu', variants)).toBe(true)
+    expect(matchesSomeVariant('může', variants)).toBe(false)
+  })
+
+  it('applies the matching rules to each value: case and whitespace forgiven, diacritics not', () => {
+    expect(matchesSomeVariant('  MŮŽU ', variants)).toBe(true)
+    expect(matchesSomeVariant('muzu', variants)).toBe(false)
+  })
+
+  it('goes by the value alone, whatever remarks a variant has', () => {
+    expect(matchesSomeVariant('pánu', [{ value: 'pánovi' }, { value: 'pánu', remarks: ['less-commonly-used'] }])).toBe(true)
+  })
+
+  it('accepts nothing for a cell without variants', () => {
+    expect(matchesSomeVariant('', [])).toBe(false)
   })
 })
 

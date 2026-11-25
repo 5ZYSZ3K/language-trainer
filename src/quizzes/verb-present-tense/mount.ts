@@ -190,7 +190,7 @@ export function mountVerbPresentTense(container: HTMLElement, host: QuizHost<Ite
     inputs[index]!.readOnly = state !== 'open'
     wrap.querySelector<HTMLButtonElement>('.check')!.disabled = state !== 'open'
     wrap.querySelector<HTMLElement>('.answer-forms')!.textContent =
-      state === 'open' ? '' : item!.cells[index]!.acceptedForms.join(' / ')
+      state === 'open' ? '' : item!.cells[index]!.acceptedForms.map((variant) => variant.value).join(' / ')
   }
 
   function syncActions(): void {

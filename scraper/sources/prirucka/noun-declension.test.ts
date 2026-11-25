@@ -4,9 +4,9 @@ import { ParseError, type HttpGet } from '../../harness/types'
 import { nounPageScraper } from './noun-declension'
 import { fixture, SITE } from './test-support'
 
-/** Cells as an object of id -> acceptedForms, for compact assertions. */
+/** Cells as an object of id -> the values of their variants, for compact assertions. */
 const formsById = (html: string, word: string) =>
-  Object.fromEntries(nounPageScraper.parse(html, word).cells.map((cell) => [cell.id, cell.acceptedForms]))
+  Object.fromEntries(nounPageScraper.parse(html, word).cells.map((cell) => [cell.id, cell.acceptedForms.map((variant) => variant.value)]))
 
 /** A fake site: known URLs return their page, anything else returns an empty body. */
 function fakeSite(pages: Record<string, string>, failOn?: RegExp) {
@@ -78,6 +78,13 @@ describe('nounPageScraper.parse', () => {
     })
   })
 
+  it('gives each listed form as a variant of its own, a value and nothing else', () => {
+    expect(nounPageScraper.parse(fixture('pan'), 'pán').cells[2]).toStrictEqual({
+      id: 'dat-sg',
+      acceptedForms: [{ value: 'pánovi' }, { value: 'pánu' }],
+    })
+  })
+
   it('accepts every listed variant of a form, and ignores the footnote markers', () => {
     const forms = formsById(fixture('pan'), 'pán')
     expect(forms['dat-sg']).toEqual(['pánovi', 'pánu'])
@@ -89,14 +96,14 @@ describe('nounPageScraper.parse', () => {
   it('leaves out the cells of a number the noun does not have ("dveře" has no singular)', () => {
     const { cells } = nounPageScraper.parse(fixture('dvere'), 'dveře')
     expect(cells.map((cell) => cell.id)).toEqual(['nom-pl', 'gen-pl', 'dat-pl', 'acc-pl', 'voc-pl', 'loc-pl', 'ins-pl'])
-    expect(cells[0]).toEqual({ id: 'nom-pl', acceptedForms: ['dveře'] })
-    expect(cells.at(-1)).toEqual({ id: 'ins-pl', acceptedForms: ['dveřmi'] })
+    expect(cells[0]).toEqual({ id: 'nom-pl', acceptedForms: [{ value: 'dveře' }] })
+    expect(cells.at(-1)).toEqual({ id: 'ins-pl', acceptedForms: [{ value: 'dveřmi' }] })
   })
 
   it('leaves out the cells of a number the noun does not have the other way round ("zdraví" has no plural)', () => {
     const { cells } = nounPageScraper.parse(fixture('zdravi'), 'zdraví')
     expect(cells.map((cell) => cell.id)).toEqual(['nom-sg', 'gen-sg', 'dat-sg', 'acc-sg', 'voc-sg', 'loc-sg', 'ins-sg'])
-    expect(cells.at(-1)).toEqual({ id: 'ins-sg', acceptedForms: ['zdravím'] })
+    expect(cells.at(-1)).toEqual({ id: 'ins-sg', acceptedForms: [{ value: 'zdravím' }] })
   })
 
   it('reads an irregular noun as the site lists it ("kuře": kuřete, kuřata)', () => {

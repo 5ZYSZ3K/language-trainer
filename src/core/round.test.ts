@@ -5,12 +5,12 @@ import { Round } from './round'
 const item: Item = {
   prompt: 'mít',
   cells: [
-    { id: '1sg', acceptedForms: ['mám'] },
-    { id: '1pl', acceptedForms: ['máme'] },
-    { id: '2sg', acceptedForms: ['máš'] },
-    { id: '2pl', acceptedForms: ['máte'] },
-    { id: '3sg', acceptedForms: ['má'] },
-    { id: '3pl', acceptedForms: ['mají', 'měj'] },
+    { id: '1sg', acceptedForms: [{ value: 'mám' }] },
+    { id: '1pl', acceptedForms: [{ value: 'máme' }] },
+    { id: '2sg', acceptedForms: [{ value: 'máš' }] },
+    { id: '2pl', acceptedForms: [{ value: 'máte' }] },
+    { id: '3sg', acceptedForms: [{ value: 'má' }] },
+    { id: '3pl', acceptedForms: [{ value: 'mají' }, { value: 'měj' }] },
   ],
 }
 const ALL_RIGHT = ['mám', 'máme', 'máš', 'máte', 'má', 'mají']
@@ -117,7 +117,7 @@ describe('Round: completing the item', () => {
     expect(items).toEqual([false])
   })
 
-  it('accepts any variant listed for a cell', () => {
+  it('accepts the value of any variant listed for a cell', () => {
     const round = newRound()
     round.checkCell(5, 'měj')
     expect(round.state(5)).toBe('correct')

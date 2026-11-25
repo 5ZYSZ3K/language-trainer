@@ -50,16 +50,16 @@ describe('the texts of verbPresentTense', () => {
 
 describe('verbPresentTenseContract', () => {
   const ids = ['1sg', '2sg', '3sg', '1pl', '2pl', '3pl']
-  const valid = (): Item => ({ prompt: 'bát se', cells: ids.map((id) => ({ id, acceptedForms: [`${id} se`] })) })
+  const valid = (): Item => ({ prompt: 'bát se', cells: ids.map((id) => ({ id, acceptedForms: [{ value: `${id} se` }] })) })
   const problems = (value: unknown) => verbPresentTenseContract.validateItem(value)
 
-  it('accepts an item with the six ids in order, each with a form', () => {
+  it('accepts an item with the six ids in order, each with a variant', () => {
     expect(problems(valid())).toEqual([])
   })
 
-  it('accepts several forms per cell', () => {
+  it('accepts several variants per cell', () => {
     const item = valid()
-    item.cells[0]!.acceptedForms = ['mohu', 'můžu']
+    item.cells[0]!.acceptedForms = [{ value: 'mohu' }, { value: 'můžu' }]
     expect(problems(item)).toEqual([])
   })
 
@@ -84,16 +84,11 @@ describe('verbPresentTenseContract', () => {
     expect(problems(item)).toEqual(['no form found for 1pl'])
   })
 
-  it('treats blank forms as no form', () => {
+  it('reports a variant whose value is blank, even next to one that has a value', () => {
     const item = valid()
-    item.cells[1]!.acceptedForms = ['', '  ']
-    expect(problems(item)).toEqual(['no form found for 2sg'])
-  })
-
-  it('accepts a cell that has at least one non-empty form next to blank ones', () => {
-    const item = valid()
-    item.cells[1]!.acceptedForms = ['', 'bojíš se']
-    expect(problems(item)).toEqual([])
+    item.cells[1]!.acceptedForms = [{ value: '' }, { value: '  ' }]
+    item.cells[2]!.acceptedForms = [{ value: '' }, { value: 'bojí se' }]
+    expect(problems(item)).toEqual(['cell 2sg has a variant without a text value', 'cell 3sg has a variant without a text value'])
   })
 
   it('reports every cell without a form, in cell order', () => {
@@ -110,10 +105,28 @@ describe('verbPresentTenseContract', () => {
     expect(problems(item)).toEqual(['no form found for 1sg', 'no form found for 1pl'])
   })
 
-  it('reports a form that is not text', () => {
+  it('reports a variant that is not an object, such as a bare form (the shape before variants)', () => {
     const item = valid() as unknown as { cells: { id: string; acceptedForms: unknown[] }[] }
-    item.cells[0]!.acceptedForms = ['bojím se', 42]
-    expect(problems(item)).toEqual(['cell 1sg has a form that is not text'])
+    item.cells[0]!.acceptedForms = ['bojím se']
+    item.cells[1]!.acceptedForms = [{ value: 'bojíš se' }, null]
+    expect(problems(item)).toEqual(['cell 1sg has a variant that is not an object', 'cell 2sg has a variant that is not an object'])
+  })
+
+  it('reports a variant whose value is missing or not text', () => {
+    const item = valid() as unknown as { cells: { id: string; acceptedForms: unknown[] }[] }
+    item.cells[0]!.acceptedForms = [{ value: 42 }]
+    item.cells[1]!.acceptedForms = [{ text: 'bojíš se' }]
+    expect(problems(item)).toEqual(['cell 1sg has a variant without a text value', 'cell 2sg has a variant without a text value'])
+  })
+
+  it('refuses remarks on a variant, even an empty list of them: this quiz type takes none', () => {
+    const item = valid()
+    item.cells[0]!.acceptedForms = [{ value: 'bojím se', remarks: ['less-commonly-used'] }]
+    item.cells[1]!.acceptedForms = [{ value: 'bojíš se', remarks: [] }]
+    expect(problems(item)).toEqual([
+      'cell 1sg has a variant with remarks, which this quiz type does not take',
+      'cell 2sg has a variant with remarks, which this quiz type does not take',
+    ])
   })
 
   it('requires a non-empty prompt', () => {
@@ -133,7 +146,7 @@ describe('verbPresentTenseContract', () => {
     expect(problems(swapped)).toEqual(['cell ids must be 1sg, 2sg, 3sg, 1pl, 2pl, 3pl in that order, found 3pl, 2pl, 1pl, 3sg, 2sg, 1sg'])
 
     const extra = valid()
-    extra.cells.push({ id: '4sg', acceptedForms: ['x'] })
+    extra.cells.push({ id: '4sg', acceptedForms: [{ value: 'x' }] })
     expect(problems(extra)).toHaveLength(1)
   })
 
