@@ -1,41 +1,68 @@
 /**
- * The list-driven loop: for each entry of a word list, fetch a page, parse it into an item, validate it, save.
- * Used by the prirucka adapter; available to any adapter that works through a list.
+ * The list-driven loop: for each entry of a word list, fetch a page, parse it into an item (and the entry's source
+ * material), carry over what was written by hand, validate it, save. Used by the prirucka adapter; available to any
+ * adapter that works through a list.
  */
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { Contract } from '../src/core/contract'
 import type { Failure, RunContext, RunResult } from './harness/context'
+import {
+  materialByWord,
+  NO_SOURCE_MATERIAL,
+  sideFileKeys,
+  sourceMaterialOf,
+  wordMaterialOf,
+  type EntryMaterial,
+  type SourceMaterial,
+  type WordMaterial,
+} from './harness/source-material'
 import { ParseError, type HttpGet } from './harness/types'
 import { parseList } from './list'
+
+/** What an adapter makes of one entry's page. */
+export interface Scraped<Item> {
+  /** The entry's item, whose key (`contract.keyOf`) is the entry. */
+  item: Item
+  /** What the entry says beyond the item, for the side files. An adapter that keeps none leaves it out. */
+  material?: EntryMaterial
+  /**
+   * What the scrape log should say about the page. None of it stops the item from being saved, and it is logged only
+   * if the item is: a word that fails keeps its previous item and entries, so nothing said about the fresh ones applies.
+   */
+  warnings?: readonly string[]
+}
 
 /** How an adapter turns one list entry into an item. */
 export interface EntryScraper<Item> {
   /** Fetch the page that describes `entry`, following any redirects or disambiguation. */
   fetchPage(entry: string, get: HttpGet): Promise<string>
-  /**
-   * Turn a fetched page into the entry's item, whose key (`contract.keyOf`) is the entry. Throws ParseError if it
-   * is not the right page.
-   */
-  parse(html: string, entry: string): Item
+  /** Turn a fetched page into the entry's item and source material. Throws ParseError if it is not the right page. */
+  parse(html: string, entry: string): Scraped<Item>
 }
 
 export interface ScrapeListOptions<Item> {
   scraper: EntryScraper<Item>
-  /** What every item must satisfy before it is saved; its problems turn into a `ParseError`. */
+  /**
+   * What every item must satisfy before it is saved; its problems turn into a `ParseError`. If it has a `carryOver`
+   * hook, a fetched entry that already had an item gets what was written by hand in that one before it is checked.
+   */
   contract: Contract<Item>
   entries: readonly string[]
   /** Items from the previous run. */
   existing: readonly Item[]
+  /** The side files of the previous run (none if left out). */
+  existingMaterial?: SourceMaterial
   /** Re-fetch everything instead of only what is missing. */
   force: boolean
   get: HttpGet
   /**
-   * Persists everything known so far, in the order of `entries`. Called after every entry that was scraped
-   * successfully (and once at the start if items were pruned or re-ordered), never for a failure. If it
-   * rejects, `scrapeList` rejects at once and fetches nothing more: a run that cannot save must not carry on.
+   * Persists everything known so far, in the order of `entries`: the items, and the side files that go with them.
+   * Called after every entry that was scraped successfully (and once at the start if items or side files were
+   * pruned or re-ordered), never for a failure. If it rejects, `scrapeList` rejects at once and fetches nothing
+   * more: a run that cannot save must not carry on.
    */
-  save: (items: readonly Item[]) => Promise<void>
+  save: (items: readonly Item[], material: SourceMaterial) => Promise<void>
   /**
    * After this many fetches in a row that fail for reasons other than the page's content (timeouts, errors,
    * "busy"), the site is assumed to be down and the remaining entries are not tried. Default 5.
@@ -71,13 +98,26 @@ function planRun<Item>(contract: Contract<Item>, entries: readonly string[], exi
   return { listed, previous, toTry: force ? listed : listed.filter((entry) => !previous.has(entry)) }
 }
 
-/** Items are in the order of `entries`. Entries that failed are absent unless an earlier item for them existed. */
+/** What is known of one listed entry: its item, and its entries in the side files if it has any. */
+interface Known<Item> {
+  item: Item
+  material: WordMaterial
+}
+
+/**
+ * Items are in the order of `entries`. Entries that failed are absent unless an earlier item for them existed. The
+ * side files follow the items: in what is handed to `save`, a word has entries only if it has an item, so that (with
+ * the run context's `save`) a side file never names a word its dataset lacks. That is the whole guarantee. The three
+ * files cannot be replaced in one step, so a run that stops between two writes may leave a word's fresh entries
+ * beside its previous item.
+ */
 export async function scrapeList<Item>(options: ScrapeListOptions<Item>): Promise<RunResult<Item>> {
   const {
     scraper,
     contract,
     entries,
     existing,
+    existingMaterial = NO_SOURCE_MATERIAL,
     force,
     get,
     save,
@@ -87,23 +127,36 @@ export async function scrapeList<Item>(options: ScrapeListOptions<Item>): Promis
     sleep = (ms) => new Promise((r) => setTimeout(r, ms)),
   } = options
   const { listed, previous, toTry } = planRun(contract, entries, existing, force)
-  const scraped = new Map<string, Item>()
+  const scraped = new Map<string, Known<Item>>()
   const failures: Failure[] = []
   let fetchFailuresInARow = 0
 
-  // What is known right now: this run's item if there is one, else the previous one. A failed refresh must not
-  // throw away data that was good, so every failure path leaves the previous item in place.
-  const snapshot = (): Item[] =>
-    listed.flatMap((entry) => {
-      const item = scraped.get(entry) ?? previous.get(entry)
-      return item ? [item] : []
-    })
+  const previousMaterial = materialByWord(existingMaterial)
+  // The text of every article known: the previous run's, then each page's as it is fetched (the latest wins).
+  const articles: Record<string, string> = { ...existingMaterial.articles }
 
+  // What is known right now: this run's item if there is one, else the previous one. A failed refresh must not
+  // throw away data that was good, so every failure path leaves the previous item in place, and its entries in the
+  // side files with it.
+  const knownOf = (entry: string): Known<Item> | undefined => {
+    const fresh = scraped.get(entry)
+    if (fresh) return fresh
+    const item = previous.get(entry)
+    return item && { item, material: previousMaterial.get(entry) ?? {} }
+  }
+  const snapshot = (): { items: Item[]; material: SourceMaterial } => {
+    const known = listed.flatMap((entry) => knownOf(entry) ?? [])
+    return { items: known.map(({ item }) => item), material: sourceMaterialOf(known.map(({ material }) => material), articles) }
+  }
+
+  // Save at the start only if pruning or re-ordering changed the dataset or a side file.
   const initial = snapshot()
-  const unchanged =
-    initial.length === existing.length &&
-    initial.every((item, i) => existing[i] !== undefined && contract.keyOf(item) === contract.keyOf(existing[i]))
-  if (!unchanged) await save(initial)
+  const keysOf = (items: readonly Item[], material: SourceMaterial) => [items.map((item) => contract.keyOf(item)), ...sideFileKeys(material)]
+  const before = keysOf(existing, existingMaterial)
+  const unchanged = keysOf(initial.items, initial.material).every(
+    (keys, i) => keys.length === before[i]!.length && keys.every((key, j) => key === before[i]![j]),
+  )
+  if (!unchanged) await save(initial.items, initial.material)
 
   let tried = 0
   for (const entry of toTry) {
@@ -114,15 +167,18 @@ export async function scrapeList<Item>(options: ScrapeListOptions<Item>): Promis
 
     tried++
     const progress = `(${tried}/${toTry.length})`
-    let item: Item | undefined
-    while (item === undefined) {
+    // The checked item with what the page and the carry-over say about it, which is logged once it is saved.
+    let toSave: Scraped<Item> | undefined
+    while (toSave === undefined) {
       try {
         const html = await scraper.fetchPage(entry, get)
         fetchFailuresInARow = 0
-        const candidate = scraper.parse(html, entry)
-        const problems = contract.validateItem(candidate)
+        const parsed = scraper.parse(html, entry)
+        const earlier = previous.get(entry)
+        const carried = earlier && contract.carryOver ? contract.carryOver(earlier, parsed.item) : { item: parsed.item, warnings: [] }
+        const problems = contract.validateItem(carried.item)
         if (problems.length > 0) throw new ParseError(problems.join('; '))
-        item = candidate
+        toSave = { ...parsed, item: carried.item, warnings: [...(parsed.warnings ?? []), ...carried.warnings] }
       } catch (error) {
         const reason = error instanceof Error ? error.message : String(error)
         const fetchFailed = !(error instanceof ParseError)
@@ -138,14 +194,18 @@ export async function scrapeList<Item>(options: ScrapeListOptions<Item>): Promis
         break
       }
     }
-    if (item === undefined) continue
+    if (toSave === undefined) continue
 
     // Outside the try: a failed save is fatal, not a failure of this entry.
-    scraped.set(entry, item)
-    await save(snapshot())
+    const { item, material, warnings = [] } = toSave
+    scraped.set(entry, { item, material: material ? wordMaterialOf(entry, material) : {} })
+    Object.assign(articles, material?.articles)
+    const now = snapshot()
+    await save(now.items, now.material)
+    for (const warning of warnings) log(`warn   ${entry} ${progress}: ${warning}`)
     log(`ok     ${entry} ${progress}`)
   }
-  return { items: snapshot(), failures }
+  return { items: snapshot().items, failures }
 }
 
 /**
@@ -163,6 +223,7 @@ export async function runListDriven<Item>(context: RunContext<Item>, scraper: En
     contract,
     entries,
     existing,
+    existingMaterial: context.existingMaterial,
     force,
     get: context.get,
     save: context.save,

@@ -73,6 +73,7 @@ function foundIn(file: string, code: string): Found[] {
 }
 
 const reachesBuildCode = ({ to }: Found) => to !== undefined && /^(scraper|scripts)(\/|$)/.test(to)
+const reachesSourceMaterial = ({ to }: Found) => to !== undefined && /^source-material(\/|$)/.test(to)
 const cannotBeChecked = ({ computed }: Found) => computed !== undefined
 const leavesCore = ({ from, to }: Found) =>
   from.startsWith('src/core/') && to !== undefined && !to.startsWith('src/core/') && to !== 'vitest'
@@ -90,6 +91,10 @@ describe('dependency rule', () => {
 
   it('src/ never imports from scraper/ or scripts/', () => {
     expect(found.filter(reachesBuildCode)).toEqual([])
+  })
+
+  it('src/ never refers to source-material/, so that the build never ships it', () => {
+    expect(found.filter(reachesSourceMaterial)).toEqual([])
   })
 
   it('src/ refers to modules only in ways that can be checked (no computed import, require or glob)', () => {
@@ -151,6 +156,13 @@ describe('the scanner', () => {
     const references = inFile(code)
     expect(references.filter(reachesBuildCode)).toEqual([])
     expect(references.filter(cannotBeChecked)).toEqual([])
+  })
+
+  it.each([
+    ['a glob from the project root', `import.meta.glob('/source-material/*/*/*.json')`],
+    ['a relative import', `import notes from '../../source-material/cs/prirucka/noun-declension.json'`],
+  ])('finds %s of source material', (_form, code) => {
+    expect(inFile(code).filter(reachesSourceMaterial)).toHaveLength(1)
   })
 
   it('resolves a specifier from the importing file, and a leading slash from the project root', () => {

@@ -1,10 +1,11 @@
-import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { mkdir, mkdtemp, readdir, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import type { Item } from '../src/core/cell'
 import type { Contract } from '../src/core/contract'
 import { createRunContext, type RunContext } from './harness/context'
+import { sideFilesIn, type EntryMaterial, type SourceMaterial } from './harness/source-material'
 import { testContext } from './harness/test-support'
 import { ParseError, type HttpGet } from './harness/types'
 import { runListDriven, scrapeList, type EntryScraper } from './list-driven'
@@ -15,8 +16,8 @@ const stub: EntryScraper<Item> = {
   fetchPage: (entry, get) => get(`page:${entry}`),
   parse(html, entry) {
     if (entry.includes('bad')) throw new ParseError('not the right page')
-    if (entry.includes('empty')) return { prompt: entry, cells: cellIds.map((id, i) => ({ id, acceptedForms: i === 0 ? [] : [{ value: `${html}/${id}` }] })) }
-    return { prompt: entry, cells: cellIds.map((id) => ({ id, acceptedForms: [{ value: `${html}/${id}` }] })) }
+    if (entry.includes('empty')) return { item: { prompt: entry, cells: cellIds.map((id, i) => ({ id, acceptedForms: i === 0 ? [] : [{ value: `${html}/${id}` }] })) } }
+    return { item: { prompt: entry, cells: cellIds.map((id) => ({ id, acceptedForms: [{ value: `${html}/${id}` }] })) } }
   },
 }
 
@@ -556,6 +557,287 @@ describe('scrapeList', () => {
   })
 })
 
+describe('scrapeList: source material', () => {
+  /** Like `stub`, but each page also says more: a line and a cell leading to the article "common" and one of its own, and a dictionary entry. */
+  const withMaterial: EntryScraper<Item> = {
+    fetchPage: stub.fetchPage,
+    parse(html, entry) {
+      const { item } = stub.parse(html, entry)
+      const material: EntryMaterial = {
+        lines: [{ label: 'dělení', html: `${html} line`, footnotes: ['common', `own ${entry}`] }],
+        cellFootnotes: { '1sg': ['common'] },
+        dictionaryEntries: { ssc: `${html} ssc` },
+        articles: { common: `common, as ${html} has it`, [`own ${entry}`]: `own, as ${html} has it` },
+      }
+      return { item, material }
+    },
+  }
+
+  /** The side files of a previous run for these words: each with a line leading to an article of its own. */
+  const storedMaterial = (...prompts: string[]): SourceMaterial => ({
+    entries: prompts.map((prompt) => ({ prompt, lines: [{ label: 'dělení', html: 'kept', footnotes: [`own ${prompt}`] }], cellFootnotes: {} })),
+    articles: Object.fromEntries(prompts.map((prompt) => [`own ${prompt}`, 'kept'])),
+    wordsInDictionaries: prompts.map((prompt) => ({ prompt, entries: { ssc: 'kept' } })),
+  })
+
+  /** A `save` that keeps the side files of every snapshot it is given. */
+  function materialRecorder() {
+    const saved: SourceMaterial[] = []
+    const save = async (_items: readonly Item[], material: SourceMaterial) => void saved.push(material)
+    return { save, saved }
+  }
+  const prompts = (material: SourceMaterial | undefined) => ({
+    entries: material?.entries.map((entry) => entry.prompt),
+    wordsInDictionaries: material?.wordsInDictionaries.map((word) => word.prompt),
+    articles: Object.keys(material?.articles ?? {}).sort(),
+  })
+
+  it('gives each word it fetches an entry in both side files, and keeps each article they lead to once, as the latest page has it', async () => {
+    const { save, saved } = materialRecorder()
+    await scrapeList({ scraper: withMaterial, contract: stubContract, entries: ['a', 'b'], existing: [], force: false, get: recordingGet().get, save })
+    expect(saved).toHaveLength(2)
+    const last = saved.at(-1)!
+    expect(last.entries).toEqual([
+      { prompt: 'a', lines: [{ label: 'dělení', html: 'page:a line', footnotes: ['common', 'own a'] }], cellFootnotes: { '1sg': ['common'] } },
+      { prompt: 'b', lines: [{ label: 'dělení', html: 'page:b line', footnotes: ['common', 'own b'] }], cellFootnotes: { '1sg': ['common'] } },
+    ])
+    expect(last.wordsInDictionaries).toEqual([
+      { prompt: 'a', entries: { ssc: 'page:a ssc' } },
+      { prompt: 'b', entries: { ssc: 'page:b ssc' } },
+    ])
+    expect(last.articles).toEqual({ common: 'common, as page:b has it', 'own a': 'own, as page:a has it', 'own b': 'own, as page:b has it' })
+  })
+
+  it('on a normal run, drops unlisted words from the side files at the start and puts the rest in list order', async () => {
+    const { save, saved } = materialRecorder()
+    const { get, urls } = recordingGet()
+    await scrapeList({
+      scraper: withMaterial,
+      contract: stubContract,
+      entries: ['b', 'a'],
+      existing: [stored('a'), stored('b'), stored('gone')],
+      existingMaterial: storedMaterial('a', 'gone', 'b'),
+      force: false,
+      get,
+      save,
+    })
+    expect(urls).toEqual([])
+    expect(saved.map(prompts)).toEqual([{ entries: ['b', 'a'], wordsInDictionaries: ['b', 'a'], articles: ['own a', 'own b'] }])
+  })
+
+  it('saves at the start when only the side files are out of step with the list', async () => {
+    const { save, saved } = materialRecorder()
+    await scrapeList({
+      scraper: withMaterial,
+      contract: stubContract,
+      entries: ['a', 'b'],
+      existing: [stored('a'), stored('b')],
+      existingMaterial: storedMaterial('b', 'a', 'gone'),
+      force: false,
+      get: recordingGet().get,
+      save,
+    })
+    expect(saved.map(prompts)).toEqual([{ entries: ['a', 'b'], wordsInDictionaries: ['a', 'b'], articles: ['own a', 'own b'] }])
+  })
+
+  it('does not save at the start when the side files already follow the list', async () => {
+    const { save, saved } = materialRecorder()
+    const options = { scraper: withMaterial, contract: stubContract, entries: ['a', 'b'], existing: [stored('a'), stored('b')], force: false, get: recordingGet().get, save }
+    await scrapeList({ ...options, existingMaterial: storedMaterial('a', 'b') })
+    await scrapeList(options) // no side files at all, as for words scraped before source material was kept
+    expect(saved).toEqual([])
+  })
+
+  it('with --force, replaces the entries of every word it fetches', async () => {
+    const { save, saved } = materialRecorder()
+    await scrapeList({
+      scraper: withMaterial,
+      contract: stubContract,
+      entries: ['a', 'b'],
+      existing: [stored('a'), stored('b')],
+      existingMaterial: storedMaterial('a', 'b'),
+      force: true,
+      get: recordingGet().get,
+      save,
+    })
+    const last = saved.at(-1)!
+    expect(last.entries.map((entry) => entry.lines[0]!.html)).toEqual(['page:a line', 'page:b line'])
+    expect(last.wordsInDictionaries.map((entry) => entry.entries.ssc)).toEqual(['page:a ssc', 'page:b ssc'])
+    expect(last.articles).toEqual({ common: 'common, as page:b has it', 'own a': 'own, as page:a has it', 'own b': 'own, as page:b has it' })
+  })
+
+  it('keeps the entries of a word whose fetch fails, and the articles they lead to', async () => {
+    const { save, saved } = materialRecorder()
+    await scrapeList({
+      scraper: withMaterial,
+      contract: stubContract,
+      entries: ['a', 'b'],
+      existing: [stored('a'), stored('b')],
+      existingMaterial: storedMaterial('a', 'b'),
+      force: true,
+      get: recordingGet(['page:b']).get,
+      save,
+    })
+    const last = saved.at(-1)!
+    expect(last.entries[1]).toEqual(storedMaterial('b').entries[0])
+    expect(last.wordsInDictionaries[1]).toEqual(storedMaterial('b').wordsInDictionaries[0])
+    expect(last.articles['own b']).toBe('kept')
+  })
+
+  it('also keeps the entries of a word whose page no longer parses, or whose item breaks the contract', async () => {
+    const { save, saved } = materialRecorder()
+    await scrapeList({
+      scraper: withMaterial,
+      contract: stubContract,
+      entries: ['a', 'bad one', 'empty one'],
+      existing: [stored('a'), stored('bad one'), stored('empty one')],
+      existingMaterial: storedMaterial('a', 'bad one', 'empty one'),
+      force: true,
+      get: recordingGet().get,
+      save,
+    })
+    expect(saved.at(-1)!.entries.slice(1)).toEqual(storedMaterial('bad one', 'empty one').entries)
+  })
+
+  it('drops the articles that no word of the file leads to any more', async () => {
+    const { save, saved } = materialRecorder()
+    const before = storedMaterial('a', 'b')
+    await scrapeList({
+      scraper: withMaterial,
+      contract: stubContract,
+      entries: ['a', 'b'],
+      existing: [stored('a'), stored('b')],
+      // "a" led to "old a" before the refresh; nothing ever led to "orphan".
+      existingMaterial: {
+        ...before,
+        entries: [{ ...before.entries[0]!, lines: [{ label: 'dělení', html: 'kept', footnotes: ['old a'] }] }, before.entries[1]!],
+        articles: { ...before.articles, 'old a': 'kept', orphan: 'kept' },
+      },
+      force: true,
+      get: recordingGet(['page:b']).get,
+      save,
+    })
+    expect(saved.map(prompts)).toEqual([
+      { entries: ['a', 'b'], wordsInDictionaries: ['a', 'b'], articles: ['old a', 'own b'] }, // at the start: "orphan" goes
+      { entries: ['a', 'b'], wordsInDictionaries: ['a', 'b'], articles: ['common', 'own a', 'own b'] }, // "a" refreshed: "old a" goes
+    ])
+  })
+
+  it('gives a word that was scraped before source material was kept no entries until it is fetched again', async () => {
+    const { save, saved } = materialRecorder()
+    await scrapeList({ scraper: withMaterial, contract: stubContract, entries: ['a', 'b'], existing: [stored('a')], force: false, get: recordingGet().get, save })
+    expect(saved.map(prompts)).toEqual([{ entries: ['b'], wordsInDictionaries: ['b'], articles: ['common', 'own b'] }])
+  })
+
+  it('keeps no entries for a word that has no item, so that every word of a side file is an item of its dataset', async () => {
+    // "b" was deleted from the dataset by hand to have it fetched again, and its fetch failed.
+    const { save, saved } = materialRecorder()
+    await scrapeList({
+      scraper: withMaterial,
+      contract: stubContract,
+      entries: ['a', 'b'],
+      existing: [stored('a')],
+      existingMaterial: storedMaterial('a', 'b'),
+      force: false,
+      get: recordingGet(['page:b']).get,
+      save,
+    })
+    expect(saved.map(prompts)).toEqual([{ entries: ['a'], wordsInDictionaries: ['a'], articles: ['own a'] }])
+  })
+
+  it('logs what the adapter warns about a page, with the word and its progress, before the line that says how it went', async () => {
+    const warning: EntryScraper<Item> = { ...stub, parse: (html, entry) => ({ ...stub.parse(html, entry), warnings: ['footnote 7 is missing', 'and 8'] }) }
+    const lines: string[] = []
+    await scrapeList({ scraper: warning, contract: stubContract, entries: ['a'], existing: [], force: false, get: recordingGet().get, save: noSave, log: (line) => void lines.push(line) })
+    expect(lines).toEqual(['warn   a (1/1): footnote 7 is missing', 'warn   a (1/1): and 8', 'ok     a (1/1)'])
+  })
+
+  describe('carrying over what was written by hand', () => {
+    /** A contract whose hook copies the first variant's remarks from the previous item, and warns when it cannot. */
+    const remarked = (prompt: string): Item => ({
+      prompt,
+      cells: [
+        { id: '1sg', acceptedForms: [{ value: 'kept', remarks: ['dual'] }] },
+        { id: '1pl', acceptedForms: [{ value: 'kept' }] },
+      ],
+    })
+    const calls: [Item, Item][] = []
+    const carrying: Contract<Item> = {
+      ...stubContract,
+      carryOver(previous, fresh) {
+        calls.push([previous, fresh])
+        const remarks = previous.cells[0]!.acceptedForms[0]!.remarks
+        const [first, ...rest] = fresh.cells
+        return {
+          item: { ...fresh, cells: [{ ...first!, acceptedForms: first!.acceptedForms.map((variant) => ({ ...variant, remarks })) }, ...rest] },
+          warnings: [`cell 1sg: carried ${String(remarks)}`],
+        }
+      },
+    }
+    afterEach(() => void calls.splice(0))
+
+    it('hands the hook the previous item and the fresh one, and saves what it gives back', async () => {
+      const lines: string[] = []
+      const result = await scrapeList({
+        scraper: stub,
+        contract: carrying,
+        entries: ['a'],
+        existing: [remarked('a')],
+        force: true,
+        get: recordingGet().get,
+        save: noSave,
+        log: (line) => void lines.push(line),
+      })
+      expect(calls).toEqual([[remarked('a'), stub.parse('page:a', 'a').item]])
+      expect(result.items[0]!.cells[0]!.acceptedForms).toEqual([{ value: 'page:a/1sg', remarks: ['dual'] }])
+      expect(lines).toEqual(['warn   a (1/1): cell 1sg: carried dual', 'ok     a (1/1)'])
+    })
+
+    it('does not call the hook for a word that has no previous item', async () => {
+      await scrapeList({ scraper: stub, contract: carrying, entries: ['a'], existing: [], force: false, get: recordingGet().get, save: noSave })
+      expect(calls).toEqual([])
+    })
+
+    it('fails a word whose carried item breaks the contract, and keeps its previous item and entries', async () => {
+      const picky: Contract<Item> = {
+        ...carrying,
+        validateItem: (value) => ((value as Item).cells[0]!.acceptedForms[0]!.remarks ? ['remarks are not allowed here'] : []),
+      }
+      const { save, saved } = materialRecorder()
+      const result = await scrapeList({
+        scraper: withMaterial,
+        contract: picky,
+        entries: ['a'],
+        existing: [remarked('a')],
+        existingMaterial: storedMaterial('a'),
+        force: true,
+        get: recordingGet().get,
+        save,
+      })
+      expect(result.failures).toEqual([{ entry: 'a', reason: 'remarks are not allowed here' }])
+      expect(result.items).toEqual([remarked('a')])
+      expect(saved).toEqual([])
+    })
+
+    it('logs only why a word failed, not what the page and the hook warned about the fresh item it did not save', async () => {
+      const picky: Contract<Item> = { ...carrying, validateItem: () => ['remarks are not allowed here'] }
+      const warning: EntryScraper<Item> = { ...stub, parse: (html, entry) => ({ ...stub.parse(html, entry), warnings: ['footnote 7 is missing'] }) }
+      const lines: string[] = []
+      await scrapeList({
+        scraper: warning,
+        contract: picky,
+        entries: ['a'],
+        existing: [remarked('a')],
+        force: true,
+        get: recordingGet().get,
+        save: noSave,
+        log: (line) => void lines.push(line),
+      })
+      expect(lines).toEqual(['FAILED a (1/1): remarks are not allowed here'])
+    })
+  })
+})
+
 describe('runListDriven', () => {
   let listsDir: string
   beforeEach(async () => {
@@ -604,10 +886,12 @@ describe('runListDriven', () => {
 
   it('logs the counts, then the pause and the cool-down in use, then one line per entry', async () => {
     const lines: string[] = []
+    const target = { language: 'cs', source: 'test', quizType: 'quiz' }
     const { context: real } = await createRunContext<Item>({
-      target: { language: 'cs', source: 'test', quizType: 'quiz' },
+      target,
       contract: stubContract,
       dataFile: join(listsDir, 'out', 'quiz.json'),
+      sideFiles: sideFilesIn(join(listsDir, 'source-material'), target),
       tmpFile: join(listsDir, '.tmp'),
       listsDir,
       force: false,
@@ -625,6 +909,8 @@ describe('runListDriven', () => {
       'ok     b (2/3)',
       'ok     c (3/3)',
     ])
+    // The stub keeps no source material, so the real context wrote the dataset and no side file.
+    expect(await readdir(listsDir)).not.toContain('source-material')
   })
 
   it('counts every listed entry as to fetch with force', async () => {

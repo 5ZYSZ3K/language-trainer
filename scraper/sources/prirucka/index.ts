@@ -22,31 +22,24 @@ export const priruckaPolicy: RequestPolicy = {
   isUnusable: isServerBusy,
 }
 
-/** cs / verb-present-tense: the verbs of lists/cs/verb-present-tense.txt, one entry page each. */
+/** cs / verb-present-tense: the verbs of lists/cs/verb-present-tense.txt, one entry page each, with its source material. */
 const verbPresentTenseAdapter: Adapter<Item> = {
   source: 'prirucka',
   language: 'cs',
   quizType: 'verb-present-tense',
-  run: (context) =>
-    runListDriven(context, {
-      fetchPage: verbPageScraper.fetchPage,
-      parse: (html, entry) => ({ prompt: entry, cells: verbPageScraper.parse(html, entry) }),
-    }),
+  run: (context) => runListDriven(context, verbPageScraper),
 }
 
 /**
- * cs / noun-declension: the nouns of lists/cs/noun-declension.txt, one entry page each. A noun the site cannot give
- * one entry for (none, or several such as "vedoucí") fails on its own and is left out; the run goes on.
+ * cs / noun-declension: the nouns of lists/cs/noun-declension.txt, one entry page each, with its source material. A
+ * noun the site cannot give one entry for (none, or several such as "vedoucí") fails on its own and is left out; the
+ * run goes on.
  */
 const nounDeclensionAdapter: Adapter<NounItem> = {
   source: 'prirucka',
   language: 'cs',
   quizType: 'noun-declension',
-  run: (context) =>
-    runListDriven(context, {
-      fetchPage: nounPageScraper.fetchPage,
-      parse: (html, entry) => ({ prompt: entry, ...nounPageScraper.parse(html, entry) }),
-    }),
+  run: (context) => runListDriven(context, nounPageScraper),
 }
 
 export const prirucka: ScraperSource = {
