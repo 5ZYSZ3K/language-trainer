@@ -1,6 +1,7 @@
 import type { Item } from '../../core/cell'
 import type { Contract } from '../../core/contract'
 import { isRecord } from '../../core/is-record'
+import { checkVariants } from '../../core/variants'
 import type { Meter, QuizType } from '../quiz-type'
 import { verbPresentCellIds } from './cells'
 import { mountVerbPresentTense } from './mount'
@@ -10,7 +11,8 @@ export { verbPresentCellIds, verbPresentCellLabelKeys } from './cells'
 
 /**
  * What the quiz needs of an item: a non-empty prompt and exactly the six cells `verbPresentCellIds`, in that order, each
- * with at least one non-empty accepted form. An optional `sourceUrl` must be text; other properties are ignored.
+ * with at least one variant. A variant is an object with a non-empty text `value` (the accepted form) and no `remarks`.
+ * An optional `sourceUrl` must be text; other properties are ignored.
  */
 export const verbPresentTenseContract: Contract<Item> = {
   validateItem(value) {
@@ -30,10 +32,11 @@ export const verbPresentTenseContract: Contract<Item> = {
 
     cells.forEach((cell: unknown, i) => {
       const id = isRecord(cell) && typeof cell.id === 'string' ? cell.id : `#${i + 1}`
-      const forms: unknown = isRecord(cell) ? cell.acceptedForms : undefined
-      if (!Array.isArray(forms)) return void problems.push(`no form found for ${id}`)
-      if (forms.some((form) => typeof form !== 'string')) problems.push(`cell ${id} has a form that is not text`)
-      else if (!forms.some((form: string) => form.trim() !== '')) problems.push(`no form found for ${id}`)
+      const checked = checkVariants(id, isRecord(cell) ? cell.acceptedForms : undefined)
+      if ('problem' in checked) return void problems.push(checked.problem)
+      if (checked.variants.some((variant) => variant.remarks !== undefined)) {
+        problems.push(`cell ${id} has a variant with remarks, which this quiz type does not take`)
+      }
     })
     return problems
   },

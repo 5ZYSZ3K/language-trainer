@@ -1,7 +1,13 @@
-/** One input of a type-in quiz: a neutral id (what the page shows for it is the quiz type's business) and every form that counts as correct. */
+/** One of the forms a source lists for a cell: its value, which is an accepted form, and optional remarks about it. */
+export interface Variant {
+  value: string
+  remarks?: string[]
+}
+
+/** One input of a type-in quiz: a neutral id (what the page shows for it is the quiz type's business) and every variant that counts as correct. */
 export interface Cell {
   id: string
-  acceptedForms: string[]
+  acceptedForms: Variant[]
 }
 
 /** One round of a type-in quiz: something to show, and the cells to fill in for it. */

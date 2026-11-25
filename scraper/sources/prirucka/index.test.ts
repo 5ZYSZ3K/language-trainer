@@ -59,7 +59,7 @@ describe('prirucka adapters', () => {
       expect(saved.at(-1)).toEqual(result.items)
       const batSe = result.items[1] as Item
       expect(batSe.cells.map((cell) => cell.id)).toEqual(['1sg', '2sg', '3sg', '1pl', '2pl', '3pl'])
-      expect(batSe.cells[0]!.acceptedForms).toContain('bojím se')
+      expect(batSe.cells[0]!.acceptedForms).toContainEqual({ value: 'bojím se' })
       for (const item of result.items) expect(verbPresentTenseContract.validateItem(item)).toEqual([])
     })
   })
@@ -100,7 +100,7 @@ describe('prirucka adapters', () => {
       const pan = result.items[0] as NounItem
       expect(pan.gender).toBe('m. živ.')
       expect(pan.cells).toHaveLength(14)
-      expect(pan.cells[0]).toEqual({ id: 'nom-sg', acceptedForms: ['pán'] })
+      expect(pan.cells[0]).toEqual({ id: 'nom-sg', acceptedForms: [{ value: 'pán' }] })
       const dvere = result.items[1] as NounItem
       expect(dvere.gender).toBe('ž.')
       expect(dvere.cells.map((cell) => cell.id)[0]).toBe('nom-pl')
@@ -117,7 +117,13 @@ describe('prirucka adapters', () => {
         return pages[url] ?? ''
       }
       // "pán" was scraped before the gender was kept: it is not fetched again just to add one.
-      const pan: NounItem = { prompt: 'pán', cells: [{ id: 'nom-sg', acceptedForms: ['pán'] }, { id: 'gen-sg', acceptedForms: ['pána'] }] }
+      const pan: NounItem = {
+        prompt: 'pán',
+        cells: [
+          { id: 'nom-sg', acceptedForms: [{ value: 'pán' }] },
+          { id: 'gen-sg', acceptedForms: [{ value: 'pána' }] },
+        ],
+      }
       const context = testContext<NounItem>({
         target: { language: 'cs', source: 'prirucka', quizType: 'noun-declension' },
         contract: nounDeclensionContract,

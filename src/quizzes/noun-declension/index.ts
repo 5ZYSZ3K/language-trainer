@@ -1,6 +1,7 @@
 import type { Item } from '../../core/cell'
 import type { Contract } from '../../core/contract'
 import { isRecord } from '../../core/is-record'
+import { checkVariants } from '../../core/variants'
 import type { Meter, QuizType } from '../quiz-type'
 import { nounDeclensionCellIds } from './cells'
 import { mountNounDeclension } from './mount'
@@ -19,10 +20,10 @@ export interface NounItem extends Item {
 
 /**
  * What the quiz needs of an item: a non-empty prompt (the dictionary form) and the cells that exist, each with at
- * least one non-empty accepted form, in the order of `nounDeclensionCellIds` without repeats. The first cell is the
- * nominative singular, or the nominative plural for a noun that has no singular at all: the quiz shows it as given. At
- * least one cell must follow it, or there would be nothing to ask. An optional `sourceUrl` and an optional `gender`
- * must be text; other properties are ignored.
+ * least one variant, in the order of `nounDeclensionCellIds` without repeats. A variant is an object with a non-empty
+ * text `value` (the accepted form) and no `remarks`. The first cell is the nominative singular, or the nominative
+ * plural for a noun that has no singular at all: the quiz shows it as given. At least one cell must follow it, or there
+ * would be nothing to ask. An optional `sourceUrl` and an optional `gender` must be text; other properties are ignored.
  */
 export const nounDeclensionContract: Contract<NounItem> = {
   validateItem(value) {
@@ -53,10 +54,11 @@ export const nounDeclensionContract: Contract<NounItem> = {
 
     cells.forEach((cell: unknown, i) => {
       const id = isRecord(cell) && typeof cell.id === 'string' ? cell.id : `#${i + 1}`
-      const forms: unknown = isRecord(cell) ? cell.acceptedForms : undefined
-      if (!Array.isArray(forms)) return void problems.push(`no form found for ${id}`)
-      if (forms.some((form) => typeof form !== 'string')) problems.push(`cell ${id} has a form that is not text`)
-      else if (!forms.some((form: string) => form.trim() !== '')) problems.push(`no form found for ${id}`)
+      const checked = checkVariants(id, isRecord(cell) ? cell.acceptedForms : undefined)
+      if ('problem' in checked) return void problems.push(checked.problem)
+      if (checked.variants.some((variant) => variant.remarks !== undefined)) {
+        problems.push(`cell ${id} has a variant with remarks, which this quiz type does not take`)
+      }
     })
     return problems
   },

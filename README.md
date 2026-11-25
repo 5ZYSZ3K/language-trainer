@@ -80,15 +80,19 @@ material, not read by anything.)
 - **File:** `data/<language>/<source>/<quiz type>.json`, e.g. `data/cs/prirucka/verb-present-tense.json`.
 - **Shape:** `{ "language": "cs", "source": "prirucka", "quizType": "verb-present-tense", "items": [ ... ] }`.
   The three fields must match the file's location. A `verb-present-tense` item is
-  `{ "prompt": "bát se", "cells": [ { "id": "1sg", "acceptedForms": ["bojím se", ...] }, ...6 cells... ] }`
+  `{ "prompt": "bát se", "cells": [ { "id": "1sg", "acceptedForms": [{ "value": "bojím se" }] }, ...6 cells... ] }`
   with the cell ids `1sg 2sg 3sg 1pl 2pl 3pl` in that order. A `noun-declension` item has the same shape,
-  `{ "prompt": "pán", "cells": [ { "id": "nom-sg", "acceptedForms": ["pán"] }, ... ] }`, with cell ids named after
-  case and number, `nom gen dat acc voc loc ins` (the Czech 1st to 7th case) each as `-sg` and `-pl`, singular
-  first: up to 14 cells, of **only the forms that exist** (*dveře* has just the plural ones). The first cell, the
-  nominative singular (the nominative plural when there is no singular), is the form the page shows locked as
+  `{ "prompt": "pán", "cells": [ { "id": "nom-sg", "acceptedForms": [{ "value": "pán" }] }, ... ] }`, with cell ids
+  named after case and number, `nom gen dat acc voc loc ins` (the Czech 1st to 7th case) each as `-sg` and `-pl`,
+  singular first: up to 14 cells, of **only the forms that exist** (*dveře* has just the plural ones). The first cell,
+  the nominative singular (the nominative plural when there is no singular), is the form the page shows locked as
   given, and at least one more cell must follow it. Cell ids are neutral: the quiz's texts map them to the labels
   the page shows, so data never mentions UI texts (and the cases are not numbered in data, because the number of a
   case differs between languages).
+- **Variants.** Each entry of a cell's `acceptedForms` is a variant, an object whose `value` is the accepted form:
+  non-empty text, matched by the matching rules. A cell has at least one, in the order the source lists them
+  (*pán*'s `dat-sg` is `[{ "value": "pánovi" }, { "value": "pánu" }]`). A variant may not have `remarks` yet: both
+  contracts refuse them.
 - **Numerals** (`data/cs/language-trainer/numerals.json`, hand-written, `manual: true`): an item is a range of numbers,
   `{ "id": "0-100", "min": 0, "max": 100, "spread": "uniform" }`, with whole numbers 0 ≤ min ≤ max < 10¹² and a
   `spread` of `uniform` (every number equally likely) or `log` (every order of magnitude equally likely; needs min ≥ 1).

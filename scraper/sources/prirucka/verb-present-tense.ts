@@ -93,6 +93,9 @@ export const verbPageScraper: VerbPageScraper = {
         byId.set(`${person}pl`, expandVariants(cellText($, tds[2]!)))
       })
     const withParticle = (form: string) => (particle && !form.endsWith(` ${particle}`) ? `${form} ${particle}` : form)
-    return verbPresentCellIds.map((id): Cell => ({ id, acceptedForms: (byId.get(id) ?? []).map(withParticle) }))
+    return verbPresentCellIds.map((id): Cell => ({
+      id,
+      acceptedForms: (byId.get(id) ?? []).map((form) => ({ value: withParticle(form) })),
+    }))
   },
 }

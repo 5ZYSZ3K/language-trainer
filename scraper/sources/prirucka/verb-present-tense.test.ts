@@ -3,9 +3,9 @@ import { ParseError, type HttpGet } from '../../harness/types'
 import { fixture, SITE } from './test-support'
 import { isServerBusy, verbPageScraper } from './verb-present-tense'
 
-/** Cells as [id, acceptedForms] pairs, for compact assertions. */
+/** Cells as [id, the values of their variants] pairs, for compact assertions. */
 const forms = (html: string, prompt: string) =>
-  verbPageScraper.parse(html, prompt).map((c) => [c.id, c.acceptedForms])
+  verbPageScraper.parse(html, prompt).map((c) => [c.id, c.acceptedForms.map((variant) => variant.value)])
 
 /** A fake site: known URLs return their page, anything else returns an empty body. */
 function fakeSite(pages: Record<string, string>, failOn?: RegExp) {
@@ -99,6 +99,11 @@ describe('verbPageScraper.parse', () => {
       ['2pl', ['bavíte']],
       ['3pl', ['baví']],
     ])
+  })
+
+  it('gives each listed form as a variant of its own, a value and nothing else', () => {
+    expect(verbPageScraper.parse(fixture('moct'), 'moct')[0]).toStrictEqual({ id: '1sg', acceptedForms: [{ value: 'mohu' }, { value: 'můžu' }] })
+    expect(verbPageScraper.parse(fixture('myslet-si'), 'myslet si')[0]).toStrictEqual({ id: '1sg', acceptedForms: [{ value: 'myslím si' }] })
   })
 
   it('accepts every listed variant of a form', () => {

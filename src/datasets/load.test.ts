@@ -4,7 +4,7 @@ import type { Dataset } from './dataset'
 import { loadDataset } from './load'
 
 const pool = { language: 'cs', source: 'prirucka', quizType: 'verb-present-tense' }
-const dataset: Dataset = { ...pool, items: [{ prompt: 'být', cells: [{ id: '1sg', acceptedForms: ['jsem'] }] }] }
+const dataset: Dataset = { ...pool, items: [{ prompt: 'být', cells: [{ id: '1sg', acceptedForms: [{ value: 'jsem' }] }] }] }
 
 const sourceWith = (delivery: Source['provides'][number]['delivery']): Source => ({
   id: 'prirucka',

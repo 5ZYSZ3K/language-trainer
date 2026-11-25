@@ -84,8 +84,8 @@ export const nounPageScraper: NounPageScraper = {
 
     // Only the forms that exist: an empty cell (no plural, no singular) is simply not an item cell.
     const cells = nounDeclensionCellIds.flatMap((id): Cell[] => {
-      const acceptedForms = byId.get(id) ?? []
-      return acceptedForms.length > 0 ? [{ id, acceptedForms }] : []
+      const forms = byId.get(id) ?? []
+      return forms.length > 0 ? [{ id, acceptedForms: forms.map((value) => ({ value })) }] : []
     })
     return { gender, cells }
   },
