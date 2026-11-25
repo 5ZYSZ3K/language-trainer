@@ -1,12 +1,15 @@
-import type { Cell, Item } from '../../core/cell'
+import type { Cell, Variant } from '../../core/cell'
 import { Round } from '../../core/round'
 import { getUiLanguage } from '../../i18n'
 import { fillTexts } from '../../i18n/dom'
 import { createGoTo, enableShortcuts, fillSpecialChars, finder, renderShortcutHelp, syncRoundActions } from '../../ui'
 import type { QuizHost, QuizInstance } from '../quiz-type'
 import { nounCaseLabelKey, nounNumberLabelKey, nounNumbers, partsOf, type GrammaticalNumber } from './cells'
+import { createExplanationDialog, remarkChip } from './explanation-dialog'
 import { createFilterDialog } from './filter-dialog'
 import { pickNoun, practiceOf, readFilter, saveFilter, type CellFilter, type Practice } from './filter'
+import type { NounItem } from './index'
+import { answerLine, type AnswerPart } from './remarks'
 import { t } from './texts'
 
 // The quiz's area of the page. All visible text is filled in by applyTexts() via the data-i18n attributes.
@@ -25,6 +28,7 @@ const AREA = `
   </main>
 
   <dialog id="filter-dialog" class="filters"></dialog>
+  <dialog id="explanation-dialog" class="explanation"></dialog>
 
   <section class="help" aria-labelledby="help-title">
     <h2 id="help-title" data-i18n="help.title"></h2>
@@ -40,9 +44,10 @@ const NO_EVENTS = { cellChecked: () => {}, itemCompleted: () => {} }
  * singular) is put in the table locked, as given. Records into the meters `cells` (per checked field) and `items` (per
  * completed noun). A noun the filter leaves nothing to ask for is still shown, with a message instead of fields; that
  * happens to a random noun only when no noun has anything to ask. Changing the filter starts the same noun again. Under
- * the buttons, a line to open a noun by its dictionary form, whatever the filter.
+ * the buttons, a line to open a noun by its dictionary form, whatever the filter. Once a cell is checked, its answer
+ * line shows every variant, each one with remarks followed by its chips and an ⓘ that opens the explanation dialog.
  */
-export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>): QuizInstance {
+export function mountNounDeclension(container: HTMLElement, host: QuizHost<NounItem>): QuizInstance {
   const { items, language } = host
   container.innerHTML = AREA
   const find = finder(container)
@@ -58,7 +63,7 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
   promptEl.lang = language.htmlLang
 
   let filter: CellFilter = readFilter(host.settings.get())
-  let item: Item | undefined
+  let item: NounItem | undefined
   let practice: Practice = { asked: [], shown: [] }
   let round = new Round({ prompt: '', cells: [] }, NO_EVENTS)
   // The fields and their wrappers, one per asked cell and in the same order, so an index means the same cell as in `round`.
@@ -71,6 +76,7 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
     host.settings.set(saveFilter(filter))
     startRound(item)
   })
+  const explanationDialog = createExplanationDialog(find<HTMLDialogElement>('#explanation-dialog'), language.htmlLang)
 
   function applyTexts(): void {
     // The language's shortcut lines are the whole list: this quiz has no notes of its own.
@@ -118,7 +124,7 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
   // ---- rounds -----------------------------------------------------------------------------------
 
   /** Starts a round on `next`, or on a random noun (see pickNoun) if none is given. */
-  function startRound(next?: Item): void {
+  function startRound(next?: NounItem): void {
     const noun = next ?? pickNoun(items, filter, item, Math.random)
     item = noun
     practice = practiceOf(noun, filter)
@@ -195,9 +201,9 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
     answerLabel.className = 'answer-label'
     answerLabel.dataset.i18n = 'answer.label'
     answerLabel.textContent = t('answer.label')
-    const answerForms = document.createElement('strong')
+    // The forms are in the learned language, their chips in the UI language: so `lang` is on each form, not on the line.
+    const answerForms = document.createElement('span')
     answerForms.className = 'answer-forms'
-    answerForms.lang = language.htmlLang
     answer.append(answerLabel, ' ', answerForms)
 
     if (given) {
@@ -250,8 +256,37 @@ export function mountNounDeclension(container: HTMLElement, host: QuizHost<Item>
     wrap.dataset.state = state
     inputs[index]!.readOnly = state !== 'open'
     wrap.querySelector<HTMLButtonElement>('.check')!.disabled = state !== 'open'
-    wrap.querySelector<HTMLElement>('.answer-forms')!.textContent =
-      state === 'open' ? '' : practice.asked[index]!.acceptedForms.map((variant) => variant.value).join(' / ')
+    wrap.querySelector<HTMLElement>('.answer-forms')!.replaceChildren(...answerNodes(answerLine(practice.asked[index]!, state)))
+  }
+
+  /** The answer line's nodes: the forms joined by " / ", each one with remarks followed by its chips and its ⓘ. */
+  function answerNodes(parts: readonly AnswerPart[]): (Node | string)[] {
+    let forms = 0
+    return parts.flatMap((part): (Node | string)[] => {
+      if (part.kind === 'remark') return [' ', remarkChip(part.code)]
+      if (part.kind === 'explain') return [' ', explainButton(part.variant)]
+      const form = document.createElement('strong')
+      form.lang = language.htmlLang
+      form.textContent = part.value
+      return forms++ === 0 ? [form] : [' / ', form]
+    })
+  }
+
+  /**
+   * The ⓘ after a variant with remarks. Out of the Tab order, so Enter and Tab keep moving between the fields, and it
+   * does not take the focus when clicked either: the dialog gives it back to the field the learner was in.
+   */
+  function explainButton(variant: Variant): HTMLButtonElement {
+    const button = document.createElement('button')
+    button.type = 'button'
+    button.className = 'explain'
+    button.tabIndex = -1
+    button.textContent = 'ⓘ'
+    button.dataset.i18nLabel = 'explanation.open'
+    button.setAttribute('aria-label', t('explanation.open'))
+    button.addEventListener('mousedown', (event) => event.preventDefault())
+    button.addEventListener('click', () => explanationDialog.open(variant, item?.explanation))
+    return button
   }
 
   /** "Check all" is only there to use while some field is still open: not with nothing to ask, nor once everything is checked. */

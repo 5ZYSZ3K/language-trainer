@@ -500,8 +500,9 @@ button.link {
   padding: 0 0.4rem;
 }
 
-/* The filter dialog: a grid with a row per case and a column per number. */
-dialog.filters {
+/* The noun's two dialogs: the filter (a grid with a row per case and a column per number) and the explanation an ⓘ opens. */
+dialog.filters,
+dialog.explanation {
   max-width: min(32rem, calc(100vw - 2rem));
   width: 100%;
   background: var(--surface);
@@ -511,8 +512,40 @@ dialog.filters {
   padding: 1rem 1.2rem;
 }
 
-dialog.filters::backdrop {
+dialog.filters::backdrop,
+dialog.explanation::backdrop {
   background: rgba(0, 0, 0, 0.45);
+}
+
+/* The ⓘ after a noun variant with remarks: a mark in the line, not a full-size button. */
+.cell .explain {
+  border: 0;
+  background: none;
+  color: var(--accent);
+  padding: 0 0.15rem;
+  line-height: 1;
+}
+
+.explanation-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.4rem;
+}
+
+.explanation-text {
+  margin-bottom: 0.6rem;
+}
+
+.explanation-text + .explanation-text {
+  border-top: 1px solid var(--border);
+  padding-top: 0.6rem;
+}
+
+.explanation-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }
 
 .filters-hint {
@@ -604,7 +637,9 @@ dialog.filters::backdrop {
   font-weight: 600;
 }
 
+/* A remark's tag: on a numerals version, and on a noun variant in a checked cell's answer line and its dialog. */
 .remark {
+  font-weight: normal;
   color: var(--muted);
   font-size: 0.8rem;
   border: 1px solid var(--border);

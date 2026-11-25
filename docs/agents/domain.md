@@ -40,7 +40,10 @@ silently.
    scores are saved under. The browser keeps `pool`, `scores`, `settings` and `language` in `localStorage`. Saved
    settings may come from an older build, so the quiz checks them before using them.
 6. **Data is neutral.** Cell ids are neutral (`1sg`, `nom-sg`), and each quiz type's texts map them to labels.
-   Data never holds UI texts, and cases are named, never numbered.
+   Data never holds UI texts, and cases are named, never numbered. The one exception, on purpose (#2), is a noun's
+   `explanation` (`{ en, cs }`): the owner's hand-written note on that noun's special variants, which no text of the
+   quiz could say. A new UI language has to be written into every one of them; `check-data` refuses a missing one,
+   the compiler does not.
 7. **The scraped data is committed.** Datasets live on `main` and are the only copy. A list is the only thing
    that decides what a scrape fetches.
 8. **A dataset holds only valid items.** An item that fails its contract is never written. `check-data` fails the

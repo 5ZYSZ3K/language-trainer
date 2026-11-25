@@ -22,6 +22,18 @@ export const en = {
   'goTo.label': 'Go to noun:',
   'goTo.notFound': 'No noun “{word}” in this list.',
 
+  // A label per remark code (NOUN_REMARK_CODES in ./remarks), and the shared explanation (HTML) of every code that has
+  // one. `meaning` has none: only the noun's own explanation can say which meaning is which.
+  'remark.dual': 'dual',
+  'remark.non-final': 'before another noun',
+  'remark.meaning': 'other meaning',
+  'remark-explanation.dual':
+    'A dual form, left over from the old dual number. Czech keeps it for things that come in pairs, above all parts of the body (<em>rukama</em>, <em>nohama</em>, <em>očima</em>). Where a noun has both, the dual form is the usual one for the body part, and the ordinary plural form for its other meanings.',
+  'remark-explanation.non-final':
+    'The form for a noun that comes before another one in a string of nouns, such as a title before a name: in the dative and locative singular, only the last noun takes <em>-ovi</em>, and the ones before it take <em>-u</em> (<em>panu doktoru Novákovi</em>).',
+  'explanation.open': 'Explain this form',
+  'explanation.close': 'Close',
+
   'filters.open': 'Filters',
   'filters.title': 'Forms to practise',
   'filters.hint': 'Tick the forms you want to be asked for. A row or column heading switches the whole row or column.',

@@ -23,6 +23,16 @@ export const cs: Record<NounDeclensionTextKey, string> = {
   'goTo.label': 'Přejít na podstatné jméno:',
   'goTo.notFound': 'Podstatné jméno „{word}“ v seznamu není.',
 
+  'remark.dual': 'duál',
+  'remark.non-final': 'před dalším jménem',
+  'remark.meaning': 'jiný význam',
+  'remark-explanation.dual':
+    'Tvar dvojného čísla (duálu), který se v češtině zachoval u párových věcí, především částí těla (<em>rukama</em>, <em>nohama</em>, <em>očima</em>). Má-li podstatné jméno oba tvary, duálový se obvykle užívá o části těla a běžný tvar množného čísla v ostatních významech.',
+  'remark-explanation.non-final':
+    'Tvar podstatného jména, za kterým ve spojení následuje další jméno, například titulu před příjmením: ve 3. a 6. pádě jednotného čísla má koncovku <em>-ovi</em> jen poslední jméno a jména před ním mají <em>-u</em> (<em>panu doktoru Novákovi</em>).',
+  'explanation.open': 'Vysvětlit tento tvar',
+  'explanation.close': 'Zavřít',
+
   'filters.open': 'Filtry',
   'filters.title': 'Tvary k procvičování',
   'filters.hint': 'Zaškrtněte tvary, na které se chcete nechat ptát. Nadpis řádku nebo sloupce přepne celý řádek nebo sloupec.',

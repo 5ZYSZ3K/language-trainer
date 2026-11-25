@@ -3,7 +3,7 @@ import type { Item } from '../../core/cell'
 import { UI_LANGUAGES } from '../../i18n'
 import { uiTexts } from '../../ui'
 import { nounCaseLabelKey, nounCaseIds, nounDeclensionCellIds, nounNumberLabelKey, nounNumbers, partsOf } from './cells'
-import { nounDeclension, nounDeclensionContract } from './index'
+import { NOUN_REMARK_CODES, nounDeclension, nounDeclensionContract } from './index'
 
 describe('nounDeclension', () => {
   it('has the permanent id noun-declension, which names its data file and its scores', () => {
@@ -49,6 +49,16 @@ describe('the texts of nounDeclension', () => {
       for (const id of nounCaseIds) expect(texts[language][nounCaseLabelKey(id)], `${language} ${id}`).toBeTruthy()
       for (const number of nounNumbers) expect(texts[language][nounNumberLabelKey(number)], `${language} ${number}`).toBeTruthy()
       for (const meter of nounDeclension.meters) expect(texts[language][meter.label], `${language} ${meter.id}`).toBeTruthy()
+    }
+  })
+
+  it('labels every remark code in each UI language, and explains dual and non-final but not meaning', () => {
+    for (const language of UI_LANGUAGES) {
+      const own: Record<string, string | undefined> = texts[language]
+      for (const code of NOUN_REMARK_CODES) expect(own[`remark.${code}`], `${language} ${code}`).toBeTruthy()
+      expect(own['remark-explanation.dual'], language).toBeTruthy()
+      expect(own['remark-explanation.non-final'], language).toBeTruthy()
+      expect(own['remark-explanation.meaning'], language).toBeUndefined()
     }
   })
 
@@ -167,10 +177,125 @@ describe('nounDeclensionContract', () => {
     ])
   })
 
-  it('refuses remarks on a variant for now', () => {
-    const item = valid()
-    item.cells[2]!.acceptedForms = [{ value: 'pánovi' }, { value: 'pánu', remarks: ['less-commonly-used'] }]
-    expect(problems(item)).toEqual(['cell dat-sg has a variant with remarks, which this quiz type does not take'])
+  describe('remarks and the explanation', () => {
+    // Test data only: the real dataset is tagged by hand, by the owner.
+    const explanation = { en: '<em>manželové</em> are married men, <em>manželé</em> couples.', cs: '<em>manželové</em> jsou ženatí muži, <em>manželé</em> páry.' }
+    const withVariants = (cellIndex: number, acceptedForms: { value: string; remarks?: string[] }[]) => {
+      const item = valid()
+      item.cells[cellIndex]!.acceptedForms = acceptedForms
+      return item
+    }
+    const nomPl = 7
+    const insPl = 13
+    const givenRefused = (id: string) =>
+      `cell ${id} is the given cell: the page shows only its first value and never an answer line there, so a remark on it could never be shown`
+
+    it('accepts remarks from NOUN_REMARK_CODES, on a noun with or without its own explanation', () => {
+      expect(NOUN_REMARK_CODES).toEqual(['dual', 'non-final', 'meaning'])
+      const dual = withVariants(insPl, [{ value: 'nohami' }, { value: 'nohama', remarks: ['dual'] }])
+      expect(problems(dual)).toEqual([])
+      expect(problems({ ...dual, explanation })).toEqual([])
+      const nonFinal = withVariants(2, [{ value: 'advokátovi' }, { value: 'advokátu', remarks: ['non-final'] }])
+      expect(problems(nonFinal)).toEqual([])
+      const meaning = withVariants(nomPl, [{ value: 'manželé' }, { value: 'manželové', remarks: ['meaning'] }])
+      expect(problems({ ...meaning, explanation })).toEqual([])
+      const both = withVariants(nomPl, [{ value: 'manželé' }, { value: 'manželové', remarks: ['meaning', 'dual'] }])
+      expect(problems({ ...both, explanation })).toEqual([])
+    })
+
+    it('reports a code that is not in NOUN_REMARK_CODES, such as a numerals one, with or without a part', () => {
+      const known = '(known: dual, non-final, meaning)'
+      const numerals = withVariants(2, [{ value: 'pánovi' }, { value: 'pánu', remarks: ['less-commonly-used'] }])
+      expect(problems(numerals)).toEqual([`cell dat-sg has a variant with the unknown remark less-commonly-used ${known}`])
+      const withPart = withVariants(insPl, [{ value: 'nohama', remarks: ['noha:dual'] }])
+      expect(problems(withPart)).toEqual([`cell ins-pl has a variant with the unknown remark noha:dual ${known}`])
+    })
+
+    it.each([
+      ['a bare code', 'dual'],
+      ['a list holding something other than text', ['dual', 7]],
+      ['null', null],
+    ])('reports remarks that are not a list of codes: %s', (_case, remarks) => {
+      expect(problems(withVariants(insPl, [{ value: 'nohama', remarks: remarks as string[] }]))).toEqual([
+        'cell ins-pl has a variant whose remarks are not a list of codes',
+      ])
+    })
+
+    it('reports remarks that are not a non-empty list of codes, each once', () => {
+      expect(problems(withVariants(insPl, [{ value: 'nohama', remarks: [] }]))).toEqual([
+        'cell ins-pl has a variant with an empty list of remarks',
+      ])
+      expect(problems(withVariants(insPl, [{ value: 'nohama', remarks: ['dual', 'dual'] }]))).toEqual([
+        'cell ins-pl has a variant with the remark dual twice',
+      ])
+    })
+
+    it('reports every variant whose remarks have a problem, in order, at most once each', () => {
+      const item = withVariants(insPl, [{ value: 'a', remarks: [] }, { value: 'b' }, { value: 'c', remarks: ['x', 'x'] }])
+      expect(problems(item)).toEqual([
+        'cell ins-pl has a variant with an empty list of remarks',
+        'cell ins-pl has a variant with the unknown remark x (known: dual, non-final, meaning)',
+      ])
+    })
+
+    it('reports a meaning remark on a noun without an explanation: only the noun can say which meaning is which', () => {
+      const meaning = withVariants(nomPl, [{ value: 'manželé' }, { value: 'manželové', remarks: ['meaning'] }])
+      expect(problems(meaning)).toEqual([
+        "cell nom-pl has the remark meaning, which only the noun's own explanation explains, but the noun has no explanation",
+      ])
+    })
+
+    it('reports an explanation on a noun with no remark on any variant, because nothing could open it', () => {
+      expect(problems({ ...valid(), explanation })).toEqual(['the noun has an explanation, but no variant has a remark to open it'])
+    })
+
+    it('refuses a remark on the given cell, which the page shows only by its first value and without an answer line', () => {
+      const given = withVariants(0, [{ value: 'pán' }, { value: 'pan', remarks: ['non-final'] }])
+      expect(problems(given)).toEqual([givenRefused('nom-sg')])
+      const first = withVariants(0, [{ value: 'pán', remarks: ['dual'] }])
+      expect(problems(first)).toEqual([givenRefused('nom-sg')])
+      const pluralOnly = { prompt: 'dveře', cells: [{ id: 'nom-pl', acceptedForms: [{ value: 'dveře', remarks: ['dual'] }] }, ...cellsFor(['gen-pl'])] }
+      expect(problems(pluralOnly)).toEqual([givenRefused('nom-pl')])
+    })
+
+    it("does not count a remark on the given cell as one that opens the noun's explanation, nor as one that needs it", () => {
+      const refused = givenRefused('nom-sg')
+      const opener = withVariants(0, [{ value: 'manžel' }, { value: 'manžel', remarks: ['meaning'] }])
+      expect(problems({ ...opener, explanation })).toEqual([refused, 'the noun has an explanation, but no variant has a remark to open it'])
+      expect(problems(opener)).toEqual([refused])
+      // Nothing in the given cell could open it, read or not.
+      const unreadGiven = withVariants(0, [{ value: 7 as unknown as string, remarks: ['meaning'] }])
+      expect(problems({ ...unreadGiven, explanation })).toEqual([
+        'cell nom-sg has a variant without a text value',
+        'the noun has an explanation, but no variant has a remark to open it',
+      ])
+    })
+
+    it.each([
+      ['remarks that are not a list of codes', [{ value: 'nohama', remarks: 'dual' }], 'cell ins-pl has a variant whose remarks are not a list of codes'],
+      ['an empty list of remarks', [{ value: 'nohama', remarks: [] }], 'cell ins-pl has a variant with an empty list of remarks'],
+      ['an unknown code', [{ value: 'nohama', remarks: ['duál'] }], 'cell ins-pl has a variant with the unknown remark duál (known: dual, non-final, meaning)'],
+      ['a variant without a text value', [{ value: 7, remarks: ['dual'] }], 'cell ins-pl has a variant without a text value'],
+    ])('reports only the real problem when the remarks of an explained noun cannot be read: %s', (_case, acceptedForms, problem) => {
+      const item = withVariants(insPl, acceptedForms as { value: string; remarks?: string[] }[])
+      expect(problems({ ...item, explanation })).toEqual([problem])
+    })
+
+    it('reports an explanation that is not an object of texts', () => {
+      const dual = withVariants(insPl, [{ value: 'nohami' }, { value: 'nohama', remarks: ['dual'] }])
+      for (const bad of ['text', null, ['en', 'cs']]) {
+        expect(problems({ ...dual, explanation: bad }), String(bad)).toEqual(['explanation must be an object with a text per UI language (en, cs)'])
+      }
+    })
+
+    it('reports an explanation without both en and cs, or with an empty one', () => {
+      const dual = withVariants(insPl, [{ value: 'nohami' }, { value: 'nohama', remarks: ['dual'] }])
+      expect(problems({ ...dual, explanation: { en: explanation.en } })).toEqual(['explanation has no cs text'])
+      expect(problems({ ...dual, explanation: { cs: explanation.cs } })).toEqual(['explanation has no en text'])
+      expect(problems({ ...dual, explanation: { en: ' ', cs: explanation.cs } })).toEqual(['explanation has no en text'])
+      expect(problems({ ...dual, explanation: { en: explanation.en, cs: 7 } })).toEqual(['explanation has no cs text'])
+      expect(problems({ ...dual, explanation: {} })).toEqual(['explanation has no en text', 'explanation has no cs text'])
+    })
   })
 
   it('identifies an item by its prompt', () => {
