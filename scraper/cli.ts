@@ -4,9 +4,10 @@
  * (see USAGE in cli-options.ts)
  *
  * Runs the registered adapters the filters select (with no filter, the only one; several are listed instead).
- * Each adapter writes data/<language>/<source>/<quiz type>.json after every item, so stopping the run (Ctrl-C,
- * a crash, the site going away) loses nothing. Exits non-zero if any item failed; the data of the items that
- * worked is already written. Only one scrape may run at a time (.scrape.lock).
+ * Each adapter writes data/<language>/<source>/<quiz type>.json after every item, and the dataset's side files in
+ * source-material/<language>/<source>/ with it, so stopping the run (Ctrl-C, a crash, the site going away) loses
+ * nothing. Exits non-zero if any item failed; the data of the items that worked is already written. Only one
+ * scrape may run at a time (.scrape.lock).
  */
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -18,12 +19,14 @@ import { createRunContext, type RunProgress, type ScraperSource } from './harnes
 import { politeGetter } from './harness/http'
 import { acquireLock, LockHeldError, type Lock } from './harness/lock'
 import { ADAPTERS, SCRAPER_SOURCES } from './harness/registry'
+import { sideFilesIn } from './harness/source-material'
 import { selectTargets, targetName } from './harness/targets'
 import type { HttpGet } from './harness/types'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const listsDir = resolve(root, 'lists')
-// In the repo root, on the same filesystem as data/ (the atomic save renames the temporary file over the data file).
+// In the repo root, on the same filesystem as data/ and source-material/ (the atomic save renames the temporary file
+// over the file it replaces).
 const lockFile = resolve(root, '.scrape.lock')
 const tmpDataFile = resolve(root, '.scrape-data.tmp')
 
@@ -93,6 +96,7 @@ async function main(): Promise<number> {
         target,
         contract: quizType.contract,
         dataFile,
+        sideFiles: sideFilesIn(resolve(root, 'source-material'), target),
         tmpFile: tmpDataFile,
         listsDir,
         force,
