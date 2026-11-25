@@ -119,13 +119,15 @@ describe('verbPresentTenseContract', () => {
     expect(problems(item)).toEqual(['cell 1sg has a variant without a text value', 'cell 2sg has a variant without a text value'])
   })
 
-  it('refuses remarks on a variant, even an empty list of them: this quiz type takes none', () => {
+  it('refuses remarks on a variant, even an empty list of them or a code the noun quiz takes: this quiz type takes none', () => {
     const item = valid()
     item.cells[0]!.acceptedForms = [{ value: 'bojím se', remarks: ['less-commonly-used'] }]
     item.cells[1]!.acceptedForms = [{ value: 'bojíš se', remarks: [] }]
+    item.cells[2]!.acceptedForms = [{ value: 'bojí se', remarks: ['meaning'] }]
     expect(problems(item)).toEqual([
       'cell 1sg has a variant with remarks, which this quiz type does not take',
       'cell 2sg has a variant with remarks, which this quiz type does not take',
+      'cell 3sg has a variant with remarks, which this quiz type does not take',
     ])
   })
 

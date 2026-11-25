@@ -88,11 +88,26 @@ material, not read by anything.)
   the nominative singular (the nominative plural when there is no singular), is the form the page shows locked as
   given, and at least one more cell must follow it. Cell ids are neutral: the quiz's texts map them to the labels
   the page shows, so data never mentions UI texts (and the cases are not numbered in data, because the number of a
-  case differs between languages).
+  case differs between languages). The one exception, on purpose, is a noun's `explanation` (below).
 - **Variants.** Each entry of a cell's `acceptedForms` is a variant, an object whose `value` is the accepted form:
   non-empty text, matched by the matching rules. A cell has at least one, in the order the source lists them
-  (*pán*'s `dat-sg` is `[{ "value": "pánovi" }, { "value": "pánu" }]`). A variant may not have `remarks` yet: both
-  contracts refuse them.
+  (*pán*'s `dat-sg` is `[{ "value": "pánovi" }, { "value": "pánu" }]`). A verb variant may not have `remarks`.
+- **Noun remarks and explanations.** A noun variant may have `remarks`: a non-empty list of codes, each once, from
+  `NOUN_REMARK_CODES` in `src/quizzes/noun-declension/remarks.ts`: `dual` (a dual form, *nohama*), `non-final` (the
+  form for a noun before another one, *panu doktoru Novákovi*) and `meaning` (another meaning, *manželové* next to
+  *manželé*). Unlike numerals' remarks, a code has no `part:` in front. A noun may have an `explanation`,
+  `{ "en": "…", "cs": "…" }`: its own note on its special variants, as HTML, with a non-empty text for every UI
+  language. `{ "prompt": "manžel", "explanation": { … }, "cells": [ …, { "id": "nom-pl", "acceptedForms":
+  [{ "value": "manželé" }, { "value": "manželové", "remarks": ["meaning"] }] } ] }`. An explanation is the one place
+  where data holds UI texts, and on purpose: it is the owner's hand-written note on one noun, which no text of the quiz
+  could say (so a new UI language has to be written into it, see *Adding things later*). The noun contract refuses a
+  code it does not know; a remark on the given cell (the page shows only its first value there and never an answer
+  line, so the remark could never be shown); a `meaning` remark on a noun without an explanation (only the noun can say
+  which meaning is which; `meaning` is the one code without a shared explanation); an explanation on a noun with no
+  remark outside the given cell (nothing could open it); and an explanation without a non-empty text for every UI
+  language. Remarks and explanations are written by hand in the dataset, by the owner. Adding a code is one more code
+  in `NOUN_REMARK_CODES` plus its texts: a label (`remark.<code>`) and, unless the code is marked as having none, a
+  shared explanation (`remark-explanation.<code>`); a missing text is a compile error.
 - **Numerals** (`data/cs/language-trainer/numerals.json`, hand-written, `manual: true`): an item is a range of numbers,
   `{ "id": "0-100", "min": 0, "max": 100, "spread": "uniform" }`, with whole numbers 0 ≤ min ≤ max < 10¹² and a
   `spread` of `uniform` (every number equally likely) or `log` (every order of magnitude equally likely; needs min ≥ 1).
@@ -269,7 +284,9 @@ src/
   languages/   the languages that can be learned: characters, typing shortcuts, names (registry in index.ts)
   sources/     the data sources and which datasets each provides (registry in index.ts)
   quizzes/     one folder per quiz type: contract, score meters, texts, mount (the quiz's DOM)
-               (registry in index.ts); noun-declension also holds its filter (pure, tested) and the filter dialog;
+               (registry in index.ts); noun-declension also holds its filter (pure, tested) and the filter dialog,
+               and its remark codes with what a checked cell's answer line and the explanation dialog show (pure,
+               tested) and the explanation dialog;
                numerals holds its ranges and picking, the version list rules and the numeral generator of each
                learned language (cs.ts), all pure and tested
   datasets/    the pool (language, source, quiz type), the dataset file's envelope and the loader of the bundled
@@ -331,7 +348,8 @@ typed lists; nothing is discovered dynamically.
   needed. The build validates it like any other.
 - **A UI language.** List it in `UI_LANGUAGES` (`src/i18n/index.ts`) and write the file the compiler then asks
   for in each set of texts (the shell's, `src/ui/`'s, each quiz type's, each learned language's); a missing key
-  is a compile error.
+  is a compile error. Then write it into every noun's `explanation` in the data too: the compiler does not see
+  those, but `check-data` (and so `npm run build`) refuses an explanation without a text in every UI language.
 - **The `github` delivery.** Add the loader, change a dataset's `delivery`, extend the test; the data files do
   not move.
 
@@ -381,6 +399,13 @@ still need to be reviewed.
   cases (the Czech 1st to 7th, vocative included) for the singular and the plural, in two columns on a wide screen
   (singular left) and one after the other on a narrow one. A noun without a singular or a plural has no column for it.
 - Checking, "Check all", "Skip" / "Next noun", Enter and the matching rules work as for verbs.
+- **Remarks.** Nothing about them shows until a cell is checked. Then, in that cell's answer line, each variant with
+  remarks is followed by a chip per remark, labelled in the UI language and styled like the numerals' remarks
+  (*dual*, *before another noun*, *other meaning*), and an ⓘ. Plain variants get neither, and there is no legend. The
+  ⓘ is outside the Tab order, so Enter and Tab keep moving between the fields; a click or tap opens a dialog, in the
+  UI language, with the variant and its chips, then the shared explanation of each remark that has one (`dual`,
+  `non-final`), then the noun's own explanation if it has one (`meaning` shows only that). Close, Esc or a click
+  outside closes it, and the focus goes back to the field it was in. The given cell still shows only its first value.
 - **Filters.** The Filters button opens a dialog with a grid of all 14 forms (7 cases × singular / plural), each a
   checkbox. A row heading or a column heading switches the whole row or column; "Select all" and "Clear all" do
   what they say. Closing the dialog (Done, Esc, a click outside) applies the choice, if anything changed, and starts

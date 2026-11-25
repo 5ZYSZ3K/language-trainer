@@ -68,6 +68,14 @@ One of the forms a source lists for a cell (`mohu, můžu`): its value, which is
 remarks.
 _Avoid_: version (that is a numeral's)
 
+**Remark**:
+A tag saying what is special about a noun's variant (*dual*, *before another noun*, *other meaning*) or a numeral's
+version (*less common*, *inverted order*, *masculine*); on a version, sometimes with the part of the number it is
+about. A noun's remark may have a shared explanation, the same for every noun that has it.
+
+**Explanation**:
+A noun's own hand-written note on its special variants, in every UI language.
+
 **Given cell**:
 The first cell of a noun (the nominative singular, or the nominative plural for a noun with no singular), shown filled
 in and locked. It is never checked or scored.
@@ -131,10 +139,6 @@ likely).
 **Version**:
 One accepted way of writing a number in words. A number usually has several.
 _Avoid_: variant (that is a cell's)
-
-**Remark**:
-A tag on a version saying what is special about it (*less common*, *inverted order*, *masculine*), sometimes with the
-part of the number it is about.
 
 **Numeral generator**:
 A learned language's rules for writing any number in words. Numerals are not scraped: the generator decides every
