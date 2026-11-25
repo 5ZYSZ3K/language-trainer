@@ -80,6 +80,14 @@ describe('serialise', () => {
     const [, firstLine] = (await serialise(envelope([item('a')]), { tabWidth: 4 })).split('\n')
     expect(firstLine).toBe('    "language": "cs",')
   })
+
+  it("writes the file's other fields, such as a side file's footnotes, after its items, and a dataset without any", async () => {
+    const sideFile = { ...target, items: [{ prompt: 'a' }], footnotes: { '135': '<h1>Dělení</h1>' } }
+    const text = await serialise(sideFile)
+    expect(JSON.parse(text)).toEqual(sideFile)
+    expect(Object.keys(JSON.parse(text))).toEqual(['language', 'source', 'quizType', 'items', 'footnotes'])
+    expect(Object.keys(JSON.parse(await serialise(envelope([item('a')]))))).toEqual(['language', 'source', 'quizType', 'items'])
+  })
 })
 
 describe('readItems', () => {

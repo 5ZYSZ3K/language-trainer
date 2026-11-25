@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import type { Item } from '../../../src/core/cell'
 import { nounDeclensionContract, type NounItem } from '../../../src/quizzes/noun-declension'
 import { verbPresentTenseContract } from '../../../src/quizzes/verb-present-tense'
+import type { SourceMaterial } from '../../harness/source-material'
 import { testContext } from '../../harness/test-support'
 import type { HttpGet } from '../../harness/types'
 import { prirucka, priruckaPolicy } from '.'
@@ -62,6 +63,25 @@ describe('prirucka adapters', () => {
       expect(batSe.cells[0]!.acceptedForms).toContainEqual({ value: 'bojím se' })
       for (const item of result.items) expect(verbPresentTenseContract.validateItem(item)).toEqual([])
     })
+
+    it("hands over each verb's source material with it, and keeps it out of the item", async () => {
+      await writeFile(join(listsDir, 'cs', 'verb-present-tense.txt'), 'moct')
+      const saved: SourceMaterial[] = []
+      const context = testContext<Item>({
+        target: { language: 'cs', source: 'prirucka', quizType: 'verb-present-tense' },
+        contract: verbPresentTenseContract,
+        get: async (url) => (url === `${SITE}?slovo=moct` ? fixture('moct') : ''),
+        save: async (_items, material) => void saved.push(material),
+        listsDir,
+      })
+      const result = await prirucka.adapters[0]!.run(context)
+      expect(Object.keys(result.items[0]!)).toEqual(['prompt', 'cells'])
+      const { entries, articles, wordsInDictionaries } = saved.at(-1)!
+      expect(entries.map((entry) => entry.prompt)).toEqual(['moct'])
+      expect(entries[0]!.lines.map((line) => line.label)).toContain('přechodník přítomný, m.')
+      expect(wordsInDictionaries).toEqual([{ prompt: 'moct', entries: { ssc: expect.any(String), ssjc: expect.any(String) } }])
+      expect(Object.keys(articles)).toEqual(['135', '510', '590'])
+    })
   })
 
   describe('cs / noun-declension', () => {
@@ -84,11 +104,13 @@ describe('prirucka adapters', () => {
       }
       const get: HttpGet = async (url) => pages[url] ?? ''
       const saved: NounItem[][] = []
+      const lines: string[] = []
       const context = testContext<NounItem>({
         target: { language: 'cs', source: 'prirucka', quizType: 'noun-declension' },
         contract: nounDeclensionContract,
         get,
         save: async (items) => void saved.push([...items]),
+        log: (line) => void lines.push(line),
         listsDir,
       })
       const result = await prirucka.adapters[1]!.run(context)
@@ -97,6 +119,8 @@ describe('prirucka adapters', () => {
       expect(result.failures[0]).toMatchObject({ entry: 'vedoucí' })
       expect(result.failures[0]!.reason).toContain('2 noun entries')
       expect(saved.at(-1)).toEqual(result.items)
+      // The saved pages are trimmed: the articles their markers lead to are not in them.
+      expect(lines).toContain('warn   pán (1/3): footnote 135 leads to an article that is not on the page; it is left out')
       const pan = result.items[0] as NounItem
       expect(pan.gender).toBe('m. živ.')
       expect(pan.cells).toHaveLength(14)
@@ -138,6 +162,72 @@ describe('prirucka adapters', () => {
       expect(result.items[0]).toBe(pan)
       expect(result.items[0]).not.toHaveProperty('gender')
       expect((result.items[1] as NounItem).gender).toBe('ž.')
+    })
+
+    it("hands over each noun's source material with it, and keeps it out of the item", async () => {
+      await writeFile(join(listsDir, 'cs', 'noun-declension.txt'), 'manžel, bratr')
+      const pages: Record<string, string> = {
+        [`${SITE}?slovo=man%C5%BEel`]: fixture('manzel'),
+        [`${SITE}?slovo=bratr`]: fixture('bratr'),
+      }
+      const saved: SourceMaterial[] = []
+      const context = testContext<NounItem>({
+        target: { language: 'cs', source: 'prirucka', quizType: 'noun-declension' },
+        contract: nounDeclensionContract,
+        get: async (url) => pages[url] ?? '',
+        save: async (_items, material) => void saved.push(material),
+        listsDir,
+      })
+      const result = await prirucka.adapters[1]!.run(context)
+      expect(result.failures).toEqual([])
+      expect(Object.keys(result.items[0]!)).toEqual(['prompt', 'gender', 'cells'])
+      const { entries, articles, wordsInDictionaries } = saved.at(-1)!
+      expect(entries.map((entry) => entry.prompt)).toEqual(['manžel', 'bratr'])
+      expect(entries[0]!.cellFootnotes['nom-sg']).toEqual(['220'])
+      expect(entries[1]!.lines.map((line) => line.label)).toEqual(['dělení', 'rod', 'příklady', 'poznámky k heslu'])
+      expect(wordsInDictionaries.map((word) => [word.prompt, Object.keys(word.entries)])).toEqual([
+        ['manžel', ['ssc', 'ssjc']],
+        ['bratr', ['ssc', 'ssjc']],
+      ])
+      // Each article once, for both nouns: 224 is on both pages.
+      expect(Object.keys(articles)).toEqual(['135', '186', '220', '224', '225', '226', '227', '228', '600', '699', '710'])
+    })
+
+    it('with --force, keeps the remarks and the explanation written by hand, and warns about a remark whose variant is gone', async () => {
+      await writeFile(join(listsDir, 'cs', 'noun-declension.txt'), 'manžel')
+      const explanation = { en: '<p>Two plurals.</p>', cs: '<p>Dvě množná čísla.</p>' }
+      const written: NounItem = {
+        prompt: 'manžel',
+        gender: 'm. živ.',
+        explanation,
+        cells: [
+          { id: 'nom-sg', acceptedForms: [{ value: 'manžel' }] },
+          { id: 'dat-sg', acceptedForms: [{ value: 'manželovi' }, { value: 'manželu', remarks: ['non-final'] }] },
+          { id: 'nom-pl', acceptedForms: [{ value: 'manželé' }, { value: 'manželové', remarks: ['meaning'] }] },
+          { id: 'loc-pl', acceptedForms: [{ value: 'manželech' }, { value: 'manželách', remarks: ['dual'] }] },
+        ],
+      }
+      expect(nounDeclensionContract.validateItem(written)).toEqual([])
+      const lines: string[] = []
+      const context = testContext<NounItem>({
+        target: { language: 'cs', source: 'prirucka', quizType: 'noun-declension' },
+        contract: nounDeclensionContract,
+        existing: [written],
+        force: true,
+        get: async (url) => (url === `${SITE}?slovo=man%C5%BEel` ? fixture('manzel') : ''),
+        log: (line) => void lines.push(line),
+        listsDir,
+      })
+      const result = await prirucka.adapters[1]!.run(context)
+      expect(result.failures).toEqual([])
+      const manzel = result.items[0] as NounItem
+      expect(manzel.explanation).toEqual(explanation)
+      expect(manzel.cells).toHaveLength(14)
+      const byId = Object.fromEntries(manzel.cells.map((cell) => [cell.id, cell.acceptedForms]))
+      expect(byId['dat-sg']).toEqual([{ value: 'manželovi' }, { value: 'manželu', remarks: ['non-final'] }])
+      expect(byId['nom-pl']).toEqual([{ value: 'manželé' }, { value: 'manželové', remarks: ['meaning'] }])
+      expect(byId['loc-pl']).toEqual([{ value: 'manželech' }, { value: 'manželích' }])
+      expect(lines).toContain('warn   manžel (1/1): cell loc-pl no longer has the variant "manželách", so its remarks (dual) were dropped')
     })
   })
 })

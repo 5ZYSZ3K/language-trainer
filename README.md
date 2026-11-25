@@ -32,8 +32,10 @@ owner runs by hand.
    [`data/cs/prirucka/verb-present-tense.json`](data/cs/prirucka/verb-present-tense.json) after every verb.
    `npm run scrape:cs:nouns` does the same for the nouns of
    [`lists/cs/noun-declension.txt`](lists/cs/noun-declension.txt) (the declension table of each) into
-   `data/cs/prirucka/noun-declension.json`. Those files are **committed to `main`** as scraped source data; they
-   are the only copy, so commit them after a scrape.
+   `data/cs/prirucka/noun-declension.json`. Beside each dataset, the scrape keeps the rest of every entry (its
+   lines, footnotes and dictionary entries) in `source-material/cs/prirucka/`, for writing remarks and
+   explanations from; the page never ships it. Those files are **committed to `main`** as scraped source data;
+   they are the only copy, so commit them after a scrape.
 2. **Build.** `npm run build` type-checks, runs `scripts/check-data.ts` (it fails the build on an invalid
    dataset or when no dataset holds any item), then Vite builds the page into `dist/`. Each dataset is bundled
    into the page as its own JavaScript chunk; the page fetches no data file and never calls the source site.
@@ -59,7 +61,7 @@ To put a new version on the site:
 ```sh
 npm run scrape:cs:verbs               # only if a list changed or words are missing
 npm run scrape:cs:nouns               # (one per list)
-git add data && git commit            # the scraped data lives in the repo
+git add data source-material && git commit   # the scraped data lives in the repo
 npm run build
 npm run publish-pages                 # commits dist/ to the local gh-pages branch
 git push origin gh-pages
@@ -108,6 +110,23 @@ material, not read by anything.)
   language. Remarks and explanations are written by hand in the dataset, by the owner. Adding a code is one more code
   in `NOUN_REMARK_CODES` plus its texts: a label (`remark.<code>`) and, unless the code is marked as having none, a
   shared explanation (`remark-explanation.<code>`); a missing text is a compile error.
+- **Source material.** Everything an entry says beyond the forms is kept beside its dataset, in two side files under
+  `source-material/<language>/<source>/` (outside `data/`, so the page's glob never bundles them and `data/` holds
+  only what the page ships). They are committed and never shipped, and the scraper writes them like the dataset
+  (laid out by Prettier, replaced in one step). Both have the dataset's envelope.
+  - `<quiz type>.json`: `items`, one per word, `{ "prompt": "manžel", "lines": [ { "label": "dělení", "html":
+    "man-žel<sup>…</sup>", "footnotes": ["135"] }, { "label": "rod", "html": "m. živ.", "footnotes": [] }, … ],
+    "cellFootnotes": { "nom-sg": ["220"], "dat-sg": ["224"], … } }`, and `footnotes`, every article the items
+    lead to, once, by id, as HTML: `{ "135": "<h1>Dělení slov na konci řádku</h1>…", … }`. `lines` holds every
+    line of the entry under the source's own label, with its HTML as the source has it and the ids of the articles
+    its markers lead to; there are no fixed field names. `cellFootnotes` holds the article ids of each cell that has
+    markers, by cell id, the given cell included, and so does a cell with no form (a noun's "—"), though the item has
+    no such cell.
+  - `<quiz type>.dictionaries.json`: `items`, one per word, `{ "prompt": "noha", "entries": { "ssc": "<html>",
+    "ssjc": "<html>" } }`, keyed by the source's id of the dictionary.
+
+  A word has entries in the side files only if it is an item of the dataset. Words that were scraped before source
+  material was kept have none until a forced scrape.
 - **Numerals** (`data/cs/language-trainer/numerals.json`, hand-written, `manual: true`): an item is a range of numbers,
   `{ "id": "0-100", "min": 0, "max": 100, "spread": "uniform" }`, with whole numbers 0 ≤ min ≤ max < 10¹² and a
   `spread` of `uniform` (every number equally likely) or `log` (every order of magnitude equally likely; needs min ≥ 1).
@@ -126,7 +145,11 @@ material, not read by anything.)
   dataset a source provides with `bundled` delivery has no file, a file under `data/` is not provided by any
   source, a file's envelope does not match its location, an item violates its quiz type's contract, two
   items of one file have the same key (the contract's `keyOf`), or no dataset holds any item. A dataset with zero items is valid; its pool shows the "nothing to practise yet"
-  status.
+  status. A second step checks `source-material/`: a missing side file is fine (it may not have been scraped
+  yet), but a file there that is not a side file of a scraped dataset, or a side file whose envelope does not match
+  its location, that has a word which is not an item of its dataset, or (the source-material file) a line or a cell
+  leading to an article id that is not a key of its `footnotes`, fails the build like a dataset does. It prints
+  `Data OK: <n> items in <n> dataset file(s), <n> source-material file(s).`
 - **Delivery.** The only implemented delivery is `bundled` (above). A `github` delivery is typed in
   `src/sources/source.ts` but has no loader: `loadDataset` rejects it with a clear error, and no source uses it.
 
@@ -154,7 +177,23 @@ The two scripts in `package.json` (Czech verbs, Czech nouns) are the second form
   rewritten (to `.scrape-data.tmp` in the repo root, then renamed over the data file, so it is never
   half-written), in the order of the list. Failures are never written. Items that are no longer in the list are
   pruned from the file when the scrape starts. Each line of progress is numbered: `ok     bavit (3/120)`, where
-  the total is the number of items this run will try.
+  the total is the number of items this run will try. Anything the adapter or the carry-over (below) warns about
+  comes just before it, as `warn   manžel (3/120): <what>`; a warning never stops the item from being saved. A word
+  that fails logs only its `FAILED` line: what was warned about concerns the fresh item, which is not saved.
+- **Side files.** An adapter that keeps source material (see *Data*) hands the harness, for each word, its item, its
+  source-material entry, its dictionary entry and the articles it leads to; the harness writes the dataset and both
+  side files together, each the same way. On every run, not only with `--force`, the side files follow the list
+  exactly as the dataset does: at the start, unlisted words are dropped and the rest re-ordered; a fetched word
+  gets new entries (with `--force`, every fetched word's entries are replaced); a word that fails keeps its
+  previous entries; and articles that no word of the file leads to any more are dropped. The three files are each
+  replaced in one step but not together, so they are written in the order that never leaves a side file with a
+  word its dataset lacks if the run stops in between. That is all that is guaranteed: with `--force`, the side
+  files are written first, so a run that stops in between can leave a word's new entries beside its old item.
+
+  _This contradicts the rule that adding a source changes nothing existing, the scraper harness included (see
+  *Adding things later*)._ The harness knows the shape of prirucka's source material (lines, cell footnotes,
+  articles, dictionary entries), because #3 asked for that shape, so a second source whose entries say something
+  else would need the harness changed. It is not redesigned yet.
 - **Interrupting is safe.** Ctrl-C (or SIGTERM) prints `Stopped: N of M items saved in <file>`, removes the
   lock and exits 130 (143 for SIGTERM). Run the scrape again and it carries on with the items that are
   missing. Nothing is lost, so stopping early when the site misbehaves is always fine.
@@ -163,7 +202,18 @@ The two scripts in `package.json` (Czech verbs, Czech nouns) are the second form
   crashed run is ignored. The lock is global: two scrapes never run at once, whatever the sources.
 - **`--force` is not resumable.** It replaces items one by one as they succeed, and a failed refresh keeps the
   old item, but a second `--force` starts again from the first entry. To refresh just a few verbs, delete
-  their items from the data file and run the plain script again.
+  their items from the data file and run the plain script again (for a noun, that also drops what was written
+  on it by hand, which only `--force` carries over).
+- **Keeping what was written by hand.** A forced scrape makes each item again from its page, which has none of the
+  owner's remarks and explanations. So a quiz type whose items hold something written by hand gives its contract a
+  `carryOver` hook, and the harness calls it for every fetched word that already had an item, before checking the
+  fresh one. The noun hook puts each variant's remarks back onto the variant with the same value in the same cell,
+  and the noun's explanation back onto the noun; everything else (forms, their order, the gender) is the page's. A
+  remark whose variant is no longer on the page is dropped with a warning naming the word, the cell and the value:
+  `warn   manžel (1/9): cell loc-pl no longer has the variant "manželách", so its remarks (dual) were dropped`. If
+  what is carried over breaks the contract (an explanation left with no remark to open it), the word fails and
+  keeps its previous item, so nothing written by hand is lost; the log then says only why it failed, not which
+  remarks would have been dropped. Verbs have no hook: nothing in a verb item is written by hand.
 - **Exit codes.** `0` everything requested is in the data; `1` some items failed or were not attempted, or a
   fatal error such as a failed save; `2` bad usage, an unknown target, or another scrape is running; `130` /
   `143` interrupted.
@@ -189,8 +239,9 @@ The two scripts in `package.json` (Czech verbs, Czech nouns) are the second form
 
 ### The prirucka adapter
 
-[`scraper/sources/prirucka/`](scraper/sources/prirucka/) holds the source's request policy, its adapter and the
-parser for the verb pages.
+[`scraper/sources/prirucka/`](scraper/sources/prirucka/) holds the source's request policy, its two adapters, the
+parsers of the verb and the noun pages, and `page.ts`, what every page has in common (the source-material parser
+among it).
 
 - **A page is only accepted if it is that verb's own entry.** The site answers some searches with an
   unrelated page (e.g. `dát si` returns the noun *pusa*, `nechtít se` returns the entry for *chtít*), so the
@@ -214,6 +265,27 @@ parser for the verb pages.
   fails on its own with a clear message and is left out: the run goes on, like for any word that fails to parse,
   and ends with the usual summary and exit code 1. There is no way yet to say which entry is meant; see *Words known
   to fail*. A page whose entry names no gender (a verb, an adjective) is refused the same way.
+- **Source material.** The shared parser in `page.ts` reads it for both adapters, from the entry's own body (its
+  heading up to the next one).
+  - **Lines** are the entry's `p.polozky` lines (`dělení`, `rod`, `příbuzná slova`, `příklady`, `poznámky k heslu`,
+    `lze i`, …), split at the first colon into label and HTML. The table's rows that are not cells of the quiz are
+    lines too, in their place: on a verb page *rozkazovací způsob*, *příčestí činné / trpné*, the *přechodník* rows
+    and *verbální substantivum* are table rows, not `p.polozky` lines. Such a line is labelled with the row's header
+    and holds the HTML of its value cells (`<td …>`, spans kept), so moct's article 590, which only its *přechodník
+    přítomný, m.* leads to, stays referenced.
+  - **Footnotes** are read only from those lines and from the table's cells, never from the rest of the page: the
+    list of links at the bottom of the page repeats every marker. A marker
+    (`bref_baleni("bref4", "226")`) names its block on this page and the article's global id; the article is the
+    block's HTML, which the page already holds (no request), tidied so that one id reads the same from every word:
+    without its `.screen` "Skrýt" links and its `div.print` rule, with `nadpis<n>_` heading ids turned into
+    `nadpis_`, trimmed. A marker whose block is missing from the page is left out of its line or cell, with a
+    warning in the scrape log naming the word and the article id; the word is still saved. A marker in a noun's
+    case row but in no cell of it (a column past the plural) is left out the same way, with a warning naming the
+    row.
+  - **Dictionary entries** are the hidden `dict_ssc` and `dict_ssjc` blocks, without their title; a dictionary the
+    page does not quote has none.
+  - **Tests** read it from whole saved pages of `moct`, `noha`, `manžel` and `bratr` (`fixtures/`). The other saved
+    pages are trimmed to the entry, so their markers lead to articles they do not hold, and only warn.
 - **Politeness.** One request at a time, 30 s timeout, up to 4 retries (the wait before retry n is at least n × 15 s), and
   a pause of 1.5 s by default between one request finishing (answer, error or timeout) and the next one
   starting, so a slow answer never leaves two requests in flight. The requests carry the User-Agent
@@ -277,6 +349,8 @@ The tests run the same logic against a temporary git repository; they never touc
 index.html, vite.config.ts, tsconfig.json   the page's HTML, the Vite / Vitest and the TypeScript configuration
 lists/<language>/<quiz type>.txt      scraper input (comma-separated entries); only the scraper reads lists
 data/<language>/<source>/<quiz type>.json   the committed datasets
+source-material/<language>/<source>/<quiz type>.json, <quiz type>.dictionaries.json
+                                      each dataset's committed side files: source material, never shipped
 public/                               .nojekyll only
 src/
   core/        pure, tested logic: matching, typing shortcuts, Round, Scores, Settings (what a quiz remembers per
@@ -285,8 +359,8 @@ src/
   sources/     the data sources and which datasets each provides (registry in index.ts)
   quizzes/     one folder per quiz type: contract, score meters, texts, mount (the quiz's DOM)
                (registry in index.ts); noun-declension also holds its filter (pure, tested) and the filter dialog,
-               and its remark codes with what a checked cell's answer line and the explanation dialog show (pure,
-               tested) and the explanation dialog;
+               its remark codes with what a checked cell's answer line and the explanation dialog show (pure,
+               tested) and the explanation dialog, and its contract's carry-over hook (pure, tested);
                numerals holds its ranges and picking, the version list rules and the numeral generator of each
                learned language (cs.ts), all pure and tested
   datasets/    the pool (language, source, quiz type), the dataset file's envelope and the loader of the bundled
@@ -305,19 +379,22 @@ src/
   style.css    the page's styles; fonts/ holds the bundled font files (Comic Relief, OFL)
 scraper/       build-time only, never shipped
   cli.ts, cli-options.ts   entry point; arguments and environment
-  harness/     lock, atomic data file, polite requests, run context, target selection, adapter registry
+  harness/     lock, atomic data file, the side files (source-material.ts: their format, reading and writing),
+               polite requests, run context, target selection, adapter registry
   list.ts          the word-list reader (comma-separated entries)
-  list-driven.ts   the loop over a word list: fetch, parse, validate, save after every item
-  sources/prirucka/   request policy, adapter and verb parser; fixtures/ holds trimmed real pages from
-                      prirucka.ujc.cas.cz that the parser tests run against
-scripts/       check-data.ts: validates data/ before every build; publish-pages.ts: commits dist/ to the local
+  list-driven.ts   the loop over a word list: fetch, parse, carry over, validate, save after every item
+  sources/prirucka/   request policy, adapters, the verb and noun parsers and what they share (page.ts);
+                      fixtures/ holds real pages from prirucka.ujc.cas.cz that the parser tests run against: moct,
+                      noha, manzel and bratr whole, the others trimmed to the entry (so their footnote markers lead
+                      to articles that are not in them)
+scripts/       check-data.ts: validates data/ and source-material/ before every build; publish-pages.ts: commits dist/ to the local
                gh-pages branch (tested against a temporary repo); registry.test.ts: checks the registries and
                the scraper's adapters against each other
 ```
 
-Rules the layout keeps: `src/` never imports from `scraper/` or `scripts/` (a unit test scans for it), and
-`scraper/` and `scripts/` may import types, registries and contracts from `src/`. The page never calls a
-source, and no parser or HTML library is in its bundle.
+Rules the layout keeps: `src/` never imports from `scraper/` or `scripts/`, nor refers to `source-material/` (a
+unit test scans for both), and `scraper/` and `scripts/` may import types, registries and contracts from `src/`.
+The page never calls a source, and no parser or HTML library is in its bundle.
 
 Tests sit next to the code (`*.test.ts`) and run with `npm test`. The `test-support.ts` files hold the little
 helpers that several tests share (a run context, saved pages of the site).
@@ -332,12 +409,15 @@ typed lists; nothing is discovered dynamically.
   texts (typed `en` / `cs` dictionaries, including `name`, its label in the selector) and `mount`, and
   add it to `src/quizzes/index.ts`. It may reuse the type-in blocks in `src/ui/` and `src/core/` or bring a
   different interaction. A quiz that wants to remember something between visits (a filter, say) saves it through
-  `host.settings`, which the shell keeps per pool. Its id is permanent. The selector picks it up by itself.
+  `host.settings`, which the shell keeps per pool. If its items hold something written by hand, its contract gets a
+  `carryOver` hook, so that a forced scrape keeps it. Its id is permanent. The selector picks it up by itself.
 - **A source.** (It shows up in the selector as soon as a second source provides something for the language.)
   Add `src/sources/<id>.ts` (name, url, trust, license, attribution, `provides`) and register it
   in `src/sources/index.ts`. Add `scraper/sources/<id>/` with a request policy and one adapter per provided
   dataset, and register it in `scraper/harness/registry.ts`. An adapter may use `list-driven` or its own loop;
-  it only has to write items that satisfy the contract.
+  it only has to write items that satisfy the contract. Keeping source material is up to the adapter: one that
+  hands none over writes no side files. One whose source material has another shape than prirucka's needs the
+  harness changed first (see *Side files* under *The scraper*).
 - **A dataset** (a source covering another language or quiz type): add the `provides` entry and the adapter, run
   the scrape, and commit the file in `data/<language>/<source>/`. `npm run build` and the registry test
   (`scripts/registry.test.ts`) tell you what is missing.

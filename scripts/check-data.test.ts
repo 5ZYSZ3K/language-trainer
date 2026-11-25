@@ -4,7 +4,7 @@ import { dirname, join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 import type { QuizType } from '../src/quizzes'
 import type { Source } from '../src/sources'
-import { checkData, readDataFiles } from './check-data'
+import { checkData, checkSourceMaterial, readDataFiles } from './check-data'
 
 /** A made-up quiz type whose items are `{ n: number }`, so that these tests do not depend on a real contract. */
 const numbers: QuizType<unknown> = {
@@ -134,6 +134,115 @@ describe('checkData', () => {
     const regs = { ...registries, sources: [source('alpha', [{ language: 'cs', quizType: 'words', delivery: bundled }])] }
     const text = run({ 'cs/alpha/words.json': file([{ n: 1 }], { quizType: 'words' }) }, regs).problems.join('\n')
     expect(text).toMatch(/words\.json.*quiz type "words" is not registered/)
+  })
+})
+
+describe('checkSourceMaterial', () => {
+  const MATERIAL = 'cs/alpha/numbers.json'
+  const DICTIONARIES = 'cs/alpha/numbers.dictionaries.json'
+  const envelope = { language: 'cs', source: 'alpha', quizType: 'numbers' }
+  const dataFiles = { [OK_PATH]: file([{ n: 1 }, { n: 2 }]) }
+  const entry = (prompt: string, lineFootnotes: string[] = [], cellFootnotes: Record<string, string[]> = {}) => ({
+    prompt,
+    lines: [{ label: 'dělení', html: '…', footnotes: lineFootnotes }],
+    cellFootnotes,
+  })
+  const material = (items: unknown[], footnotes: Record<string, string> = {}, head: Record<string, unknown> = {}) =>
+    JSON.stringify({ ...envelope, items, footnotes, ...head })
+  const dictionaries = (items: unknown[], head: Record<string, unknown> = {}) => JSON.stringify({ ...envelope, items, ...head })
+  const check = (sideFiles: Record<string, string>, data: Record<string, string> = dataFiles, regs = registries) =>
+    checkSourceMaterial(regs, data, sideFiles)
+
+  it('is fine with no side files at all, as before any scrape kept source material', () => {
+    expect(check({})).toEqual({ problems: [], files: 0 })
+  })
+
+  it('has no problems for side files whose words are items of their dataset and whose articles are all there', () => {
+    const sideFiles = {
+      [MATERIAL]: material([entry('1', ['135'], { 'nom-sg': ['220'] }), entry('2')], { '135': '<h1>…</h1>', '220': '<h1>…</h1>' }),
+      [DICTIONARIES]: dictionaries([{ prompt: '2', entries: { ssc: '…' } }]),
+    }
+    expect(check(sideFiles)).toEqual({ problems: [], files: 2 })
+  })
+
+  it('is fine with one side file and not the other', () => {
+    expect(check({ [DICTIONARIES]: dictionaries([{ prompt: '1', entries: {} }]) }).problems).toEqual([])
+    expect(check({ [MATERIAL]: material([entry('1')]) }).problems).toEqual([])
+  })
+
+  it.each([
+    ['language', { language: 'de' }],
+    ['source', { source: 'beta' }],
+    ['quizType', { quizType: 'words' }],
+  ])('reports a side file whose %s differs from its location', (field, head) => {
+    const { problems } = check({ [MATERIAL]: material([], {}, head), [DICTIONARIES]: dictionaries([], head) })
+    expect(problems).toHaveLength(2)
+    expect(problems[0]).toMatch(new RegExp(`^source-material/cs/alpha/numbers\\.dictionaries\\.json: ${field} is`))
+    expect(problems[1]).toMatch(new RegExp(`^source-material/cs/alpha/numbers\\.json: ${field} is`))
+  })
+
+  it('reports a word of either side file that is not an item of its dataset', () => {
+    const { problems } = check({
+      [MATERIAL]: material([entry('1'), entry('7')]),
+      [DICTIONARIES]: dictionaries([{ prompt: '8', entries: {} }]),
+    })
+    expect(problems).toEqual([
+      'source-material/cs/alpha/numbers.dictionaries.json: item 1: "8" is not an item of data/cs/alpha/numbers.json',
+      'source-material/cs/alpha/numbers.json: item 2: "7" is not an item of data/cs/alpha/numbers.json',
+    ])
+  })
+
+  it('reports an article that a line or a cell leads to but that is not in the footnotes', () => {
+    const { problems } = check({
+      [MATERIAL]: material([entry('1', ['135', '699'], { 'nom-sg': ['135'], 'dat-sg': ['224'] })], { '135': '…', unused: '…' }),
+    })
+    expect(problems).toEqual([
+      'source-material/cs/alpha/numbers.json: item 1 ("1"): line 1 (dělení) leads to article 699, which is not in footnotes',
+      'source-material/cs/alpha/numbers.json: item 1 ("1"): cell dat-sg leads to article 224, which is not in footnotes',
+    ])
+  })
+
+  it('reports a side file that cannot be read: not JSON, no items, items without a prompt, footnotes that are no object', () => {
+    const { problems } = check({
+      [MATERIAL]: material([{ lines: [], cellFootnotes: {} }, entry('1')], undefined, { footnotes: [] }),
+      [DICTIONARIES]: '{"language":',
+    })
+    expect(problems).toEqual([
+      'source-material/cs/alpha/numbers.dictionaries.json: not valid JSON',
+      'source-material/cs/alpha/numbers.json: footnotes must be an object of articles by id',
+      'source-material/cs/alpha/numbers.json: item 1 has no prompt',
+    ])
+    expect(check({ [MATERIAL]: JSON.stringify(envelope) }).problems).toEqual(['source-material/cs/alpha/numbers.json: items must be a list'])
+  })
+
+  it('reports an item whose lines or cell footnotes cannot be read', () => {
+    const { problems } = check({ [MATERIAL]: material([{ prompt: '1', lines: [{ label: 'x' }], cellFootnotes: { 'nom-sg': '135' } }]) })
+    expect(problems).toEqual([
+      'source-material/cs/alpha/numbers.json: item 1 ("1"): line 1 must have a list of footnotes',
+      'source-material/cs/alpha/numbers.json: item 1 ("1"): cell nom-sg must have a list of footnotes',
+    ])
+  })
+
+  it('reports a file under source-material/ that is not a side file of a scraped dataset', () => {
+    const regs = { ...registries, sources: [source('alpha', [{ language: 'cs', quizType: 'numbers', delivery: bundled, manual: true }])] }
+    const sideFiles = { 'cs/beta/numbers.json': material([]), 'cs/alpha/numbers.notes.json': '{}', 'stray.txt': 'x' }
+    expect(check(sideFiles).problems).toEqual([
+      'source-material/cs/alpha/numbers.notes.json: not a side file of any dataset a source scrapes',
+      'source-material/cs/beta/numbers.json: not a side file of any dataset a source scrapes',
+      'source-material/stray.txt: not a side file of any dataset a source scrapes',
+    ])
+    // A hand-written dataset has no page to keep anything from.
+    expect(check({ [MATERIAL]: material([]) }, dataFiles, regs).problems).toEqual([
+      'source-material/cs/alpha/numbers.json: not a side file of any dataset a source scrapes',
+    ])
+  })
+
+  it('says once that the words cannot be checked when the dataset itself cannot be read', () => {
+    const sideFiles = { [MATERIAL]: material([entry('1'), entry('2')]) }
+    expect(check(sideFiles, {}).problems).toEqual([
+      'source-material/cs/alpha/numbers.json: its dataset data/cs/alpha/numbers.json cannot be read, so its words cannot be checked',
+    ])
+    expect(check(sideFiles, { [OK_PATH]: '{' }).problems).toHaveLength(1)
   })
 })
 

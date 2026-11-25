@@ -4,6 +4,7 @@ import { isRecord } from '../../core/is-record'
 import { checkVariants, type CheckedVariant } from '../../core/variants'
 import { UI_LANGUAGES } from '../../i18n'
 import type { Meter, QuizType } from '../quiz-type'
+import { carryOverNoun } from './carry-over'
 import { nounDeclensionCellIds } from './cells'
 import { mountNounDeclension } from './mount'
 import { hasSharedExplanation, NOUN_REMARK_CODES, remarkCodesOf, type NounExplanation } from './remarks'
@@ -100,6 +101,9 @@ export const nounDeclensionContract: Contract<NounItem> = {
   },
 
   keyOf: (item) => item.prompt,
+
+  /** The remarks and the explanation, written by hand, survive a forced scrape (see `carryOverNoun`). */
+  carryOver: carryOverNoun,
 }
 
 /**

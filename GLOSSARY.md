@@ -173,6 +173,28 @@ The source site's page for one headword. A word is only accepted from its own en
 site returns for it.
 _Avoid_: page (on its own), result
 
+**Source material**:
+Everything an entry says beyond the forms: its lines (syllabification, related words, examples, the entry's notes and
+the like), its footnotes and the dictionary entries it quotes. It is kept beside a dataset for the owner, who writes
+remarks and explanations from it, and is never shipped with the page.
+_Avoid_: notes, metadata
+
+**Side file**:
+One of the files of source material kept next to a dataset, with the dataset's envelope: one holds each word's lines
+and footnotes together with the articles they lead to, the other each word's dictionary entries. A side file only
+names words that are items of its dataset. It is committed and never shipped.
+_Avoid_: notes file, metadata file
+
+**Footnote**:
+A marker in an entry that leads to one of the source's grammar articles, by the article's global id: the same id is
+the same article on every entry.
+_Avoid_: reference, link
+
+**Article**:
+One of the source's grammar articles, which a footnote leads to. It is known by its global id, the same on every
+entry, so a side file keeps each article once however many words lead to it.
+_Avoid_: footnote (that is the marker), explanation (that is the owner's note on a noun)
+
 **Contract**:
 The exact shape a quiz type requires of an item, and what makes two items the same. A dataset holds only items that
 satisfy it completely.

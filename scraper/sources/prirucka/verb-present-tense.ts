@@ -1,8 +1,9 @@
 import * as cheerio from 'cheerio'
-import type { Cell } from '../../../src/core/cell'
+import type { Cell, Item } from '../../../src/core/cell'
 import { verbPresentCellIds } from '../../../src/quizzes/verb-present-tense'
 import { ParseError, type HttpGet } from '../../harness/types'
-import { cellText, collapse, expandVariants, SITE } from './page'
+import type { EntryScraper } from '../../list-driven'
+import { cellFootnotesOf, cellText, collapse, entryBody, entryMaterial, expandVariants, footnoteIds, SITE } from './page'
 
 export { isServerBusy } from './page'
 
@@ -49,15 +50,12 @@ async function fetchEntryPage(word: string, get: HttpGet): Promise<string> {
   return entry ? get(entry) : html
 }
 
-/** How to get the cells of one verb from prirucka. */
-export interface VerbPageScraper {
-  /** Fetch the page that describes `prompt`, following any disambiguation. */
-  fetchPage(prompt: string, get: HttpGet): Promise<string>
-  /** Turn a fetched page into cells, in the quiz type's cell order. Throws ParseError if it is not the right page. */
-  parse(html: string, prompt: string): Cell[]
-}
+/** A row of the conjugation table that holds cells of the quiz: "1. osoba" to "3. osoba". */
+const PERSON_ROW = /^([123])\. osoba$/
 
-export const verbPageScraper: VerbPageScraper = {
+/** How to get one verb from prirucka: its item (the present-tense cells) and its source material. */
+export const verbPageScraper: EntryScraper<Item> = {
+  /** Searches for the verb and follows any disambiguation; a verb with a particle may fall back to its plain verb. */
   async fetchPage(prompt, get) {
     const page = await fetchEntryPage(prompt, get)
     const { base, particle } = splitReflexive(prompt)
@@ -69,6 +67,7 @@ export const verbPageScraper: VerbPageScraper = {
     return hasEntry(plain, base) ? plain : page
   },
 
+  /** The verb's item, with its cells in the quiz type's order, and its source material. The warnings name each footnote that is left out. */
   parse(html, prompt) {
     const $ = cheerio.load(html)
     const headings = acceptableHeadings(prompt)
@@ -80,22 +79,26 @@ export const verbPageScraper: VerbPageScraper = {
       .first()
     if (!entry.length) throw new ParseError(`no dictionary entry named "${prompt}"`)
 
+    // Everything that belongs to this entry: up to the next heading, so another entry's table is never read.
+    const body = entryBody(entry)
+    const table = body.filter('table.para').first()
     const byId = new Map<string, string[]>()
-    entry
-      .nextAll('table.para')
-      .first()
-      .find('tr')
-      .each((_, tr) => {
-        const tds = $(tr).children('td')
-        const person = /^([123])\. osoba$/.exec(collapse($(tds[0]).text()))?.[1] as '1' | '2' | '3' | undefined
-        if (!person) return
-        byId.set(`${person}sg`, expandVariants(cellText($, tds[1]!)))
-        byId.set(`${person}pl`, expandVariants(cellText($, tds[2]!)))
-      })
+    const footnotesById = new Map<string, string[]>()
+    table.find('tr').each((_, tr) => {
+      const tds = $(tr).children('td')
+      const person = PERSON_ROW.exec(collapse($(tds[0]).text()))?.[1] as '1' | '2' | '3' | undefined
+      if (!person) return
+      for (const [number, td] of [['sg', tds[1]!], ['pl', tds[2]!]] as const) {
+        byId.set(`${person}${number}`, expandVariants(cellText($, td)))
+        footnotesById.set(`${person}${number}`, footnoteIds($, td))
+      }
+    })
     const withParticle = (form: string) => (particle && !form.endsWith(` ${particle}`) ? `${form} ${particle}` : form)
-    return verbPresentCellIds.map((id): Cell => ({
+    const cells = verbPresentCellIds.map((id): Cell => ({
       id,
       acceptedForms: (byId.get(id) ?? []).map((form) => ({ value: withParticle(form) })),
     }))
+    const cellFootnotes = cellFootnotesOf(verbPresentCellIds, footnotesById)
+    return { item: { prompt, cells }, ...entryMaterial($, body, { table, isCellRow: (header) => PERSON_ROW.test(header), cellFootnotes }) }
   },
 }
