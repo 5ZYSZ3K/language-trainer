@@ -13,7 +13,7 @@ export const USAGE = `Usage: npm run scrape:cs:verbs | npm run scrape:cs:nouns [
                               flag wins
   --fail-cooldown <duration>  when an item cannot be fetched (after the usual retries), stop for this long and then
                               try that item again instead of moving on; a number and a unit: 500ms, 90s, 10m, 1h.
-                              Off by default. The run still gives up after several failures in a row.`
+                              Off by default. The run still gives up after several fetch failures in a row.`
 
 export interface CliOptions extends TargetFilter {
   force: boolean
