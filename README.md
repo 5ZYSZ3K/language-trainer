@@ -220,18 +220,22 @@ The two scripts in `package.json` (Czech verbs, Czech nouns) are the second form
 - **Failures.** An item that cannot be fetched or parsed is logged and left out of the data (so it is not on the
   site). The run ends with a summary and a **non-zero exit code**; the items that worked are already saved.
   There is no overrides file for now. Two safety rules: a failed `--force` refresh keeps the item's previous
-  data instead of deleting it, and after 5 fetch failures in a row (timeouts, "busy", HTTP errors; a page that
-  merely fails to parse does not count) the run stops asking the site and reports the remaining items as "not
-  attempted". By default there is no cool-down: wait, then run it again, or use `--fail-cooldown` (next point).
+  data instead of deleting it, and after 5 fetch failures in a row the run stops asking the site and reports the
+  remaining items as "not attempted". A fetch failure is a timeout, "busy", an HTTP error or any other unexpected
+  error while a word's entry is fetched; finding the entry is part of fetching it. Finding no single entry for the
+  word, or anything that goes wrong once its entry is fetched (it fails to parse, its item breaks the contract, or
+  the adapter's parser or the carry-over throws), is not a fetch failure: that word fails on its own. By default
+  there is no cool-down: wait, then run it again, or use `--fail-cooldown` (next point).
 - **`--fail-cooldown <duration>`.** When an item cannot be fetched (after the request-level retries described
   under *Politeness*), the scrape stops for that long and then tries the same item again instead of moving on,
   e.g. `npm run scrape:cs:nouns -- --fail-cooldown 10m`. The duration needs a unit: `500ms`, `90s`, `10m`, `1h` (a bare
   number is rejected, so it cannot be mistaken for the milliseconds of `--delay-ms`). Only fetch failures
-  trigger it; a page that merely fails to parse is not retried, because the site is fine and waiting will not
-  change the page. Each failed attempt still counts towards the 5-in-a-row limit, so a site that stays down is
-  given up on after 5 attempts at the same item (4 cool-downs), not waited for forever. The progress log shows
-  `retry  <item> (n/total): <reason>; cooling down for N s first`. Off by default; Ctrl-C works during a
-  cool-down like at any other time.
+  (previous point) trigger it. A word that fails on its own is logged `FAILED <item> (n/total): <reason>` at once,
+  with no cool-down and no second fetch, because the site is fine and waiting will not change its entry. Each fetch
+  failure still counts towards the 5-in-a-row limit, so a site that stays down is given up on after 5 attempts at
+  the same item (4 cool-downs), not waited for forever. The progress log shows
+  `retry  <item> (n/total): <reason>; cooling down for N s first`. Off by default; Ctrl-C works during a cool-down
+  like at any other time.
 - **Validation.** Every item is checked against its quiz type's contract before it is saved. For
   `verb-present-tense` that means six cells in the fixed order, each with at least one non-empty form; an item
   that falls short fails with `no form found for <id>` and is not written. For `noun-declension` it means cells in

@@ -64,14 +64,18 @@ export interface ScrapeListOptions<Item> {
    */
   save: (items: readonly Item[], material: SourceMaterial) => Promise<void>
   /**
-   * After this many fetches in a row that fail for reasons other than the page's content (timeouts, errors,
-   * "busy"), the site is assumed to be down and the remaining entries are not tried. Default 5.
+   * After this many fetch failures in a row, the site is assumed to be down and the remaining words are not tried.
+   * A fetch failure is whatever the adapter's `fetchPage` throws other than a `ParseError` (a timeout, an HTTP error,
+   * "busy"). Finding the word's entry is part of fetching it, so an unexpected error there is a fetch failure too.
+   * A `ParseError`, or anything thrown once the entry is fetched (by the adapter's parser or the carry-over), is not:
+   * that word fails on its own. Default 5.
    */
   maxConsecutiveFetchFailures?: number
   /**
-   * When an entry fails for reasons other than the page's content (see above), wait this long and try the same
-   * entry again instead of moving on to the next one. Each such failure counts towards
-   * `maxConsecutiveFetchFailures`, so a site that stays down is still given up on. 0 (the default) turns it off.
+   * After a fetch failure (see above), wait this long and fetch the same word again instead of moving on to the next
+   * one. Each fetch failure counts towards `maxConsecutiveFetchFailures`, so a site that stays down is still given up
+   * on. A word that fails on its own is not tried again: the site is fine, and its entry would fail the same way.
+   * 0 (the default) turns it off.
    */
   failCooldownMs?: number
   log?: (message: string) => void
@@ -170,8 +174,10 @@ export async function scrapeList<Item>(options: ScrapeListOptions<Item>): Promis
     // The checked item with what the page and the carry-over say about it, which is logged once it is saved.
     let toSave: Scraped<Item> | undefined
     while (toSave === undefined) {
+      let fetched = false
       try {
         const html = await scraper.fetchPage(entry, get)
+        fetched = true
         fetchFailuresInARow = 0
         const parsed = scraper.parse(html, entry)
         const earlier = previous.get(entry)
@@ -181,7 +187,8 @@ export async function scrapeList<Item>(options: ScrapeListOptions<Item>): Promis
         toSave = { ...parsed, item: carried.item, warnings: [...(parsed.warnings ?? []), ...carried.warnings] }
       } catch (error) {
         const reason = error instanceof Error ? error.message : String(error)
-        const fetchFailed = !(error instanceof ParseError)
+        // Only fetchPage's errors, other than a ParseError, are fetch failures (see `maxConsecutiveFetchFailures`).
+        const fetchFailed = !fetched && !(error instanceof ParseError)
         if (fetchFailed) fetchFailuresInARow++
         // Waiting only helps when the site is the problem, and is pointless once the run is about to give up.
         if (fetchFailed && failCooldownMs > 0 && fetchFailuresInARow < maxConsecutiveFetchFailures) {

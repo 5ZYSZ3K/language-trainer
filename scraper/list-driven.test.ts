@@ -216,10 +216,16 @@ describe('scrapeList', () => {
   })
 
   describe('with a cooldown after failures', () => {
-    /** A `sleep` that records what it was asked to wait, together with the urls fetched up to then. */
+    /**
+     * A `sleep` that records what it was asked to wait, together with the urls fetched up to then. A run that naps
+     * more than 20 times is retrying forever, so the 21st nap throws to end it.
+     */
     function sleeper(urls: string[]) {
       const naps: { ms: number; fetchedBefore: string[] }[] = []
-      const sleep = async (ms: number) => void naps.push({ ms, fetchedBefore: [...urls] })
+      const sleep = async (ms: number) => {
+        if (naps.length >= 20) throw new Error('still cooling down after 20 naps')
+        naps.push({ ms, fetchedBefore: [...urls] })
+      }
       return { sleep, naps }
     }
 
@@ -314,6 +320,66 @@ describe('scrapeList', () => {
       expect(naps).toEqual([])
       expect(urls).toEqual(['page:bad one', 'page:empty one', 'page:a'])
       expect(result.failures.map((f) => f.entry)).toEqual(['bad one', 'empty one'])
+    })
+
+    it("fails a word whose fetched entry the adapter's parser chokes on, without waiting or fetching it again", async () => {
+      const message = "Cannot read properties of undefined (reading 'text')"
+      const buggy: EntryScraper<Item> = {
+        ...stub,
+        parse(html, entry) {
+          if (entry === 'a') throw new TypeError(message)
+          return stub.parse(html, entry)
+        },
+      }
+      const { get, urls } = recordingGet()
+      const { sleep, naps } = sleeper(urls)
+      const lines: string[] = []
+      const result = await scrapeList({
+        scraper: buggy, contract: stubContract,
+        entries: ['a', 'b'],
+        existing: [],
+        force: false,
+        get,
+        save: noSave,
+        failCooldownMs: 1000,
+        sleep,
+        log: (line) => void lines.push(line),
+      })
+      expect(urls).toEqual(['page:a', 'page:b'])
+      expect(naps).toEqual([])
+      expect(result.failures).toEqual([{ entry: 'a', reason: message }])
+      expect(result.items.map((i) => i.prompt)).toEqual(['b'])
+      expect(lines).toEqual([`FAILED a (1/2): ${message}`, 'ok     b (2/2)'])
+    })
+
+    it('fails a word whose carry-over throws, without waiting or fetching it again', async () => {
+      const message = "Cannot read properties of undefined (reading 'remarks')"
+      const throwing: Contract<Item> = {
+        ...stubContract,
+        carryOver(_previous, fresh) {
+          if (fresh.prompt === 'a') throw new TypeError(message)
+          return { item: fresh, warnings: [] }
+        },
+      }
+      const { get, urls } = recordingGet()
+      const { sleep, naps } = sleeper(urls)
+      const lines: string[] = []
+      const result = await scrapeList({
+        scraper: stub, contract: throwing,
+        entries: ['a', 'b'],
+        existing: [stored('a'), stored('b')],
+        force: true,
+        get,
+        save: noSave,
+        failCooldownMs: 1000,
+        sleep,
+        log: (line) => void lines.push(line),
+      })
+      expect(urls).toEqual(['page:a', 'page:b'])
+      expect(naps).toEqual([])
+      expect(result.failures).toEqual([{ entry: 'a', reason: message }])
+      expect(result.items).toEqual([stored('a'), stub.parse('page:b', 'b').item])
+      expect(lines).toEqual([`FAILED a (1/2): ${message}`, 'ok     b (2/2)'])
     })
 
     it('does not wait at all when no cooldown is set, as before', async () => {
