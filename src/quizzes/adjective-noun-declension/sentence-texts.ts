@@ -2,8 +2,8 @@ import type { CaseId, GrammaticalNumber } from '../noun-declension/cells'
 
 /**
  * The texts every sentence quiz has, for the cases `C` it offers: what the shared page shows on its behalf (see
- * sentence-mount.ts and filter-dialog.ts). A quiz's texts also name its first field, `field.<kind>`, and hold its title,
- * name, intro, empty status and meters.
+ * sentence-mount.ts and filter-dialog.ts). A quiz's texts also name its fields (`field.<kind>`, and `field.noun` in a
+ * quiz of two fields), and hold its title, name, intro, empty status and meters.
  */
 export type SentenceTextKey<C extends CaseId = CaseId> =
   | `case.${C}`
@@ -13,10 +13,9 @@ export type SentenceTextKey<C extends CaseId = CaseId> =
    * — 3. dative, singular"), and the name of its checkbox in the filter. `{case}` and `{number}` stand for the two.
    */
   | 'form'
-  | 'field.noun'
   /** In place of the sentence, when the filter leaves nothing to ask for. */
   | 'nothing'
-  /** The button that starts the next sentence, once both fields are checked. */
+  /** The button that starts the next sentence, once every field is checked. */
   | 'next'
   | 'filters.open'
   | 'filters.title'

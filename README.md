@@ -462,11 +462,15 @@ src/
                is), its adapter to the quiz's ids (cs.ts) and the generators by language (generators.ts), the
                governing verbs of each learned language (governing-verbs.<id>.ts, read only by the joins), what fills
                its first blank (draw.ts, page.ts) and its mount (mount.ts). It also holds what every sentence quiz
-               shares, each part taking what fills the first blank, the cases the quiz offers, its texts and its
-               meters: the items and their contract checks (sentence-items.ts), the draw of a round
-               (sentence-draw.ts), the filter dialog's ticks while it is open (filter.ts, over the noun quiz's
-               filter) and the page without its DOM (sentence-page.ts), all pure and tested, the texts every sentence
-               quiz has (sentence-texts.ts), and the DOM that draws the page (sentence-mount.ts, filter-dialog.ts);
+               shares, each part taking the cases the quiz offers, its texts and its meters: the items and their
+               contract checks (sentence-items.ts), the draw of a round and its steps, the noun, the case and number
+               and the verb's person (sentence-draw.ts), the filter dialog's ticks while it is open (filter.ts, over
+               the noun quiz's filter) and the page without its DOM (sentence-page.ts: SentenceRoundPage, the page of
+               any sentence quiz whatever its round holds, and SentenceQuizPage, the page of a quiz of two fields that
+               takes what fills the first blank), all pure and tested, the texts every sentence quiz has
+               (sentence-texts.ts), and the DOM that draws the page (sentence-mount.ts: mountSentenceRounds, the page
+               around the quiz's own view of its round, and mountSentenceQuiz, the view of two fields;
+               filter-dialog.ts);
                demonstrative-noun-declension is a sentence quiz made of them: its contract (items.ts), the owner's
                Czech demonstrative pronoun table (pointing-pronouns.ts, used as it is), its adapter to the quiz's ids
                (cs.ts) and the tables by language (tables.ts), what fills its first blank (page.ts), all pure and
@@ -526,12 +530,15 @@ typed lists; nothing is discovered dynamically.
   `carryOver` hook, so that a forced scrape keeps it. Its id is permanent. The selector picks it up by itself.
 - **A sentence quiz** (see the glossary) is such a quiz type built from what the sentence quizzes share, in
   `src/quizzes/adjective-noun-declension/`. Its noun item is a `SentenceNounItem` (sentence-items.ts, with the checks its
-  contract is made of). Its rules (`SentenceQuizRules`: what fills the first blank, with its base form for a noun and its
-  accepted forms in a case and number, and the cases the quiz offers) and its meters make its `SentenceQuizPage`
-  (sentence-page.ts). Its texts have every `SentenceTextKey` of its cases (sentence-texts.ts) and `field.<kind>`, the
-  first field's label; its mount hands the page and its translator to `mountSentenceQuiz` (sentence-mount.ts). Its
-  dataset is a joined dataset (below) whose join is `joinSentenceQuiz` (`scripts/joins/sentence.ts`) with the quiz's own
-  `SentenceNounRules`.
+  contract is made of). A quiz of two fields, a word and the noun after the verb form, is a `SentenceQuizPage`
+  (sentence-page.ts) made of its rules (`SentenceQuizRules`: what fills the first blank, with its base form for a noun and
+  its accepted forms in a case and number, and the cases the quiz offers) and its meters; its texts have every
+  `SentenceTextKey` of its cases (sentence-texts.ts), `field.<kind>`, the first field's label, and `field.noun`; its mount
+  hands the page and its translator to `mountSentenceQuiz` (sentence-mount.ts). Any other sentence quiz extends
+  `SentenceRoundPage` with its own draw (made of the steps in sentence-draw.ts) and the cells its round asks, and hands
+  the page, its translator and its own view of the round to `mountSentenceRounds`. Its dataset is a joined dataset
+  (below) whose join is `joinSentenceQuiz` (`scripts/joins/sentence.ts`) with the quiz's own `SentenceNounRules` and
+  `SentenceVerbRules` (`GOVERNING_VERBS` takes the governing verb items as they are).
 - **A source.** (It shows up in the selector as soon as a second source provides something for the language.)
   Add `src/sources/<id>.ts` (name, url, trust, license, attribution, `provides`) and register it
   in `src/sources/index.ts`. Add `scraper/sources/<id>/` with a request policy and one adapter per provided

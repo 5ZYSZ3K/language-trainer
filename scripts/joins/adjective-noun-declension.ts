@@ -3,7 +3,7 @@ import { czechGoverningVerbs } from '../../src/quizzes/adjective-noun-declension
 import { adjectiveNounContract, type AdjectiveNounItem, type PairedNounItem } from '../../src/quizzes/adjective-noun-declension/items'
 import { partsOf } from '../../src/quizzes/noun-declension'
 import type { Join, JoinResult } from './join'
-import { CZECH_NOUNS, CZECH_PAIRING, CZECH_VERBS, czechSentenceInputs, joinSentenceQuiz, type SentenceJoinInputs, type SentenceNounRules } from './sentence'
+import { CZECH_NOUNS, CZECH_PAIRING, CZECH_VERBS, czechSentenceInputs, GOVERNING_VERBS, joinSentenceQuiz, type SentenceJoinInputs, type SentenceNounRules } from './sentence'
 
 export interface AdjectiveNounJoinInputs extends SentenceJoinInputs {
   /** The learned language's adjective declension generator, which every adjective must decline with. */
@@ -18,7 +18,7 @@ export interface AdjectiveNounJoinInputs extends SentenceJoinInputs {
  * its noun, or a plural gender is not one the generator knows.
  */
 export function joinAdjectivesWithNouns({ generator, ...inputs }: AdjectiveNounJoinInputs): JoinResult<AdjectiveNounItem> {
-  return joinSentenceQuiz(inputs, adjectiveNouns(generator), adjectiveNounContract)
+  return joinSentenceQuiz(inputs, adjectiveNouns(generator), adjectiveNounContract, GOVERNING_VERBS)
 }
 
 /** The nouns of adjectives with nouns: each with the pairing's adjectives, which must all decline in each of its cells. */

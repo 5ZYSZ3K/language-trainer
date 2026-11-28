@@ -37,7 +37,7 @@ export function splitItems<Noun extends SentenceNounItem>(items: readonly (Noun 
 }
 
 /** One of `choices`, all equally likely. */
-const pick = <T>(choices: readonly T[], random: () => number): T => pickNext(choices, undefined, random)
+export const pick = <T>(choices: readonly T[], random: () => number): T => pickNext(choices, undefined, random)
 
 /**
  * The numbers a round on `noun` may ask for in a case: those the filter has ticked in it and the noun has (`dveře` has
@@ -57,13 +57,53 @@ const casesOf = <C extends CaseId>(cases: readonly C[], noun: SentenceNounItem, 
   cases.filter((caseId) => numbersIn(noun, caseId, filter).length > 0 && (!isGoverningCase(caseId) || verbs.some((verb) => verb.case === caseId)))
 
 /**
- * A new round, each part drawn uniformly in turn: a noun (never `previous` again, unless it is the only one), the first
- * blank's word for it (`rules.baseForm`), a case, a number, a governing verb followed by that case and a person and
- * number for the verb. The case is one the quiz offers where the filter ticks a form the noun has, and some governing
- * verb is followed by it (the vocative needs none); the number is one the filter ticks in that case and the noun has. A
- * noun is drawn only if it has such a case. A verb with a subject is always in the third person (`to je`), and in the
- * nominative the verb's number follows the noun's (`to jsou dobří advokáti`); the vocative has no verb. Undefined when
- * nothing is left to draw.
+ * The noun of a new round, drawn uniformly (never `previous` again, unless it is the only one) among those with a case
+ * left to ask among `cases` (see drawForm). Undefined when no noun has one.
+ */
+export function drawNoun<Noun extends SentenceNounItem>(
+  cases: readonly CaseId[],
+  nouns: readonly Noun[],
+  verbs: readonly GoverningVerbItem[],
+  filter: CellFilter,
+  previous: Noun | undefined,
+  random: () => number,
+): Noun | undefined {
+  const eligible = nouns.filter((noun) => casesOf(cases, noun, verbs, filter).length > 0)
+  return eligible.length === 0 ? undefined : pickNext(eligible, previous, random)
+}
+
+/**
+ * The case and the number of a round on `noun`, a noun drawNoun gave, each drawn uniformly in turn: a case among `cases`
+ * where the filter ticks a form the noun has and some governing verb is followed by it (the vocative needs none), then a
+ * number the filter ticks in that case and the noun has.
+ */
+export function drawForm<C extends CaseId>(
+  cases: readonly C[],
+  noun: SentenceNounItem,
+  verbs: readonly GoverningVerbItem[],
+  filter: CellFilter,
+  random: () => number,
+): { readonly caseId: C; readonly number: GrammaticalNumber } {
+  const caseId = pick(casesOf(cases, noun, verbs, filter), random)
+  return { caseId, number: pick(numbersIn(noun, caseId, filter), random) }
+}
+
+/**
+ * The person and number of a governing verb's form in a round in `caseId` and `number`, drawn uniformly: a verb with a
+ * subject is always in the third person (`to je`), and in the nominative the verb's number follows the noun's (`to jsou
+ * dobří advokáti`).
+ */
+export function drawPerson(verb: GoverningVerbItem, caseId: CaseId, number: GrammaticalNumber, random: () => number): Person {
+  const persons = PERSONS.filter(
+    (person) => (verb.subject === undefined || person.startsWith('3')) && (caseId !== 'nom' || person.endsWith(number)),
+  )
+  return pick(persons, random)
+}
+
+/**
+ * A new round, each part drawn uniformly in turn: a noun (see drawNoun), the first blank's word for it
+ * (`rules.baseForm`), a case and a number (see drawForm), a governing verb followed by that case, and a person and
+ * number for the verb (see drawPerson). The vocative has no verb. Undefined when nothing is left to draw.
  */
 export function drawSentenceOf<Noun extends SentenceNounItem, Kind extends string, C extends CaseId>(
   rules: SentenceRules<Noun, Kind, C>,
@@ -73,21 +113,15 @@ export function drawSentenceOf<Noun extends SentenceNounItem, Kind extends strin
   previous: Noun | undefined,
   random: () => number,
 ): SentenceDraw<Noun, Kind, C> | undefined {
-  const eligible = nouns.filter((noun) => casesOf(rules.cases, noun, verbs, filter).length > 0)
-  if (eligible.length === 0) return undefined
-
-  const noun = pickNext(eligible, previous, random)
+  const noun = drawNoun(rules.cases, nouns, verbs, filter, previous, random)
+  if (!noun) return undefined
   const word = named(rules.kind, rules.baseForm(noun, random))
-  const caseId = pick(casesOf(rules.cases, noun, verbs, filter), random)
-  const number = pick(numbersIn(noun, caseId, filter), random)
+  const { caseId, number } = drawForm(rules.cases, noun, verbs, filter, random)
   if (!isGoverningCase(caseId)) return { noun, ...word, caseId, number }
 
   const item = pick(
     verbs.filter((verb) => verb.case === caseId),
     random,
   )
-  const persons = PERSONS.filter(
-    (person) => (item.subject === undefined || person.startsWith('3')) && (caseId !== 'nom' || person.endsWith(number)),
-  )
-  return { noun, ...word, caseId, number, verb: { item, person: pick(persons, random) } }
+  return { noun, ...word, caseId, number, verb: { item, person: drawPerson(item, caseId, number, random) } }
 }

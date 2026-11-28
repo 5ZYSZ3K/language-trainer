@@ -3,7 +3,7 @@ import { isGoverningCase, type SentenceNounItem } from '../../src/quizzes/adject
 import { DEMONSTRATIVE_TABLES, demonstrativeNounContract, type DemonstrativeNounItem, type DemonstrativeTable } from '../../src/quizzes/demonstrative-noun-declension'
 import { partsOf } from '../../src/quizzes/noun-declension'
 import type { Join, JoinResult } from './join'
-import { CZECH_NOUNS, CZECH_PAIRING, CZECH_VERBS, czechSentenceInputs, joinSentenceQuiz, type SentenceJoinInputs, type SentenceNounRules } from './sentence'
+import { CZECH_NOUNS, CZECH_PAIRING, CZECH_VERBS, czechSentenceInputs, GOVERNING_VERBS, joinSentenceQuiz, type SentenceJoinInputs, type SentenceNounRules } from './sentence'
 
 export interface DemonstrativeNounJoinInputs extends SentenceJoinInputs {
   /** The learned language's demonstrative pronoun table, which must give a form for every cell of every noun. */
@@ -18,7 +18,7 @@ export interface DemonstrativeNounJoinInputs extends SentenceJoinInputs {
  * gender is not one the table knows.
  */
 export function joinDemonstrativesWithNouns({ table, ...inputs }: DemonstrativeNounJoinInputs): JoinResult<DemonstrativeNounItem> {
-  return joinSentenceQuiz(inputs, demonstrativeNouns(table), demonstrativeNounContract)
+  return joinSentenceQuiz(inputs, demonstrativeNouns(table), demonstrativeNounContract, GOVERNING_VERBS)
 }
 
 /** The nouns of demonstratives with nouns: each without its vocative cells, and with a form of the pronoun in each other one. */

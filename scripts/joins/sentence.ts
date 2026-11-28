@@ -42,6 +42,15 @@ export interface SentenceNounRules<Noun extends SentenceNounItem, Own> {
   problems(item: Noun, noun: string): string[]
 }
 
+/** How one sentence quiz makes its governing verb items from what they all share (see GoverningVerbItem). */
+export interface SentenceVerbRules<Verb extends GoverningVerbItem> {
+  /** The quiz's item for a governing verb, adding every problem with it to `problems` (`verb` names it in the messages). */
+  make(item: GoverningVerbItem, verb: string, problems: string[]): Verb
+}
+
+/** The governing verb items as they are: what adjectives with nouns and demonstratives with nouns make. */
+export const GOVERNING_VERBS: SentenceVerbRules<GoverningVerbItem> = { make: (item) => item }
+
 /** The remark of a noun's variant that the sentence quizzes drop: the noun always ends the phrase. */
 const NON_FINAL = 'non-final' satisfies NounRemarkCode
 /** The remark they refuse in the instrumental plural (`INS_PL`): the dual is not designed for them yet. */
@@ -51,28 +60,29 @@ const INS_PL = nounCellId('ins', 'pl')
 /**
  * The dataset of a sentence quiz, joined from the pairing, the noun and verb datasets and the governing verbs: the nouns
  * in pairing order (each made by `rules`, from its noun dataset cells without the variants marked `non-final` and
- * without any remark), then the verbs in module order (see GoverningVerbItem). A verb's forms are the first variant of
- * each person, unless the entry names another. Nothing is made, and every problem is listed, if a pairing noun is not
- * in the noun dataset or its gender differs there, a plural gender is not one of `rules.genders`, a noun's `ins-pl` has
- * a dual variant, the quiz's own checks fail (`rules.own`, `rules.problems`), a governing verb is not in the verb
- * dataset or names a variant it lacks, a case other than the vocative has no governing verb, or an item made breaks
- * `contract`.
+ * without any remark), then the verbs in module order (each made by `verbRules` from its GoverningVerbItem). A verb's
+ * forms are the first variant of each person, unless the entry names another. Nothing is made, and every problem is
+ * listed, if a pairing noun is not in the noun dataset or its gender differs there, a plural gender is not one of
+ * `rules.genders`, a noun's `ins-pl` has a dual variant, the quiz's own checks fail (`rules.own`, `rules.problems`,
+ * `verbRules.make`), a governing verb is not in the verb dataset or names a variant it lacks, a case other than the
+ * vocative has no governing verb, or an item made breaks `contract`.
  */
-export function joinSentenceQuiz<Noun extends SentenceNounItem, Own>(
+export function joinSentenceQuiz<Noun extends SentenceNounItem, Own, Verb extends GoverningVerbItem>(
   inputs: SentenceJoinInputs,
   rules: SentenceNounRules<Noun, Own>,
-  contract: Contract<Noun | GoverningVerbItem>,
-): JoinResult<Noun | GoverningVerbItem> {
+  contract: Contract<Noun | Verb>,
+  verbRules: SentenceVerbRules<Verb>,
+): JoinResult<Noun | Verb> {
   const problems: string[] = []
   const nouns = joinNouns(inputs, rules, problems)
-  const verbs = joinVerbs(inputs, problems)
+  const verbs = joinVerbs(inputs, verbRules, problems)
 
   for (const caseId of GOVERNING_CASES) {
     if (!inputs.governingVerbs.some((entry) => entry.case === caseId)) problems.push(`no governing verb is followed by the case ${caseId}`)
   }
 
   // Whatever the join makes must satisfy the quiz's contract: a dataset holds only valid items.
-  const items: (Noun | GoverningVerbItem)[] = [...nouns, ...verbs]
+  const items: (Noun | Verb)[] = [...nouns, ...verbs]
   for (const item of items) {
     const what = item.kind === 'noun' ? `noun ${JSON.stringify(item.prompt)}` : `governing verb ${JSON.stringify(verbName(item))}`
     for (const problem of contract.validateItem(item)) problems.push(`${what}: ${problem}`)
@@ -171,10 +181,10 @@ function finalCell(cell: Cell): Cell {
   return { id: cell.id, acceptedForms: cell.acceptedForms.filter((variant) => !variant.remarks?.includes(NON_FINAL)).map(({ value }) => ({ value })) }
 }
 
-function joinVerbs({ verbs, governingVerbs }: SentenceJoinInputs, problems: string[]): GoverningVerbItem[] {
+function joinVerbs<Verb extends GoverningVerbItem>({ verbs, governingVerbs }: SentenceJoinInputs, rules: SentenceVerbRules<Verb>, problems: string[]): Verb[] {
   const { valid, invalid } = byPrompt<Item>(verbs, (value) => verbPresentTenseContract.validateItem(value))
 
-  return governingVerbs.flatMap((entry): GoverningVerbItem[] => {
+  return governingVerbs.flatMap((entry): Verb[] => {
     const what = `governing verb ${JSON.stringify(verbName(entry))}`
     const item = valid.get(entry.verb)
     if (!item) {
@@ -193,16 +203,15 @@ function joinVerbs({ verbs, governingVerbs }: SentenceJoinInputs, problems: stri
       }),
     ) as Record<Person, string>
     if (problems.length > before) return []
-    return [
-      {
-        kind: 'verb',
-        verb: entry.verb,
-        ...(entry.subject === undefined ? {} : { subject: entry.subject }),
-        ...(entry.preposition === undefined ? {} : { preposition: entry.preposition }),
-        case: entry.case,
-        forms,
-      },
-    ]
+    const made: GoverningVerbItem = {
+      kind: 'verb',
+      verb: entry.verb,
+      ...(entry.subject === undefined ? {} : { subject: entry.subject }),
+      ...(entry.preposition === undefined ? {} : { preposition: entry.preposition }),
+      case: entry.case,
+      forms,
+    }
+    return [rules.make(made, what, problems)]
   })
 }
 
