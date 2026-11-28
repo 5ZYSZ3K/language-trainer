@@ -1,4 +1,3 @@
-import { czechGoverningVerbs } from '../../src/quizzes/adjective-noun-declension/governing-verbs.cs'
 import { isGoverningCase, PERSONS, type Person, type SentenceNounItem } from '../../src/quizzes/adjective-noun-declension/sentence-items'
 import { agreementOf } from '../../src/quizzes/adjective-noun-declension/sentence-page'
 import { partsOf } from '../../src/quizzes/noun-declension'
@@ -14,16 +13,7 @@ import {
   type PronounVerbItem,
 } from '../../src/quizzes/personal-pronoun-declension'
 import type { Join, JoinResult } from './join'
-import {
-  CZECH_NOUNS,
-  CZECH_PAIRING,
-  CZECH_VERBS,
-  czechSentenceInputs,
-  joinSentenceQuiz,
-  type SentenceJoinInputs,
-  type SentenceNounRules,
-  type SentenceVerbRules,
-} from './sentence'
+import { czechSentenceJoin, joinSentenceQuiz, nounsWithoutVocative, type SentenceJoinInputs, type SentenceVerbRules } from './sentence'
 
 export interface PersonalPronounJoinInputs extends SentenceJoinInputs {
   /** The learned language's personal pronoun table, which must give a form for every cell of every noun, in every position. */
@@ -39,20 +29,9 @@ export interface PersonalPronounJoinInputs extends SentenceJoinInputs {
  * is not one the table knows, or a reflexive verb's form does not end with its particle.
  */
 export function joinPersonalPronouns({ table, ...inputs }: PersonalPronounJoinInputs): JoinResult<PersonalPronounItem> {
-  return joinSentenceQuiz(inputs, pronounNouns(table), personalPronounContract, REFLEXIVE_APART)
+  const nouns = nounsWithoutVocative(table.genders, 'the personal pronoun', (noun) => formProblem(table, noun))
+  return joinSentenceQuiz(inputs, nouns, personalPronounContract, REFLEXIVE_APART)
 }
-
-/** The nouns of personal pronouns: each without its vocative cells, and with a form of the pronoun in each other one. */
-const pronounNouns = (table: PersonalPronounTable): SentenceNounRules<SentenceNounItem, true> => ({
-  entry: 'a noun and its gender',
-  genders: table.genders,
-  own: () => true,
-  make: ({ cells, ...noun }) => ({ ...noun, cells: cells.filter((cell) => isGoverningCase(partsOf(cell.id)?.caseId)) }),
-  problems(item, noun) {
-    const problem = formProblem(table, item)
-    return problem === undefined ? [] : [`${noun}: the personal pronoun has no form in ${problem}`]
-  },
-})
 
 const POSITION_NAMES: Readonly<Record<Position, string>> = { 'after-verb': 'after the verb', 'after-preposition': 'after a preposition', start: 'at the start' }
 
@@ -102,17 +81,10 @@ const REFLEXIVE_APART: SentenceVerbRules<PronounVerbItem> = {
  * `lists/cs/adjective-noun-declension.json`, `cs/prirucka/noun-declension`, `cs/prirucka/verb-present-tense` and the
  * Czech governing verbs.
  */
-export const czechPersonalPronouns: Join = {
-  pool: { language: 'cs', source: 'language-trainer', quizType: 'personal-pronoun-declension' },
+export const czechPersonalPronouns: Join = czechSentenceJoin({
+  quizType: 'personal-pronoun-declension',
   command: 'npm run join:cs:personal-pronouns',
-  datasets: [CZECH_NOUNS, CZECH_VERBS],
-  lists: [CZECH_PAIRING],
-  make({ data, lists }) {
-    const problems: string[] = []
-    const inputs = czechSentenceInputs(data, lists, problems)
-    const table = PERSONAL_PRONOUN_TABLES.cs
-    if (!table) problems.push('there is no Czech personal pronoun table')
-    if (problems.length > 0 || !inputs || !table) return { items: [], problems }
-    return joinPersonalPronouns({ ...inputs, governingVerbs: czechGoverningVerbs, table })
-  },
-}
+  declensions: PERSONAL_PRONOUN_TABLES,
+  declensionName: 'personal pronoun table',
+  join: (inputs, table) => joinPersonalPronouns({ ...inputs, table }),
+})

@@ -568,8 +568,9 @@ typed lists; nothing is discovered dynamically.
   hands the page and its translator to `mountSentenceQuiz` (sentence-mount.ts). Any other sentence quiz extends
   `SentenceRoundPage` with its own draw (made of the steps in sentence-draw.ts) and the cells its round asks, and hands
   the page, its translator and its own view of the round to `mountSentenceRounds`. Its dataset is a joined dataset
-  (below) whose join is `joinSentenceQuiz` (`scripts/joins/sentence.ts`) with the quiz's own `SentenceNounRules` and
-  `SentenceVerbRules` (`GOVERNING_VERBS` takes the governing verb items as they are).
+  (below) whose join is `joinSentenceQuiz` (`scripts/joins/sentence.ts`) with the quiz's own `SentenceNounRules`
+  (`nounsWithoutVocative` makes the nouns of a quiz without the vocative) and `SentenceVerbRules` (`VERBS_AS_THEY_ARE`
+  takes the governing verb items as they are); a Czech one's `Join` is made by `czechSentenceJoin`.
 - **A source.** (It shows up in the selector as soon as a second source provides something for the language.)
   Add `src/sources/<id>.ts` (name, url, trust, license, attribution, `provides`) and register it
   in `src/sources/index.ts`. Add `scraper/sources/<id>/` with a request policy and one adapter per provided

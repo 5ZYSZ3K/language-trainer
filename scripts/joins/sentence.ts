@@ -3,10 +3,18 @@ import type { Contract } from '../../src/core/contract'
 import { isRecord } from '../../src/core/is-record'
 import { datasetPath, poolKey, type Pool } from '../../src/datasets/pool'
 import type { GoverningVerb } from '../../src/quizzes/adjective-noun-declension/governing-verbs'
-import { GOVERNING_CASES, PERSONS, type GoverningVerbItem, type Person, type SentenceNounItem } from '../../src/quizzes/adjective-noun-declension/sentence-items'
-import { nounCellId, nounDeclensionContract, type NounItem, type NounRemarkCode } from '../../src/quizzes/noun-declension'
+import { czechGoverningVerbs } from '../../src/quizzes/adjective-noun-declension/governing-verbs.cs'
+import {
+  GOVERNING_CASES,
+  isGoverningCase,
+  PERSONS,
+  type GoverningVerbItem,
+  type Person,
+  type SentenceNounItem,
+} from '../../src/quizzes/adjective-noun-declension/sentence-items'
+import { nounCellId, nounDeclensionContract, partsOf, type NounItem, type NounRemarkCode } from '../../src/quizzes/noun-declension'
 import { verbPresentTenseContract } from '../../src/quizzes/verb-present-tense'
-import { parseInput, type JoinResult } from './join'
+import { parseInput, type Join, type JoinResult } from './join'
 
 // What the joins of the sentence quizzes share: they read the same pairing, noun and verb datasets and governing verbs,
 // and make the same governing verb items; each makes its nouns its own way (see SentenceNounRules).
@@ -48,8 +56,32 @@ export interface SentenceVerbRules<Verb extends GoverningVerbItem> {
   make(item: GoverningVerbItem, verb: string, problems: string[]): Verb
 }
 
+/**
+ * The nouns of a sentence quiz whose first blank's word has no vocative (demonstratives with nouns, personal pronouns):
+ * read from the pairing's nouns alone, not their adjectives, and each without its vocative cells, which the quiz never
+ * asks. A noun is refused where `formProblem` finds a cell the word has no form in; `word` names the word in the
+ * message (`the demonstrative pronoun`).
+ */
+export function nounsWithoutVocative(
+  genders: readonly string[],
+  word: string,
+  formProblem: (noun: SentenceNounItem) => string | undefined,
+): SentenceNounRules<SentenceNounItem, true> {
+  return {
+    entry: 'a noun and its gender',
+    genders,
+    // Nothing of a pairing entry is read but the noun and its genders, which every sentence quiz reads.
+    own: () => true,
+    make: ({ cells, ...noun }) => ({ ...noun, cells: cells.filter((cell) => isGoverningCase(partsOf(cell.id)?.caseId)) }),
+    problems(item, noun) {
+      const problem = formProblem(item)
+      return problem === undefined ? [] : [`${noun}: ${word} has no form in ${problem}`]
+    },
+  }
+}
+
 /** The governing verb items as they are: what adjectives with nouns and demonstratives with nouns make. */
-export const GOVERNING_VERBS: SentenceVerbRules<GoverningVerbItem> = { make: (item) => item }
+export const VERBS_AS_THEY_ARE: SentenceVerbRules<GoverningVerbItem> = { make: (item) => item }
 
 /** The remark of a noun's variant that the sentence quizzes drop: the noun always ends the phrase. */
 const NON_FINAL = 'non-final' satisfies NounRemarkCode
@@ -222,8 +254,44 @@ export const CZECH_VERBS: Pool = { language: 'cs', source: 'prirucka', quizType:
 /** The Czech pairing, below lists/: the nouns of every Czech sentence quiz, with the adjectives each may be paired with. */
 export const CZECH_PAIRING = 'cs/adjective-noun-declension.json'
 
+/** What makes the join of a Czech sentence quiz: its dataset and npm script, and how it joins its inputs. */
+export interface CzechSentenceJoin<Declension> {
+  /** The quiz type of the dataset it makes, `cs/language-trainer/<quizType>`. */
+  readonly quizType: string
+  /** The npm script that writes it. */
+  readonly command: string
+  /** What declines the quiz's first blank's word, by language id: its generators or its tables. */
+  readonly declensions: Readonly<Partial<Record<string, Declension>>>
+  /** What `declensions` holds, as the problem names it when there is none for Czech (`demonstrative pronoun table`). */
+  readonly declensionName: string
+  /** The dataset, from the inputs every Czech sentence quiz reads and the Czech generator or table. */
+  join(inputs: SentenceJoinInputs, declension: Declension): JoinResult
+}
+
+/**
+ * The join of a Czech sentence quiz: from `lists/cs/adjective-noun-declension.json`, `cs/prirucka/noun-declension`,
+ * `cs/prirucka/verb-present-tense`, the Czech governing verbs and the Czech one of `declensions`. Nothing is made, and
+ * every problem is listed, if an input cannot be read or there is no Czech one.
+ */
+export function czechSentenceJoin<Declension>({ quizType, command, declensions, declensionName, join }: CzechSentenceJoin<Declension>): Join {
+  return {
+    pool: { language: 'cs', source: 'language-trainer', quizType },
+    command,
+    datasets: [CZECH_NOUNS, CZECH_VERBS],
+    lists: [CZECH_PAIRING],
+    make({ data, lists }) {
+      const problems: string[] = []
+      const inputs = czechSentenceInputs(data, lists, problems)
+      const declension = declensions.cs
+      if (!declension) problems.push(`there is no Czech ${declensionName}`)
+      if (problems.length > 0 || !inputs || !declension) return { items: [], problems }
+      return join({ ...inputs, governingVerbs: czechGoverningVerbs }, declension)
+    },
+  }
+}
+
 /** The pairing, the noun dataset and the verb dataset of a Czech sentence quiz, as read; undefined, with every problem, if one cannot be read. */
-export function czechSentenceInputs(
+function czechSentenceInputs(
   data: Readonly<Record<string, string>>,
   lists: Readonly<Record<string, string>>,
   problems: string[],

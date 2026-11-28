@@ -1,10 +1,9 @@
 import { ADJECTIVE_DECLENSION_GENERATORS, type AdjectiveDeclensionGenerator } from '../../src/quizzes/adjective-noun-declension/generators'
-import { czechGoverningVerbs } from '../../src/quizzes/adjective-noun-declension/governing-verbs.cs'
 import { adjectiveNounContract, type AdjectiveNounItem, type PairedNounItem } from '../../src/quizzes/adjective-noun-declension/items'
 import { agreementOf } from '../../src/quizzes/adjective-noun-declension/sentence-page'
 import { partsOf } from '../../src/quizzes/noun-declension'
 import type { Join, JoinResult } from './join'
-import { CZECH_NOUNS, CZECH_PAIRING, CZECH_VERBS, czechSentenceInputs, GOVERNING_VERBS, joinSentenceQuiz, type SentenceJoinInputs, type SentenceNounRules } from './sentence'
+import { czechSentenceJoin, joinSentenceQuiz, VERBS_AS_THEY_ARE, type SentenceJoinInputs, type SentenceNounRules } from './sentence'
 
 export interface AdjectiveNounJoinInputs extends SentenceJoinInputs {
   /** The learned language's adjective declension generator, which every adjective must decline with. */
@@ -19,7 +18,7 @@ export interface AdjectiveNounJoinInputs extends SentenceJoinInputs {
  * its noun, or a plural gender is not one the generator knows.
  */
 export function joinAdjectivesWithNouns({ generator, ...inputs }: AdjectiveNounJoinInputs): JoinResult<AdjectiveNounItem> {
-  return joinSentenceQuiz(inputs, adjectiveNouns(generator), adjectiveNounContract, GOVERNING_VERBS)
+  return joinSentenceQuiz(inputs, adjectiveNouns(generator), adjectiveNounContract, VERBS_AS_THEY_ARE)
 }
 
 /** The nouns of adjectives with nouns: each with the pairing's adjectives, which must all decline in each of its cells. */
@@ -72,17 +71,10 @@ function declensionProblem(generator: AdjectiveDeclensionGenerator, noun: Paired
  * `npm run join:cs:adjectives`: the Czech adjectives with nouns, from `lists/cs/adjective-noun-declension.json`,
  * `cs/prirucka/noun-declension`, `cs/prirucka/verb-present-tense` and the Czech governing verbs.
  */
-export const czechAdjectivesWithNouns: Join = {
-  pool: { language: 'cs', source: 'language-trainer', quizType: 'adjective-noun-declension' },
+export const czechAdjectivesWithNouns: Join = czechSentenceJoin({
+  quizType: 'adjective-noun-declension',
   command: 'npm run join:cs:adjectives',
-  datasets: [CZECH_NOUNS, CZECH_VERBS],
-  lists: [CZECH_PAIRING],
-  make({ data, lists }) {
-    const problems: string[] = []
-    const inputs = czechSentenceInputs(data, lists, problems)
-    const generator = ADJECTIVE_DECLENSION_GENERATORS.cs
-    if (!generator) problems.push('there is no Czech adjective declension generator')
-    if (problems.length > 0 || !inputs || !generator) return { items: [], problems }
-    return joinAdjectivesWithNouns({ ...inputs, governingVerbs: czechGoverningVerbs, generator })
-  },
-}
+  declensions: ADJECTIVE_DECLENSION_GENERATORS,
+  declensionName: 'adjective declension generator',
+  join: (inputs, generator) => joinAdjectivesWithNouns({ ...inputs, generator }),
+})
