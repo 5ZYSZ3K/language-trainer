@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { GOVERNING_CASES } from '../adjective-noun-declension/sentence-items'
-import { nounNumbers } from '../noun-declension/cells'
+import { GOVERNING_CASES, type GoverningCase } from '../adjective-noun-declension/sentence-items'
+import { nounNumbers, type GrammaticalNumber } from '../noun-declension/cells'
+import { pronoun, type GrammarCase, type GrammarGender, type GrammarNumber } from './base-pronouns'
 import { acceptedPronouns } from './positions'
 import { PERSONAL_PRONOUN_TABLES } from './tables'
 
@@ -10,6 +11,29 @@ const valuesOf = (variants: readonly { value: string }[]) => variants.map((varia
 
 /** Every form the quiz asks the pronoun in: each case but the vocative, each number, each gender. */
 const everyForm = GOVERNING_CASES.flatMap((caseId) => nounNumbers.flatMap((number) => czech.genders.map((gender) => ({ caseId, number, gender }))))
+
+// The owner's keys for the neutral ids, written out here rather than taken from the quiz's adapter, so that a test of
+// what the quiz accepts does not trust the adapter it goes through. The owner words the genders as the quiz does.
+const OWNER_CASES: Readonly<Record<GoverningCase, GrammarCase>> = {
+  nom: 'nominativ',
+  gen: 'genitiv',
+  dat: 'dativ',
+  acc: 'akuzativ',
+  loc: 'lokál',
+  ins: 'instrumentál',
+}
+const OWNER_NUMBERS: Readonly<Record<GrammaticalNumber, GrammarNumber>> = { sg: 'singular', pl: 'plural' }
+
+/** The owner's table's variants of a form after a preposition (base-pronouns.ts), each as a value with its remarks, if any. */
+function ownerFormsAfterPreposition({ caseId, number, gender }: (typeof everyForm)[number]) {
+  const variants: readonly (string | { readonly value: string; readonly remarks: readonly string[] })[] = pronoun(
+    OWNER_CASES[caseId],
+    OWNER_NUMBERS[number],
+    gender as GrammarGender,
+    true,
+  )
+  return variants.map((variant) => (typeof variant === 'string' ? { value: variant } : { value: variant.value, remarks: [...variant.remarks] }))
+}
 
 describe('the accepted forms of the personal pronoun, by the position of the noun it stands for', () => {
   const advokátovi = { caseId: 'dat', number: 'sg', gender: 'm. živ.' } as const
@@ -51,9 +75,9 @@ describe('the accepted forms of the personal pronoun, by the position of the nou
     }
   })
 
-  it('after a preposition, in every case, number and gender, are the table’s forms after a preposition and only those', () => {
+  it('after a preposition, in every case, number and gender, are the owner’s table’s forms after a preposition and only those', () => {
     for (const form of everyForm) {
-      expect(acceptedPronouns(czech, form, 'after-preposition'), JSON.stringify(form)).toEqual(czech.forms(form, true))
+      expect(acceptedPronouns(czech, form, 'after-preposition'), JSON.stringify(form)).toEqual(ownerFormsAfterPreposition(form))
     }
     // Where the table pairs the forms, none of those without a preposition is accepted after one.
     expect(valuesOf(acceptedPronouns(czech, { caseId: 'ins', number: 'pl', gender: 'ž.' }, 'after-preposition'))).toEqual(['nimi'])
