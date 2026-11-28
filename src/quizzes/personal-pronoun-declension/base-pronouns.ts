@@ -173,9 +173,9 @@ const pronounsMap = {
   },
 } as const;
 
-type GrammarCase = keyof typeof pronounsMap;
-type GrammarNumber = keyof (typeof pronounsMap)[GrammarCase];
-type GrammarGender = keyof (typeof pronounsMap)[GrammarCase][GrammarNumber];
+export type GrammarCase = keyof typeof pronounsMap;
+export type GrammarNumber = keyof (typeof pronounsMap)[GrammarCase];
+export type GrammarGender = keyof (typeof pronounsMap)[GrammarCase][GrammarNumber];
 
 export function pronoun(
   grammarCase: GrammarCase,
