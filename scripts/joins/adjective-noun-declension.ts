@@ -1,6 +1,7 @@
 import { ADJECTIVE_DECLENSION_GENERATORS, type AdjectiveDeclensionGenerator } from '../../src/quizzes/adjective-noun-declension/generators'
 import { czechGoverningVerbs } from '../../src/quizzes/adjective-noun-declension/governing-verbs.cs'
 import { adjectiveNounContract, type AdjectiveNounItem, type PairedNounItem } from '../../src/quizzes/adjective-noun-declension/items'
+import { agreementOf } from '../../src/quizzes/adjective-noun-declension/sentence-page'
 import { partsOf } from '../../src/quizzes/noun-declension'
 import type { Join, JoinResult } from './join'
 import { CZECH_NOUNS, CZECH_PAIRING, CZECH_VERBS, czechSentenceInputs, GOVERNING_VERBS, joinSentenceQuiz, type SentenceJoinInputs, type SentenceNounRules } from './sentence'
@@ -58,7 +59,7 @@ function declensionProblem(generator: AdjectiveDeclensionGenerator, noun: Paired
     const parts = partsOf(cell.id)
     if (!parts) continue
     try {
-      const forms = generator.decline(adjective, { ...parts, gender: noun.gender, pluralGender: noun.pluralGender })
+      const forms = generator.decline(adjective, agreementOf(noun, parts.caseId, parts.number))
       if (!forms.some((form) => form.trim() !== '')) return `${cell.id}: it gives no form`
     } catch (error) {
       return `${cell.id}: ${error instanceof Error ? error.message : String(error)}`

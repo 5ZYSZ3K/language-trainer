@@ -1,5 +1,6 @@
 import { czechGoverningVerbs } from '../../src/quizzes/adjective-noun-declension/governing-verbs.cs'
 import { isGoverningCase, PERSONS, type Person, type SentenceNounItem } from '../../src/quizzes/adjective-noun-declension/sentence-items'
+import { agreementOf } from '../../src/quizzes/adjective-noun-declension/sentence-page'
 import { partsOf } from '../../src/quizzes/noun-declension'
 import {
   acceptedPronouns,
@@ -63,7 +64,7 @@ function formProblem(table: PersonalPronounTable, noun: SentenceNounItem): strin
   for (const cell of noun.cells) {
     const parts = partsOf(cell.id)
     if (!parts || !isGoverningCase(parts.caseId)) continue
-    const form = { caseId: parts.caseId, number: parts.number, gender: noun.gender, pluralGender: noun.pluralGender }
+    const form = agreementOf(noun, parts.caseId, parts.number)
     try {
       const empty = POSITIONS.find((position) => acceptedPronouns(table, form, position).every((variant) => variant.value.trim() === ''))
       if (empty !== undefined) return `${cell.id} ${POSITION_NAMES[empty]}`

@@ -1,6 +1,7 @@
 import type { Cell } from '../../core/cell'
+import { splitItems } from '../adjective-noun-declension/sentence-draw'
 import { GOVERNING_CASES, type GoverningCase, type SentenceNounItem } from '../adjective-noun-declension/sentence-items'
-import { SentenceRoundPage } from '../adjective-noun-declension/sentence-page'
+import { agreementOf, SentenceRoundPage } from '../adjective-noun-declension/sentence-page'
 import type { CellFilter } from '../noun-declension/filter'
 import type { QuizSettings } from '../quiz-type'
 import { drawPronounSentence, type PronounDraw } from './draw'
@@ -38,8 +39,9 @@ export class PersonalPronounPage extends SentenceRoundPage<PronounDraw, Governin
 
   constructor({ items, table, ...deps }: PersonalPronounPageDeps) {
     super({ ...deps, cases: GOVERNING_CASES, meters: { fields: [PRONOUN_METER] } })
-    this.nouns = items.filter((item): item is SentenceNounItem => item.kind === 'noun')
-    this.verbs = items.filter((item): item is PronounVerbItem => item.kind === 'verb')
+    const { nouns, verbs } = splitItems(items)
+    this.nouns = nouns
+    this.verbs = verbs
     this.table = table
   }
 
@@ -71,6 +73,6 @@ export class PersonalPronounPage extends SentenceRoundPage<PronounDraw, Governin
   }
 
   private accepted({ noun, caseId, number, position }: PronounDraw): readonly PronounVariant[] {
-    return acceptedPronouns(this.table, { caseId, number, gender: noun.gender, pluralGender: noun.pluralGender }, position)
+    return acceptedPronouns(this.table, agreementOf(noun, caseId, number), position)
   }
 }

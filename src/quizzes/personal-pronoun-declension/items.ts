@@ -1,7 +1,7 @@
 import type { Contract } from '../../core/contract'
 import { isRecord } from '../../core/is-record'
 import {
-  GOVERNING_CASES,
+  GOVERNING_CASE_CELL_IDS,
   isText,
   nounCellsProblems,
   nounPartsProblems,
@@ -10,7 +10,6 @@ import {
   type GoverningVerbItem,
   type SentenceNounItem,
 } from '../adjective-noun-declension/sentence-items'
-import { nounDeclensionCellIds, partsOf } from '../noun-declension/cells'
 
 /** The reflexive particles: the last word of a reflexive verb's prompt (`bát se`, `všimnout si`). */
 export const REFLEXIVE_PARTICLES = ['se', 'si'] as const
@@ -21,14 +20,6 @@ export function reflexiveOf(verb: string): ReflexiveParticle | undefined {
   const last = verb.trim().split(/\s+/).at(-1)
   return (REFLEXIVE_PARTICLES as readonly (string | undefined)[]).includes(last) ? (last as ReflexiveParticle) : undefined
 }
-
-/**
- * The cells a noun of this quiz may have: the noun quiz's, without the vocative ones, which it never asks (the personal
- * pronoun has no vocative).
- */
-export const personalPronounCellIds: readonly string[] = nounDeclensionCellIds.filter((id) =>
-  (GOVERNING_CASES as readonly string[]).includes(partsOf(id)!.caseId),
-)
 
 /**
  * A governing verb of this quiz: the governing verb item of the other sentence quizzes, but a reflexive verb's particle
@@ -55,7 +46,7 @@ export type PersonalPronounItem = SentenceNounItem | PronounVerbItem
  */
 export const personalPronounContract: Contract<PersonalPronounItem> = {
   validateItem: (value) =>
-    sentenceItemProblems(value, (noun) => [...nounPartsProblems(noun), ...nounCellsProblems(noun.cells, personalPronounCellIds)]).concat(
+    sentenceItemProblems(value, (noun) => [...nounPartsProblems(noun), ...nounCellsProblems(noun.cells, GOVERNING_CASE_CELL_IDS)]).concat(
       reflexiveProblems(value),
     ),
   keyOf: sentenceItemKey,

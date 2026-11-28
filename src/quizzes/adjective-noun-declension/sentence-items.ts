@@ -1,7 +1,7 @@
 import type { Cell } from '../../core/cell'
 import { isRecord } from '../../core/is-record'
 import { checkVariants } from '../../core/variants'
-import type { CaseId } from '../noun-declension/cells'
+import { nounCellId, nounDeclensionCellIds, partsOf, type CaseId, type GrammaticalNumber } from '../noun-declension/cells'
 
 // What the items of every sentence quiz share: a noun with its gender and cells, and the governing verbs, which frame a
 // round and are never asked about; and the checks of their contracts.
@@ -16,6 +16,12 @@ export type GoverningCase = (typeof GOVERNING_CASES)[number]
 
 /** Whether some governing verb can be followed by `caseId`: false for the vocative, and for anything that is not a case. */
 export const isGoverningCase = (caseId: unknown): caseId is GoverningCase => (GOVERNING_CASES as readonly unknown[]).includes(caseId)
+
+/**
+ * The cells a noun may have in a sentence quiz whose first blank's word has no vocative (demonstratives with nouns,
+ * personal pronouns): the noun quiz's, in their order, without the vocative ones.
+ */
+export const GOVERNING_CASE_CELL_IDS: readonly string[] = nounDeclensionCellIds.filter((id) => isGoverningCase(partsOf(id)!.caseId))
 
 /**
  * A noun of a sentence quiz: what a round asks about. Its cells are those of the noun dataset that the quiz asks,
@@ -44,6 +50,10 @@ export interface GoverningVerbItem {
   case: GoverningCase
   forms: Record<Person, string>
 }
+
+/** The noun's cell of `caseId` and `number`, which a round asks only of a noun that has it. */
+export const nounCell = (noun: SentenceNounItem, caseId: CaseId, number: GrammaticalNumber): Cell =>
+  noun.cells.find((cell) => cell.id === nounCellId(caseId, number))!
 
 export const isText = (value: unknown): value is string => typeof value === 'string' && value.trim() !== ''
 

@@ -1,11 +1,11 @@
 import type { Cell } from '../../core/cell'
 import { Round, type CellState } from '../../core/round'
-import { nounCellId, type CaseId, type GrammaticalNumber } from '../noun-declension/cells'
+import type { CaseId, GrammaticalNumber } from '../noun-declension/cells'
 import { readFilter, saveFilter, type CellFilter } from '../noun-declension/filter'
 import type { QuizSettings } from '../quiz-type'
 import { FilterDraft, restrictedTo } from './filter'
 import { drawSentenceOf, named, splitItems, type SentenceDraw, type SentenceRules } from './sentence-draw'
-import type { GoverningVerbItem, SentenceNounItem } from './sentence-items'
+import { nounCell, type GoverningVerbItem, type SentenceNounItem } from './sentence-items'
 
 /** Which form of the first blank's word is wanted: a case and a number, agreeing with a noun of `gender`. */
 export interface AgreementForm<C extends CaseId = CaseId> {
@@ -16,6 +16,14 @@ export interface AgreementForm<C extends CaseId = CaseId> {
   /** The gender the noun's plural agrees in, where it differs from `gender` (`dítě` is neuter, `děti` feminine). */
   readonly pluralGender?: string
 }
+
+/** The form in `caseId` and `number` of a word that agrees with `noun`: with its gender, and its plural gender if it has one. */
+export const agreementOf = <C extends CaseId>(noun: SentenceNounItem, caseId: C, number: GrammaticalNumber): AgreementForm<C> => ({
+  caseId,
+  number,
+  gender: noun.gender,
+  pluralGender: noun.pluralGender,
+})
 
 /** What fills a sentence quiz's first blank, and which cases it offers (see SentenceRules), with the forms it accepts. */
 export interface SentenceQuizRules<Noun extends SentenceNounItem, Kind extends string, C extends CaseId> extends SentenceRules<Noun, Kind, C> {
@@ -237,8 +245,7 @@ export class SentenceQuizPage<Noun extends SentenceNounItem, Kind extends string
   /** The first blank's cell (its forms from the quiz's rules) and the noun's (its cell of the case and number). */
   protected cellsOf(draw: SentenceDraw<Noun, Kind, C>): Cell[] {
     const { noun, caseId, number } = draw
-    const forms = this.deps.rules.acceptedForms(draw[this.kind], { caseId, number, gender: noun.gender, pluralGender: noun.pluralGender })
-    const nounCell = noun.cells.find((cell) => cell.id === nounCellId(caseId, number))!
-    return [{ id: this.kind, acceptedForms: forms.map((value) => ({ value })) }, nounCell]
+    const forms = this.deps.rules.acceptedForms(draw[this.kind], agreementOf(noun, caseId, number))
+    return [{ id: this.kind, acceptedForms: forms.map((value) => ({ value })) }, nounCell(noun, caseId, number)]
   }
 }

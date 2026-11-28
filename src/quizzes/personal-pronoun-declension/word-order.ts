@@ -1,6 +1,6 @@
-import type { GoverningCase } from '../adjective-noun-declension/sentence-items'
+import { nounCell, type GoverningCase } from '../adjective-noun-declension/sentence-items'
 import { capitalised } from '../adjective-noun-declension/sentence-page'
-import { nounCellId, type GrammaticalNumber } from '../noun-declension/cells'
+import type { GrammaticalNumber } from '../noun-declension/cells'
 import type { PronounDraw } from './draw'
 
 /** What the page shows of a round: the noun above the sentence, the sentence with the noun, and the words around the field. */
@@ -32,7 +32,7 @@ export function sentenceOf({ noun, caseId, number, position, prepositionFirst, v
   const nounFirst = position === 'start' || prepositionFirst
   const before = nounFirst ? [preposition] : [subject, form, reflexive, preposition]
   const after = nounFirst ? [reflexive, form] : []
-  const nounForm = noun.cells.find((cell) => cell.id === nounCellId(caseId, number))!.acceptedForms[0]!.value
+  const nounForm = nounCell(noun, caseId, number).acceptedForms[0]!.value
   return {
     noun: noun.prompt,
     caseId,

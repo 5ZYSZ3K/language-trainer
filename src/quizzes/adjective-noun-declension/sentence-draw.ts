@@ -29,10 +29,12 @@ export type SentenceDraw<Noun extends SentenceNounItem, Kind extends string, C e
 export const named = <Kind extends string>(kind: Kind, value: string) => ({ [kind]: value }) as { readonly [K in Kind]: string }
 
 /** The dataset's nouns and its governing verbs, each in dataset order. */
-export function splitItems<Noun extends SentenceNounItem>(items: readonly (Noun | GoverningVerbItem)[]): { nouns: Noun[]; verbs: GoverningVerbItem[] } {
+export function splitItems<Item extends SentenceNounItem | GoverningVerbItem>(
+  items: readonly Item[],
+): { nouns: Extract<Item, { kind: 'noun' }>[]; verbs: Extract<Item, { kind: 'verb' }>[] } {
   return {
-    nouns: items.filter((item): item is Noun => item.kind === 'noun'),
-    verbs: items.filter((item): item is GoverningVerbItem => item.kind === 'verb'),
+    nouns: items.filter((item): item is Extract<Item, { kind: 'noun' }> => item.kind === 'noun'),
+    verbs: items.filter((item): item is Extract<Item, { kind: 'verb' }> => item.kind === 'verb'),
   }
 }
 

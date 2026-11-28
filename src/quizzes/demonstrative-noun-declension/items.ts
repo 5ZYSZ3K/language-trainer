@@ -1,6 +1,6 @@
 import type { Contract } from '../../core/contract'
 import {
-  GOVERNING_CASES,
+  GOVERNING_CASE_CELL_IDS,
   nounCellsProblems,
   nounPartsProblems,
   sentenceItemKey,
@@ -8,15 +8,6 @@ import {
   type GoverningVerbItem,
   type SentenceNounItem,
 } from '../adjective-noun-declension/sentence-items'
-import { nounDeclensionCellIds, partsOf } from '../noun-declension/cells'
-
-/**
- * The cells a noun of this quiz may have: the noun quiz's, without the vocative ones, which it never asks (the
- * demonstrative pronoun has no vocative).
- */
-export const demonstrativeNounCellIds: readonly string[] = nounDeclensionCellIds.filter((id) =>
-  (GOVERNING_CASES as readonly string[]).includes(partsOf(id)!.caseId),
-)
 
 /** A noun (`SentenceNounItem`, with no vocative cell) or a governing verb. */
 export type DemonstrativeNounItem = SentenceNounItem | GoverningVerbItem
@@ -33,6 +24,6 @@ export type DemonstrativeNounItem = SentenceNounItem | GoverningVerbItem
  */
 export const demonstrativeNounContract: Contract<DemonstrativeNounItem> = {
   validateItem: (value) =>
-    sentenceItemProblems(value, (noun) => [...nounPartsProblems(noun), ...nounCellsProblems(noun.cells, demonstrativeNounCellIds)]),
+    sentenceItemProblems(value, (noun) => [...nounPartsProblems(noun), ...nounCellsProblems(noun.cells, GOVERNING_CASE_CELL_IDS)]),
   keyOf: sentenceItemKey,
 }

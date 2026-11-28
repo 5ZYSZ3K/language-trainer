@@ -1,5 +1,6 @@
 import { czechGoverningVerbs } from '../../src/quizzes/adjective-noun-declension/governing-verbs.cs'
 import { isGoverningCase, type SentenceNounItem } from '../../src/quizzes/adjective-noun-declension/sentence-items'
+import { agreementOf } from '../../src/quizzes/adjective-noun-declension/sentence-page'
 import { DEMONSTRATIVE_TABLES, demonstrativeNounContract, type DemonstrativeNounItem, type DemonstrativeTable } from '../../src/quizzes/demonstrative-noun-declension'
 import { partsOf } from '../../src/quizzes/noun-declension'
 import type { Join, JoinResult } from './join'
@@ -39,7 +40,7 @@ function formProblem(table: DemonstrativeTable, noun: SentenceNounItem): string 
     const parts = partsOf(cell.id)
     if (!parts || !isGoverningCase(parts.caseId)) continue
     try {
-      const form = table.form({ caseId: parts.caseId, number: parts.number, gender: noun.gender, pluralGender: noun.pluralGender })
+      const form = table.form(agreementOf(noun, parts.caseId, parts.number))
       if (form.trim() === '') return cell.id
     } catch (error) {
       return `${cell.id}: ${error instanceof Error ? error.message : String(error)}`
