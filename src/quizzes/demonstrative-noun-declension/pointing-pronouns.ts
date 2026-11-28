@@ -85,9 +85,9 @@ const pointingPronounsMap = {
   },
 } as const;
 
-type GrammarCase = keyof typeof pointingPronounsMap;
-type GrammarNumber = keyof (typeof pointingPronounsMap)[GrammarCase];
-type GrammarGender =
+export type GrammarCase = keyof typeof pointingPronounsMap;
+export type GrammarNumber = keyof (typeof pointingPronounsMap)[GrammarCase];
+export type GrammarGender =
   keyof (typeof pointingPronounsMap)[GrammarCase][GrammarNumber];
 
 export function pointingPronoun(
