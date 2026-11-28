@@ -2,7 +2,8 @@ import type { GoverningVerb } from './governing-verbs'
 
 /**
  * The Czech governing verbs, settled with the owner (#11), in the order of the cases. Each verb is a prompt of
- * `cs/prirucka/verb-present-tense`. Run `npm run join:cs:adjectives` after changing them.
+ * `cs/prirucka/verb-present-tense`. Every sentence quiz has them: run `npm run join:cs:adjectives`,
+ * `npm run join:cs:demonstratives` and `npm run join:cs:personal-pronouns` after changing them.
  *
  * A verb is here only if, with its preposition, it takes one case and no other: the sentence alone must say which
  * case to use. So not `mávat` (`mávat někomu`, dative), `chlubit se` (`chlubit se někomu`), `stát se`
@@ -28,6 +29,8 @@ export const czechGoverningVerbs: readonly GoverningVerb[] = [
   { verb: 'rozumět', case: 'dat' },
   { verb: 'telefonovat', case: 'dat' },
   { verb: 'smát se', case: 'dat' },
+  { verb: 'bojovat', preposition: 'proti', case: 'dat' },
+  { verb: 'plakat', preposition: 'kvůli', case: 'dat' },
 
   { verb: 'vidět', case: 'acc' },
   { verb: 'mít', case: 'acc' },

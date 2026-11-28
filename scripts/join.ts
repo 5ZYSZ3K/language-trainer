@@ -1,5 +1,5 @@
 /**
- * Usage: npm run join:cs:adjectives  (tsx scripts/join.ts <language>/<source>/<quiz type>)
+ * Usage: npm run join:cs:adjectives | join:cs:demonstratives | join:cs:personal-pronouns  (tsx scripts/join.ts <language>/<source>/<quiz type>)
  *
  * Makes a joined dataset again from its committed inputs (scripts/joins) and writes it to data/, laid out by Prettier
  * and replaced in one step like the scraper's files. If the join finds any problem in its inputs, it writes nothing,

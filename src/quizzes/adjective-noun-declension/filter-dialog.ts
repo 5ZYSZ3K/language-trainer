@@ -1,6 +1,6 @@
-import { nounCaseIds, nounCellId, nounNumbers, type CaseId, type GrammaticalNumber } from '../noun-declension/cells'
+import { nounCellId, nounNumbers, type CaseId, type GrammaticalNumber } from '../noun-declension/cells'
 import type { FilterDraft } from './filter'
-import { caseLabelKey, filterNumberKey, formText, t, type AdjectiveNounTextKey } from './texts'
+import { caseLabelKey, filterNumberKey, formText, type SentenceTextKey } from './sentence-texts'
 
 export interface FilterDialog {
   /** Shows the dialog on the draft's ticks (open the draft first). */
@@ -9,14 +9,26 @@ export interface FilterDialog {
   applyTexts(): void
 }
 
+/** What the dialog shows: the cases the quiz offers, one row each, and the quiz's texts. */
+export interface FilterDialogOptions<C extends CaseId> {
+  readonly cases: readonly C[]
+  readonly t: (key: SentenceTextKey<C>) => string
+}
+
 /**
  * Builds the filter inside `dialog` (a `<dialog>` the quiz put in its area), as the noun quiz's: a grid with a row per
- * case and a column per number, one checkbox in each of the 14 crossings, a heading button that switches its whole row
- * or column, and "Select all", "Clear all" and "Done". The ticks go to `draft` as they change; nothing is applied while
- * it is open. Closing it (Done, Esc, a click outside) calls `onClose` once, which applies the draft. Its texts are
- * `data-i18n` attributes, filled in with the rest of the quiz's area; the checkboxes' names are set by `applyTexts`.
+ * case the quiz offers and a column per number, one checkbox in each crossing (14 for all seven cases), a heading button
+ * that switches its whole row or column, and "Select all", "Clear all" and "Done". The ticks go to `draft` as they
+ * change; nothing is applied while it is open. Closing it (Done, Esc, a click outside) calls `onClose` once, which
+ * applies the draft. Its texts are `data-i18n` attributes, filled in with the rest of the quiz's area; the checkboxes'
+ * names are set by `applyTexts`.
  */
-export function createFilterDialog(dialog: HTMLDialogElement, draft: FilterDraft, onClose: () => void): FilterDialog {
+export function createFilterDialog<C extends CaseId>(
+  dialog: HTMLDialogElement,
+  draft: FilterDraft,
+  { cases, t }: FilterDialogOptions<C>,
+  onClose: () => void,
+): FilterDialog {
   dialog.innerHTML = `
     <form method="dialog" class="filters-form">
       <h2 id="filters-title" data-i18n="filters.title"></h2>
@@ -32,9 +44,9 @@ export function createFilterDialog(dialog: HTMLDialogElement, draft: FilterDraft
   dialog.setAttribute('aria-labelledby', 'filters-title')
   const grid = dialog.querySelector<HTMLElement>('.filter-grid')!
   /** Each checkbox with the case and number it stands for. */
-  const boxes: { box: HTMLInputElement; caseId: CaseId; number: GrammaticalNumber }[] = []
+  const boxes: { box: HTMLInputElement; caseId: C; number: GrammaticalNumber }[] = []
 
-  const headingButton = (textKey: AdjectiveNounTextKey, toggle: () => void): HTMLButtonElement => {
+  const headingButton = (textKey: SentenceTextKey<C>, toggle: () => void): HTMLButtonElement => {
     const button = document.createElement('button')
     button.type = 'button'
     button.className = 'filter-heading'
@@ -49,7 +61,7 @@ export function createFilterDialog(dialog: HTMLDialogElement, draft: FilterDraft
   // The first grid cell is empty: the corner above the case headings.
   grid.append(document.createElement('span'))
   for (const number of nounNumbers) grid.append(headingButton(filterNumberKey(number), () => draft.toggleNumber(number)))
-  for (const caseId of nounCaseIds) {
+  for (const caseId of cases) {
     grid.append(headingButton(caseLabelKey(caseId), () => draft.toggleCase(caseId)))
     for (const number of nounNumbers) {
       const box = document.createElement('input')
