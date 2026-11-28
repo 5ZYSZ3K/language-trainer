@@ -57,9 +57,10 @@ _Avoid_: merge, generate
 ### A round
 
 **Item**:
-One thing a quiz can ask about: a word with its cells (verbs, nouns), a number range (numerals), or a noun with the
-adjectives it may be paired with (adjectives with nouns). The dataset of adjectives with nouns also holds its governing
-verbs as items, each with the forms its sentences show; they frame a round but are never asked about.
+One thing a quiz can ask about: a word with its cells (verbs, nouns), a number range (numerals), or a noun of a
+sentence quiz, with the adjectives it may be paired with in adjectives with nouns. The dataset of a sentence quiz also
+holds its governing verbs as items, each with the forms its sentences show; they frame a round but are never asked
+about.
 _Avoid_: entry, card, question, word (numerals items are not words)
 
 **Prompt**:
@@ -124,9 +125,9 @@ _Avoid_: preferences
 
 **Filter**:
 What the learner has chosen to be asked. In noun declension it is the noun cells to see: only those are shown, all of
-them except the given cell are asked, and a random noun is only picked if at least one of its cells is asked. In
-adjectives with nouns it is the same set of cells, a case and a number each, read as the forms a sentence may ask for:
-a noun is only drawn in a form that is ticked and that it has.
+them except the given cell are asked, and a random noun is only picked if at least one of its cells is asked. In the
+sentence quizzes it is the same set of cells, a case and a number each, read as the forms a sentence may ask for: a
+noun is only drawn in a form that is ticked and that it has.
 
 ### Grammar
 
@@ -139,8 +140,8 @@ Cases are known by name, never by number, because languages number them differen
 _Avoid_: pád, 1st case
 
 **Gender**:
-A noun's grammatical gender, worded as the source words it (`m. živ.`, `ž.`). Adjectives with nouns decline the
-adjective by it; no other quiz uses it.
+A noun's grammatical gender, worded as the source words it (`m. živ.`, `ž.`). The sentence quizzes decline the
+adjective or the pronoun by it; no other quiz uses it.
 
 ### Numerals
 
@@ -159,16 +160,28 @@ _Avoid_: variant (that is a cell's)
 A learned language's rules for writing any number in words. Numerals are not scraped: the generator decides every
 version.
 
-### Adjectives with nouns
+### Sentence quizzes
+
+**Sentence quiz**:
+A quiz type whose round is a sentence built around a governing verb: adjectives with nouns, demonstratives with nouns
+and personal pronouns. They take their nouns from one list, and share the governing verbs.
 
 **Sentence**:
-What a round of adjectives with nouns shows: a governing verb's form, after its subject and with its preposition if it
-has them, followed by a blank for the adjective and one for the noun (`Mluvím o ___ ___.`, `To je ___ ___.`). A
-vocative sentence has no verb (`___ ___!`).
+What a round of a sentence quiz shows: a governing verb's form, after its subject and with its preposition if it has
+them, and blanks for what the learner types. In adjectives with nouns and demonstratives with nouns the blanks follow
+the verb, one for the adjective or the demonstrative pronoun and one for the noun (`Mluvím o ___ ___.`, `To je ___
+___.`); a vocative sentence has no verb (`___ ___!`). In personal pronouns the sentence is shown with its noun first
+(`Mluvím o advokátovi.`), then again with one blank for the personal pronoun in the noun's place (`Mluvím o ___.`).
+
+**Position**:
+Where the noun stands in a sentence of personal pronouns, which decides the pronoun's accepted forms: *after the verb*
+(`Pomáhám mu.`), *after a preposition*, wherever the preposition stands (`Mluvím o něm.`, `O něm mluvím.`), or *at the
+start*, with no preposition (`Jemu pomáhám.`, never `Mu pomáhám.`). A reflexive particle stays second in the sentence
+(`Jeho se bojím.`).
 
 **Governing verb**:
 A verb, with at most one preposition, that is always followed by one case: `pomáhat` by the dative, `mluvit o` by the
-locative. A verb that can be followed by more than one case is not a governing verb.
+locative. A verb that can be followed by more than one case is not a governing verb. The sentence quizzes share them.
 _Avoid_: valency verb
 
 **Plural gender**:
@@ -178,12 +191,25 @@ The gender a noun's plural agrees in, where it differs from the noun's own: `dí
 A learned language's rules for declining any adjective by case, number and gender. Adjective forms are not scraped:
 the generator decides every one.
 
+### Pronouns
+
+**Demonstrative pronoun**:
+`ten`, `ta`, `to`. It declines by case, number and gender, as an adjective does, and has no vocative.
+_Avoid_: pointing pronoun
+
+**Personal pronoun**:
+A pronoun of the third person (`on`, `ona`, `ono`) that stands for a noun, in the noun's case, number and gender. It has
+other forms after a preposition (`o něm`, `k ní`) than without one (`jemu`, `jí`), and some of its forms are unstressed
+(`ho`, `mu`). It has no vocative. The first and second persons are not practised.
+_Avoid_: base pronoun
+
 ### Building the data
 
 **List**:
-The input that alone decides what one dataset of one quiz type holds, for one language: the words a scrape fetches,
-by prompt, or the nouns with the adjectives they may be paired with, which a join takes. A word removed from it is
-removed from the data at the next scrape or join.
+The input that alone decides which words a dataset holds, for one language: the words a scrape fetches, by prompt, or
+the nouns with the adjectives they may be paired with, which the join of every sentence quiz takes (adjectives with nouns
+also takes the adjectives; the others take only the nouns). A word removed from it is removed from the data at the next
+scrape or join.
 _Avoid_: vocabulary, word bank
 
 **Vocabulary**:
