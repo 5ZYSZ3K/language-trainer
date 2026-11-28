@@ -591,10 +591,16 @@ dialog.explanation::backdrop {
   margin-left: auto;
 }
 
-/* The sentence quizzes: the first blank's word and the noun above the sentence, then the sentence, whose two fields stand
-   in for its blanks. On a narrow screen it wraps, and the fields keep their order. */
+/* The sentence quizzes: the words in their base forms above the sentence, then the sentence, whose fields stand in for its
+   blanks (personal pronouns shows the sentence with its noun first). On a narrow screen it wraps, and the fields keep
+   their order. */
 .sentence-prompt strong {
   margin-left: 0;
+}
+
+.sentence,
+.sentence-with-noun {
+  font-size: 1.15rem;
 }
 
 .sentence {
@@ -602,11 +608,11 @@ dialog.explanation::backdrop {
   flex-wrap: wrap;
   align-items: flex-start;
   gap: 0.4rem 0.5rem;
-  font-size: 1.15rem;
 }
 
 /* On a line with the text inside the fields. */
 .sentence .lead,
+.sentence .tail,
 .sentence .end {
   padding-top: 0.45rem;
 }

@@ -14,6 +14,7 @@
     "scrape:cs:nouns": "tsx scraper/cli.ts --language cs --quiz noun-declension",
     "join:cs:adjectives": "tsx scripts/join.ts cs/language-trainer/adjective-noun-declension",
     "join:cs:demonstratives": "tsx scripts/join.ts cs/language-trainer/demonstrative-noun-declension",
+    "join:cs:personal-pronouns": "tsx scripts/join.ts cs/language-trainer/personal-pronoun-declension",
     "publish-pages": "tsx scripts/publish-pages.ts"
   },
   "devDependencies": {

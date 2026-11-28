@@ -19,8 +19,8 @@ what is learned.
 _Avoid_: language (on its own), locale
 
 **Quiz type**:
-One kind of quiz: present-tense verb conjugation, noun declension, numerals, adjectives with nouns or demonstratives
-with nouns. It owns its contract, its interaction, its meters and its texts. Its id is permanent.
+One kind of quiz: present-tense verb conjugation, noun declension, numerals, adjectives with nouns, demonstratives
+with nouns or personal pronouns. It owns its contract, its interaction, its meters and its texts. Its id is permanent.
 _Avoid_: exercise, mode, game
 
 **Source**:
@@ -46,8 +46,8 @@ A dataset that no adapter makes: one written by hand (the numerals ranges), or a
 **Joined dataset**:
 A manual dataset that a join makes from other datasets and hand-written input, rather than one scraped or written by
 hand: adjectives with nouns takes its nouns' forms, its verbs' forms and the adjectives paired with each noun, and
-demonstratives with nouns the same without the adjectives. The build refuses one that differs from what its join would
-make of its inputs now.
+demonstratives with nouns and personal pronouns the same without the adjectives. The build refuses one that differs
+from what its join would make of its inputs now.
 
 **Join**:
 The build-time step that makes one joined dataset from its inputs, as an adapter makes a scraped one; also one run of
@@ -84,9 +84,10 @@ remarks.
 _Avoid_: version (that is a numeral's)
 
 **Remark**:
-A tag saying what is special about a noun's variant (*dual*, *before another noun*, *other meaning*) or a numeral's
-version (*less common*, *inverted order*, *masculine*); on a version, sometimes with the part of the number it is
-about. A noun's remark may have a shared explanation, the same for every noun that has it.
+A tag saying what is special about a noun's variant (*dual*, *before another noun*, *other meaning*), a personal
+pronoun's form (*less common*, *unstressed*, *IJP: animate only*) or a numeral's version (*less common*, *inverted
+order*, *masculine*); on a version, sometimes with the part of the number it is about. A noun's remark may have a shared
+explanation, the same for every noun that has it.
 
 **Explanation**:
 A noun's own hand-written note on its special variants, in every UI language.
@@ -128,8 +129,8 @@ _Avoid_: preferences
 What the learner has chosen to be asked. In noun declension it is the noun cells to see: only those are shown, all of
 them except the given cell are asked, and a random noun is only picked if at least one of its cells is asked. In the
 sentence quizzes it is the same set of cells, a case and a number each, over the cases the quiz offers (demonstratives
-with nouns has no vocative), read as the forms a sentence may ask for: a noun is only drawn in a form that is ticked and
-that it has.
+with nouns and personal pronouns have no vocative), read as the forms a sentence may ask for: a noun is only drawn in a
+form that is ticked and that it has.
 
 ### Grammar
 

@@ -13053,6 +13053,34 @@
     },
     {
       "kind": "verb",
+      "verb": "bojovat",
+      "preposition": "proti",
+      "case": "dat",
+      "forms": {
+        "1sg": "bojuji",
+        "2sg": "bojuješ",
+        "3sg": "bojuje",
+        "1pl": "bojujeme",
+        "2pl": "bojujete",
+        "3pl": "bojují"
+      }
+    },
+    {
+      "kind": "verb",
+      "verb": "plakat",
+      "preposition": "kvůli",
+      "case": "dat",
+      "forms": {
+        "1sg": "pláču",
+        "2sg": "pláčeš",
+        "3sg": "pláče",
+        "1pl": "pláčeme",
+        "2pl": "pláčete",
+        "3pl": "pláčou"
+      }
+    },
+    {
+      "kind": "verb",
       "verb": "vidět",
       "case": "acc",
       "forms": {
