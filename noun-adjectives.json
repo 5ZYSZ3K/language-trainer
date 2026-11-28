@@ -1,0 +1,6952 @@
+[
+  {
+    "noun": "adjektivum",
+    "gender": "s.",
+    "adjectives": [
+      "anglický",
+      "český",
+      "dlouhý",
+      "francouzský",
+      "italský",
+      "krátký",
+      "německý",
+      "nepravidelný",
+      "neutrální",
+      "nový",
+      "polský",
+      "pravidelný",
+      "ruský",
+      "správný",
+      "zajímavý",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "advokát",
+    "gender": "m. živ.",
+    "adjectives": [
+      "ambiciózní",
+      "bohatý",
+      "dobrý",
+      "drahý",
+      "elegantní",
+      "chytrý",
+      "inteligentní",
+      "laciný",
+      "mladý",
+      "nervózní",
+      "osobní",
+      "pracovitý",
+      "prohnaný",
+      "skvělý",
+      "slavný",
+      "starý",
+      "špatný",
+      "vážený",
+      "výborný",
+      "známý"
+    ]
+  },
+  {
+    "noun": "aktivita",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "hazardní",
+      "hlavní",
+      "letní",
+      "nebezpečný",
+      "nový",
+      "obchodní",
+      "oblíbený",
+      "pravidelný",
+      "ranní",
+      "společenský",
+      "studentský",
+      "zábavný",
+      "zahraničněpolitický",
+      "zajímavý",
+      "zimní",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "aktovka",
+    "gender": "ž.",
+    "adjectives": [
+      "černý",
+      "červený",
+      "drahý",
+      "elegantní",
+      "hnědý",
+      "hranatý",
+      "kožený",
+      "laciný",
+      "levný",
+      "malý",
+      "modrý",
+      "nový",
+      "plný",
+      "starý",
+      "špinavý",
+      "těžký",
+      "velký",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "akuzativ",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "český",
+      "německý",
+      "nepravidelný",
+      "polský",
+      "pravidelný",
+      "ruský",
+      "správný",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "akvárium",
+    "gender": "s.",
+    "adjectives": [
+      "drahý",
+      "hranatý",
+      "krásný",
+      "levný",
+      "maličký",
+      "malý",
+      "nový",
+      "ohromný",
+      "plný",
+      "průhledný",
+      "starý",
+      "špinavý",
+      "velikánský",
+      "velký"
+    ]
+  },
+  {
+    "noun": "aluminium",
+    "gender": "s.",
+    "adjectives": ["laciný", "levný", "měkký", "ohnutý", "stříbrný"]
+  },
+  {
+    "noun": "ambasáda",
+    "gender": "ž.",
+    "adjectives": [
+      "anglický",
+      "český",
+      "francouzský",
+      "chorvatský",
+      "italský",
+      "moderní",
+      "německý",
+      "nový",
+      "polský",
+      "ruský",
+      "starý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "Američan",
+    "gender": "m. živ.",
+    "adjectives": [
+      "ambiciózní",
+      "bohatý",
+      "hloupý",
+      "hodný",
+      "chytrý",
+      "milý",
+      "mladý",
+      "naivní",
+      "nevychovaný",
+      "slavný",
+      "starý",
+      "sympatický",
+      "veselý",
+      "známý"
+    ]
+  },
+  {
+    "noun": "Angličan",
+    "gender": "m. živ.",
+    "adjectives": [
+      "bohatý",
+      "elegantní",
+      "chytrý",
+      "ironický",
+      "konzervativní",
+      "milý",
+      "mladý",
+      "mlčenlivý",
+      "přátelský",
+      "slavný",
+      "starý",
+      "sympatický",
+      "známý"
+    ]
+  },
+  {
+    "noun": "angličtina",
+    "gender": "ž.",
+    "adjectives": [
+      "dobrý",
+      "moderní",
+      "obchodní",
+      "odborný",
+      "skvělý",
+      "správný",
+      "starý",
+      "špatný",
+      "výborný",
+      "základní"
+    ]
+  },
+  {
+    "noun": "antikvariát",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "malý",
+      "oblíbený",
+      "slavný",
+      "starý",
+      "tajemný",
+      "tichý",
+      "zajímavý",
+      "známý"
+    ]
+  },
+  {
+    "noun": "asimilace",
+    "gender": "ž.",
+    "adjectives": ["český", "rychlý", "společenský", "úplný"]
+  },
+  {
+    "noun": "auto",
+    "gender": "s.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "červený",
+      "český",
+      "drahý",
+      "elegantní",
+      "elektrický",
+      "exkluzivní",
+      "francouzský",
+      "hezký",
+      "italský",
+      "krásný",
+      "laciný",
+      "levný",
+      "malý",
+      "moderní",
+      "modrý",
+      "německý",
+      "nový",
+      "oblíbený",
+      "osobní",
+      "pohodlný",
+      "pokažený",
+      "rychlý",
+      "silný",
+      "starý",
+      "stříbrný",
+      "špinavý",
+      "velký",
+      "vlastní",
+      "zahraniční",
+      "zahřátý",
+      "zelený",
+      "žlutý"
+    ]
+  },
+  {
+    "noun": "autobus",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "červený",
+      "další",
+      "elektrický",
+      "malý",
+      "moderní",
+      "modrý",
+      "nový",
+      "plný",
+      "pohodlný",
+      "pokažený",
+      "poslední",
+      "ranní",
+      "rychlý",
+      "starý",
+      "špinavý",
+      "velký",
+      "zahraniční",
+      "žlutý"
+    ]
+  },
+  {
+    "noun": "automobil",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "červený",
+      "český",
+      "drahý",
+      "elegantní",
+      "elektrický",
+      "exkluzivní",
+      "francouzský",
+      "italský",
+      "levný",
+      "malý",
+      "moderní",
+      "německý",
+      "nový",
+      "osobní",
+      "pohodlný",
+      "pokažený",
+      "rychlý",
+      "silný",
+      "starý",
+      "velký",
+      "vlastní",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "automobilista",
+    "gender": "m. živ.",
+    "adjectives": [
+      "český",
+      "hloupý",
+      "mladý",
+      "nebezpečný",
+      "německý",
+      "nervózní",
+      "nevychovaný",
+      "polský",
+      "prchlivý",
+      "starý",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "autonomie",
+    "gender": "ž.",
+    "adjectives": [
+      "moravský",
+      "nový",
+      "osobní",
+      "regionální",
+      "univerzitní",
+      "úplný",
+      "vlastní"
+    ]
+  },
+  {
+    "noun": "autor",
+    "gender": "m. živ.",
+    "adjectives": [
+      "anglický",
+      "český",
+      "dávný",
+      "domácí",
+      "francouzský",
+      "hlavní",
+      "ironický",
+      "italský",
+      "konzervativní",
+      "latinskoamerický",
+      "mladý",
+      "moderní",
+      "německý",
+      "oblíbený",
+      "polský",
+      "regionální",
+      "ruský",
+      "římský",
+      "slavný",
+      "starověký",
+      "starý",
+      "zahraniční",
+      "známý"
+    ]
+  },
+  {
+    "noun": "babička",
+    "gender": "ž.",
+    "adjectives": [
+      "aktivní",
+      "drahý",
+      "hodný",
+      "chytrý",
+      "maličký",
+      "milý",
+      "mlčenlivý",
+      "mlsný",
+      "moudrý",
+      "nemocný",
+      "ochotný",
+      "pracovitý",
+      "slepý",
+      "smutný",
+      "starý",
+      "sympatický",
+      "veselý",
+      "vlastní",
+      "zdravý"
+    ]
+  },
+  {
+    "noun": "bagr",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "elektrický",
+      "malý",
+      "nový",
+      "ohromný",
+      "pokažený",
+      "silný",
+      "starý",
+      "špinavý",
+      "těžký",
+      "velikánský",
+      "velký",
+      "žlutý"
+    ]
+  },
+  {
+    "noun": "bakalář",
+    "gender": "m. živ.",
+    "adjectives": [
+      "ambiciózní",
+      "budoucí",
+      "čerstvý",
+      "chytrý",
+      "inteligentní",
+      "mladý",
+      "nešťastný",
+      "nový",
+      "pracovitý"
+    ]
+  },
+  {
+    "noun": "banka",
+    "gender": "ž.",
+    "adjectives": [
+      "bohatý",
+      "český",
+      "francouzský",
+      "hlavní",
+      "italský",
+      "malý",
+      "moderní",
+      "německý",
+      "nový",
+      "obchodní",
+      "polský",
+      "regionální",
+      "ruský",
+      "starý",
+      "univerzální",
+      "velký",
+      "zahraniční",
+      "známý"
+    ]
+  },
+  {
+    "noun": "bar",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "drahý",
+      "elegantní",
+      "exkluzivní",
+      "italský",
+      "laciný",
+      "letní",
+      "levný",
+      "malý",
+      "moderní",
+      "nádražní",
+      "nový",
+      "oblíbený",
+      "plný",
+      "starý",
+      "studentský",
+      "špinavý",
+      "známý"
+    ]
+  },
+  {
+    "noun": "báseň",
+    "gender": "ž.",
+    "adjectives": [
+      "anglický",
+      "český",
+      "dávný",
+      "dlouhý",
+      "francouzský",
+      "hezký",
+      "hrdinský",
+      "ironický",
+      "krásný",
+      "krátký",
+      "moderní",
+      "napsaný",
+      "nenapsaný",
+      "nový",
+      "oblíbený",
+      "perský",
+      "polský",
+      "romantický",
+      "ruský",
+      "slavný",
+      "smutný",
+      "starověký",
+      "starý",
+      "tajemný",
+      "veselý",
+      "zábavný",
+      "známý"
+    ]
+  },
+  {
+    "noun": "batoh",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "černý",
+      "červený",
+      "drahý",
+      "hnědý",
+      "kožený",
+      "laciný",
+      "levný",
+      "malý",
+      "modrý",
+      "nový",
+      "ohromný",
+      "plný",
+      "pohodlný",
+      "starý",
+      "studentský",
+      "špinavý",
+      "těžký",
+      "velikánský",
+      "velký",
+      "zelený",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "běh",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "další",
+      "dlouhý",
+      "hlavní",
+      "krátký",
+      "lesní",
+      "pravidelný",
+      "ranní",
+      "rychlý",
+      "těžký",
+      "zimní"
+    ]
+  },
+  {
+    "noun": "bělidlo",
+    "gender": "s.",
+    "adjectives": [
+      "domácí",
+      "laciný",
+      "levný",
+      "nebezpečný",
+      "nový",
+      "silný",
+      "starý"
+    ]
+  },
+  {
+    "noun": "biolog",
+    "gender": "m. živ.",
+    "adjectives": [
+      "ambiciózní",
+      "budoucí",
+      "český",
+      "chytrý",
+      "inteligentní",
+      "mladý",
+      "polský",
+      "pracovitý",
+      "skvělý",
+      "slavný",
+      "starý",
+      "vedoucí",
+      "výborný",
+      "zahraniční",
+      "známý"
+    ]
+  },
+  {
+    "noun": "biologie",
+    "gender": "ž.",
+    "adjectives": [
+      "kvantový",
+      "moderní",
+      "oblíbený",
+      "těžký",
+      "zábavný",
+      "zajímavý",
+      "základní"
+    ]
+  },
+  {
+    "noun": "bit",
+    "gender": "m. neživ.",
+    "adjectives": ["další", "kvantový", "poslední"]
+  },
+  {
+    "noun": "blbec",
+    "gender": "m. živ.",
+    "adjectives": [
+      "hotový",
+      "mladý",
+      "nevychovaný",
+      "ohavný",
+      "pořádný",
+      "starý",
+      "úplný",
+      "velký"
+    ]
+  },
+  {
+    "noun": "bobr",
+    "gender": "m. živ.",
+    "adjectives": [
+      "divoký",
+      "hladový",
+      "hnědý",
+      "malý",
+      "mladý",
+      "plachý",
+      "pracovitý",
+      "starý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "bohemista",
+    "gender": "m. živ.",
+    "adjectives": [
+      "ambiciózní",
+      "anglický",
+      "budoucí",
+      "chorvatský",
+      "chytrý",
+      "inteligentní",
+      "italský",
+      "mladý",
+      "německý",
+      "polský",
+      "pracovitý",
+      "ruský",
+      "skvělý",
+      "slavný",
+      "starý",
+      "výborný",
+      "zahraniční",
+      "známý"
+    ]
+  },
+  {
+    "noun": "bohemistika",
+    "gender": "ž.",
+    "adjectives": [
+      "český",
+      "chorvatský",
+      "italský",
+      "moderní",
+      "německý",
+      "polský",
+      "ruský",
+      "univerzitní",
+      "vysokoškolský",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "borovice",
+    "gender": "ž.",
+    "adjectives": [
+      "černý",
+      "krásný",
+      "lesní",
+      "malý",
+      "mladý",
+      "ohnutý",
+      "ohromný",
+      "spadlý",
+      "starý",
+      "štíhlý",
+      "uschlý",
+      "velký",
+      "vysoký",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "brambor",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "čerstvý",
+      "grilovaný",
+      "malý",
+      "měkký",
+      "nový",
+      "smažený",
+      "starý",
+      "tvrdý",
+      "vařený",
+      "velký",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "bratranec",
+    "gender": "m. živ.",
+    "adjectives": [
+      "bohatý",
+      "hodný",
+      "chytrý",
+      "malý",
+      "milý",
+      "mladý",
+      "nemocný",
+      "nevychovaný",
+      "oblíbený",
+      "sympatický",
+      "veselý",
+      "zlý"
+    ]
+  },
+  {
+    "noun": "brk",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "dlouhý",
+      "krátký",
+      "ohnutý",
+      "ostrý",
+      "starý"
+    ]
+  },
+  {
+    "noun": "brko",
+    "gender": "s.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "dlouhý",
+      "krátký",
+      "ohnutý",
+      "ostrý",
+      "starý"
+    ]
+  },
+  {
+    "noun": "brouk",
+    "gender": "m. živ.",
+    "adjectives": [
+      "černý",
+      "hnědý",
+      "lesní",
+      "maličký",
+      "malý",
+      "modrý",
+      "nebezpečný",
+      "ohromný",
+      "ošklivý",
+      "velikánský",
+      "velký",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "břeh",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "divoký",
+      "holý",
+      "chorvatský",
+      "krásný",
+      "lesnatý",
+      "nebezpečný",
+      "nízký",
+      "pravý",
+      "severní",
+      "vysoký",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "břemeno",
+    "gender": "s.",
+    "adjectives": ["další", "ohromný", "osobní", "těžký", "tíživý", "velký"]
+  },
+  {
+    "noun": "břicho",
+    "gender": "s.",
+    "adjectives": [
+      "bílý",
+      "hladový",
+      "holý",
+      "malý",
+      "měkký",
+      "ohromný",
+      "plný",
+      "tvrdý",
+      "velikánský",
+      "velký"
+    ]
+  },
+  {
+    "noun": "bříza",
+    "gender": "ž.",
+    "adjectives": [
+      "bílý",
+      "holý",
+      "krásný",
+      "mladý",
+      "spadlý",
+      "starý",
+      "štíhlý",
+      "uschlý",
+      "vysoký",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "býk",
+    "gender": "m. živ.",
+    "adjectives": [
+      "černý",
+      "divoký",
+      "hnědý",
+      "krásný",
+      "mladý",
+      "nebezpečný",
+      "ohromný",
+      "prchlivý",
+      "silný",
+      "starý",
+      "velký",
+      "zlý"
+    ]
+  },
+  {
+    "noun": "byt",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "drahý",
+      "exkluzivní",
+      "hezký",
+      "krásný",
+      "laciný",
+      "levný",
+      "malý",
+      "moderní",
+      "nový",
+      "ošklivý",
+      "pětipokojový",
+      "pohodlný",
+      "starý",
+      "studentský",
+      "studený",
+      "špinavý",
+      "teplý",
+      "velký",
+      "vlastní"
+    ]
+  },
+  {
+    "noun": "centrum",
+    "gender": "s.",
+    "adjectives": [
+      "hlavní",
+      "malý",
+      "moderní",
+      "nový",
+      "obchodní",
+      "regionální",
+      "starý",
+      "univerzitní",
+      "velký",
+      "živý"
+    ]
+  },
+  {
+    "noun": "ceremoniář",
+    "gender": "m. živ.",
+    "adjectives": ["elegantní", "hlavní", "mladý", "starý", "vážný", "známý"]
+  },
+  {
+    "noun": "cesta",
+    "gender": "ž.",
+    "adjectives": [
+      "celý",
+      "další",
+      "dlouhý",
+      "hlavní",
+      "krásný",
+      "krátký",
+      "lesní",
+      "nebezpečný",
+      "nový",
+      "obchodní",
+      "pohodlný",
+      "poslední",
+      "rychlý",
+      "římský",
+      "starý",
+      "tajemný",
+      "těžký",
+      "zábavný",
+      "zahraniční",
+      "zajímavý"
+    ]
+  },
+  {
+    "noun": "cibule",
+    "gender": "ž.",
+    "adjectives": [
+      "bílý",
+      "čerstvý",
+      "červený",
+      "grilovaný",
+      "malý",
+      "smažený",
+      "uschlý",
+      "vařený",
+      "velký",
+      "žlutý"
+    ]
+  },
+  {
+    "noun": "cigareta",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "dlouhý",
+      "drahý",
+      "elektrický",
+      "krátký",
+      "laciný",
+      "levný",
+      "poslední",
+      "ranní",
+      "silný"
+    ]
+  },
+  {
+    "noun": "cíl",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "ambiciózní",
+      "budoucí",
+      "další",
+      "důležitý",
+      "hlavní",
+      "možný",
+      "nový",
+      "obchodní",
+      "osobní",
+      "poslední",
+      "vlastní",
+      "vysoký",
+      "zahraničněpolitický",
+      "základní"
+    ]
+  },
+  {
+    "noun": "citoslovce",
+    "gender": "s.",
+    "adjectives": [
+      "anglický",
+      "český",
+      "dlouhý",
+      "krátký",
+      "německý",
+      "oblíbený",
+      "polský",
+      "ruský",
+      "zajímavý",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "civilizace",
+    "gender": "ž.",
+    "adjectives": [
+      "budoucí",
+      "celý",
+      "dávný",
+      "koloniální",
+      "moderní",
+      "nový",
+      "perský",
+      "řeckořímský",
+      "římský",
+      "starověký",
+      "tajemný",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "cizinec",
+    "gender": "m. živ.",
+    "adjectives": [
+      "bohatý",
+      "elegantní",
+      "hezký",
+      "hladový",
+      "milý",
+      "mladý",
+      "mlčenlivý",
+      "mlčící",
+      "naivní",
+      "nervózní",
+      "nevychovaný",
+      "plachý",
+      "přátelský",
+      "překvapený",
+      "starý",
+      "sympatický",
+      "tajemný",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "cukr",
+    "gender": "m. neživ.",
+    "adjectives": ["bílý", "drahý", "hnědý", "hrubý", "laciný", "levný"]
+  },
+  {
+    "noun": "cukrkandl",
+    "gender": "m. neživ.",
+    "adjectives": ["bílý", "hnědý", "tvrdý"]
+  },
+  {
+    "noun": "cvičení",
+    "gender": "s.",
+    "adjectives": [
+      "další",
+      "deklinační",
+      "dlouhý",
+      "domácí",
+      "gramatický",
+      "krátký",
+      "nový",
+      "poslední",
+      "pravidelný",
+      "ranní",
+      "těžký",
+      "zábavný",
+      "zajímavý",
+      "základní"
+    ]
+  },
+  {
+    "noun": "čaj",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "anglický",
+      "bílý",
+      "černý",
+      "čerstvý",
+      "dobrý",
+      "drahý",
+      "horký",
+      "hřejivý",
+      "chutný",
+      "kvašený",
+      "levný",
+      "ovocný",
+      "ranní",
+      "ruský",
+      "silný",
+      "studený",
+      "teplý",
+      "výborný",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "čas",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "budoucí",
+      "další",
+      "dávný",
+      "dlouhý",
+      "krátký",
+      "letní",
+      "minulý",
+      "moderní",
+      "nový",
+      "poslední",
+      "přítomný",
+      "správný",
+      "starý",
+      "těžký",
+      "vlastní",
+      "volný",
+      "zimní"
+    ]
+  },
+  {
+    "noun": "časopis",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "dámský",
+      "dětský",
+      "ilustrovaný",
+      "levný",
+      "literární",
+      "měsíční",
+      "módní",
+      "nový",
+      "oblíbený",
+      "odborný",
+      "sportovní",
+      "starý",
+      "týdenní",
+      "vědecký",
+      "zahraniční",
+      "zajímavý"
+    ]
+  },
+  {
+    "noun": "část",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "dolní",
+      "druhý",
+      "důležitý",
+      "historický",
+      "hlavní",
+      "horní",
+      "jižní",
+      "malý",
+      "podstatný",
+      "poslední",
+      "první",
+      "severní",
+      "střední",
+      "velký",
+      "východní",
+      "západní",
+      "zbývající"
+    ]
+  },
+  {
+    "noun": "částice",
+    "gender": "ž.",
+    "adjectives": [
+      "drobný",
+      "elementární",
+      "jemný",
+      "malý",
+      "modální",
+      "nabitý",
+      "prachový",
+      "radioaktivní",
+      "tázací",
+      "záporný"
+    ]
+  },
+  {
+    "noun": "Čech",
+    "gender": "m. živ.",
+    "adjectives": [
+      "bohatý",
+      "chytrý",
+      "konzervativní",
+      "mladý",
+      "pracovitý",
+      "slavný",
+      "starý",
+      "sympatický",
+      "veselý",
+      "známý"
+    ]
+  },
+  {
+    "noun": "čelo",
+    "gender": "s.",
+    "adjectives": [
+      "bledý",
+      "hladký",
+      "horký",
+      "nízký",
+      "opálený",
+      "široký",
+      "vrásčitý",
+      "vysoký",
+      "zamračený",
+      "zpocený"
+    ]
+  },
+  {
+    "noun": "čepice",
+    "gender": "ž.",
+    "adjectives": [
+      "baseballový",
+      "bílý",
+      "černý",
+      "červený",
+      "kožešinový",
+      "modrý",
+      "námořnický",
+      "nový",
+      "pletený",
+      "pruhovaný",
+      "sportovní",
+      "starý",
+      "teplý",
+      "vlněný",
+      "vojenský",
+      "zimní"
+    ]
+  },
+  {
+    "noun": "čert",
+    "gender": "m. živ.",
+    "adjectives": [
+      "černý",
+      "hloupý",
+      "hodný",
+      "chlupatý",
+      "kulhavý",
+      "malý",
+      "mazaný",
+      "mladý",
+      "pekelný",
+      "rohatý",
+      "starý",
+      "veselý",
+      "zlý"
+    ]
+  },
+  {
+    "noun": "česnek",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "čerstvý",
+      "český",
+      "čínský",
+      "drcený",
+      "lisovaný",
+      "medvědí",
+      "mladý",
+      "nakládaný",
+      "pečený",
+      "sušený"
+    ]
+  },
+  {
+    "noun": "čeština",
+    "gender": "ž.",
+    "adjectives": [
+      "bezchybný",
+      "dobrý",
+      "hovorový",
+      "krásný",
+      "lámaný",
+      "mluvený",
+      "moderní",
+      "obecný",
+      "plynulý",
+      "současný",
+      "spisovný",
+      "správný",
+      "starý",
+      "špatný"
+    ]
+  },
+  {
+    "noun": "čich",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "citlivý",
+      "dobrý",
+      "jemný",
+      "neomylný",
+      "novinářský",
+      "obchodní",
+      "psí",
+      "skvělý",
+      "špatný",
+      "výborný",
+      "vynikající"
+    ]
+  },
+  {
+    "noun": "číslo",
+    "gender": "s.",
+    "adjectives": [
+      "celý",
+      "desetinný",
+      "jednotný",
+      "kladný",
+      "lichý",
+      "malý",
+      "množný",
+      "náhodný",
+      "nový",
+      "poslední",
+      "přirozený",
+      "rodný",
+      "sudý",
+      "šťastný",
+      "telefonní",
+      "velký",
+      "záporný"
+    ]
+  },
+  {
+    "noun": "číslovka",
+    "gender": "ž.",
+    "adjectives": [
+      "dílový",
+      "druhový",
+      "násobný",
+      "neurčitý",
+      "řadový",
+      "souborový",
+      "určitý",
+      "základní"
+    ]
+  },
+  {
+    "noun": "člověk",
+    "gender": "m. živ.",
+    "adjectives": [
+      "bohatý",
+      "cizí",
+      "dobrý",
+      "hloupý",
+      "hodný",
+      "chudý",
+      "chytrý",
+      "laskavý",
+      "mladý",
+      "moudrý",
+      "nemocný",
+      "nešťastný",
+      "obyčejný",
+      "poctivý",
+      "pracovitý",
+      "skromný",
+      "starý",
+      "sympatický",
+      "šťastný",
+      "vzdělaný",
+      "zlý"
+    ]
+  },
+  {
+    "noun": "čokoláda",
+    "gender": "ž.",
+    "adjectives": [
+      "belgický",
+      "bílý",
+      "drahý",
+      "horký",
+      "hořký",
+      "jemný",
+      "kvalitní",
+      "lahodný",
+      "levný",
+      "mléčný",
+      "oříškový",
+      "rozpuštěný",
+      "sladký",
+      "švýcarský",
+      "tmavý"
+    ]
+  },
+  {
+    "noun": "čtvrtek",
+    "gender": "m. neživ.",
+    "adjectives": ["celý", "další", "minulý", "poslední", "příští", "zelený"]
+  },
+  {
+    "noun": "ďábel",
+    "gender": "m. živ.",
+    "adjectives": [
+      "černý",
+      "krutý",
+      "lstivý",
+      "malý",
+      "mazaný",
+      "prohnaný",
+      "rohatý",
+      "rudý",
+      "starý",
+      "tasmánský",
+      "vtělený",
+      "zlý"
+    ]
+  },
+  {
+    "noun": "dáma",
+    "gender": "ž.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "distingovaný",
+      "elegantní",
+      "krásný",
+      "milý",
+      "mladý",
+      "noblesní",
+      "osamělý",
+      "první",
+      "starší",
+      "starý",
+      "tajemný",
+      "vážený",
+      "vznešený"
+    ]
+  },
+  {
+    "noun": "dárek",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "drahý",
+      "hezký",
+      "krásný",
+      "levný",
+      "malý",
+      "milý",
+      "narozeninový",
+      "nečekaný",
+      "originální",
+      "praktický",
+      "skvělý",
+      "svatební",
+      "symbolický",
+      "vánoční",
+      "velký",
+      "zabalený"
+    ]
+  },
+  {
+    "noun": "dativ",
+    "gender": "m. neživ.",
+    "adjectives": ["český", "německý", "polský", "ruský", "správný"]
+  },
+  {
+    "noun": "dcera",
+    "gender": "ž.",
+    "adjectives": [
+      "ambiciózní",
+      "drahý",
+      "hezký",
+      "hodný",
+      "chytrý",
+      "krásný",
+      "maličký",
+      "malý",
+      "milý",
+      "mladý",
+      "nemocný",
+      "nešťastný",
+      "nevychovaný",
+      "oblíbený",
+      "plachý",
+      "pracovitý",
+      "smutný",
+      "sympatický",
+      "štíhlý",
+      "veselý",
+      "vlastní",
+      "zdravý",
+      "zlý"
+    ]
+  },
+  {
+    "noun": "dědeček",
+    "gender": "m. živ.",
+    "adjectives": [
+      "aktivní",
+      "drahý",
+      "hodný",
+      "milý",
+      "mlčenlivý",
+      "mlsný",
+      "moudrý",
+      "nemocný",
+      "pracovitý",
+      "prchlivý",
+      "slepý",
+      "smutný",
+      "starý",
+      "veselý",
+      "vlastní",
+      "zdravý"
+    ]
+  },
+  {
+    "noun": "děj",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "dramatický",
+      "hlavní",
+      "chemický",
+      "jednoduchý",
+      "minulý",
+      "napínavý",
+      "nudný",
+      "opakovaný",
+      "probíhající",
+      "rychlý",
+      "skutečný",
+      "slovesný",
+      "složitý",
+      "zajímavý"
+    ]
+  },
+  {
+    "noun": "dějepis",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "církevní",
+      "český",
+      "moderní",
+      "národní",
+      "nudný",
+      "oblíbený",
+      "světový",
+      "školní",
+      "těžký",
+      "zábavný",
+      "zajímavý"
+    ]
+  },
+  {
+    "noun": "děkan",
+    "gender": "m. živ.",
+    "adjectives": [
+      "ambiciózní",
+      "budoucí",
+      "konzervativní",
+      "mladý",
+      "mlčenlivý",
+      "nervózní",
+      "nový",
+      "oblíbený",
+      "starý",
+      "vážený",
+      "známý"
+    ]
+  },
+  {
+    "noun": "den",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "celý",
+      "další",
+      "dlouhý",
+      "dobrý",
+      "hezký",
+      "horký",
+      "krásný",
+      "krátký",
+      "letní",
+      "minulý",
+      "mlžný",
+      "nešťastný",
+      "pokažený",
+      "poslední",
+      "příští",
+      "sanitární",
+      "smutný",
+      "studený",
+      "špatný",
+      "teplý",
+      "těžký",
+      "veselý",
+      "volný",
+      "výroční",
+      "zajímavý",
+      "zimní",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "dítě",
+    "gender": "s.",
+    "plural-gender": "ž.",
+    "adjectives": [
+      "boží",
+      "hladový",
+      "hodný",
+      "hospitalizovaný",
+      "chorý",
+      "chytrý",
+      "krásný",
+      "maličký",
+      "malý",
+      "mlsný",
+      "nahý",
+      "nemocný",
+      "nešťastný",
+      "nevychovaný",
+      "plachý",
+      "překvapený",
+      "slepý",
+      "smutný",
+      "veselý",
+      "vlastní",
+      "zdravý",
+      "ztracený",
+      "živý",
+      "žíznivý"
+    ]
+  },
+  {
+    "noun": "div",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "další",
+      "hotový",
+      "malý",
+      "nevysvětlitelný",
+      "starověký",
+      "tajemný",
+      "úchvatný"
+    ]
+  },
+  {
+    "noun": "divadlo",
+    "gender": "s.",
+    "adjectives": [
+      "krásný",
+      "letní",
+      "malý",
+      "moderní",
+      "nový",
+      "oblíbený",
+      "plný",
+      "regionální",
+      "římský",
+      "slavný",
+      "starověký",
+      "starý",
+      "studentský",
+      "velký",
+      "zbořený",
+      "známý"
+    ]
+  },
+  {
+    "noun": "dívka",
+    "gender": "ž.",
+    "adjectives": [
+      "ambiciózní",
+      "bohatý",
+      "elegantní",
+      "hezký",
+      "hloupý",
+      "hodný",
+      "chytrý",
+      "inteligentní",
+      "krásný",
+      "malý",
+      "milý",
+      "mladý",
+      "mlčenlivý",
+      "mlčící",
+      "nešťastný",
+      "nevychovaný",
+      "plachý",
+      "plavý",
+      "smutný",
+      "sympatický",
+      "štíhlý",
+      "tajemný",
+      "veselý",
+      "zlý",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "díže",
+    "gender": "ž.",
+    "adjectives": ["malý", "nový", "plný", "starý", "těžký", "velký"]
+  },
+  {
+    "noun": "dluh",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "další",
+      "dávný",
+      "hazardní",
+      "malý",
+      "nízký",
+      "nový",
+      "obchodní",
+      "ohromný",
+      "osobní",
+      "starý",
+      "tíživý",
+      "velký",
+      "vysoký",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "doba",
+    "gender": "ž.",
+    "adjectives": [
+      "budoucí",
+      "dávný",
+      "dlouhý",
+      "koloniální",
+      "krátký",
+      "lidovědemokratický",
+      "minulý",
+      "moderní",
+      "nový",
+      "poslední",
+      "protireformační",
+      "římský",
+      "starověký",
+      "těžký",
+      "zlý"
+    ]
+  },
+  {
+    "noun": "docent",
+    "gender": "m. živ.",
+    "adjectives": [
+      "ambiciózní",
+      "budoucí",
+      "chytrý",
+      "inteligentní",
+      "konzervativní",
+      "mladý",
+      "nervózní",
+      "nový",
+      "oblíbený",
+      "přednášející",
+      "starý",
+      "univerzitní",
+      "vážený",
+      "zahraniční",
+      "známý"
+    ]
+  },
+  {
+    "noun": "doktor",
+    "gender": "m. živ.",
+    "adjectives": [
+      "dobrý",
+      "hodný",
+      "chytrý",
+      "milý",
+      "mladý",
+      "nervózní",
+      "nový",
+      "oblíbený",
+      "ochotný",
+      "osobní",
+      "slavný",
+      "starý",
+      "sympatický",
+      "zahraniční",
+      "známý"
+    ]
+  },
+  {
+    "noun": "doktorka",
+    "gender": "ž.",
+    "adjectives": [
+      "dobrý",
+      "hodný",
+      "chytrý",
+      "milý",
+      "mladý",
+      "nervózní",
+      "nový",
+      "oblíbený",
+      "ochotný",
+      "osobní",
+      "slavný",
+      "starý",
+      "sympatický",
+      "zahraniční",
+      "známý"
+    ]
+  },
+  {
+    "noun": "domácnost",
+    "gender": "ž.",
+    "adjectives": [
+      "bohatý",
+      "celý",
+      "český",
+      "malý",
+      "moderní",
+      "nový",
+      "pořádný",
+      "studentský",
+      "špinavý",
+      "velký",
+      "vlastní"
+    ]
+  },
+  {
+    "noun": "dominikán",
+    "gender": "m. živ.",
+    "adjectives": [
+      "mladý",
+      "mlčenlivý",
+      "moudrý",
+      "slavný",
+      "starý",
+      "svatý",
+      "známý"
+    ]
+  },
+  {
+    "noun": "dopis",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "další",
+      "dávný",
+      "dlouhý",
+      "důležitý",
+      "hřejivý",
+      "ironický",
+      "krátký",
+      "napsaný",
+      "nenapsaný",
+      "nový",
+      "obchodní",
+      "osobní",
+      "polooficiální",
+      "poslední",
+      "smutný",
+      "starý",
+      "strohý",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "doupě",
+    "gender": "s.",
+    "adjectives": [
+      "lesní",
+      "malý",
+      "podzemní",
+      "starý",
+      "studentský",
+      "špinavý",
+      "tajemný",
+      "vlčí"
+    ]
+  },
+  {
+    "noun": "dovolená",
+    "gender": "ž.",
+    "adjectives": [
+      "aktivní",
+      "celý",
+      "dlouhý",
+      "drahý",
+      "exkluzivní",
+      "krásný",
+      "krátký",
+      "laciný",
+      "letní",
+      "levný",
+      "minulý",
+      "pokažený",
+      "poslední",
+      "příští",
+      "řádný",
+      "skvělý",
+      "zábavný",
+      "zahraniční",
+      "zimní"
+    ]
+  },
+  {
+    "noun": "dóže",
+    "gender": "m. živ.",
+    "plural-gender": "s.",
+    "adjectives": [
+      "benátský",
+      "bohatý",
+      "krutý",
+      "mladý",
+      "moudrý",
+      "poslední",
+      "slavný",
+      "starý",
+      "vážený"
+    ]
+  },
+  {
+    "noun": "drát",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "dlouhý",
+      "elektrický",
+      "holý",
+      "krátký",
+      "měděný",
+      "nový",
+      "ohnutý",
+      "silný",
+      "spadlý",
+      "starý",
+      "stříbrný",
+      "vytažený"
+    ]
+  },
+  {
+    "noun": "drogerie",
+    "gender": "ž.",
+    "adjectives": [
+      "drahý",
+      "laciný",
+      "levný",
+      "malý",
+      "nový",
+      "oblíbený",
+      "starý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "dřevo",
+    "gender": "s.",
+    "adjectives": [
+      "borový",
+      "březový",
+      "čerstvý",
+      "drahý",
+      "hrubý",
+      "levný",
+      "lískový",
+      "mahagonový",
+      "měkký",
+      "ořechový",
+      "starý",
+      "tvrdý",
+      "uschlý",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "dřez",
+    "gender": "m. neživ.",
+    "adjectives": ["malý", "mělký", "nový", "plný", "starý", "špinavý", "velký"]
+  },
+  {
+    "noun": "duha",
+    "gender": "ž.",
+    "adjectives": ["celý", "krásný", "letní", "ohromný", "úchvatný", "velký"]
+  },
+  {
+    "noun": "důl",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "hlavní",
+      "měděný",
+      "nebezpečný",
+      "nový",
+      "podzemní",
+      "starý",
+      "stříbrný",
+      "velký"
+    ]
+  },
+  {
+    "noun": "dům",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "bílý",
+      "boží",
+      "drahý",
+      "krásný",
+      "malý",
+      "moderní",
+      "nový",
+      "obchodní",
+      "pětipokojový",
+      "pětiposchoďový",
+      "starý",
+      "studený",
+      "tajemný",
+      "teplý",
+      "velký",
+      "vlastní",
+      "zbořený"
+    ]
+  },
+  {
+    "noun": "dveře",
+    "gender": "ž.",
+    "adjectives": [
+      "bílý",
+      "hlavní",
+      "hnědý",
+      "kostelní",
+      "mahagonový",
+      "malý",
+      "nový",
+      "průhledný",
+      "starý",
+      "těžký",
+      "velký",
+      "zadní"
+    ]
+  },
+  {
+    "noun": "džungle",
+    "gender": "ž.",
+    "adjectives": [
+      "divoký",
+      "nebezpečný",
+      "ohromný",
+      "tajemný",
+      "velký",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "e-mail",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "další",
+      "dlouhý",
+      "důležitý",
+      "ironický",
+      "krátký",
+      "napsaný",
+      "nenapsaný",
+      "nový",
+      "obchodní",
+      "osobní",
+      "polooficiální",
+      "poslední",
+      "strohý",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "Egypťan",
+    "gender": "m. živ.",
+    "adjectives": ["bohatý", "mladý", "slavný", "starověký", "starý"]
+  },
+  {
+    "noun": "ekologie",
+    "gender": "ž.",
+    "adjectives": ["lesní", "moderní", "regionální", "zajímavý"]
+  },
+  {
+    "noun": "ekonom",
+    "gender": "m. živ.",
+    "adjectives": [
+      "ambiciózní",
+      "český",
+      "hlavní",
+      "chytrý",
+      "inteligentní",
+      "konzervativní",
+      "mladý",
+      "polský",
+      "slavný",
+      "starý",
+      "vedoucí",
+      "zahraniční",
+      "známý"
+    ]
+  },
+  {
+    "noun": "ekonomie",
+    "gender": "ž.",
+    "adjectives": ["konzervativní", "moderní", "zajímavý", "základní"]
+  },
+  {
+    "noun": "elektrárna",
+    "gender": "ž.",
+    "adjectives": [
+      "hlavní",
+      "malý",
+      "moderní",
+      "nový",
+      "podzemní",
+      "starý",
+      "velký",
+      "zbořený"
+    ]
+  },
+  {
+    "noun": "estetika",
+    "gender": "ž.",
+    "adjectives": [
+      "moderní",
+      "osobní",
+      "starověký",
+      "strohý",
+      "vlastní",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "euro",
+    "gender": "s.",
+    "adjectives": ["další", "poslední", "silný"]
+  },
+  {
+    "noun": "Evropa",
+    "gender": "ž.",
+    "adjectives": [
+      "bohatý",
+      "budoucí",
+      "celý",
+      "jednotný",
+      "moderní",
+      "severní",
+      "starověký",
+      "starý",
+      "střední"
+    ]
+  },
+  {
+    "noun": "fakulta",
+    "gender": "ž.",
+    "adjectives": [
+      "celý",
+      "humanitní",
+      "malý",
+      "moderní",
+      "nový",
+      "starý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "fantazie",
+    "gender": "ž.",
+    "adjectives": [
+      "bohatý",
+      "divoký",
+      "ohromný",
+      "romantický",
+      "tajemný",
+      "velký",
+      "živý"
+    ]
+  },
+  {
+    "noun": "fara",
+    "gender": "ž.",
+    "adjectives": ["krásný", "malý", "nový", "starý", "velký", "zbořený"]
+  },
+  {
+    "noun": "femininum",
+    "gender": "s.",
+    "adjectives": [
+      "český",
+      "německý",
+      "nepravidelný",
+      "polský",
+      "pravidelný",
+      "ruský",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "fialka",
+    "gender": "ž.",
+    "adjectives": [
+      "bílý",
+      "fialový",
+      "krásný",
+      "lesní",
+      "maličký",
+      "malý",
+      "uschlý"
+    ]
+  },
+  {
+    "noun": "film",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "anglický",
+      "český",
+      "dlouhý",
+      "dobrý",
+      "francouzský",
+      "hloupý",
+      "italský",
+      "krátký",
+      "latinskoamerický",
+      "moderní",
+      "německý",
+      "nový",
+      "oblíbený",
+      "polský",
+      "romantický",
+      "ruský",
+      "slavný",
+      "smutný",
+      "starý",
+      "špatný",
+      "tajemný",
+      "vážný",
+      "zábavný",
+      "zajímavý",
+      "známý"
+    ]
+  },
+  {
+    "noun": "filologie",
+    "gender": "ž.",
+    "adjectives": [
+      "anglický",
+      "český",
+      "francouzský",
+      "hebrejský",
+      "italský",
+      "moderní",
+      "německý",
+      "polský",
+      "ruský"
+    ]
+  },
+  {
+    "noun": "filtr",
+    "gender": "m. neživ.",
+    "adjectives": ["nový", "selektivní", "starý", "špinavý", "univerzální"]
+  },
+  {
+    "noun": "Fin",
+    "gender": "m. živ.",
+    "adjectives": ["mladý", "mlčenlivý", "plachý", "starý", "sympatický"]
+  },
+  {
+    "noun": "fólie",
+    "gender": "ž.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "nalepený",
+      "ohrnutý",
+      "průhledný",
+      "stříbrný"
+    ]
+  },
+  {
+    "noun": "forma",
+    "gender": "ž.",
+    "adjectives": [
+      "dlouhý",
+      "dobrý",
+      "gramatický",
+      "krátký",
+      "mužský",
+      "nepravidelný",
+      "neutrální",
+      "nový",
+      "osobní",
+      "oznamovací",
+      "podmiňovací",
+      "pravidelný",
+      "reflexivní",
+      "rozkazovací",
+      "skvělý",
+      "správný",
+      "starý",
+      "špatný",
+      "výborný",
+      "základní",
+      "zvratný",
+      "ženský"
+    ]
+  },
+  {
+    "noun": "fotbal",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "anglický",
+      "český",
+      "italský",
+      "moderní",
+      "mužský",
+      "německý",
+      "oblíbený",
+      "rychlý",
+      "ženský"
+    ]
+  },
+  {
+    "noun": "fotografie",
+    "gender": "ž.",
+    "adjectives": [
+      "krásný",
+      "nový",
+      "osobní",
+      "slavný",
+      "starý",
+      "zajímavý",
+      "známý",
+      "ztracený",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "francouzština",
+    "gender": "ž.",
+    "adjectives": [
+      "dobrý",
+      "krásný",
+      "moderní",
+      "obchodní",
+      "odborný",
+      "správný",
+      "starý",
+      "špatný",
+      "výborný",
+      "základní"
+    ]
+  },
+  {
+    "noun": "fyzik",
+    "gender": "m. živ.",
+    "adjectives": [
+      "chytrý",
+      "inteligentní",
+      "kvantový",
+      "mladý",
+      "slavný",
+      "starý",
+      "známý"
+    ]
+  },
+  {
+    "noun": "galanterie",
+    "gender": "ž.",
+    "adjectives": ["levný", "malý", "nový", "starý"]
+  },
+  {
+    "noun": "garáž",
+    "gender": "ž.",
+    "adjectives": [
+      "malý",
+      "nový",
+      "plný",
+      "podzemní",
+      "starý",
+      "studený",
+      "velký",
+      "vlastní",
+      "zbořený"
+    ]
+  },
+  {
+    "noun": "generálmajor",
+    "gender": "m. živ.",
+    "adjectives": ["ambiciózní", "krutý", "mladý", "slavný", "starý", "vážný"]
+  },
+  {
+    "noun": "genitiv",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "český",
+      "německý",
+      "nepravidelný",
+      "polský",
+      "ruský",
+      "správný",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "génius",
+    "gender": "m. živ.",
+    "adjectives": ["mladý", "pravý", "skvělý", "slavný", "starý", "zlý"]
+  },
+  {
+    "noun": "gentleman",
+    "gender": "m. živ.",
+    "adjectives": ["anglický", "elegantní", "mladý", "pravý", "starý"]
+  },
+  {
+    "noun": "geologie",
+    "gender": "ž.",
+    "adjectives": ["moderní", "zajímavý", "základní"]
+  },
+  {
+    "noun": "germanistika",
+    "gender": "ž.",
+    "adjectives": ["český", "moderní", "polský", "zahraniční"]
+  },
+  {
+    "noun": "golf",
+    "gender": "m. neživ.",
+    "adjectives": ["drahý", "exkluzivní", "oblíbený"]
+  },
+  {
+    "noun": "gramatika",
+    "gender": "ž.",
+    "adjectives": [
+      "anglický",
+      "český",
+      "francouzský",
+      "hebrejský",
+      "italský",
+      "moderní",
+      "nekomplikovaný",
+      "německý",
+      "polský",
+      "ruský",
+      "těžký",
+      "základní"
+    ]
+  },
+  {
+    "noun": "grog",
+    "gender": "m. neživ.",
+    "adjectives": ["horký", "hřejivý", "silný", "teplý"]
+  },
+  {
+    "noun": "guláš",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "dobrý",
+      "horký",
+      "houbový",
+      "hutný",
+      "chutný",
+      "kuřecí",
+      "ostrý",
+      "telecí",
+      "teplý",
+      "vepřový",
+      "výborný"
+    ]
+  },
+  {
+    "noun": "gymnázium",
+    "gender": "s.",
+    "adjectives": ["malý", "moderní", "nový", "starý", "velký", "známý"]
+  },
+  {
+    "noun": "gyps",
+    "gender": "m. neživ.",
+    "adjectives": ["bílý", "tvrdý", "ztuhlý"]
+  },
+  {
+    "noun": "habilitace",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "nový",
+      "poslední",
+      "rychlý",
+      "univerzitní",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "hádanka",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "hloupý",
+      "nekomplikovaný",
+      "nevysvětlitelný",
+      "poslední",
+      "slovní",
+      "starý",
+      "tajemný",
+      "těžký",
+      "zábavný",
+      "zajímavý",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "hadice",
+    "gender": "ž.",
+    "adjectives": [
+      "dlouhý",
+      "krátký",
+      "nový",
+      "ohnutý",
+      "plný",
+      "starý",
+      "vytažený",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "hajný",
+    "gender": "m. živ.",
+    "adjectives": ["hodný", "mladý", "mlčenlivý", "moudrý", "starý", "zlý"]
+  },
+  {
+    "noun": "hájovna",
+    "gender": "ž.",
+    "adjectives": ["lesní", "malý", "starý", "tajemný", "tichý", "zbořený"]
+  },
+  {
+    "noun": "hala",
+    "gender": "ž.",
+    "adjectives": [
+      "hlavní",
+      "malý",
+      "moderní",
+      "nádražní",
+      "nový",
+      "ohromný",
+      "podzemní",
+      "starý",
+      "studený",
+      "velký",
+      "zbořený"
+    ]
+  },
+  {
+    "noun": "halas",
+    "gender": "m. neživ.",
+    "adjectives": ["ohromný", "ranní", "velký", "veselý"]
+  },
+  {
+    "noun": "haléř",
+    "gender": "m. neživ.",
+    "adjectives": ["poslední", "starý", "ztracený"]
+  },
+  {
+    "noun": "halogen",
+    "gender": "m. neživ.",
+    "adjectives": ["nový", "silný", "starý"]
+  },
+  {
+    "noun": "halucinace",
+    "gender": "ž.",
+    "adjectives": ["další", "nebezpečný", "nevysvětlitelný", "zvláštní", "živý"]
+  },
+  { "noun": "hanba", "gender": "ž.", "adjectives": ["ohromný", "velký"] },
+  {
+    "noun": "hangár",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "letadlový",
+      "nový",
+      "ohromný",
+      "podzemní",
+      "starý",
+      "velký",
+      "zbořený"
+    ]
+  },
+  {
+    "noun": "harfa",
+    "gender": "ž.",
+    "adjectives": ["drahý", "krásný", "malý", "starý", "velký"]
+  },
+  {
+    "noun": "harlekýn",
+    "gender": "m. živ.",
+    "adjectives": ["smutný", "starý", "veselý"]
+  },
+  {
+    "noun": "harmonogram",
+    "gender": "m. neživ.",
+    "adjectives": ["hlavní", "hotový", "napsaný", "nový"]
+  },
+  {
+    "noun": "hašiš",
+    "gender": "m. neživ.",
+    "adjectives": ["drahý", "laciný", "levný", "silný"]
+  },
+  {
+    "noun": "havárie",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "nebezpečný",
+      "politováníhodný",
+      "poslední",
+      "těžký",
+      "vážný"
+    ]
+  },
+  {
+    "noun": "hazard",
+    "gender": "m. neživ.",
+    "adjectives": ["nebezpečný", "velký"]
+  },
+  {
+    "noun": "hektar",
+    "gender": "m. neživ.",
+    "adjectives": ["celý", "další", "obdělavatelný", "obhospodařovatelný"]
+  },
+  {
+    "noun": "herec",
+    "gender": "m. živ.",
+    "adjectives": [
+      "anglický",
+      "český",
+      "dobrý",
+      "elegantní",
+      "francouzský",
+      "italský",
+      "mladý",
+      "nervózní",
+      "oblíbený",
+      "polský",
+      "skvělý",
+      "slavný",
+      "starý",
+      "špatný",
+      "výborný",
+      "známý"
+    ]
+  },
+  {
+    "noun": "herečka",
+    "gender": "ž.",
+    "adjectives": [
+      "anglický",
+      "český",
+      "dobrý",
+      "elegantní",
+      "francouzský",
+      "italský",
+      "krásný",
+      "mladý",
+      "nervózní",
+      "oblíbený",
+      "polský",
+      "skvělý",
+      "slavný",
+      "starý",
+      "špatný",
+      "štíhlý",
+      "výborný",
+      "známý"
+    ]
+  },
+  {
+    "noun": "heretik",
+    "gender": "m. živ.",
+    "adjectives": ["mladý", "nebezpečný", "slavný", "starý"]
+  },
+  {
+    "noun": "heslo",
+    "gender": "s.",
+    "adjectives": [
+      "dlouhý",
+      "krátký",
+      "napsaný",
+      "nový",
+      "silný",
+      "správný",
+      "starý",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "historie",
+    "gender": "ž.",
+    "adjectives": [
+      "celý",
+      "český",
+      "dávný",
+      "dlouhý",
+      "moderní",
+      "osobní",
+      "polský",
+      "římský",
+      "smutný",
+      "starověký",
+      "tajemný",
+      "zajímavý"
+    ]
+  },
+  {
+    "noun": "hit",
+    "gender": "m. neživ.",
+    "adjectives": ["horký", "letní", "nový", "oblíbený", "starý", "velký"]
+  },
+  {
+    "noun": "hlad",
+    "gender": "m. neživ.",
+    "adjectives": ["ohromný", "velký", "vlčí"]
+  },
+  {
+    "noun": "hlas",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "ironický",
+      "krásný",
+      "měkký",
+      "mužský",
+      "nízký",
+      "příjemný",
+      "rozechvělý",
+      "silný",
+      "smutný",
+      "studený",
+      "teplý",
+      "tichý",
+      "tvrdý",
+      "vážný",
+      "veselý",
+      "vysoký",
+      "znělý",
+      "zvláštní",
+      "ženský"
+    ]
+  },
+  {
+    "noun": "hláska",
+    "gender": "ž.",
+    "adjectives": ["dlouhý", "krátký", "měkký", "neznělý", "tvrdý", "znělý"]
+  },
+  {
+    "noun": "hlemýžď",
+    "gender": "m. živ.",
+    "adjectives": ["maličký", "malý", "velký"]
+  },
+  {
+    "noun": "hlína",
+    "gender": "ž.",
+    "adjectives": [
+      "černý",
+      "čerstvý",
+      "hnědý",
+      "měkký",
+      "obdělavatelný",
+      "tuhý",
+      "tvrdý"
+    ]
+  },
+  {
+    "noun": "hlt",
+    "gender": "m. neživ.",
+    "adjectives": ["další", "dlouhý", "malý", "poslední", "velký"]
+  },
+  {
+    "noun": "hluk",
+    "gender": "m. neživ.",
+    "adjectives": ["nevysvětlitelný", "ohromný", "ranní", "velký"]
+  },
+  {
+    "noun": "hmota",
+    "gender": "ž.",
+    "adjectives": ["hutný", "měkký", "plastický", "tuhý", "tvrdý"]
+  },
+  {
+    "noun": "hodina",
+    "gender": "ž.",
+    "adjectives": [
+      "celý",
+      "další",
+      "dlouhý",
+      "krátký",
+      "minulý",
+      "poslední",
+      "příští",
+      "ranní"
+    ]
+  },
+  {
+    "noun": "hodiny",
+    "gender": "ž.",
+    "adjectives": [
+      "elektrický",
+      "kostelní",
+      "malý",
+      "nádražní",
+      "nový",
+      "pokažený",
+      "starý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "hoch",
+    "gender": "m. živ.",
+    "adjectives": [
+      "hezký",
+      "hloupý",
+      "hodný",
+      "chytrý",
+      "malý",
+      "mladý",
+      "plachý",
+      "veselý",
+      "zlý"
+    ]
+  },
+  {
+    "noun": "hokej",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "český",
+      "moderní",
+      "oblíbený",
+      "rychlý",
+      "severoamerický",
+      "tvrdý",
+      "ženský"
+    ]
+  },
+  {
+    "noun": "holič",
+    "gender": "m. živ.",
+    "adjectives": ["dobrý", "mladý", "mlčenlivý", "oblíbený", "starý", "špatný"]
+  },
+  {
+    "noun": "holka",
+    "gender": "ž.",
+    "adjectives": [
+      "hezký",
+      "hloupý",
+      "hodný",
+      "chytrý",
+      "krásný",
+      "malý",
+      "mladý",
+      "plachý",
+      "štíhlý",
+      "veselý"
+    ]
+  },
+  {
+    "noun": "hora",
+    "gender": "ž.",
+    "adjectives": [
+      "holý",
+      "lesnatý",
+      "mlžný",
+      "nebezpečný",
+      "nízký",
+      "ohromný",
+      "pokrytý",
+      "svatý",
+      "vysoký"
+    ]
+  },
+  {
+    "noun": "horník",
+    "gender": "m. živ.",
+    "adjectives": ["mladý", "nemocný", "pracovitý", "silný", "starý", "špinavý"]
+  },
+  {
+    "noun": "horolezec",
+    "gender": "m. živ.",
+    "adjectives": [
+      "ambiciózní",
+      "mladý",
+      "silný",
+      "slavný",
+      "starý",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "hospoda",
+    "gender": "ž.",
+    "adjectives": [
+      "laciný",
+      "levný",
+      "malý",
+      "nádražní",
+      "oblíbený",
+      "plný",
+      "starý",
+      "studentský",
+      "špinavý",
+      "ztuchlý"
+    ]
+  },
+  {
+    "noun": "host",
+    "gender": "m. živ.",
+    "adjectives": ["další", "milý", "nový", "vážený", "zahraniční"]
+  },
+  {
+    "noun": "hotel",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "drahý",
+      "elegantní",
+      "exkluzivní",
+      "laciný",
+      "levný",
+      "malý",
+      "moderní",
+      "nádražní",
+      "nový",
+      "pětiposchoďový",
+      "starý",
+      "velký",
+      "zbořený"
+    ]
+  },
+  {
+    "noun": "housle",
+    "gender": "ž.",
+    "adjectives": ["drahý", "krásný", "malý", "starý"]
+  },
+  {
+    "noun": "houslista",
+    "gender": "m. živ.",
+    "adjectives": [
+      "mladý",
+      "nervózní",
+      "skvělý",
+      "slavný",
+      "starý",
+      "výborný",
+      "známý"
+    ]
+  },
+  {
+    "noun": "hra",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "hazardní",
+      "nebezpečný",
+      "nový",
+      "oblíbený",
+      "společenský",
+      "starý",
+      "zábavný",
+      "zajímavý"
+    ]
+  },
+  {
+    "noun": "hrábě",
+    "gender": "ž.",
+    "adjectives": ["dlouhý", "nový", "starý"]
+  },
+  {
+    "noun": "hráč",
+    "gender": "m. živ.",
+    "adjectives": [
+      "aktivní",
+      "hazardní",
+      "hlavní",
+      "mladý",
+      "nový",
+      "rychlý",
+      "skvělý",
+      "slavný",
+      "starý",
+      "výborný"
+    ]
+  },
+  {
+    "noun": "hrad",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "český",
+      "jihočeský",
+      "krásný",
+      "moravský",
+      "slavný",
+      "starý",
+      "tajemný",
+      "velký",
+      "zbořený"
+    ]
+  },
+  {
+    "noun": "hrách",
+    "gender": "m. neživ.",
+    "adjectives": ["uschlý", "vařený", "zelený"]
+  },
+  {
+    "noun": "hrdina",
+    "gender": "m. živ.",
+    "adjectives": [
+      "hlavní",
+      "mladý",
+      "oblíbený",
+      "pravý",
+      "slavný",
+      "starý",
+      "známý"
+    ]
+  },
+  {
+    "noun": "hrnec",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "horký",
+      "malý",
+      "měděný",
+      "plný",
+      "starý",
+      "špinavý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "hroch",
+    "gender": "m. živ.",
+    "adjectives": ["hladový", "malý", "ohromný", "velký"]
+  },
+  {
+    "noun": "hrot",
+    "gender": "m. neživ.",
+    "adjectives": ["ohnutý", "ostrý", "vytažený"]
+  },
+  {
+    "noun": "hrouda",
+    "gender": "ž.",
+    "adjectives": ["hnědý", "tuhý", "tvrdý", "velký"]
+  },
+  {
+    "noun": "hruška",
+    "gender": "ž.",
+    "adjectives": [
+      "čerstvý",
+      "grilovaný",
+      "chutný",
+      "měkký",
+      "ohlodaný",
+      "spadlý",
+      "vařený",
+      "zelený",
+      "žlutý"
+    ]
+  },
+  { "noun": "hřad", "gender": "m. neživ.", "adjectives": ["dlouhý", "vysoký"] },
+  {
+    "noun": "hřbet",
+    "gender": "m. neživ.",
+    "adjectives": ["holý", "ohnutý", "ztuhlý"]
+  },
+  {
+    "noun": "hřib",
+    "gender": "m. neživ.",
+    "adjectives": ["čerstvý", "jedlý", "smažený", "uschlý", "velký"]
+  },
+  {
+    "noun": "hříbě",
+    "gender": "s.",
+    "adjectives": ["hnědý", "malý", "mladý", "plachý", "plavý"]
+  },
+  {
+    "noun": "hříbek",
+    "gender": "m. neživ.",
+    "adjectives": ["čerstvý", "jedlý", "malý", "smažený"]
+  },
+  { "noun": "hříčka", "gender": "ž.", "adjectives": ["slovní", "zábavný"] },
+  { "noun": "hříšník", "gender": "m. živ.", "adjectives": ["starý", "velký"] },
+  {
+    "noun": "hřiště",
+    "gender": "s.",
+    "adjectives": ["fotbalový", "malý", "nový", "starý", "velký"]
+  },
+  {
+    "noun": "hudba",
+    "gender": "ž.",
+    "adjectives": [
+      "český",
+      "francouzský",
+      "italský",
+      "krásný",
+      "latinskoamerický",
+      "moderní",
+      "moravský",
+      "oblíbený",
+      "smutný",
+      "tichý",
+      "veselý"
+    ]
+  },
+  {
+    "noun": "hudebník",
+    "gender": "m. živ.",
+    "adjectives": ["mladý", "skvělý", "slavný", "starý", "známý"]
+  },
+  {
+    "noun": "hůl",
+    "gender": "ž.",
+    "adjectives": ["dlouhý", "lískový", "ohnutý", "starý", "tvrdý"]
+  },
+  {
+    "noun": "humor",
+    "gender": "m. neživ.",
+    "adjectives": ["anglický", "ironický", "zvláštní"]
+  },
+  {
+    "noun": "husa",
+    "gender": "ž.",
+    "adjectives": ["bílý", "hloupý", "vařený", "velký"]
+  },
+  {
+    "noun": "huť",
+    "gender": "ž.",
+    "adjectives": ["nový", "starý", "velký", "zbořený"]
+  },
+  {
+    "noun": "hvězda",
+    "gender": "ž.",
+    "adjectives": [
+      "malý",
+      "mladý",
+      "nový",
+      "ohromný",
+      "pohasínající",
+      "ranní",
+      "severní",
+      "slavný",
+      "spadlý",
+      "stříbrný",
+      "velký"
+    ]
+  },
+  {
+    "noun": "hvězdárna",
+    "gender": "ž.",
+    "adjectives": [
+      "malý",
+      "moderní",
+      "nový",
+      "starý",
+      "univerzitní",
+      "velký",
+      "zbořený"
+    ]
+  },
+  {
+    "noun": "hvozd",
+    "gender": "m. neživ.",
+    "adjectives": ["divoký", "ohromný", "starý", "tajemný", "tichý"]
+  },
+  {
+    "noun": "hydrant",
+    "gender": "m. neživ.",
+    "adjectives": ["červený", "nový", "pokažený", "starý"]
+  },
+  {
+    "noun": "hygiena",
+    "gender": "ž.",
+    "adjectives": ["dobrý", "osobní", "špatný", "základní"]
+  },
+  {
+    "noun": "hýl",
+    "gender": "m. živ.",
+    "adjectives": ["červený", "malý", "plachý"]
+  },
+  {
+    "noun": "hypnóza",
+    "gender": "ž.",
+    "adjectives": ["nebezpečný", "zvláštní"]
+  },
+  {
+    "noun": "hypochondr",
+    "gender": "m. živ.",
+    "adjectives": ["mladý", "nervózní", "nešťastný", "starý"]
+  },
+  {
+    "noun": "hypotéka",
+    "gender": "ž.",
+    "adjectives": ["drahý", "levný", "nízký", "nový", "tíživý", "vysoký"]
+  },
+  {
+    "noun": "chata",
+    "gender": "ž.",
+    "adjectives": [
+      "krásný",
+      "lesní",
+      "letní",
+      "malý",
+      "nový",
+      "starý",
+      "studený",
+      "vlastní",
+      "zbořený"
+    ]
+  },
+  {
+    "noun": "chemik",
+    "gender": "m. živ.",
+    "adjectives": ["chytrý", "mladý", "skvělý", "slavný", "starý", "známý"]
+  },
+  {
+    "noun": "chichot",
+    "gender": "m. neživ.",
+    "adjectives": ["hloupý", "ironický", "nervózní", "tichý"]
+  },
+  {
+    "noun": "chips",
+    "gender": "m. neživ.",
+    "adjectives": ["česnekový", "laciný", "smažený", "ztuchlý"]
+  },
+  {
+    "noun": "chirurgie",
+    "gender": "ž.",
+    "adjectives": ["moderní", "plastický"]
+  },
+  { "noun": "chlad", "gender": "m. neživ.", "adjectives": ["ranní", "zimní"] },
+  {
+    "noun": "chléb",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "čerstvý",
+      "česnekový",
+      "domácí",
+      "měkký",
+      "starý",
+      "teplý",
+      "tvrdý",
+      "uschlý",
+      "ztuchlý"
+    ]
+  },
+  {
+    "noun": "chlév",
+    "gender": "m. neživ.",
+    "adjectives": ["kozí", "starý", "špinavý", "zbořený", "ztuchlý"]
+  },
+  {
+    "noun": "choutka",
+    "gender": "ž.",
+    "adjectives": ["další", "mlsný", "zvláštní"]
+  },
+  {
+    "noun": "chrám",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "boží",
+      "krásný",
+      "ohromný",
+      "římský",
+      "starověký",
+      "starý",
+      "svatý",
+      "velký",
+      "zbořený"
+    ]
+  },
+  {
+    "noun": "chrt",
+    "gender": "m. živ.",
+    "adjectives": ["hladový", "mladý", "rychlý", "starý", "štíhlý"]
+  },
+  {
+    "noun": "chudák",
+    "gender": "m. živ.",
+    "adjectives": ["hloupý", "malý", "nemocný", "nešťastný", "starý"]
+  },
+  {
+    "noun": "chuť",
+    "gender": "ž.",
+    "adjectives": [
+      "dobrý",
+      "kyselý",
+      "neporovnatelný",
+      "ohromný",
+      "příjemný",
+      "velký",
+      "výborný",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "chůze",
+    "gender": "ž.",
+    "adjectives": ["dlouhý", "elegantní", "rychlý", "těžký"]
+  },
+  {
+    "noun": "chvíle",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "dlouhý",
+      "krásný",
+      "krátký",
+      "poslední",
+      "příjemný",
+      "smutný",
+      "těžký",
+      "volný"
+    ]
+  },
+  {
+    "noun": "chvojí",
+    "gender": "s.",
+    "adjectives": ["borový", "čerstvý", "uschlý", "zelený"]
+  },
+  {
+    "noun": "chvost",
+    "gender": "m. neživ.",
+    "adjectives": ["černý", "dlouhý", "hnědý", "krátký"]
+  },
+  {
+    "noun": "chyba",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "gramatický",
+      "hloupý",
+      "malý",
+      "ohromný",
+      "podstatný",
+      "politováníhodný",
+      "poslední",
+      "vážný",
+      "velký"
+    ]
+  },
+  {
+    "noun": "idiot",
+    "gender": "m. živ.",
+    "adjectives": [
+      "hotový",
+      "mladý",
+      "nevychovaný",
+      "pořádný",
+      "starý",
+      "úplný"
+    ]
+  },
+  {
+    "noun": "imunita",
+    "gender": "ž.",
+    "adjectives": ["aktivní", "silný", "úplný"]
+  },
+  {
+    "noun": "indikátor",
+    "gender": "m. neživ.",
+    "adjectives": ["důležitý", "hlavní", "nový", "selektivní", "základní"]
+  },
+  {
+    "noun": "individualita",
+    "gender": "ž.",
+    "adjectives": ["silný", "unikátní", "zajímavý", "zvláštní"]
+  },
+  {
+    "noun": "infinitiv",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "český",
+      "dokonavý",
+      "nedokonavý",
+      "německý",
+      "polský",
+      "ruský",
+      "správný"
+    ]
+  },
+  {
+    "noun": "instrumentál",
+    "gender": "m. neživ.",
+    "adjectives": ["český", "polský", "ruský", "správný"]
+  },
+  {
+    "noun": "Ital",
+    "gender": "m. živ.",
+    "adjectives": [
+      "bohatý",
+      "elegantní",
+      "mladý",
+      "slavný",
+      "starý",
+      "sympatický",
+      "veselý"
+    ]
+  },
+  {
+    "noun": "jablíčko",
+    "gender": "s.",
+    "adjectives": [
+      "čerstvý",
+      "červený",
+      "chutný",
+      "maličký",
+      "malý",
+      "ohlodaný",
+      "spadlý",
+      "zelený",
+      "žlutý"
+    ]
+  },
+  {
+    "noun": "jablko",
+    "gender": "s.",
+    "adjectives": [
+      "čerstvý",
+      "červený",
+      "chutný",
+      "kyselý",
+      "malý",
+      "měkký",
+      "ohlodaný",
+      "spadlý",
+      "tvrdý",
+      "velký",
+      "zelený",
+      "žlutý"
+    ]
+  },
+  {
+    "noun": "jahoda",
+    "gender": "ž.",
+    "adjectives": [
+      "čerstvý",
+      "červený",
+      "chutný",
+      "kyselý",
+      "lesní",
+      "malý",
+      "měkký",
+      "velký",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "jaro",
+    "gender": "s.",
+    "adjectives": [
+      "celý",
+      "další",
+      "krásný",
+      "minulý",
+      "poslední",
+      "příští",
+      "studený",
+      "teplý"
+    ]
+  },
+  {
+    "noun": "jazyk",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "anglický",
+      "cizí",
+      "český",
+      "dlouhý",
+      "francouzský",
+      "hebrejský",
+      "chorvatský",
+      "italský",
+      "moderní",
+      "německý",
+      "ostrý",
+      "perský",
+      "polský",
+      "ruský",
+      "starověký",
+      "těžký",
+      "vyplazený",
+      "zlý",
+      "živý"
+    ]
+  },
+  {
+    "noun": "jedle",
+    "gender": "ž.",
+    "adjectives": [
+      "mladý",
+      "ohromný",
+      "spadlý",
+      "starý",
+      "štíhlý",
+      "uschlý",
+      "vysoký",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "jeskyně",
+    "gender": "ž.",
+    "adjectives": [
+      "krásný",
+      "nebezpečný",
+      "ohromný",
+      "podzemní",
+      "studený",
+      "tajemný",
+      "úchvatný",
+      "velký"
+    ]
+  },
+  {
+    "noun": "jeviště",
+    "gender": "s.",
+    "adjectives": ["hlavní", "malý", "nový", "starý", "velký"]
+  },
+  {
+    "noun": "jezero",
+    "gender": "s.",
+    "adjectives": [
+      "krásný",
+      "lesní",
+      "malý",
+      "mělký",
+      "studený",
+      "teplý",
+      "tichý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "jezevčík",
+    "gender": "m. živ.",
+    "adjectives": [
+      "černý",
+      "hladový",
+      "hnědý",
+      "hodný",
+      "chytrý",
+      "malý",
+      "mladý",
+      "starý",
+      "věrný"
+    ]
+  },
+  {
+    "noun": "jídelna",
+    "gender": "ž.",
+    "adjectives": [
+      "levný",
+      "malý",
+      "nový",
+      "plný",
+      "starý",
+      "studentský",
+      "univerzitní",
+      "velký"
+    ]
+  },
+  {
+    "noun": "jídlo",
+    "gender": "s.",
+    "adjectives": [
+      "čerstvý",
+      "český",
+      "dobrý",
+      "domácí",
+      "drahý",
+      "francouzský",
+      "grilovaný",
+      "hlavní",
+      "horký",
+      "hotový",
+      "chutný",
+      "italský",
+      "laciný",
+      "levný",
+      "oblíbený",
+      "pokažený",
+      "připravený",
+      "smažený",
+      "studený",
+      "teplý",
+      "vařený",
+      "výborný",
+      "zdravý",
+      "ztuchlý"
+    ]
+  },
+  {
+    "noun": "jitro",
+    "gender": "s.",
+    "adjectives": ["krásný", "letní", "mlžný", "studený", "tichý", "zimní"]
+  },
+  {
+    "noun": "jméno",
+    "gender": "s.",
+    "adjectives": [
+      "dlouhý",
+      "hebrejský",
+      "krásný",
+      "krátký",
+      "mužský",
+      "nový",
+      "oblíbený",
+      "osobní",
+      "podstatný",
+      "přídavný",
+      "slavný",
+      "starý",
+      "vlastní",
+      "známý",
+      "zvláštní",
+      "ženský"
+    ]
+  },
+  {
+    "noun": "jogurt",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "bílý",
+      "čerstvý",
+      "chutný",
+      "kozí",
+      "levný",
+      "ovocný",
+      "rybízový",
+      "studený",
+      "zdravý"
+    ]
+  },
+  {
+    "noun": "kabinet",
+    "gender": "m. neživ.",
+    "adjectives": ["malý", "nový", "starý", "univerzitní"]
+  },
+  {
+    "noun": "kachna",
+    "gender": "ž.",
+    "adjectives": ["bílý", "divoký", "grilovaný", "malý", "vařený", "velký"]
+  },
+  {
+    "noun": "kalhotky",
+    "gender": "ž.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "červený",
+      "krátký",
+      "nový",
+      "starý",
+      "špinavý"
+    ]
+  },
+  {
+    "noun": "kamarád",
+    "gender": "m. živ.",
+    "adjectives": [
+      "dávný",
+      "dobrý",
+      "hodný",
+      "milý",
+      "nový",
+      "starý",
+      "věrný",
+      "veselý"
+    ]
+  },
+  {
+    "noun": "kamarádka",
+    "gender": "ž.",
+    "adjectives": [
+      "dávný",
+      "dobrý",
+      "hodný",
+      "milý",
+      "nový",
+      "starý",
+      "věrný",
+      "veselý"
+    ]
+  },
+  {
+    "noun": "kámen",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "drahý",
+      "horký",
+      "malý",
+      "ohromný",
+      "ostrý",
+      "pokrytý",
+      "spadlý",
+      "studený",
+      "teplý",
+      "tvrdý",
+      "velký",
+      "zahřátý"
+    ]
+  },
+  {
+    "noun": "kancelář",
+    "gender": "ž.",
+    "adjectives": [
+      "hlavní",
+      "malý",
+      "moderní",
+      "nový",
+      "obchodní",
+      "studený",
+      "velký",
+      "vlastní",
+      "zadní"
+    ]
+  },
+  {
+    "noun": "kanystr",
+    "gender": "m. neživ.",
+    "adjectives": ["červený", "nový", "plný", "starý"]
+  },
+  {
+    "noun": "kapitola",
+    "gender": "ž.",
+    "adjectives": [
+      "celý",
+      "další",
+      "dlouhý",
+      "hotový",
+      "krátký",
+      "napsaný",
+      "nenapsaný",
+      "nový",
+      "poslední",
+      "příští",
+      "zajímavý"
+    ]
+  },
+  {
+    "noun": "kartáček",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "elektrický",
+      "malý",
+      "měkký",
+      "nový",
+      "starý",
+      "tuhý",
+      "tvrdý"
+    ]
+  },
+  {
+    "noun": "kašel",
+    "gender": "m. neživ.",
+    "adjectives": ["ošklivý", "ranní", "silný"]
+  },
+  {
+    "noun": "káva",
+    "gender": "ž.",
+    "adjectives": [
+      "černý",
+      "čerstvý",
+      "horký",
+      "chutný",
+      "italský",
+      "ranní",
+      "silný",
+      "studený",
+      "teplý",
+      "vařený"
+    ]
+  },
+  {
+    "noun": "kavárna",
+    "gender": "ž.",
+    "adjectives": [
+      "drahý",
+      "italský",
+      "levný",
+      "malý",
+      "moderní",
+      "oblíbený",
+      "plný",
+      "starý",
+      "studentský",
+      "známý"
+    ]
+  },
+  {
+    "noun": "kibic",
+    "gender": "m. živ.",
+    "adjectives": ["mlčenlivý", "nervózní", "starý"]
+  },
+  {
+    "noun": "kino",
+    "gender": "s.",
+    "adjectives": ["letní", "malý", "nový", "starý", "velký", "zbořený"]
+  },
+  {
+    "noun": "kiosk",
+    "gender": "m. neživ.",
+    "adjectives": ["malý", "nádražní", "nový", "starý"]
+  },
+  {
+    "noun": "klíč",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "hlavní",
+      "malý",
+      "ohnutý",
+      "správný",
+      "starý",
+      "univerzální",
+      "vytažený",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "klid",
+    "gender": "m. neživ.",
+    "adjectives": ["příjemný", "svatý", "úplný", "velký"]
+  },
+  {
+    "noun": "klobása",
+    "gender": "ž.",
+    "adjectives": [
+      "domácí",
+      "grilovaný",
+      "horký",
+      "chutný",
+      "kuřecí",
+      "ostrý",
+      "studený",
+      "vařený",
+      "vepřový"
+    ]
+  },
+  {
+    "noun": "klokan",
+    "gender": "m. živ.",
+    "adjectives": ["hnědý", "malý", "mladý", "rychlý", "velký"]
+  },
+  {
+    "noun": "klub",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "čtenářský",
+      "exkluzivní",
+      "fotbalový",
+      "malý",
+      "nový",
+      "oblíbený",
+      "slavný",
+      "společenský",
+      "starý",
+      "studentský",
+      "velký",
+      "známý"
+    ]
+  },
+  {
+    "noun": "klučina",
+    "gender": "m. živ.",
+    "adjectives": ["hodný", "chytrý", "malý", "mladý", "veselý"]
+  },
+  {
+    "noun": "kluk",
+    "gender": "m. živ.",
+    "adjectives": [
+      "hezký",
+      "hloupý",
+      "hodný",
+      "chytrý",
+      "malý",
+      "mladý",
+      "nevychovaný",
+      "plachý",
+      "veselý",
+      "zlý",
+      "zvlčilý"
+    ]
+  },
+  {
+    "noun": "kmotr",
+    "gender": "m. živ.",
+    "adjectives": ["bohatý", "hodný", "starý"]
+  },
+  {
+    "noun": "kněžna",
+    "gender": "ž.",
+    "adjectives": ["bohatý", "elegantní", "krásný", "mladý", "slavný", "starý"]
+  },
+  {
+    "noun": "kniha",
+    "gender": "ž.",
+    "adjectives": [
+      "celý",
+      "další",
+      "drahý",
+      "hebrejský",
+      "krásný",
+      "laciný",
+      "napsaný",
+      "nenapsaný",
+      "nový",
+      "oblíbený",
+      "odborný",
+      "poslední",
+      "slavný",
+      "starý",
+      "svatý",
+      "tajemný",
+      "těžký",
+      "zábavný",
+      "zajímavý",
+      "známý",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "knihovna",
+    "gender": "ž.",
+    "adjectives": [
+      "domácí",
+      "mahagonový",
+      "malý",
+      "moderní",
+      "nový",
+      "ohromný",
+      "plný",
+      "regionální",
+      "starý",
+      "tichý",
+      "univerzitní",
+      "velký",
+      "vlastní"
+    ]
+  },
+  {
+    "noun": "knížečka",
+    "gender": "ž.",
+    "adjectives": ["maličký", "malý", "nový", "starý", "zajímavý"]
+  },
+  {
+    "noun": "koberec",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "červený",
+      "drahý",
+      "krásný",
+      "levný",
+      "malý",
+      "měkký",
+      "nový",
+      "ohrnutý",
+      "perský",
+      "starý",
+      "špinavý",
+      "velký",
+      "ztuchlý"
+    ]
+  },
+  {
+    "noun": "kocour",
+    "gender": "m. živ.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "divoký",
+      "domácí",
+      "hladový",
+      "chytrý",
+      "mladý",
+      "mlsný",
+      "perský",
+      "prohnaný",
+      "starý",
+      "velký",
+      "zlý"
+    ]
+  },
+  {
+    "noun": "kočička",
+    "gender": "ž.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "hladový",
+      "maličký",
+      "malý",
+      "mlsný",
+      "perský",
+      "plachý"
+    ]
+  },
+  {
+    "noun": "kočka",
+    "gender": "ž.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "divoký",
+      "domácí",
+      "hladový",
+      "chytrý",
+      "mladý",
+      "mlsný",
+      "perský",
+      "plachý",
+      "starý"
+    ]
+  },
+  {
+    "noun": "koláč",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "čerstvý",
+      "domácí",
+      "horký",
+      "chutný",
+      "ořechový",
+      "ovocný",
+      "rybízový",
+      "teplý",
+      "výborný"
+    ]
+  },
+  {
+    "noun": "kolega",
+    "gender": "m. živ.",
+    "adjectives": [
+      "ambiciózní",
+      "budoucí",
+      "hodný",
+      "milý",
+      "mladý",
+      "nervózní",
+      "nový",
+      "ochotný",
+      "pracovitý",
+      "přátelský",
+      "starý",
+      "sympatický",
+      "vážený",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "kolegyně",
+    "gender": "ž.",
+    "adjectives": [
+      "ambiciózní",
+      "budoucí",
+      "hodný",
+      "milý",
+      "mladý",
+      "nervózní",
+      "nový",
+      "ochotný",
+      "pracovitý",
+      "přátelský",
+      "starý",
+      "sympatický",
+      "vážený",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "kolej",
+    "gender": "ž.",
+    "adjectives": [
+      "hlavní",
+      "nový",
+      "slepý",
+      "starý",
+      "studentský",
+      "tramvajový",
+      "univerzitní",
+      "vysokoškolský"
+    ]
+  },
+  {
+    "noun": "kolo",
+    "gender": "s.",
+    "adjectives": [
+      "červený",
+      "další",
+      "elektrický",
+      "modrý",
+      "nový",
+      "ohnutý",
+      "pokažený",
+      "poslední",
+      "rychlý",
+      "starý",
+      "zadní"
+    ]
+  },
+  {
+    "noun": "kominík",
+    "gender": "m. živ.",
+    "adjectives": ["černý", "mladý", "starý", "špinavý"]
+  },
+  {
+    "noun": "komunikace",
+    "gender": "ž.",
+    "adjectives": ["hlavní", "nový", "obchodní", "osobní", "rychlý"]
+  },
+  {
+    "noun": "komunismus",
+    "gender": "m. neživ.",
+    "adjectives": ["český", "polský", "ruský"]
+  },
+  {
+    "noun": "koncert",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "další",
+      "krásný",
+      "letní",
+      "oblíbený",
+      "poslední",
+      "příští",
+      "skvělý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "koncovka",
+    "gender": "ž.",
+    "adjectives": [
+      "deklinační",
+      "dlouhý",
+      "krátký",
+      "mužský",
+      "nepravidelný",
+      "nový",
+      "pravidelný",
+      "správný",
+      "starý",
+      "ženský"
+    ]
+  },
+  {
+    "noun": "konec",
+    "gender": "m. neživ.",
+    "adjectives": ["nešťastný", "rychlý", "smutný", "tichý", "úplný", "zadní"]
+  },
+  {
+    "noun": "konev",
+    "gender": "ž.",
+    "adjectives": ["malý", "nový", "plný", "starý", "velký", "zelený"]
+  },
+  {
+    "noun": "konference",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "jazykovědný",
+      "odborný",
+      "příští",
+      "studentský",
+      "univerzitní",
+      "velký",
+      "výroční",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "konjugace",
+    "gender": "ž.",
+    "adjectives": [
+      "český",
+      "německý",
+      "nepravidelný",
+      "polský",
+      "pravidelný",
+      "ruský",
+      "správný"
+    ]
+  },
+  {
+    "noun": "konsonant",
+    "gender": "m. neživ.",
+    "adjectives": ["měkký", "neznělý", "tvrdý", "znělý"]
+  },
+  {
+    "noun": "konstrukce",
+    "gender": "ž.",
+    "adjectives": [
+      "gramatický",
+      "moderní",
+      "nekomplikovaný",
+      "nový",
+      "starý",
+      "těžký"
+    ]
+  },
+  {
+    "noun": "kontinent",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "celý",
+      "nový",
+      "ohromný",
+      "severoamerický",
+      "starý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "konzerva",
+    "gender": "ž.",
+    "adjectives": [
+      "hermetický",
+      "laciný",
+      "levný",
+      "nový",
+      "pokažený",
+      "starý",
+      "studený"
+    ]
+  },
+  {
+    "noun": "koruna",
+    "gender": "ž.",
+    "adjectives": [
+      "celý",
+      "český",
+      "další",
+      "poslední",
+      "starý",
+      "stříbrný",
+      "svatý"
+    ]
+  },
+  {
+    "noun": "korzo",
+    "gender": "s.",
+    "adjectives": ["hlavní", "starý", "velký"]
+  },
+  {
+    "noun": "kořen",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "dlouhý",
+      "ohlodaný",
+      "silný",
+      "starý",
+      "tvrdý",
+      "uschlý",
+      "vytažený"
+    ]
+  },
+  {
+    "noun": "kořenka",
+    "gender": "ž.",
+    "adjectives": ["malý", "nový", "plný", "starý"]
+  },
+  {
+    "noun": "kořist",
+    "gender": "ž.",
+    "adjectives": ["bohatý", "další", "ohromný", "poslední", "velký"]
+  },
+  {
+    "noun": "kostel",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "krásný",
+      "malý",
+      "nový",
+      "plný",
+      "protireformační",
+      "římský",
+      "starý",
+      "studený",
+      "tichý",
+      "velký",
+      "zbořený"
+    ]
+  },
+  {
+    "noun": "koš",
+    "gender": "m. neživ.",
+    "adjectives": ["malý", "nový", "plný", "starý", "špinavý", "velký"]
+  },
+  {
+    "noun": "košík",
+    "gender": "m. neživ.",
+    "adjectives": ["malý", "nový", "plný", "starý", "velký"]
+  },
+  {
+    "noun": "koťátko",
+    "gender": "s.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "hladový",
+      "maličký",
+      "malý",
+      "mlsný",
+      "plachý"
+    ]
+  },
+  {
+    "noun": "kotě",
+    "gender": "s.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "hladový",
+      "maličký",
+      "malý",
+      "plachý",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "koupaliště",
+    "gender": "s.",
+    "adjectives": [
+      "krásný",
+      "letní",
+      "nový",
+      "plný",
+      "starý",
+      "studený",
+      "velký"
+    ]
+  },
+  {
+    "noun": "koupelna",
+    "gender": "ž.",
+    "adjectives": [
+      "malý",
+      "moderní",
+      "nový",
+      "starý",
+      "studený",
+      "špinavý",
+      "teplý",
+      "velký",
+      "vlastní"
+    ]
+  },
+  {
+    "noun": "kout",
+    "gender": "m. neživ.",
+    "adjectives": ["malý", "špinavý", "tichý", "zadní"]
+  },
+  {
+    "noun": "koza",
+    "gender": "ž.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "domácí",
+      "hloupý",
+      "hnědý",
+      "mladý",
+      "starý"
+    ]
+  },
+  {
+    "noun": "koženka",
+    "gender": "ž.",
+    "adjectives": ["černý", "hnědý", "laciný", "levný"]
+  },
+  {
+    "noun": "kožich",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "drahý",
+      "hnědý",
+      "hřejivý",
+      "nový",
+      "starý",
+      "teplý",
+      "vlčí"
+    ]
+  },
+  {
+    "noun": "krabička",
+    "gender": "ž.",
+    "adjectives": ["hranatý", "maličký", "malý", "nový", "plný", "starý"]
+  },
+  {
+    "noun": "kraj",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "celý",
+      "divoký",
+      "jihočeský",
+      "jihomoravský",
+      "krásný",
+      "lesnatý",
+      "moravský",
+      "severní"
+    ]
+  },
+  {
+    "noun": "králík",
+    "gender": "m. živ.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "divoký",
+      "domácí",
+      "hladový",
+      "hnědý",
+      "malý",
+      "mladý",
+      "plachý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "kráva",
+    "gender": "ž.",
+    "adjectives": ["bílý", "černý", "hloupý", "hnědý", "mladý", "starý"]
+  },
+  {
+    "noun": "kritika",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "estetický",
+      "ironický",
+      "krutý",
+      "minuciózní",
+      "nový",
+      "odborný",
+      "ostrý",
+      "strohý",
+      "tvrdý"
+    ]
+  },
+  {
+    "noun": "krk",
+    "gender": "m. neživ.",
+    "adjectives": ["dlouhý", "holý", "krátký", "oholený", "štíhlý", "ztuhlý"]
+  },
+  {
+    "noun": "krkavec",
+    "gender": "m. živ.",
+    "adjectives": ["černý", "chytrý", "starý", "velký"]
+  },
+  {
+    "noun": "krtek",
+    "gender": "m. živ.",
+    "adjectives": ["černý", "malý", "slepý"]
+  },
+  {
+    "noun": "krůta",
+    "gender": "ž.",
+    "adjectives": ["grilovaný", "vařený", "velký"]
+  },
+  {
+    "noun": "krytina",
+    "gender": "ž.",
+    "adjectives": ["měděný", "nový", "starý"]
+  },
+  { "noun": "křen", "gender": "m. neživ.", "adjectives": ["čerstvý", "ostrý"] },
+  {
+    "noun": "křepelka",
+    "gender": "ž.",
+    "adjectives": ["hnědý", "malý", "plachý"]
+  },
+  {
+    "noun": "křeslo",
+    "gender": "s.",
+    "adjectives": [
+      "houpací",
+      "kožený",
+      "mahagonový",
+      "měkký",
+      "nový",
+      "pohodlný",
+      "starý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "křižovatka",
+    "gender": "ž.",
+    "adjectives": ["hlavní", "nebezpečný", "velký"]
+  },
+  { "noun": "křovina", "gender": "ž.", "adjectives": ["uschlý", "zelený"] },
+  {
+    "noun": "kufr",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "kožený",
+      "malý",
+      "nový",
+      "plný",
+      "starý",
+      "těžký",
+      "velký",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "kufřík",
+    "gender": "m. neživ.",
+    "adjectives": ["kožený", "malý", "nový", "starý"]
+  },
+  {
+    "noun": "kuchyně",
+    "gender": "ž.",
+    "adjectives": [
+      "český",
+      "francouzský",
+      "italský",
+      "malý",
+      "moderní",
+      "nový",
+      "starý",
+      "studený",
+      "špinavý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "kuře",
+    "gender": "s.",
+    "adjectives": [
+      "čerstvý",
+      "grilovaný",
+      "malý",
+      "opařený",
+      "smažený",
+      "vařený",
+      "žlutý"
+    ]
+  },
+  {
+    "noun": "kutr",
+    "gender": "m. neživ.",
+    "adjectives": ["malý", "nový", "pokažený", "rychlý", "starý"]
+  },
+  {
+    "noun": "kůže",
+    "gender": "ž.",
+    "adjectives": [
+      "hrubý",
+      "hříběcí",
+      "kozí",
+      "měkký",
+      "opařený",
+      "telecí",
+      "tvrdý",
+      "vepřový"
+    ]
+  },
+  {
+    "noun": "kvalita",
+    "gender": "ž.",
+    "adjectives": ["dobrý", "neporovnatelný", "nízký", "špatný", "vysoký"]
+  },
+  {
+    "noun": "kvartál",
+    "gender": "m. neživ.",
+    "adjectives": ["další", "minulý", "poslední", "příští"]
+  },
+  { "noun": "kvasnice", "gender": "ž.", "adjectives": ["čerstvý"] },
+  {
+    "noun": "květ",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "bílý",
+      "červený",
+      "fialový",
+      "krásný",
+      "modrý",
+      "spadlý",
+      "uschlý",
+      "žlutý"
+    ]
+  },
+  {
+    "noun": "květák",
+    "gender": "m. neživ.",
+    "adjectives": ["grilovaný", "kvašený", "smažený", "vařený"]
+  },
+  {
+    "noun": "květina",
+    "gender": "ž.",
+    "adjectives": [
+      "bílý",
+      "červený",
+      "fialový",
+      "krásný",
+      "modrý",
+      "oblíbený",
+      "uschlý",
+      "žlutý"
+    ]
+  },
+  { "noun": "kyj", "gender": "m. neživ.", "adjectives": ["dlouhý", "těžký"] },
+  {
+    "noun": "kytara",
+    "gender": "ž.",
+    "adjectives": ["elektrický", "mahagonový", "nový", "starý"]
+  },
+  {
+    "noun": "láhev",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "drahý",
+      "hranatý",
+      "malý",
+      "plný",
+      "poslední",
+      "velký",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "laminát",
+    "gender": "m. neživ.",
+    "adjectives": ["laciný", "levný", "nalepený", "nový", "starý"]
+  },
+  {
+    "noun": "laser",
+    "gender": "m. neživ.",
+    "adjectives": ["červený", "nebezpečný", "nový", "silný", "zelený"]
+  },
+  {
+    "noun": "lavice",
+    "gender": "ž.",
+    "adjectives": [
+      "dlouhý",
+      "kostelní",
+      "nový",
+      "starý",
+      "studený",
+      "tvrdý",
+      "zadní"
+    ]
+  },
+  {
+    "noun": "lečo",
+    "gender": "s.",
+    "adjectives": ["domácí", "horký", "chutný", "teplý", "výborný"]
+  },
+  {
+    "noun": "legenda",
+    "gender": "ž.",
+    "adjectives": [
+      "benátský",
+      "český",
+      "dávný",
+      "hrdinský",
+      "krásný",
+      "římský",
+      "slavný",
+      "starověký",
+      "starý",
+      "tajemný",
+      "živý"
+    ]
+  },
+  {
+    "noun": "legitimace",
+    "gender": "ž.",
+    "adjectives": [
+      "čtenářský",
+      "nový",
+      "starý",
+      "studentský",
+      "univerzitní",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "legrace",
+    "gender": "ž.",
+    "adjectives": ["ohromný", "pořádný", "velký"]
+  },
+  {
+    "noun": "lékař",
+    "gender": "m. živ.",
+    "adjectives": [
+      "budoucí",
+      "dobrý",
+      "mladý",
+      "oblíbený",
+      "odborný",
+      "ochotný",
+      "osobní",
+      "skvělý",
+      "starý",
+      "sympatický",
+      "vedoucí",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "lektor",
+    "gender": "m. živ.",
+    "adjectives": [
+      "anglický",
+      "český",
+      "francouzský",
+      "italský",
+      "mladý",
+      "německý",
+      "nový",
+      "oblíbený",
+      "polský",
+      "ruský",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "lektorát",
+    "gender": "m. neživ.",
+    "adjectives": ["anglický", "český", "nový", "univerzitní", "zahraniční"]
+  },
+  {
+    "noun": "les",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "borový",
+      "březový",
+      "divoký",
+      "krásný",
+      "ohromný",
+      "starý",
+      "tajemný",
+      "tichý",
+      "velký",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "letadlo",
+    "gender": "s.",
+    "adjectives": [
+      "elektrický",
+      "malý",
+      "nový",
+      "pohodlný",
+      "pokažený",
+      "rychlý",
+      "spadlý",
+      "starý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "letiště",
+    "gender": "s.",
+    "adjectives": [
+      "hlavní",
+      "malý",
+      "moderní",
+      "nový",
+      "regionální",
+      "starý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "léto",
+    "gender": "s.",
+    "adjectives": [
+      "celý",
+      "dlouhý",
+      "horký",
+      "krásný",
+      "minulý",
+      "poslední",
+      "příští",
+      "studený",
+      "teplý"
+    ]
+  },
+  {
+    "noun": "liána",
+    "gender": "ž.",
+    "adjectives": ["dlouhý", "uschlý", "zelený"]
+  },
+  {
+    "noun": "lichokopytník",
+    "gender": "m. živ.",
+    "adjectives": ["divoký", "velký"]
+  },
+  { "noun": "likvidace", "gender": "ž.", "adjectives": ["rychlý", "úplný"] },
+  {
+    "noun": "linie",
+    "gender": "ž.",
+    "adjectives": ["dlouhý", "hlavní", "mužský", "nový", "štíhlý", "ženský"]
+  },
+  {
+    "noun": "lístek",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "další",
+      "malý",
+      "nalepený",
+      "nový",
+      "tramvajový",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "listí",
+    "gender": "s.",
+    "adjectives": [
+      "březový",
+      "čerstvý",
+      "hnědý",
+      "spadlý",
+      "uschlý",
+      "zelený",
+      "žlutý"
+    ]
+  },
+  {
+    "noun": "literatura",
+    "gender": "ž.",
+    "adjectives": [
+      "anglický",
+      "český",
+      "francouzský",
+      "hebrejský",
+      "italský",
+      "jazykovědný",
+      "krásný",
+      "latinskoamerický",
+      "moderní",
+      "německý",
+      "odborný",
+      "perský",
+      "polský",
+      "protireformační",
+      "regionální",
+      "ruský",
+      "římský",
+      "severoamerický",
+      "starověký",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "litr",
+    "gender": "m. neživ.",
+    "adjectives": ["celý", "další", "poslední"]
+  },
+  {
+    "noun": "loď",
+    "gender": "ž.",
+    "adjectives": [
+      "benátský",
+      "letadlový",
+      "malý",
+      "nový",
+      "obchodní",
+      "ohromný",
+      "rychlý",
+      "starý",
+      "velký",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "lokál",
+    "gender": "m. neživ.",
+    "adjectives": ["český", "oblíbený", "polský", "ruský", "správný", "starý"]
+  },
+  {
+    "noun": "lokomotiva",
+    "gender": "ž.",
+    "adjectives": [
+      "elektrický",
+      "nový",
+      "pokažený",
+      "rychlý",
+      "silný",
+      "starý",
+      "těžký"
+    ]
+  },
+  {
+    "noun": "lotr",
+    "gender": "m. živ.",
+    "adjectives": ["mladý", "prohnaný", "starý", "zlý"]
+  },
+  {
+    "noun": "louka",
+    "gender": "ž.",
+    "adjectives": [
+      "krásný",
+      "lesní",
+      "letní",
+      "mlžný",
+      "uschlý",
+      "velký",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "loutka",
+    "gender": "ž.",
+    "adjectives": ["krásný", "malý", "nový", "starý"]
+  },
+  { "noun": "loutna", "gender": "ž.", "adjectives": ["krásný", "starý"] },
+  { "noun": "lůj", "gender": "m. neživ.", "adjectives": ["vepřový", "ztuhlý"] },
+  {
+    "noun": "lustr",
+    "gender": "m. neživ.",
+    "adjectives": ["drahý", "elegantní", "krásný", "spadlý", "starý", "velký"]
+  },
+  { "noun": "lýko", "gender": "s.", "adjectives": ["měkký"] },
+  { "noun": "lysina", "gender": "ž.", "adjectives": ["malý", "velký"] },
+  {
+    "noun": "lyžař",
+    "gender": "m. živ.",
+    "adjectives": ["mladý", "nervózní", "rychlý", "skvělý", "slavný", "starý"]
+  },
+  {
+    "noun": "lžíce",
+    "gender": "ž.",
+    "adjectives": ["malý", "ohnutý", "stříbrný", "špinavý", "velký"]
+  },
+  {
+    "noun": "Maďar",
+    "gender": "m. živ.",
+    "adjectives": [
+      "bohatý",
+      "mladý",
+      "prchlivý",
+      "slavný",
+      "starý",
+      "sympatický",
+      "veselý"
+    ]
+  },
+  {
+    "noun": "mafie",
+    "gender": "ž.",
+    "adjectives": ["celý", "italský", "krutý", "nebezpečný", "ruský"]
+  },
+  {
+    "noun": "magie",
+    "gender": "ž.",
+    "adjectives": ["bílý", "černý", "dávný", "pravý", "starověký", "tajemný"]
+  },
+  {
+    "noun": "magistr",
+    "gender": "m. živ.",
+    "adjectives": ["ambiciózní", "budoucí", "mladý", "nový"]
+  },
+  {
+    "noun": "mák",
+    "gender": "m. neživ.",
+    "adjectives": ["čerstvý", "červený", "modrý", "vlčí"]
+  },
+  {
+    "noun": "malina",
+    "gender": "ž.",
+    "adjectives": [
+      "čerstvý",
+      "červený",
+      "chutný",
+      "lesní",
+      "malý",
+      "měkký",
+      "velký"
+    ]
+  },
+  {
+    "noun": "máma",
+    "gender": "ž.",
+    "adjectives": [
+      "budoucí",
+      "hodný",
+      "milý",
+      "mladý",
+      "moudrý",
+      "nemocný",
+      "nervózní",
+      "pracovitý",
+      "smutný",
+      "starý",
+      "veselý",
+      "vlastní",
+      "zdravý"
+    ]
+  },
+  {
+    "noun": "mandl",
+    "gender": "m. neživ.",
+    "adjectives": ["elektrický", "starý", "těžký", "velký"]
+  },
+  {
+    "noun": "maniak",
+    "gender": "m. živ.",
+    "adjectives": ["fotbalový", "mladý", "nebezpečný", "úplný"]
+  },
+  {
+    "noun": "manipulace",
+    "gender": "ž.",
+    "adjectives": ["další", "nebezpečný", "ohavný"]
+  },
+  {
+    "noun": "mapa",
+    "gender": "ž.",
+    "adjectives": [
+      "malý",
+      "nový",
+      "slepý",
+      "starověký",
+      "starý",
+      "tajemný",
+      "velký",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "maskulinum",
+    "gender": "s.",
+    "adjectives": [
+      "český",
+      "nepravidelný",
+      "neživotný",
+      "polský",
+      "pravidelný",
+      "ruský",
+      "životný"
+    ]
+  },
+  {
+    "noun": "máslo",
+    "gender": "s.",
+    "adjectives": [
+      "čerstvý",
+      "česnekový",
+      "domácí",
+      "drahý",
+      "levný",
+      "měkký",
+      "ořechový",
+      "tavený",
+      "tvrdý",
+      "ztuhlý",
+      "ztuchlý"
+    ]
+  },
+  {
+    "noun": "maso",
+    "gender": "s.",
+    "adjectives": [
+      "čerstvý",
+      "drahý",
+      "grilovaný",
+      "chutný",
+      "kozí",
+      "kuřecí",
+      "laciný",
+      "levný",
+      "měkký",
+      "pokažený",
+      "smažený",
+      "studený",
+      "telecí",
+      "tuhý",
+      "tvrdý",
+      "vařený",
+      "vepřový",
+      "ztuchlý"
+    ]
+  },
+  { "noun": "měď", "gender": "ž.", "adjectives": ["drahý", "měkký"] },
+  {
+    "noun": "medvěd",
+    "gender": "m. živ.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "divoký",
+      "hladový",
+      "hnědý",
+      "mladý",
+      "nebezpečný",
+      "ohromný",
+      "starý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "medvídek",
+    "gender": "m. živ.",
+    "adjectives": ["hladový", "hnědý", "maličký", "malý", "mlsný"]
+  },
+  {
+    "noun": "mechanismus",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "hlavní",
+      "kvantový",
+      "nekomplikovaný",
+      "nový",
+      "pokažený",
+      "starý",
+      "základní"
+    ]
+  },
+  {
+    "noun": "meloun",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "čerstvý",
+      "chutný",
+      "ohromný",
+      "studený",
+      "velký",
+      "zelený",
+      "žlutý"
+    ]
+  },
+  {
+    "noun": "menza",
+    "gender": "ž.",
+    "adjectives": [
+      "laciný",
+      "levný",
+      "nový",
+      "plný",
+      "starý",
+      "studentský",
+      "univerzitní"
+    ]
+  },
+  {
+    "noun": "měsíc",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "celý",
+      "další",
+      "dlouhý",
+      "letní",
+      "minulý",
+      "poslední",
+      "příští",
+      "stříbrný",
+      "zimní"
+    ]
+  },
+  {
+    "noun": "městečko",
+    "gender": "s.",
+    "adjectives": [
+      "jihočeský",
+      "krásný",
+      "maličký",
+      "malý",
+      "moravský",
+      "starý",
+      "tichý"
+    ]
+  },
+  {
+    "noun": "město",
+    "gender": "s.",
+    "adjectives": [
+      "celý",
+      "hlavní",
+      "italský",
+      "jihočeský",
+      "jihomoravský",
+      "krásný",
+      "malý",
+      "moderní",
+      "moravský",
+      "nový",
+      "ohromný",
+      "starověký",
+      "starý",
+      "tichý",
+      "velký",
+      "ztracený",
+      "živý"
+    ]
+  },
+  {
+    "noun": "metro",
+    "gender": "s.",
+    "adjectives": [
+      "moderní",
+      "nový",
+      "plný",
+      "poslední",
+      "ranní",
+      "rychlý",
+      "starý"
+    ]
+  },
+  {
+    "noun": "milénium",
+    "gender": "s.",
+    "adjectives": ["další", "minulý", "nový", "příští"]
+  },
+  {
+    "noun": "miliarda",
+    "gender": "ž.",
+    "adjectives": ["celý", "další", "poslední"]
+  },
+  {
+    "noun": "milion",
+    "gender": "m. neživ.",
+    "adjectives": ["celý", "další", "poslední"]
+  },
+  {
+    "noun": "ministr",
+    "gender": "m. živ.",
+    "adjectives": [
+      "ambiciózní",
+      "budoucí",
+      "konzervativní",
+      "mladý",
+      "nervózní",
+      "nový",
+      "starý",
+      "vážený",
+      "známý"
+    ]
+  },
+  {
+    "noun": "minisukně",
+    "gender": "ž.",
+    "adjectives": ["černý", "červený", "kožený", "krátký", "nový"]
+  },
+  {
+    "noun": "místnost",
+    "gender": "ž.",
+    "adjectives": [
+      "celý",
+      "malý",
+      "podzemní",
+      "společenský",
+      "strohý",
+      "studený",
+      "špinavý",
+      "teplý",
+      "tichý",
+      "velký",
+      "zadní",
+      "ztuchlý"
+    ]
+  },
+  {
+    "noun": "místo",
+    "gender": "s.",
+    "adjectives": [
+      "další",
+      "hlavní",
+      "krásný",
+      "nebezpečný",
+      "nový",
+      "oblíbený",
+      "poslední",
+      "správný",
+      "starý",
+      "svatý",
+      "tajemný",
+      "tichý",
+      "volný"
+    ]
+  },
+  {
+    "noun": "místodržitel",
+    "gender": "m. živ.",
+    "adjectives": ["krutý", "nový", "slavný", "starý"]
+  },
+  {
+    "noun": "místopředseda",
+    "gender": "m. živ.",
+    "adjectives": ["ambiciózní", "budoucí", "mladý", "nový", "starý"]
+  },
+  {
+    "noun": "mistr",
+    "gender": "m. živ.",
+    "adjectives": [
+      "mladý",
+      "moudrý",
+      "pravý",
+      "skvělý",
+      "slavný",
+      "starý",
+      "známý"
+    ]
+  },
+  {
+    "noun": "mistrovství",
+    "gender": "s.",
+    "adjectives": ["další", "fotbalový", "poslední", "příští"]
+  },
+  { "noun": "míza", "gender": "ž.", "adjectives": ["březový", "čerstvý"] },
+  {
+    "noun": "mládě",
+    "gender": "s.",
+    "adjectives": [
+      "hladový",
+      "holý",
+      "maličký",
+      "malý",
+      "plachý",
+      "slepý",
+      "vlčí",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "mládenec",
+    "gender": "m. živ.",
+    "adjectives": ["hezký", "plachý", "starý", "veselý"]
+  },
+  {
+    "noun": "mládež",
+    "gender": "ž.",
+    "adjectives": ["český", "moderní", "nevychovaný", "studentský", "zvlčilý"]
+  },
+  {
+    "noun": "mládí",
+    "gender": "s.",
+    "adjectives": ["celý", "dávný", "divoký", "krásný", "ztracený"]
+  },
+  {
+    "noun": "mléko",
+    "gender": "s.",
+    "adjectives": [
+      "čerstvý",
+      "horký",
+      "kozí",
+      "kvašený",
+      "kyselý",
+      "pokažený",
+      "studený",
+      "teplý",
+      "vařený",
+      "zahřátý"
+    ]
+  },
+  {
+    "noun": "mlha",
+    "gender": "ž.",
+    "adjectives": ["bílý", "ranní", "studený"]
+  },
+  {
+    "noun": "mobil",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "drahý",
+      "laciný",
+      "levný",
+      "nový",
+      "pokažený",
+      "starý",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "móda",
+    "gender": "ž.",
+    "adjectives": [
+      "exkluzivní",
+      "francouzský",
+      "italský",
+      "letní",
+      "moderní",
+      "mužský",
+      "nový",
+      "poslední",
+      "zimní",
+      "ženský"
+    ]
+  },
+  {
+    "noun": "monitor",
+    "gender": "m. neživ.",
+    "adjectives": ["malý", "nový", "pokažený", "starý", "velký"]
+  },
+  {
+    "noun": "morous",
+    "gender": "m. živ.",
+    "adjectives": ["mlčenlivý", "starý"]
+  },
+  {
+    "noun": "moře",
+    "gender": "s.",
+    "adjectives": [
+      "černý",
+      "divoký",
+      "chorvatský",
+      "krásný",
+      "mělký",
+      "modrý",
+      "ohromný",
+      "severní",
+      "studený",
+      "teplý"
+    ]
+  },
+  {
+    "noun": "motýl",
+    "gender": "m. živ.",
+    "adjectives": ["bílý", "krásný", "malý", "modrý", "velký", "žlutý"]
+  },
+  {
+    "noun": "mouka",
+    "gender": "ž.",
+    "adjectives": ["bílý", "hrubý", "levný", "ztuchlý"]
+  },
+  {
+    "noun": "mráček",
+    "gender": "m. neživ.",
+    "adjectives": ["bílý", "maličký", "malý"]
+  },
+  {
+    "noun": "mravenec",
+    "gender": "m. živ.",
+    "adjectives": ["černý", "červený", "maličký", "malý", "pracovitý"]
+  },
+  {
+    "noun": "mravenečník",
+    "gender": "m. živ.",
+    "adjectives": ["hladový", "velký"]
+  },
+  {
+    "noun": "mrazík",
+    "gender": "m. neživ.",
+    "adjectives": ["malý", "ranní", "zimní"]
+  },
+  {
+    "noun": "mrkev",
+    "gender": "ž.",
+    "adjectives": ["čerstvý", "malý", "vařený", "velký"]
+  },
+  { "noun": "mše", "gender": "ž.", "adjectives": ["dlouhý", "ranní", "svatý"] },
+  { "noun": "mucholapka", "gender": "ž.", "adjectives": ["nový", "plný"] },
+  {
+    "noun": "muž",
+    "gender": "m. živ.",
+    "adjectives": [
+      "bohatý",
+      "elegantní",
+      "hezký",
+      "hodný",
+      "chorý",
+      "mladý",
+      "mlčenlivý",
+      "mlčící",
+      "moudrý",
+      "nahý",
+      "nemocný",
+      "oholený",
+      "ochrnutý",
+      "silný",
+      "slepý",
+      "starý",
+      "tajemný",
+      "vážený",
+      "vysoký",
+      "zlý"
+    ]
+  },
+  { "noun": "mýdlo", "gender": "s.", "adjectives": ["levný", "nový", "tuhý"] },
+  {
+    "noun": "mysl",
+    "gender": "ž.",
+    "adjectives": ["chorý", "nemocný", "zdravý", "živý"]
+  },
+  {
+    "noun": "myš",
+    "gender": "ž.",
+    "adjectives": ["bílý", "hladový", "maličký", "malý"]
+  },
+  {
+    "noun": "naděje",
+    "gender": "ž.",
+    "adjectives": ["malý", "pohasínající", "poslední", "velký"]
+  },
+  {
+    "noun": "nádraží",
+    "gender": "s.",
+    "adjectives": ["hlavní", "malý", "nový", "starý", "velký", "zbořený"]
+  },
+  { "noun": "nafta", "gender": "ž.", "adjectives": ["drahý", "levný"] },
+  {
+    "noun": "náhoda",
+    "gender": "ž.",
+    "adjectives": ["nepravděpodobný", "nešťastný", "zvláštní"]
+  },
+  {
+    "noun": "náměstí",
+    "gender": "s.",
+    "adjectives": ["hlavní", "krásný", "malý", "starý", "velký"]
+  },
+  {
+    "noun": "nápis",
+    "gender": "m. neživ.",
+    "adjectives": ["malý", "nalepený", "nový", "starý", "tajemný", "velký"]
+  },
+  {
+    "noun": "náplň",
+    "gender": "ž.",
+    "adjectives": ["nový", "ořechový", "ovocný", "rybízový"]
+  },
+  {
+    "noun": "narozeniny",
+    "gender": "ž.",
+    "adjectives": ["další", "krásný", "poslední", "příští"]
+  },
+  {
+    "noun": "nářez",
+    "gender": "m. neživ.",
+    "adjectives": ["pořádný", "studený"]
+  },
+  {
+    "noun": "nástroj",
+    "gender": "m. neživ.",
+    "adjectives": ["nový", "ostrý", "starý", "univerzální"]
+  },
+  {
+    "noun": "nástupiště",
+    "gender": "s.",
+    "adjectives": ["další", "hlavní", "plný"]
+  },
+  {
+    "noun": "náušnice",
+    "gender": "ž.",
+    "adjectives": ["malý", "nový", "stříbrný", "ztracený"]
+  },
+  {
+    "noun": "návštěva",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "dlouhý",
+      "krátký",
+      "milý",
+      "polooficiální",
+      "poslední",
+      "příjemný",
+      "příští",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "nebe",
+    "gender": "s.",
+    "adjectives": ["celý", "černý", "krásný", "letní", "modrý"]
+  },
+  {
+    "noun": "nebezpečí",
+    "gender": "s.",
+    "adjectives": ["další", "hlavní", "nový", "ohromný", "vážný", "velký"]
+  },
+  {
+    "noun": "nedorozumění",
+    "gender": "s.",
+    "adjectives": ["další", "hloupý", "malý", "politováníhodný", "velký"]
+  },
+  {
+    "noun": "nemocnice",
+    "gender": "ž.",
+    "adjectives": [
+      "malý",
+      "moderní",
+      "nový",
+      "pětiposchoďový",
+      "regionální",
+      "starý",
+      "univerzitní",
+      "velký"
+    ]
+  },
+  {
+    "noun": "nepořádek",
+    "gender": "m. neživ.",
+    "adjectives": ["ohavný", "ohromný", "úplný", "velký"]
+  },
+  { "noun": "nerv", "gender": "m. neživ.", "adjectives": ["hlavní", "silný"] },
+  {
+    "noun": "nesmysl",
+    "gender": "m. neživ.",
+    "adjectives": ["další", "hloupý", "hotový", "úplný", "velký"]
+  },
+  {
+    "noun": "nestvůra",
+    "gender": "ž.",
+    "adjectives": [
+      "divoký",
+      "hladový",
+      "krutý",
+      "nebezpečný",
+      "ohavný",
+      "ohromný",
+      "ošklivý",
+      "tajemný"
+    ]
+  },
+  {
+    "noun": "neteř",
+    "gender": "ž.",
+    "adjectives": [
+      "hodný",
+      "chytrý",
+      "krásný",
+      "malý",
+      "milý",
+      "mladý",
+      "oblíbený"
+    ]
+  },
+  {
+    "noun": "neutrum",
+    "gender": "s.",
+    "adjectives": ["český", "německý", "polský", "ruský"]
+  },
+  {
+    "noun": "nihilismus",
+    "gender": "m. neživ.",
+    "adjectives": ["moderní", "ruský"]
+  },
+  { "noun": "nikotin", "gender": "m. neživ.", "adjectives": ["nebezpečný"] },
+  {
+    "noun": "nit",
+    "gender": "ž.",
+    "adjectives": ["bílý", "černý", "červený", "dlouhý", "stříbrný"]
+  },
+  {
+    "noun": "noc",
+    "gender": "ž.",
+    "adjectives": [
+      "celý",
+      "další",
+      "dlouhý",
+      "horký",
+      "krásný",
+      "letní",
+      "mlžný",
+      "poslední",
+      "studený",
+      "svatý",
+      "teplý",
+      "tichý",
+      "zimní"
+    ]
+  },
+  {
+    "noun": "nominativ",
+    "gender": "m. neživ.",
+    "adjectives": ["český", "německý", "polský", "ruský", "správný"]
+  },
+  {
+    "noun": "nos",
+    "gender": "m. neživ.",
+    "adjectives": ["červený", "dlouhý", "malý", "ohrnutý", "studený", "velký"]
+  },
+  {
+    "noun": "noviny",
+    "gender": "ž.",
+    "adjectives": [
+      "český",
+      "oblíbený",
+      "ranní",
+      "regionální",
+      "starý",
+      "studentský"
+    ]
+  },
+  {
+    "noun": "nůž",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "malý",
+      "nebezpečný",
+      "nový",
+      "ohnutý",
+      "ostrý",
+      "starý",
+      "velký",
+      "vytažený"
+    ]
+  },
+  {
+    "noun": "občan",
+    "gender": "m. živ.",
+    "adjectives": [
+      "aktivní",
+      "český",
+      "mladý",
+      "polský",
+      "příkladný",
+      "ruský",
+      "řádný",
+      "starý",
+      "vážený"
+    ]
+  },
+  {
+    "noun": "období",
+    "gender": "s.",
+    "adjectives": [
+      "celý",
+      "další",
+      "dlouhý",
+      "koloniální",
+      "krátký",
+      "letní",
+      "minulý",
+      "poslední",
+      "protireformační",
+      "příští",
+      "těžký",
+      "zimní",
+      "zkouškový"
+    ]
+  },
+  {
+    "noun": "oběd",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "dobrý",
+      "domácí",
+      "hotový",
+      "chutný",
+      "laciný",
+      "levný",
+      "obchodní",
+      "připravený",
+      "rychlý",
+      "teplý",
+      "výborný"
+    ]
+  },
+  {
+    "noun": "oběť",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "hrdinský",
+      "mladý",
+      "nešťastný",
+      "ohromný",
+      "poslední",
+      "velký"
+    ]
+  },
+  {
+    "noun": "obhajoba",
+    "gender": "ž.",
+    "adjectives": ["další", "hrdinský", "poslední", "silný"]
+  },
+  {
+    "noun": "obchod",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "drahý",
+      "exkluzivní",
+      "koloniální",
+      "laciný",
+      "levný",
+      "malý",
+      "nový",
+      "oblíbený",
+      "starý",
+      "velký",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "objekt",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "hlavní",
+      "malý",
+      "nový",
+      "podzemní",
+      "starý",
+      "tajemný",
+      "velký",
+      "zbořený"
+    ]
+  },
+  {
+    "noun": "obor",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "hlavní",
+      "humanitní",
+      "jazykovědný",
+      "nový",
+      "oblíbený",
+      "zajímavý"
+    ]
+  },
+  {
+    "noun": "obr",
+    "gender": "m. živ.",
+    "adjectives": [
+      "hloupý",
+      "hodný",
+      "ohromný",
+      "starý",
+      "titánský",
+      "velikánský",
+      "zlý"
+    ]
+  },
+  {
+    "noun": "obrat",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "ohromný",
+      "rychlý",
+      "slovní",
+      "úplný",
+      "zahraničněpolitický",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "obraz",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "drahý",
+      "krásný",
+      "malý",
+      "nový",
+      "slavný",
+      "starý",
+      "tajemný",
+      "velký",
+      "zajímavý",
+      "známý"
+    ]
+  },
+  {
+    "noun": "obrázek",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "hezký",
+      "krásný",
+      "maličký",
+      "malý",
+      "nalepený",
+      "nový",
+      "starý"
+    ]
+  },
+  {
+    "noun": "obývák",
+    "gender": "m. neživ.",
+    "adjectives": ["malý", "nový", "starý", "teplý", "velký"]
+  },
+  {
+    "noun": "obyvatel",
+    "gender": "m. živ.",
+    "adjectives": ["další", "mladý", "nový", "starý"]
+  },
+  {
+    "noun": "óda",
+    "gender": "ž.",
+    "adjectives": ["dlouhý", "krásný", "napsaný", "slavný"]
+  },
+  {
+    "noun": "oděv",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "drahý",
+      "elegantní",
+      "laciný",
+      "letní",
+      "levný",
+      "mužský",
+      "nový",
+      "společenský",
+      "starý",
+      "špinavý",
+      "teplý",
+      "zimní",
+      "ženský"
+    ]
+  },
+  {
+    "noun": "odjezd",
+    "gender": "m. neživ.",
+    "adjectives": ["další", "poslední", "ranní", "rychlý"]
+  },
+  { "noun": "odpadek", "gender": "m. neživ.", "adjectives": ["další", "malý"] },
+  {
+    "noun": "odpoledne",
+    "gender": "s.",
+    "adjectives": [
+      "celý",
+      "horký",
+      "krásný",
+      "letní",
+      "mlžný",
+      "příjemný",
+      "teplý",
+      "tichý",
+      "zimní"
+    ]
+  },
+  {
+    "noun": "odpověď",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "dlouhý",
+      "ironický",
+      "krátký",
+      "napsaný",
+      "poslední",
+      "připravený",
+      "rychlý",
+      "správný",
+      "strohý",
+      "univerzální"
+    ]
+  },
+  {
+    "noun": "oháňka",
+    "gender": "ž.",
+    "adjectives": ["černý", "dlouhý", "hnědý", "krátký"]
+  },
+  {
+    "noun": "ohař",
+    "gender": "m. živ.",
+    "adjectives": ["hnědý", "mladý", "rychlý", "starý", "věrný"]
+  },
+  {
+    "noun": "oheň",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "hřejivý",
+      "malý",
+      "nebezpečný",
+      "ohromný",
+      "pohasínající",
+      "velký",
+      "živý"
+    ]
+  },
+  {
+    "noun": "ohlávka",
+    "gender": "ž.",
+    "adjectives": ["kožený", "nový", "starý"]
+  },
+  {
+    "noun": "ohrada",
+    "gender": "ž.",
+    "adjectives": ["nízký", "nový", "starý", "vysoký", "zbořený"]
+  },
+  {
+    "noun": "ohřívadlo",
+    "gender": "s.",
+    "adjectives": ["elektrický", "nový", "starý"]
+  },
+  {
+    "noun": "okno",
+    "gender": "s.",
+    "adjectives": ["malý", "nový", "starý", "špinavý", "velký", "zadní"]
+  },
+  { "noun": "oměj", "gender": "m. neživ.", "adjectives": ["modrý"] },
+  {
+    "noun": "omyl",
+    "gender": "m. neživ.",
+    "adjectives": ["další", "hloupý", "politováníhodný", "velký"]
+  },
+  {
+    "noun": "opera",
+    "gender": "ž.",
+    "adjectives": ["český", "italský", "krásný", "nový", "oblíbený", "slavný"]
+  },
+  { "noun": "opozitum", "gender": "s.", "adjectives": ["pravý", "úplný"] },
+  {
+    "noun": "organismus",
+    "gender": "m. neživ.",
+    "adjectives": ["celý", "chorý", "mladý", "zdravý", "živý"]
+  },
+  {
+    "noun": "organizace",
+    "gender": "ž.",
+    "adjectives": [
+      "aktivní",
+      "celý",
+      "malý",
+      "nový",
+      "obchodní",
+      "regionální",
+      "studentský",
+      "velký",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "ořech",
+    "gender": "m. neživ.",
+    "adjectives": ["čerstvý", "lískový", "spadlý", "tvrdý"]
+  },
+  {
+    "noun": "osel",
+    "gender": "m. živ.",
+    "adjectives": ["hloupý", "mladý", "starý"]
+  },
+  {
+    "noun": "osika",
+    "gender": "ž.",
+    "adjectives": ["mladý", "starý", "vysoký"]
+  },
+  {
+    "noun": "oslava",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "krásný",
+      "letní",
+      "pokažený",
+      "poslední",
+      "velký",
+      "veselý",
+      "výroční"
+    ]
+  },
+  {
+    "noun": "osobnost",
+    "gender": "ž.",
+    "adjectives": ["silný", "slavný", "zajímavý", "známý", "zvláštní"]
+  },
+  {
+    "noun": "ostrov",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "chorvatský",
+      "krásný",
+      "malý",
+      "tajemný",
+      "velký",
+      "ztracený"
+    ]
+  },
+  {
+    "noun": "otázka",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "důležitý",
+      "gramatický",
+      "hloupý",
+      "ironický",
+      "osobní",
+      "podstatný",
+      "poslední",
+      "těžký",
+      "zajímavý",
+      "zvláštní"
+    ]
+  },
+  { "noun": "otěž", "gender": "ž.", "adjectives": ["dlouhý", "kožený"] },
+  {
+    "noun": "otoman",
+    "gender": "m. neživ.",
+    "adjectives": ["kožený", "pohodlný", "starý"]
+  },
+  {
+    "noun": "ovce",
+    "gender": "ž.",
+    "adjectives": ["bílý", "černý", "hloupý", "mladý", "starý"]
+  },
+  {
+    "noun": "ovoce",
+    "gender": "s.",
+    "adjectives": ["čerstvý", "chutný", "kyselý", "levný"]
+  },
+  {
+    "noun": "pád",
+    "gender": "m. neživ.",
+    "adjectives": ["další", "nebezpečný", "rychlý", "správný", "tvrdý", "volný"]
+  },
+  {
+    "noun": "pahorek",
+    "gender": "m. neživ.",
+    "adjectives": ["holý", "lesnatý", "malý", "zelený"]
+  },
+  {
+    "noun": "památka",
+    "gender": "ž.",
+    "adjectives": ["krásný", "slavný", "starověký", "starý", "unikátní"]
+  },
+  {
+    "noun": "pán",
+    "gender": "m. živ.",
+    "adjectives": ["bohatý", "elegantní", "hodný", "mladý", "starý", "vážený"]
+  },
+  {
+    "noun": "panenka",
+    "gender": "ž.",
+    "adjectives": ["krásný", "malý", "nový", "starý"]
+  },
+  {
+    "noun": "paní",
+    "gender": "ž.",
+    "adjectives": ["elegantní", "hodný", "milý", "mladý", "starý", "vážený"]
+  },
+  {
+    "noun": "panika",
+    "gender": "ž.",
+    "adjectives": ["nevysvětlitelný", "ohromný", "úplný", "velký"]
+  },
+  {
+    "noun": "panna",
+    "gender": "ž.",
+    "adjectives": ["krásný", "mladý", "starý", "svatý"]
+  },
+  {
+    "noun": "panoptikum",
+    "gender": "s.",
+    "adjectives": ["starý", "tajemný", "zvláštní"]
+  },
+  {
+    "noun": "paranoik",
+    "gender": "m. živ.",
+    "adjectives": ["mladý", "nervózní", "starý", "úplný"]
+  },
+  {
+    "noun": "párek",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "horký",
+      "chutný",
+      "kuřecí",
+      "studený",
+      "telecí",
+      "teplý",
+      "vařený",
+      "vepřový"
+    ]
+  },
+  {
+    "noun": "park",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "anglický",
+      "krásný",
+      "lesní",
+      "malý",
+      "starý",
+      "tichý",
+      "velký",
+      "zelený"
+    ]
+  },
+  {
+    "noun": "parkoviště",
+    "gender": "s.",
+    "adjectives": ["hlavní", "malý", "nový", "plný", "podzemní", "velký"]
+  },
+  { "noun": "past", "gender": "ž.", "adjectives": ["nebezpečný", "velký"] },
+  {
+    "noun": "pasta",
+    "gender": "ž.",
+    "adjectives": [
+      "česnekový",
+      "domácí",
+      "italský",
+      "ořechový",
+      "tuhý",
+      "vařený"
+    ]
+  },
+  {
+    "noun": "pátek",
+    "gender": "m. neživ.",
+    "adjectives": ["celý", "další", "minulý", "poslední", "příští"]
+  },
+  {
+    "noun": "páv",
+    "gender": "m. živ.",
+    "adjectives": ["bílý", "krásný", "modrý"]
+  },
+  {
+    "noun": "péče",
+    "gender": "ž.",
+    "adjectives": [
+      "dobrý",
+      "domácí",
+      "minuciózní",
+      "odborný",
+      "osobní",
+      "pravidelný"
+    ]
+  },
+  {
+    "noun": "pejsek",
+    "gender": "m. živ.",
+    "adjectives": [
+      "černý",
+      "hladový",
+      "hnědý",
+      "hodný",
+      "maličký",
+      "malý",
+      "mlsný",
+      "věrný"
+    ]
+  },
+  { "noun": "pěna", "gender": "ž.", "adjectives": ["bílý", "měkký", "tuhý"] },
+  { "noun": "penicilin", "gender": "m. neživ.", "adjectives": ["silný"] },
+  {
+    "noun": "peníze",
+    "gender": "m. neživ.",
+    "adjectives": ["další", "malý", "poslední", "velký", "vlastní", "ztracený"]
+  },
+  {
+    "noun": "pero",
+    "gender": "s.",
+    "adjectives": ["bílý", "drahý", "nový", "ohlodaný", "starý", "ztracený"]
+  },
+  {
+    "noun": "peří",
+    "gender": "s.",
+    "adjectives": ["bílý", "černý", "měkký", "prachový"]
+  },
+  {
+    "noun": "peřinka",
+    "gender": "ž.",
+    "adjectives": ["hřejivý", "malý", "měkký", "prachový", "teplý"]
+  },
+  {
+    "noun": "pes",
+    "gender": "m. živ.",
+    "adjectives": [
+      "bílý",
+      "bitý",
+      "černý",
+      "divoký",
+      "hladový",
+      "hnědý",
+      "hodný",
+      "chytrý",
+      "malý",
+      "mladý",
+      "nebezpečný",
+      "nemocný",
+      "slepý",
+      "starý",
+      "velký",
+      "věrný",
+      "zlý",
+      "ztracený",
+      "zvlčilý",
+      "žíznivý"
+    ]
+  },
+  {
+    "noun": "pesticid",
+    "gender": "m. neživ.",
+    "adjectives": ["levný", "nebezpečný", "nový", "selektivní", "silný"]
+  },
+  {
+    "noun": "pirát",
+    "gender": "m. živ.",
+    "adjectives": [
+      "divoký",
+      "krutý",
+      "mladý",
+      "nebezpečný",
+      "prohnaný",
+      "slavný",
+      "starý"
+    ]
+  },
+  {
+    "noun": "písek",
+    "gender": "m. neživ.",
+    "adjectives": ["bílý", "horký", "hrubý", "měkký", "teplý", "žlutý"]
+  },
+  {
+    "noun": "píseň",
+    "gender": "ž.",
+    "adjectives": [
+      "český",
+      "dlouhý",
+      "hrdinský",
+      "krásný",
+      "krátký",
+      "moravský",
+      "napsaný",
+      "nový",
+      "oblíbený",
+      "polský",
+      "romantický",
+      "ruský",
+      "slavný",
+      "smutný",
+      "starý",
+      "veselý",
+      "známý"
+    ]
+  },
+  {
+    "noun": "pískovec",
+    "gender": "m. neživ.",
+    "adjectives": ["červený", "hrubý", "měkký", "tvrdý", "žlutý"]
+  },
+  {
+    "noun": "písnička",
+    "gender": "ž.",
+    "adjectives": [
+      "krásný",
+      "krátký",
+      "moravský",
+      "nový",
+      "oblíbený",
+      "smutný",
+      "starý",
+      "veselý",
+      "zábavný"
+    ]
+  },
+  {
+    "noun": "pivo",
+    "gender": "s.",
+    "adjectives": [
+      "čerstvý",
+      "český",
+      "další",
+      "dobrý",
+      "drahý",
+      "laciný",
+      "levný",
+      "německý",
+      "ovocný",
+      "polský",
+      "poslední",
+      "studený",
+      "teplý",
+      "výborný"
+    ]
+  },
+  {
+    "noun": "planeta",
+    "gender": "ž.",
+    "adjectives": [
+      "celý",
+      "malý",
+      "modrý",
+      "nový",
+      "ohromný",
+      "tajemný",
+      "velký",
+      "živý"
+    ]
+  },
+  {
+    "noun": "plášť",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "bílý",
+      "černý",
+      "dlouhý",
+      "kožený",
+      "nový",
+      "starý",
+      "teplý",
+      "zimní"
+    ]
+  },
+  {
+    "noun": "plurál",
+    "gender": "m. neživ.",
+    "adjectives": ["český", "nepravidelný", "polský", "pravidelný", "ruský"]
+  },
+  {
+    "noun": "podchod",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "dlouhý",
+      "nádražní",
+      "nebezpečný",
+      "nový",
+      "starý",
+      "špinavý"
+    ]
+  },
+  {
+    "noun": "podíl",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "hlavní",
+      "malý",
+      "nízký",
+      "podstatný",
+      "velký",
+      "vlastní",
+      "vysoký"
+    ]
+  },
+  {
+    "noun": "podlaha",
+    "gender": "ž.",
+    "adjectives": [
+      "nový",
+      "pokrytý",
+      "starý",
+      "studený",
+      "špinavý",
+      "teplý",
+      "tvrdý"
+    ]
+  },
+  { "noun": "poetismus", "gender": "m. neživ.", "adjectives": ["český"] },
+  {
+    "noun": "pohádka",
+    "gender": "ž.",
+    "adjectives": [
+      "český",
+      "dávný",
+      "dlouhý",
+      "krásný",
+      "krátký",
+      "oblíbený",
+      "ruský",
+      "smutný",
+      "starý",
+      "tajemný",
+      "veselý",
+      "známý"
+    ]
+  },
+  {
+    "noun": "pohanka",
+    "gender": "ž.",
+    "adjectives": ["chutný", "teplý", "vařený"]
+  },
+  {
+    "noun": "pohled",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "další",
+      "estetický",
+      "hřejivý",
+      "ironický",
+      "krásný",
+      "krátký",
+      "neutrální",
+      "nový",
+      "odborný",
+      "osobní",
+      "rychlý",
+      "slzavý",
+      "smutný",
+      "studený",
+      "tvrdý"
+    ]
+  },
+  {
+    "noun": "pohlednice",
+    "gender": "ž.",
+    "adjectives": ["krásný", "napsaný", "nový", "pěkný", "starý"]
+  },
+  {
+    "noun": "pohoří",
+    "gender": "s.",
+    "adjectives": ["celý", "krásný", "lesnatý", "vysoký"]
+  },
+  { "noun": "pohotovost", "gender": "ž.", "adjectives": ["nový"] },
+  {
+    "noun": "pohovka",
+    "gender": "ž.",
+    "adjectives": ["kožený", "měkký", "nový", "pohodlný", "starý", "velký"]
+  },
+  {
+    "noun": "pohrabáč",
+    "gender": "m. neživ.",
+    "adjectives": ["horký", "starý"]
+  },
+  {
+    "noun": "pohroma",
+    "gender": "ž.",
+    "adjectives": ["další", "hotový", "ohromný", "velký"]
+  },
+  {
+    "noun": "pochod",
+    "gender": "m. neživ.",
+    "adjectives": ["dlouhý", "ranní", "rychlý", "slavný", "těžký"]
+  },
+  {
+    "noun": "pochvala",
+    "gender": "ž.",
+    "adjectives": ["další", "osobní", "velký"]
+  },
+  { "noun": "pochyba", "gender": "ž.", "adjectives": ["další", "velký"] },
+  {
+    "noun": "pojem",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "další",
+      "gramatický",
+      "hlavní",
+      "jazykovědný",
+      "nový",
+      "odborný",
+      "základní"
+    ]
+  },
+  {
+    "noun": "pokoj",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "malý",
+      "připravený",
+      "starý",
+      "studený",
+      "teplý",
+      "tichý",
+      "velký",
+      "vlastní",
+      "zadní",
+      "zahřátý",
+      "ztuchlý"
+    ]
+  },
+  { "noun": "pól", "gender": "m. neživ.", "adjectives": ["severní"] },
+  {
+    "noun": "Polák",
+    "gender": "m. živ.",
+    "adjectives": ["mladý", "pracovitý", "slavný", "starý", "sympatický"]
+  },
+  {
+    "noun": "poledne",
+    "gender": "s.",
+    "adjectives": ["horký", "letní", "tichý"]
+  },
+  {
+    "noun": "polévka",
+    "gender": "ž.",
+    "adjectives": [
+      "česnekový",
+      "gulášový",
+      "horký",
+      "houbový",
+      "chutný",
+      "kuřecí",
+      "studený",
+      "teplý",
+      "výborný",
+      "zahřátý",
+      "želví"
+    ]
+  },
+  {
+    "noun": "police",
+    "gender": "ž.",
+    "adjectives": ["mahagonový", "nový", "plný", "starý", "velký"]
+  },
+  {
+    "noun": "policie",
+    "gender": "ž.",
+    "adjectives": ["český", "německý", "polský", "ruský"]
+  },
+  {
+    "noun": "politik",
+    "gender": "m. živ.",
+    "adjectives": [
+      "aktivní",
+      "ambiciózní",
+      "budoucí",
+      "konzervativní",
+      "mladý",
+      "prohnaný",
+      "regionální",
+      "slavný",
+      "starý",
+      "vedoucí",
+      "zahraniční",
+      "známý"
+    ]
+  },
+  {
+    "noun": "poloautomat",
+    "gender": "m. neživ.",
+    "adjectives": ["nebezpečný", "nový"]
+  },
+  {
+    "noun": "polonistika",
+    "gender": "ž.",
+    "adjectives": ["český", "moderní", "zahraniční"]
+  },
+  {
+    "noun": "polština",
+    "gender": "ž.",
+    "adjectives": ["dobrý", "moderní", "správný", "špatný"]
+  },
+  {
+    "noun": "pomník",
+    "gender": "m. neživ.",
+    "adjectives": ["slavný", "starý", "velký", "zbořený"]
+  },
+  {
+    "noun": "pomoc",
+    "gender": "ž.",
+    "adjectives": ["boží", "další", "odborný", "osobní", "rychlý", "velký"]
+  },
+  {
+    "noun": "pondělí",
+    "gender": "s.",
+    "adjectives": ["celý", "další", "minulý", "poslední", "příští"]
+  },
+  { "noun": "pořadí", "gender": "s.", "adjectives": ["nový", "správný"] },
+  {
+    "noun": "posluchač",
+    "gender": "m. živ.",
+    "adjectives": [
+      "aktivní",
+      "mladý",
+      "mlčenlivý",
+      "mlčící",
+      "nový",
+      "starý",
+      "tichý",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "posluchárna",
+    "gender": "ž.",
+    "adjectives": [
+      "hlavní",
+      "malý",
+      "nový",
+      "plný",
+      "starý",
+      "studený",
+      "univerzitní",
+      "velký"
+    ]
+  },
+  {
+    "noun": "postel",
+    "gender": "ž.",
+    "adjectives": [
+      "mahagonový",
+      "malý",
+      "měkký",
+      "nový",
+      "pohodlný",
+      "připravený",
+      "starý",
+      "studený",
+      "teplý",
+      "tvrdý",
+      "velký",
+      "vlastní",
+      "zahřátý"
+    ]
+  },
+  { "noun": "postmodernismus", "gender": "m. neživ.", "adjectives": ["český"] },
+  {
+    "noun": "postup",
+    "gender": "m. neživ.",
+    "adjectives": ["další", "nekomplikovaný", "nový", "rychlý", "správný"]
+  },
+  {
+    "noun": "pošta",
+    "gender": "ž.",
+    "adjectives": ["hlavní", "malý", "nádražní", "nový", "starý"]
+  },
+  {
+    "noun": "poštmistr",
+    "gender": "m. živ.",
+    "adjectives": ["mladý", "nový", "starý"]
+  },
+  {
+    "noun": "potíž",
+    "gender": "ž.",
+    "adjectives": ["další", "malý", "osobní", "vážný", "velký"]
+  },
+  {
+    "noun": "potok",
+    "gender": "m. neživ.",
+    "adjectives": ["lesní", "malý", "mělký", "studený", "tichý"]
+  },
+  {
+    "noun": "potravina",
+    "gender": "ž.",
+    "adjectives": [
+      "čerstvý",
+      "levný",
+      "pokažený",
+      "základní",
+      "zdravý",
+      "ztuchlý"
+    ]
+  },
+  { "noun": "poupě", "gender": "s.", "adjectives": ["krásný", "malý"] },
+  {
+    "noun": "poušť",
+    "gender": "ž.",
+    "adjectives": ["horký", "ohromný", "velký"]
+  },
+  { "noun": "pouť", "gender": "ž.", "adjectives": ["dlouhý", "svatý"] },
+  {
+    "noun": "povídka",
+    "gender": "ž.",
+    "adjectives": ["dlouhý", "krátký", "napsaný", "zajímavý"]
+  },
+  {
+    "noun": "póvl",
+    "gender": "m. neživ.",
+    "adjectives": ["bílý", "starý", "špinavý"]
+  },
+  {
+    "noun": "pozice",
+    "gender": "ž.",
+    "adjectives": [
+      "hlavní",
+      "neutrální",
+      "nový",
+      "osobní",
+      "společenský",
+      "vedoucí",
+      "zahraničněpolitický"
+    ]
+  },
+  {
+    "noun": "poznámka",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "ironický",
+      "krátký",
+      "nalepený",
+      "napsaný",
+      "osobní",
+      "poslední",
+      "strohý"
+    ]
+  },
+  {
+    "noun": "práce",
+    "gender": "ž.",
+    "adjectives": [
+      "celý",
+      "další",
+      "diplomový",
+      "disertační",
+      "dobrý",
+      "domácí",
+      "hotový",
+      "minuciózní",
+      "napsaný",
+      "nový",
+      "odborný",
+      "pořádný",
+      "poslední",
+      "skvělý",
+      "špatný",
+      "těžký",
+      "tvrdý",
+      "vlastní",
+      "výborný",
+      "zajímavý"
+    ]
+  },
+  {
+    "noun": "prádelník",
+    "gender": "m. neživ.",
+    "adjectives": ["hnědý", "mahagonový", "nový", "starý", "velký"]
+  },
+  {
+    "noun": "prádlo",
+    "gender": "s.",
+    "adjectives": ["bílý", "čerstvý", "špinavý", "teplý", "ztuhlý", "ztuchlý"]
+  },
+  {
+    "noun": "práh",
+    "gender": "m. neživ.",
+    "adjectives": ["nízký", "starý", "vysoký"]
+  },
+  { "noun": "prach", "gender": "m. neživ.", "adjectives": ["bílý", "starý"] },
+  {
+    "noun": "prám",
+    "gender": "m. neživ.",
+    "adjectives": ["dlouhý", "plný", "starý", "velký"]
+  },
+  {
+    "noun": "prase",
+    "gender": "s.",
+    "adjectives": [
+      "divoký",
+      "domácí",
+      "hladový",
+      "malý",
+      "opařený",
+      "špinavý",
+      "velký"
+    ]
+  },
+  {
+    "noun": "pravda",
+    "gender": "ž.",
+    "adjectives": ["celý", "holý", "krutý", "smutný", "svatý", "tvrdý", "úplný"]
+  },
+  {
+    "noun": "pravice",
+    "gender": "ž.",
+    "adjectives": ["český", "konzervativní", "nový"]
+  },
+  {
+    "noun": "pravidlo",
+    "gender": "s.",
+    "adjectives": [
+      "další",
+      "důležitý",
+      "gramatický",
+      "hlavní",
+      "nekomplikovaný",
+      "nenapsaný",
+      "nový",
+      "univerzální",
+      "základní",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "právo",
+    "gender": "s.",
+    "adjectives": ["nový", "obchodní", "osobní", "římský", "svatý", "základní"]
+  },
+  {
+    "noun": "praxe",
+    "gender": "ž.",
+    "adjectives": [
+      "dlouhý",
+      "dobrý",
+      "nový",
+      "odborný",
+      "pravidelný",
+      "vlastní"
+    ]
+  },
+  {
+    "noun": "prázdniny",
+    "gender": "ž.",
+    "adjectives": [
+      "celý",
+      "dlouhý",
+      "krásný",
+      "krátký",
+      "letní",
+      "minulý",
+      "poslední",
+      "příští",
+      "skvělý",
+      "zimní"
+    ]
+  },
+  {
+    "noun": "prepozice",
+    "gender": "ž.",
+    "adjectives": ["anglický", "český", "německý", "polský", "ruský"]
+  },
+  {
+    "noun": "prezentace",
+    "gender": "ž.",
+    "adjectives": [
+      "další",
+      "dlouhý",
+      "krátký",
+      "nový",
+      "obchodní",
+      "poslední",
+      "připravený",
+      "skvělý",
+      "zajímavý"
+    ]
+  },
+  {
+    "noun": "privilegium",
+    "gender": "s.",
+    "adjectives": ["nový", "osobní", "starý", "velký", "zvláštní"]
+  },
+  {
+    "noun": "problém",
+    "gender": "m. neživ.",
+    "adjectives": [
+      "další",
+      "důležitý",
+      "estetický",
+      "gramatický",
+      "hlavní",
+      "malý",
+      "nevysvětlitelný",
+      "nový",
+      "obchodní",
+      "ohromný",
+      "osobní",
+      "podstatný",
+      "starý",
+      "těžký",
+      "vážný",
+      "velký",
+      "zahraničněpolitický",
+      "zajímavý",
+      "zvláštní"
+    ]
+  },
+  {
+    "noun": "problematika",
+    "gender": "ž.",
+    "adjectives": [
+      "celý",
+      "jazykovědný",
+      "nový",
+      "odborný",
+      "zahraničněpolitický",
+      "zajímavý"
+    ]
+  },
+  {
+    "noun": "profesionál",
+    "gender": "m. živ.",
+    "adjectives": ["mladý", "pravý", "skvělý", "slavný", "výborný"]
+  },
+  {
+    "noun": "profesor",
+    "gender": "m. živ.",
+    "adjectives": [
+      "hodný",
+      "konzervativní",
+      "mladý",
+      "moudrý",
+      "nový",
+      "oblíbený",
+      "přednášející",
+      "slavný",
+      "starý",
+      "univerzitní",
+      "vážený",
+      "vysokoškolský",
+      "zahraniční"
+    ]
+  },
+  {
+    "noun": "zdraví",
+    "gender": "s.",
+    "adjectives": ["dobrý", "špatný", "výborný"]
+  }
+]
