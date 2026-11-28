@@ -491,11 +491,11 @@ src/
                owner's files (grammar-keys.cs.ts), the draw of a round and its steps, the noun, the case and number
                and the verb's person (sentence-draw.ts), the filter dialog's ticks while it is open (filter.ts, over
                the noun quiz's filter) and the page without its DOM (sentence-page.ts: SentenceRoundPage, the page of
-               any sentence quiz whatever its round holds, and SentenceQuizPage, the page of a quiz of two fields that
-               takes what fills the first blank), all pure and tested, the texts every sentence quiz has
-               (sentence-texts.ts), and the DOM that draws the page (sentence-mount.ts: mountSentenceRounds, the page
-               around the quiz's own view of its round, and mountSentenceQuiz, the view of two fields;
-               filter-dialog.ts);
+               any sentence quiz whatever its round holds, TwoFieldSentencePage, the page of a quiz of two fields that
+               takes what fills the first blank, and SentencePageHost, what either takes from the shell), all pure and
+               tested, the texts every sentence quiz has (sentence-texts.ts), and the DOM that draws the page
+               (sentence-mount.ts: mountSentenceRounds, the page around the quiz's own view of its round, and
+               mountTwoFieldSentenceQuiz, the page with the view of two fields, twoFieldView; filter-dialog.ts);
                demonstrative-noun-declension is a sentence quiz made of them: its contract (items.ts), the owner's
                Czech demonstrative pronoun table (pointing-pronouns.ts, used as it is), its adapter to the quiz's ids
                (cs.ts) and the tables by language (tables.ts), what fills its first blank (page.ts), all pure and
@@ -561,16 +561,17 @@ typed lists; nothing is discovered dynamically.
   `carryOver` hook, so that a forced scrape keeps it. Its id is permanent. The selector picks it up by itself.
 - **A sentence quiz** (see the glossary) is such a quiz type built from what the sentence quizzes share, in
   `src/quizzes/adjective-noun-declension/`. Its noun item is a `SentenceNounItem` (sentence-items.ts, with the checks its
-  contract is made of). A quiz of two fields, a word and the noun after the verb form, is a `SentenceQuizPage`
-  (sentence-page.ts) made of its rules (`SentenceQuizRules`: what fills the first blank, with its base form for a noun and
-  its accepted forms in a case and number, and the cases the quiz offers) and its meters; its texts have every
-  `SentenceTextKey` of its cases (sentence-texts.ts), `field.<kind>`, the first field's label, and `field.noun`; its mount
-  hands the page and its translator to `mountSentenceQuiz` (sentence-mount.ts). Any other sentence quiz extends
-  `SentenceRoundPage` with its own draw (made of the steps in sentence-draw.ts) and the cells its round asks, and hands
-  the page, its translator and its own view of the round to `mountSentenceRounds`. Its dataset is a joined dataset
-  (below) whose join is `joinSentenceQuiz` (`scripts/joins/sentence.ts`) with the quiz's own `SentenceNounRules`
-  (`nounsWithoutVocative` makes the nouns of a quiz without the vocative) and `SentenceVerbRules` (`VERBS_AS_THEY_ARE`
-  takes the governing verb items as they are); a Czech one's `Join` is made by `czechSentenceJoin`.
+  contract is made of). A quiz of two fields, a word and the noun after the verb form, is a `TwoFieldSentencePage`
+  (sentence-page.ts) made of its rules (`TwoFieldSentenceRules`: what fills the first blank, with its base form for a
+  noun and its accepted forms in a case and number, and the cases the quiz offers) and its meters; its texts have every
+  `SentenceTextKey` of its cases (sentence-texts.ts), `field.<kind>`, the first field's label, and `field.noun`; its
+  mount builds the page with what it takes from the shell (`sentencePageHost`) and hands it and its translator to
+  `mountTwoFieldSentenceQuiz` (sentence-mount.ts). Any other sentence quiz extends `SentenceRoundPage` with its own
+  draw (made of the steps in sentence-draw.ts) and the cells its round asks, and hands the page, its translator and its
+  own view of the round to `mountSentenceRounds`. Its dataset is a joined dataset (below) whose join is
+  `joinSentenceQuiz` (`scripts/joins/sentence.ts`) with the quiz's own `SentenceNounRules` (`nounsWithoutVocative`
+  makes the nouns of a quiz without the vocative) and `SentenceVerbRules` (`VERBS_AS_THEY_ARE` takes the governing verb
+  items as they are); a Czech one's `Join` is made by `czechSentenceJoin`.
 - **A source.** (It shows up in the selector as soon as a second source provides something for the language.)
   Add `src/sources/<id>.ts` (name, url, trust, license, attribution, `provides`) and register it
   in `src/sources/index.ts`. Add `scraper/sources/<id>/` with a request policy and one adapter per provided

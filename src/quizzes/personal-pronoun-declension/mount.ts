@@ -1,6 +1,7 @@
 import { getUiLanguage } from '../../i18n'
 import type { GoverningCase } from '../adjective-noun-declension/sentence-items'
 import { mountSentenceRounds, type SentenceView } from '../adjective-noun-declension/sentence-mount'
+import { sentencePageHost } from '../adjective-noun-declension/sentence-page'
 import { formText } from '../adjective-noun-declension/sentence-texts'
 import type { QuizHost, QuizInstance } from '../quiz-type'
 import type { PersonalPronounItem } from './items'
@@ -79,6 +80,6 @@ function pronounView(page: PersonalPronounPage | undefined): SentenceView {
 export function mountPersonalPronounDeclension(container: HTMLElement, host: QuizHost<PersonalPronounItem>): QuizInstance {
   // Without a table for the learned language there is nothing to check answers against: no round, only the help.
   const table = PERSONAL_PRONOUN_TABLES[host.language.id]
-  const page = table && new PersonalPronounPage({ items: host.items, table, settings: host.settings, record: host.record, random: Math.random })
+  const page = table && new PersonalPronounPage({ items: host.items, table, ...sentencePageHost(host) })
   return mountSentenceRounds(container, host, { page, t, view: pronounView(page) })
 }

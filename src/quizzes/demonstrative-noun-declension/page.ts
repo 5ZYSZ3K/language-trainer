@@ -1,6 +1,5 @@
 import { GOVERNING_CASES, type GoverningCase, type SentenceNounItem } from '../adjective-noun-declension/sentence-items'
-import { SentenceQuizPage, type SentenceQuizRules } from '../adjective-noun-declension/sentence-page'
-import type { QuizSettings } from '../quiz-type'
+import { TwoFieldSentencePage, type SentencePageHost, type TwoFieldSentenceRules } from '../adjective-noun-declension/sentence-page'
 import type { DemonstrativeNounItem } from './items'
 import type { DemonstrativeTable } from './tables'
 
@@ -8,14 +7,9 @@ import type { DemonstrativeTable } from './tables'
 export const FIELD_METERS = ['pronouns', 'nouns'] as const
 export const SENTENCE_METER = 'sentences'
 
-export interface DemonstrativePageDeps {
+export interface DemonstrativePageDeps extends SentencePageHost {
   readonly items: readonly DemonstrativeNounItem[]
   readonly table: DemonstrativeTable
-  /** The quiz's saved settings for the pool: the filter, a case and a number each (the noun quiz's). */
-  readonly settings: QuizSettings
-  record(meterId: string, correct: boolean): void
-  /** Returns [0, 1), like Math.random. */
-  readonly random: () => number
 }
 
 /**
@@ -23,7 +17,7 @@ export interface DemonstrativePageDeps {
  * whatever the noun, its accepted form the table's for the round's case and number and the noun's gender (its plural
  * gender in the plural); every case but the vocative, which the pronoun does not have.
  */
-export const demonstrativeRules = (table: DemonstrativeTable): SentenceQuizRules<SentenceNounItem, 'pronoun', GoverningCase> => ({
+export const demonstrativeRules = (table: DemonstrativeTable): TwoFieldSentenceRules<SentenceNounItem, 'pronoun', GoverningCase> => ({
   kind: 'pronoun',
   cases: GOVERNING_CASES,
   baseForm: () => table.baseForm,
@@ -31,10 +25,11 @@ export const demonstrativeRules = (table: DemonstrativeTable): SentenceQuizRules
 })
 
 /**
- * The page of demonstratives with nouns without its DOM: the sentence quiz page (see SentenceQuizPage) with the
- * demonstrative pronoun in the first blank, its form from the language's table, in every case but the vocative.
+ * The page of demonstratives with nouns without its DOM: the page of a sentence quiz of two fields (see
+ * TwoFieldSentencePage) with the demonstrative pronoun in the first blank, its form from the language's table, in every
+ * case but the vocative.
  */
-export class DemonstrativePage extends SentenceQuizPage<SentenceNounItem, 'pronoun', GoverningCase> {
+export class DemonstrativePage extends TwoFieldSentencePage<SentenceNounItem, 'pronoun', GoverningCase> {
   constructor({ table, ...deps }: DemonstrativePageDeps) {
     super({ ...deps, rules: demonstrativeRules(table), meters: { fields: FIELD_METERS, sentence: SENTENCE_METER } })
   }

@@ -1,9 +1,8 @@
 import type { Cell } from '../../core/cell'
 import { splitItems } from '../adjective-noun-declension/sentence-draw'
 import { GOVERNING_CASES, type GoverningCase, type SentenceNounItem } from '../adjective-noun-declension/sentence-items'
-import { agreementOf, SentenceRoundPage } from '../adjective-noun-declension/sentence-page'
+import { agreementOf, SentenceRoundPage, type SentencePageHost } from '../adjective-noun-declension/sentence-page'
 import type { CellFilter } from '../noun-declension/filter'
-import type { QuizSettings } from '../quiz-type'
 import { drawPronounSentence, type PronounDraw } from './draw'
 import type { PersonalPronounItem, PronounVerbItem } from './items'
 import { acceptedPronouns } from './positions'
@@ -13,14 +12,9 @@ import { sentenceOf, type PronounSentence } from './word-order'
 /** The meter of the one field, the pronoun. There is no meter of sentences: this one already counts each of them. */
 export const PRONOUN_METER = 'pronouns'
 
-export interface PersonalPronounPageDeps {
+export interface PersonalPronounPageDeps extends SentencePageHost {
   readonly items: readonly PersonalPronounItem[]
   readonly table: PersonalPronounTable
-  /** The quiz's saved settings for the pool: the filter, a case and a number each (the noun quiz's). */
-  readonly settings: QuizSettings
-  record(meterId: string, correct: boolean): void
-  /** Returns [0, 1), like Math.random. */
-  readonly random: () => number
 }
 
 /** One piece of the field's answer line: an accepted form, or the chip of one of its remarks. */

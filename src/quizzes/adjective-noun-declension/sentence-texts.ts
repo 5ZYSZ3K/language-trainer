@@ -29,6 +29,9 @@ export type SentenceTextKey<C extends CaseId = CaseId> =
 /** The key of a case's name: `case.<id>`. Typed against the texts, so a case without a name is a compile error. */
 export const caseLabelKey = <C extends CaseId>(caseId: C): `case.${C}` => `case.${caseId}`
 
+/** The key of the label of the field for the first blank's word, in a quiz of two fields: `field.<kind>`. */
+export const fieldLabelKey = <Kind extends string>(kind: Kind): `field.${Kind}` => `field.${kind}`
+
 /** The key of a number's name: `number.<id>`. */
 export const numberLabelKey = (number: GrammaticalNumber): `number.${GrammaticalNumber}` => `number.${number}`
 

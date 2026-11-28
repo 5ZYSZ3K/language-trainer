@@ -2,7 +2,7 @@ import type { Cell } from '../../core/cell'
 import { Round, type CellState } from '../../core/round'
 import type { CaseId, GrammaticalNumber } from '../noun-declension/cells'
 import { readFilter, saveFilter, type CellFilter } from '../noun-declension/filter'
-import type { QuizSettings } from '../quiz-type'
+import type { QuizHost, QuizSettings } from '../quiz-type'
 import { FilterDraft, restrictedTo } from './filter'
 import { drawSentenceOf, named, splitItems, type SentenceDraw, type SentenceRules } from './sentence-draw'
 import { nounCell, type GoverningVerbItem, type SentenceNounItem } from './sentence-items'
@@ -25,8 +25,8 @@ export const agreementOf = <C extends CaseId>(noun: SentenceNounItem, caseId: C,
   pluralGender: noun.pluralGender,
 })
 
-/** What fills a sentence quiz's first blank, and which cases it offers (see SentenceRules), with the forms it accepts. */
-export interface SentenceQuizRules<Noun extends SentenceNounItem, Kind extends string, C extends CaseId> extends SentenceRules<Noun, Kind, C> {
+/** What fills the first blank of a quiz of two fields, and which cases it offers (see SentenceRules), with the forms it accepts. */
+export interface TwoFieldSentenceRules<Noun extends SentenceNounItem, Kind extends string, C extends CaseId> extends SentenceRules<Noun, Kind, C> {
   /** Every accepted form of the first blank's word, given by its base form, in `form`: from a generator or a table. */
   acceptedForms(baseForm: string, form: AgreementForm<C>): string[]
 }
@@ -40,11 +40,8 @@ export interface SentenceMeters {
   readonly sentence?: string
 }
 
-/** What the page of every sentence quiz is handed, whatever its round holds. */
-export interface SentenceRoundDeps<C extends CaseId> {
-  /** The cases the quiz offers, in case order: the filter shows only their forms. */
-  readonly cases: readonly C[]
-  readonly meters: SentenceMeters
+/** What the page of every sentence quiz takes from outside: the saved settings, the meters and the randomness. */
+export interface SentencePageHost {
   /** The quiz's saved settings for the pool: the filter, a case and a number each (the noun quiz's). */
   readonly settings: QuizSettings
   record(meterId: string, correct: boolean): void
@@ -52,15 +49,21 @@ export interface SentenceRoundDeps<C extends CaseId> {
   readonly random: () => number
 }
 
-export interface SentenceQuizPageDeps<Noun extends SentenceNounItem, Kind extends string, C extends CaseId> {
-  readonly items: readonly (Noun | GoverningVerbItem)[]
-  readonly rules: SentenceQuizRules<Noun, Kind, C>
+/** What a sentence quiz's page takes from the shell: the host's settings and recorder, and Math.random. */
+export const sentencePageHost = (host: QuizHost<unknown>): SentencePageHost => ({ settings: host.settings, record: host.record, random: Math.random })
+
+/** What the page of every sentence quiz is handed, whatever its round holds. */
+export interface SentenceRoundDeps<C extends CaseId> extends SentencePageHost {
+  /** The cases the quiz offers, in case order: the filter shows only their forms. */
+  readonly cases: readonly C[]
   readonly meters: SentenceMeters
-  /** The quiz's saved settings for the pool: the filter, a case and a number each (the noun quiz's). */
-  readonly settings: QuizSettings
-  record(meterId: string, correct: boolean): void
-  /** Returns [0, 1), like Math.random. */
-  readonly random: () => number
+}
+
+/** What the page of a sentence quiz of two fields is handed (see TwoFieldSentencePage). */
+export interface TwoFieldSentencePageDeps<Noun extends SentenceNounItem, Kind extends string, C extends CaseId> extends SentencePageHost {
+  readonly items: readonly (Noun | GoverningVerbItem)[]
+  readonly rules: TwoFieldSentenceRules<Noun, Kind, C>
+  readonly meters: SentenceMeters
 }
 
 /** What the page shows of a round, above the fields and around them. */
@@ -214,11 +217,11 @@ export abstract class SentenceRoundPage<Draw, C extends CaseId> {
  * noun in the second, after the verb form. What fills the first blank, the cases offered and the meters are the quiz's
  * (`deps.rules`, `deps.meters`).
  */
-export class SentenceQuizPage<Noun extends SentenceNounItem, Kind extends string, C extends CaseId> extends SentenceRoundPage<SentenceDraw<Noun, Kind, C>, C> {
+export class TwoFieldSentencePage<Noun extends SentenceNounItem, Kind extends string, C extends CaseId> extends SentenceRoundPage<SentenceDraw<Noun, Kind, C>, C> {
   private readonly nouns: Noun[]
   private readonly verbs: GoverningVerbItem[]
 
-  constructor(private readonly deps: SentenceQuizPageDeps<Noun, Kind, C>) {
+  constructor(private readonly deps: TwoFieldSentencePageDeps<Noun, Kind, C>) {
     super({ ...deps, cases: deps.rules.cases })
     const { nouns, verbs } = splitItems(deps.items)
     this.nouns = nouns

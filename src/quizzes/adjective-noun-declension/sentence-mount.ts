@@ -5,8 +5,8 @@ import type { CaseId } from '../noun-declension/cells'
 import type { QuizHost, QuizInstance } from '../quiz-type'
 import { createFilterDialog } from './filter-dialog'
 import type { SentenceNounItem } from './sentence-items'
-import type { SentenceQuizPage, SentenceRoundPage } from './sentence-page'
-import { formText, type SentenceTextKey } from './sentence-texts'
+import type { TwoFieldSentencePage, SentenceRoundPage } from './sentence-page'
+import { fieldLabelKey, formText, type SentenceTextKey } from './sentence-texts'
 
 /** Looks up an element of the quiz's area (see finder). */
 export type Find = ReturnType<typeof finder>
@@ -194,12 +194,12 @@ export function mountSentenceRounds<C extends CaseId>(container: HTMLElement, ho
 }
 
 /** What a sentence quiz of two fields hands the shared DOM: its page, and the translator of its area. */
-export interface SentenceMountOptions<Noun extends SentenceNounItem, Kind extends string, C extends CaseId> {
+export interface TwoFieldMountOptions<Noun extends SentenceNounItem, Kind extends string, C extends CaseId> {
   /**
    * The quiz's page over the host's items, settings and meters; undefined when the learned language has nothing to check
    * answers against (no adjective declension generator, no demonstrative pronoun table): then only the help is shown.
    */
-  readonly page: SentenceQuizPage<Noun, Kind, C> | undefined
+  readonly page: TwoFieldSentencePage<Noun, Kind, C> | undefined
   /** Translates what the quiz's area shows: its own texts (every sentence quiz text, `field.<kind>` and `field.noun`) and the shared type-in ones. */
   readonly t: (key: NoInfer<SentenceTextKey<C> | `field.${Kind}` | 'field.noun'> | UiTextKey) => string
 }
@@ -207,19 +207,22 @@ export interface SentenceMountOptions<Noun extends SentenceNounItem, Kind extend
 /**
  * The round of a sentence quiz of two fields: the first blank's word and the noun in their base forms with the case and
  * number above the sentence, then the verb form, a field for the word and one for the noun, and a full stop. A wrong
- * field's answer line is every form it accepts. `kind` names the first field's label, `field.<kind>`.
+ * field's answer line is every form it accepts. The page's kind names the first field's label, `field.<kind>`; without a
+ * page no round is shown, and that field has no label.
  */
-function twoFields<Noun extends SentenceNounItem, Kind extends string, C extends CaseId>(
-  page: SentenceQuizPage<Noun, Kind, C> | undefined,
-  t: SentenceMountOptions<Noun, Kind, C>['t'],
+export function twoFieldView<Noun extends SentenceNounItem, Kind extends string, C extends CaseId>(
+  page: TwoFieldSentencePage<Noun, Kind, C> | undefined,
+  t: TwoFieldMountOptions<Noun, Kind, C>['t'],
 ): SentenceView {
+  // Typed as a key of the translator, which the quiz's texts must have.
+  const wordLabel: Parameters<typeof t>[0] | undefined = page && fieldLabelKey(page.kind)
   return {
     html: `
       <p id="prompt" class="prompt sentence-prompt"><strong id="word"></strong> · <strong id="noun"></strong> — <span id="form"></span></p>
       <p id="sentence" class="sentence">
         <span id="lead" class="lead"></span>
         <span class="cell blank" data-state="open">
-          <input id="field-word" type="text" data-i18n-label="field.${page?.kind ?? ''}" autocomplete="off" autocapitalize="none" spellcheck="false" autocorrect="off" />
+          <input id="field-word" type="text"${wordLabel === undefined ? '' : ` data-i18n-label="${wordLabel}"`} autocomplete="off" autocapitalize="none" spellcheck="false" autocorrect="off" />
           <span class="answer"><strong class="answer-forms"></strong></span>
         </span>
         <span class="cell blank" data-state="open">
@@ -250,14 +253,15 @@ function twoFields<Noun extends SentenceNounItem, Kind extends string, C extends
 }
 
 /**
- * One sentence per round (see SentenceQuizPage, which decides everything this draws), with two fields: the first blank's
- * word and the noun in their base forms with the case and number above it, then the verb form, a field for the word and
- * one for the noun, and a full stop (see mountSentenceRounds for the rest of the page).
+ * The page of a sentence quiz of two fields (see TwoFieldSentencePage, which decides everything this draws): one sentence
+ * per round, with the first blank's word and the noun in their base forms with the case and number above it, then the
+ * verb form, a field for the word and one for the noun, and a full stop (see twoFieldView, and mountSentenceRounds for
+ * the rest of the page).
  */
-export function mountSentenceQuiz<Noun extends SentenceNounItem, Kind extends string, C extends CaseId>(
+export function mountTwoFieldSentenceQuiz<Noun extends SentenceNounItem, Kind extends string, C extends CaseId>(
   container: HTMLElement,
   host: QuizHost<unknown>,
-  { page, t }: SentenceMountOptions<Noun, Kind, C>,
+  { page, t }: TwoFieldMountOptions<Noun, Kind, C>,
 ): QuizInstance {
-  return mountSentenceRounds(container, host, { page, t, view: twoFields(page, t) })
+  return mountSentenceRounds(container, host, { page, t, view: twoFieldView(page, t) })
 }
