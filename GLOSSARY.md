@@ -19,8 +19,8 @@ what is learned.
 _Avoid_: language (on its own), locale
 
 **Quiz type**:
-One kind of quiz: present-tense verb conjugation, noun declension or numerals. It owns its contract, its interaction,
-its meters and its texts. Its id is permanent.
+One kind of quiz: present-tense verb conjugation, noun declension, numerals or adjectives with nouns. It owns its
+contract, its interaction, its meters and its texts. Its id is permanent.
 _Avoid_: exercise, mode, game
 
 **Source**:
@@ -43,10 +43,21 @@ _Avoid_: word list, data file
 **Manual dataset**:
 A dataset that is written by hand, with no adapter behind it (the numerals ranges).
 
+**Joined dataset**:
+A dataset made from other datasets and hand-written input, neither scraped nor written by hand: adjectives with nouns
+takes its nouns' forms, its verbs' forms and the adjectives paired with each noun. The build refuses one that differs
+from what a join would make of its inputs now.
+
+**Join**:
+Making a joined dataset again from its inputs. The owner runs it by hand, like a scrape, after any of them changes.
+_Avoid_: merge, generate
+
 ### A round
 
 **Item**:
-One thing a quiz can ask about: a word with its cells (verbs, nouns) or a number range (numerals).
+One thing a quiz can ask about: a word with its cells (verbs, nouns), a number range (numerals), or a noun with the
+adjectives it may be paired with (adjectives with nouns). The dataset of adjectives with nouns also holds its governing
+verbs as items, each with the forms its sentences show; they frame a round but are never asked about.
 _Avoid_: entry, card, question, word (numerals items are not words)
 
 **Prompt**:
@@ -110,8 +121,9 @@ What a quiz remembers about a pool between visits, such as the noun filter.
 _Avoid_: preferences
 
 **Filter**:
-The noun cells the learner has chosen to see. Only those are shown, and all of them except the given cell are asked.
-A random noun is only picked if at least one of its cells is asked.
+What the learner has chosen to be asked. In noun declension it is the noun cells to see: only those are shown, all of
+them except the given cell are asked, and a random noun is only picked if at least one of its cells is asked. In
+adjectives with nouns it is the cases a round may ask for.
 
 ### Grammar
 
@@ -119,13 +131,13 @@ A random noun is only picked if at least one of its cells is asked.
 `se` or `si`. It is part of a verb's prompt and part of every form the learner types.
 
 **Case**:
-One of the seven Czech noun cases, nominative to instrumental, vocative included. Cases are known by name, never by
-number, because languages number them differently.
+One of the seven Czech cases, nominative to instrumental, vocative included, in which nouns and adjectives decline.
+Cases are known by name, never by number, because languages number them differently.
 _Avoid_: pád, 1st case
 
 **Gender**:
-A noun's grammatical gender, worded as the source words it (`m. živ.`, `ž.`). It is kept with the noun but no quiz
-uses it yet.
+A noun's grammatical gender, worded as the source words it (`m. živ.`, `ž.`). Adjectives with nouns decline the
+adjective by it; no other quiz uses it.
 
 ### Numerals
 
@@ -144,11 +156,30 @@ _Avoid_: variant (that is a cell's)
 A learned language's rules for writing any number in words. Numerals are not scraped: the generator decides every
 version.
 
+### Adjectives with nouns
+
+**Sentence**:
+What a round of adjectives with nouns shows: a governing verb's form, with its preposition if it has one, followed by a
+blank for the adjective and one for the noun (`Mluvím o ___ ___.`). A vocative sentence has no verb (`___ ___!`).
+
+**Governing verb**:
+A verb, with at most one preposition, that is always followed by one case: `pomáhat` by the dative, `mluvit o` by the
+locative. A verb that can be followed by more than one case is not a governing verb.
+_Avoid_: valency verb
+
+**Plural gender**:
+The gender a noun's plural agrees in, where it differs from the noun's own: `dítě` is neuter, `děti` are feminine.
+
+**Adjective declension generator**:
+A learned language's rules for declining any adjective by case, number and gender. Adjective forms are not scraped:
+the generator decides every one.
+
 ### Building the data
 
 **List**:
-The scraper's input for one quiz type of one language: the words to fetch, by prompt. It alone decides what the
-dataset holds; a word removed from it is removed from the data at the next scrape.
+The input that alone decides what one dataset of one quiz type holds, for one language: the words a scrape fetches,
+by prompt, or the nouns with the adjectives they may be paired with, which a join takes. A word removed from it is
+removed from the data at the next scrape or join.
 _Avoid_: vocabulary, word bank
 
 **Vocabulary**:
