@@ -41,15 +41,17 @@ All the items of one quiz type, for one language, from one source.
 _Avoid_: word list, data file
 
 **Manual dataset**:
-A dataset that is written by hand, with no adapter behind it (the numerals ranges).
+A dataset that no adapter makes: one written by hand (the numerals ranges), or a joined dataset.
 
 **Joined dataset**:
-A dataset made from other datasets and hand-written input, neither scraped nor written by hand: adjectives with nouns
-takes its nouns' forms, its verbs' forms and the adjectives paired with each noun. The build refuses one that differs
-from what a join would make of its inputs now.
+A manual dataset that a join makes from other datasets and hand-written input, rather than one scraped or written by
+hand: adjectives with nouns takes its nouns' forms, its verbs' forms and the adjectives paired with each noun. The build
+refuses one that differs from what its join would make of its inputs now.
 
 **Join**:
-Making a joined dataset again from its inputs. The owner runs it by hand, like a scrape, after any of them changes.
+The build-time step that makes one joined dataset from its inputs, as an adapter makes a scraped one; also one run of
+it. The owner runs it by hand, like a scrape, after any of its inputs changes; the build runs it too, writing nothing,
+to check the committed dataset against it.
 _Avoid_: merge, generate
 
 ### A round

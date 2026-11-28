@@ -23,7 +23,7 @@ export interface Source {
     /** Quiz type id. */
     readonly quizType: string
     readonly delivery: Delivery
-    /** True: maintained by hand, no adapter exists or is needed. */
+    /** True: no adapter exists or is needed; the dataset is written by hand, or joined from other datasets and a list. */
     readonly manual?: boolean
   }[]
 }

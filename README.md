@@ -1,16 +1,18 @@
 # Language trainer
 
-A small, backendless website for practising how words inflect in a foreign language. Today it has three quizzes,
+A small, backendless website for practising how words inflect in a foreign language. Today it has four quizzes,
 all for Czech. Two have data from the [Internetová jazyková příručka](https://prirucka.ujc.cas.cz/): present-tense
 verb conjugation and noun declension; each round shows one random word, you type its forms and check them cell by
-cell (or all at once). The third, numerals, asks you to write a random number in words and accepts every version
-the site's own rules allow (an *unverified* source, and the page says so). The scores are kept in your browser.
+cell (or all at once). The other two follow the site's own rules (an *unverified* source, and the page says so):
+numerals asks you to write a random number in words and accepts every version those rules allow, and adjectives with
+nouns shows a sentence such as `Pomáháme ___ ___.` with an adjective and a noun in their base forms, which you type
+together in the case the verb asks for. The scores are kept in your browser.
 
 It is built to be hosted as a GitHub Pages project page from the `gh-pages` branch of
 <https://github.com/5ZYSZ3K/language-trainer> (default URL: <https://5zysz3k.github.io/language-trainer/>). The
 architecture lets other quiz types, other learned languages and other data sources be added without touching
 what exists (see *Adding things later*). The page draws a selector for whatever there is a choice of: today one
-dropdown under the heading with the three quizzes grouped by source, and a language dropdown as soon as a second
+dropdown under the heading with the four quizzes grouped by source, and a language dropdown as soon as a second
 learned language exists.
 
 ## Words used in this repository
@@ -18,12 +20,13 @@ learned language exists.
 The words this README and the code use for the domain (language, UI language, source, quiz type, dataset, pool,
 item, cell, adapter and the rest) are defined in [GLOSSARY.md](GLOSSARY.md). The ids behind them: languages `cs`;
 UI languages `en`, `cs`; sources `prirucka` (trusted) and `language-trainer`, the site's own rules (unverified); quiz
-types `verb-present-tense`, `noun-declension`, `numerals`. A quiz type's id is permanent: it is the data file name and
-part of the score key. A dataset is one JSON file, and an adapter is build-time code in `scraper/`.
+types `verb-present-tense`, `noun-declension`, `numerals`, `adjective-noun-declension`. A quiz type's id is permanent:
+it is the data file name and part of the score key. A dataset is one JSON file, an adapter is build-time code in
+`scraper/`, and a join is build-time code in `scripts/joins/`.
 
 ## How it works
 
-There is no server, no runtime scraping and no CI: scraping, building and publishing are three steps the
+There is no server, no runtime scraping and no CI: scraping, joining, building and publishing are four steps the
 owner runs by hand.
 
 1. **Scrape.** `npm run scrape:cs:verbs` reads
@@ -36,10 +39,16 @@ owner runs by hand.
    lines, footnotes and dictionary entries) in `source-material/cs/prirucka/`, for writing remarks and
    explanations from; the page never ships it. Those files are **committed to `main`** as scraped source data;
    they are the only copy, so commit them after a scrape.
-2. **Build.** `npm run build` type-checks, runs `scripts/check-data.ts` (it fails the build on an invalid
-   dataset or when no dataset holds any item), then Vite builds the page into `dist/`. Each dataset is bundled
-   into the page as its own JavaScript chunk; the page fetches no data file and never calls the source site.
-3. **Publish.** `npm run publish-pages` commits `dist/` to the local `gh-pages` branch; you push that branch
+2. **Join.** `npm run join:cs:adjectives` makes the joined dataset of adjectives with nouns,
+   `data/cs/language-trainer/adjective-noun-declension.json`, from committed inputs alone: the noun dataset, the verb
+   dataset, the pairing [`lists/cs/adjective-noun-declension.json`](lists/cs/adjective-noun-declension.json) and the
+   governing verbs. Run it after a noun or verb scrape, or after editing the pairing or the governing verbs, and
+   commit the result. It fetches nothing.
+3. **Build.** `npm run build` type-checks, runs `scripts/check-data.ts` (it fails the build on an invalid
+   dataset, when no dataset holds any item, or when a joined dataset is out of step with its inputs), then Vite
+   builds the page into `dist/`. Each dataset is bundled into the page as its own JavaScript chunk; the page fetches
+   no data file and never calls the source site.
+4. **Publish.** `npm run publish-pages` commits `dist/` to the local `gh-pages` branch; you push that branch
    yourself.
 
 ## Everyday use
@@ -54,6 +63,7 @@ npm run build             # typecheck + data check + production build into dist/
 npm run preview           # serve dist/ (the build uses a relative base, so it works from a sub-path)
 npm run scrape:cs:verbs   # fetch the Czech verbs that are not scraped yet (see "The scraper" below)
 npm run scrape:cs:nouns   # the same for the Czech nouns
+npm run join:cs:adjectives   # make the adjectives with nouns again from their inputs (see "Data" below)
 ```
 
 To put a new version on the site:
@@ -61,7 +71,8 @@ To put a new version on the site:
 ```sh
 npm run scrape:cs:verbs               # only if a list changed or words are missing
 npm run scrape:cs:nouns               # (one per list)
-git add data source-material && git commit   # the scraped data lives in the repo
+npm run join:cs:adjectives            # after any scrape, or an edit of the pairing or the governing verbs
+git add data source-material && git commit   # the scraped and joined data lives in the repo
 npm run build
 npm run publish-pages                 # commits dist/ to the local gh-pages branch
 git push origin gh-pages
@@ -74,8 +85,12 @@ reflexives are written like `bát se`, `dát si`; whitespace is collapsed and em
 ignored). Add nouns to [`lists/cs/noun-declension.txt`](lists/cs/noun-declension.txt) the same way, as plain
 dictionary forms (`pán`, `dveře`). Those files are the single source of truth for the scraper: a word that is
 removed from one is also removed from the data when the next scrape starts. The next scrape only fetches the new
-words. Only the scraper reads lists; the page picks words from the dataset alone. (`lists/cs/vocabulary/` is raw
-material, not read by anything.)
+words. Only the scraper and the joins read lists; the page picks words from the dataset alone.
+(`lists/cs/vocabulary/` is raw material, not read by anything.)
+
+The nouns of adjectives with nouns, and the adjectives each may be paired with, are in
+[`lists/cs/adjective-noun-declension.json`](lists/cs/adjective-noun-declension.json) (see *Data*); every noun there must
+be an item of the noun dataset, so add it to the noun list and scrape it first. Then run `npm run join:cs:adjectives`.
 
 ## Data
 
@@ -133,6 +148,42 @@ material, not read by anything.)
   Each round picks a range, all equally likely, then a number in it. The four ranges are 0–100 (uniform), 101–2 000,
   2 001–1 000 000 and 1 000 001–999 999 999 999 (log). The accepted versions of a number are not data: the
   language's numeral generator writes them (`src/quizzes/numerals/cs.ts` for Czech).
+- **Adjectives with nouns** (`data/cs/language-trainer/adjective-noun-declension.json`, `manual: true` because no
+  adapter makes it): a **joined dataset**, made by `npm run join:cs:adjectives` (`scripts/joins/`) and committed like
+  every other dataset. Its inputs, all committed:
+  - **The pairing**, [`lists/cs/adjective-noun-declension.json`](lists/cs/adjective-noun-declension.json), the list
+    that alone decides which nouns the dataset holds: `[{ "noun": "dítě", "gender": "s.", "plural-gender": "ž.",
+    "adjectives": ["boží", "hladový", …] }, …]`, with the adjectives each noun may be paired with. `plural-gender` is
+    there only where the plural agrees in another gender than the noun (`dítě`, `dóže`).
+  - **`cs/prirucka/noun-declension`**: each paired noun's cells and gender; **`cs/prirucka/verb-present-tense`**: the
+    forms of the governing verbs.
+  - **The governing verbs**, `src/quizzes/adjective-noun-declension/governing-verbs.cs.ts` (one module per learned
+    language): each a verb of the verb dataset, the case it is always followed by (`nom`, `gen`, `dat`, `acc`, `loc` or
+    `ins`) and at most one preposition, one that never changes its form (so none of `v`, `s`, `k`, `z`); an entry may
+    name the variant to show for a person where the verb dataset's first one is the wrong one (`být` shows `je`, not
+    `jest`). Each verb, or verb with its preposition, is there once. Only the join and `check-data` read it; the page
+    gets the verbs from the dataset.
+
+  Its items are the nouns, in pairing order, then the verbs, in module order:
+  `{ "kind": "noun", "prompt": "dítě", "gender": "s.", "pluralGender": "ž.", "adjectives": ["boží", …], "cells": [ { "id":
+  "nom-sg", "acceptedForms": [{ "value": "dítě" }] }, … ] }` and `{ "kind": "verb", "verb": "mluvit", "preposition": "o",
+  "case": "loc", "forms": { "1sg": "mluvím", "2sg": "mluvíš", "3sg": "mluví", "1pl": "mluvíme", "2pl": "mluvíte", "3pl":
+  "mluví" } }`. A noun's gender is the noun dataset's, `pluralGender` is the pairing's `plural-gender` (only when it is
+  given), and its `cells` are its noun dataset cells, every case included, without the variants marked `non-final`
+  (the noun ends the phrase, so *advokát*'s `dat-sg` is just `advokátovi`) and without any remark (this quiz shows
+  none). A verb's `forms` hold one form per person: the verb dataset's first variant, unless the entry names another.
+  The contract checks both shapes, and keeps a noun's key (`noun:<prompt>`) apart from a verb's (`verb:<verb>`, plus
+  `+<preposition>`). The adjective forms are not data: the language's adjective declension generator decides them
+  (`src/quizzes/adjective-noun-declension/declension-of-adjectives_with_nouns.ts`, the owner's, for Czech).
+
+  The join writes the file laid out by Prettier and replaced in one step, as the scraper does. It writes nothing,
+  lists every problem and exits 1 if a pairing noun is not a noun of the noun dataset, has no gender there or another
+  gender there; a noun's adjective list is empty or repeats an adjective; declining one of a noun's adjectives throws
+  (or gives no form) in any cell the noun has; a `plural-gender` is not one of `m. živ.`, `m. neživ.`, `ž.`, `s.`; a
+  noun's `ins-pl` has a variant with the `dual` remark (the dual is not designed for this quiz yet); a governing verb is
+  not a verb of the verb dataset, or names a variant the verb does not have; or a case other than the vocative has no
+  governing verb. It also refuses a pairing that is not a list of nouns or names a noun twice, an input dataset item
+  that breaks its own contract, and anything it makes that breaks this quiz's contract.
 - **Layout:** valid JSON formatted with [Prettier](https://prettier.io/) (the repository's Prettier config, if
   there is one, otherwise Prettier's defaults). The scraper formats the file as it saves it, so saving it from
   an editor that formats on save changes nothing.
@@ -148,8 +199,13 @@ material, not read by anything.)
   status. A second step checks `source-material/`: a missing side file is fine (it may not have been scraped
   yet), but a file there that is not a side file of a scraped dataset, or a side file whose envelope does not match
   its location, that has a word which is not an item of its dataset, or (the source-material file) a line or a cell
-  leading to an article id that is not a key of its `footnotes`, fails the build like a dataset does. It prints
-  `Data OK: <n> items in <n> dataset file(s), <n> source-material file(s).`
+  leading to an article id that is not a key of its `footnotes`, fails the build like a dataset does. A third step
+  runs every join (the list `JOINS` in `scripts/joins/index.ts`) in memory: it reports each problem the join finds in
+  its inputs, as `data/<file> cannot be joined: <problem>`, and if there is none but the committed file differs from
+  what the join would write now (or is missing), it fails with `data/cs/language-trainer/adjective-noun-declension.json
+  is out of step with its inputs. Run: npm run join:cs:adjectives`. So a re-scrape or an edit of an input can never
+  reach the site with a stale joined dataset. It prints `Data OK: <n> items in <n> dataset file(s), <n>
+  source-material file(s).`
 - **Delivery.** The only implemented delivery is `bundled` (above). A `github` delivery is typed in
   `src/sources/source.ts` but has no loader: `loadDataset` rejects it with a clear error, and no source uses it.
 
@@ -351,7 +407,9 @@ The tests run the same logic against a temporary git repository; they never touc
 
 ```
 index.html, vite.config.ts, tsconfig.json   the page's HTML, the Vite / Vitest and the TypeScript configuration
-lists/<language>/<quiz type>.txt      scraper input (comma-separated entries); only the scraper reads lists
+lists/<language>/<quiz type>.txt      scraper input (comma-separated entries)
+lists/<language>/<quiz type>.json     a join's input: the pairing of adjectives with nouns; only the scraper and the
+                                      joins read lists
 data/<language>/<source>/<quiz type>.json   the committed datasets
 source-material/<language>/<source>/<quiz type>.json, <quiz type>.dictionaries.json
                                       each dataset's committed side files: source material, never shipped
@@ -366,7 +424,12 @@ src/
                its remark codes with what a checked cell's answer line and the explanation dialog show (pure,
                tested) and the explanation dialog, and its contract's carry-over hook (pure, tested);
                numerals holds its ranges and picking, the version list rules and the numeral generator of each
-               learned language (cs.ts), all pure and tested
+               learned language (cs.ts), all pure and tested; adjective-noun-declension holds its contract (items.ts),
+               the owner's Czech adjective declension generator (declension-of-adjectives_with_nouns.ts, used as it
+               is), its adapter to the quiz's ids (cs.ts) and the generators by language (generators.ts), the
+               governing verbs of each learned language (governing-verbs.<id>.ts, read only by the join), the draw of
+               a round (draw.ts), the case filter (filter.ts), the page without its DOM (page.ts), all pure and
+               tested, and the DOM that draws it (mount.ts, filter-dialog.ts)
   datasets/    the pool (language, source, quiz type), the dataset file's envelope and the loader of the bundled
                datasets
   registry.ts  findById(): how anything looks up an entry of a registry by its id
@@ -391,9 +454,12 @@ scraper/       build-time only, never shipped
                       fixtures/ holds real pages from prirucka.ujc.cas.cz that the parser tests run against: moct,
                       noha, manzel and bratr whole, the others trimmed to the entry (so their footnote markers lead
                       to articles that are not in them)
-scripts/       check-data.ts: validates data/ and source-material/ before every build; publish-pages.ts: commits dist/ to the local
-               gh-pages branch (tested against a temporary repo); registry.test.ts: checks the registries and
-               the scraper's adapters against each other
+scripts/       check-data.ts: validates data/ and source-material/ before every build, and runs the joins to check that
+               each joined dataset is in step; publish-pages.ts: commits dist/ to the local gh-pages branch (tested
+               against a temporary repo); registry.test.ts: checks the registries and the scraper's adapters against
+               each other; join.ts: the command that writes a joined dataset (`npm run join:cs:adjectives`)
+  joins/       the joined datasets (index.ts: `JOINS`), what a join is and reads (join.ts), and each join:
+               adjective-noun-declension.ts, the Czech adjectives with nouns (pure, tested)
 ```
 
 Rules the layout keeps: `src/` never imports from `scraper/` or `scripts/`, nor refers to `source-material/` (a
@@ -430,6 +496,14 @@ typed lists; nothing is discovered dynamically.
   `lists/<id>/`.
 - **A hand-written dataset.** Add the `provides` entry with `manual: true` and commit the file; no adapter is
   needed. The build validates it like any other.
+- **A joined dataset.** Add the `provides` entry with `manual: true` (no adapter makes it), write its join in
+  `scripts/joins/` (a `Join`: the pool it makes, the npm script that writes it, the datasets and lists it reads, and a
+  `make` that turns those inputs into items or lists every problem, without throwing), add it to `JOINS` in
+  `scripts/joins/index.ts` and its npm script (`tsx scripts/join.ts <language>/<source>/<quiz type>`) to
+  `package.json`. Run the script and commit the file. `check-data` then runs it on every build, so the file cannot fall
+  out of step with its inputs. A joined dataset for another learned language is one more `Join` the same way; for
+  adjectives with nouns it also needs that language's governing verbs (`governing-verbs.<id>.ts`) and its adjective
+  declension generator in `ADJECTIVE_DECLENSION_GENERATORS` (a test asks for one for every provided pool).
 - **A UI language.** List it in `UI_LANGUAGES` (`src/i18n/index.ts`) and write the file the compiler then asks
   for in each set of texts (the shell's, `src/ui/`'s, each quiz type's, each learned language's); a missing key
   is a compile error. Then write it into every noun's `explanation` in the data too: the compiler does not see
@@ -520,6 +594,38 @@ still need to be reviewed.
   order*, *mixed order*, *masculine*, …), with the part of the number they are about in brackets (*inverted order
   (tisíc)*), and a legend explains the ones on screen.
 - Scores: numbers correct / checked, per pool.
+
+### Adjectives with nouns
+
+- Each round draws, each uniformly: a noun (never the same one twice in a row, unless there is only one), one of its
+  adjectives, a case the filter has ticked, a number the noun has in that case (`dveře` is always plural, `zdraví`
+  always singular), a governing verb followed by that case, and a person and number for the verb. In the nominative
+  the verb is `být` and its number follows the noun's (`Jsem dobrý advokát`, `Jsme dobří advokáti`): only the person
+  is drawn. The vocative has no verb.
+- Above the sentence: the adjective and the noun in their base forms, then the case and number in the UI language,
+  e.g. `dobrý · advokát — dative singular`. The gender is not shown: knowing it is part of the drill. The sentence is
+  the verb form and its preposition, capitalised, then a field for the adjective and one for the noun, then a full
+  stop: `Pomáháme ___ ___.`, `Mluvím o ___ ___.`, `Dívám se na ___ ___.`, and in the vocative `___ ___!`. There is no
+  pronoun. On a narrow screen the sentence wraps and the fields keep their order. Sentences can be absurd (`Pomáhám
+  zajímavé aktivitě`): it is a grammar drill, and the data cannot tell an animate feminine noun from an inanimate one.
+- The adjective's accepted forms come from the language's adjective declension generator (the round's case and
+  number, the noun's gender, and its plural gender in the plural); the noun's are its cell's. The matching rules are
+  the usual ones. The special-character buttons and the typing shortcuts work in both fields.
+- Enter checks the field it is in and moves to the next open field (an empty field is not checked: Enter only moves
+  on); when both are checked, Enter starts the next sentence. There is no Check button per field: "Check all" counts
+  empty fields as wrong, and "Skip" / "Next sentence" is highlighted the way the verb and noun quizzes highlight theirs.
+  A checked field turns green with a ✓, or red with ✗ and every accepted form joined by ` / `. There are no remark
+  chips.
+- **Filters.** The Filters button opens a dialog with a checkbox per case (all seven, no numbers), "Select all" and
+  "Clear all"; all cases are ticked at first. Closing it (Done, Esc, a click outside) applies the choice and, if
+  anything changed, starts a new sentence. The choice is remembered per pool in `localStorage` under `settings`, and
+  checked when it is read back (an older build's value ticks every case). With nothing ticked, the round shows *The
+  current filters leave nothing to ask for.* instead of the sentence: "Next sentence" is highlighted, "Check all" is
+  disabled, and nothing is scored.
+- Scores, per pool: adjective forms correct / checked, noun forms correct / checked, sentences fully correct /
+  completed. A skipped sentence counts only the fields it checked, and is not completed.
+- The source is the site's own rules (the adjective forms are its generator's), so the unverified warning is shown, as
+  for numerals.
 
 ### All quizzes
 

@@ -4,4 +4,5 @@ dist/
 .DS_Store
 .scrape.lock
 .scrape-data.tmp
+.join-data.tmp
 lists/cs/vocabulary

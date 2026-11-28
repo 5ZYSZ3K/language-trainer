@@ -3,12 +3,16 @@ import type { Source } from './source'
 
 /**
  * This site's own rules, written by its author and not checked against an authority: hence `unverified`, which the
- * page says wherever one of its quizzes is open. Its datasets are hand-written.
+ * page says wherever one of its quizzes is open. No adapter makes its datasets: the numerals ranges are written by
+ * hand, and the adjectives with nouns are joined (their adjective forms come from the site's own rules).
  */
 export const languageTrainer: Source = {
   id: 'language-trainer',
   name: 'Language trainer',
   url: REPOSITORY_URL,
   trust: 'unverified',
-  provides: [{ language: 'cs', quizType: 'numerals', delivery: { kind: 'bundled' }, manual: true }],
+  provides: [
+    { language: 'cs', quizType: 'numerals', delivery: { kind: 'bundled' }, manual: true },
+    { language: 'cs', quizType: 'adjective-noun-declension', delivery: { kind: 'bundled' }, manual: true },
+  ],
 }
