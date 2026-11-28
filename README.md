@@ -603,11 +603,12 @@ still need to be reviewed.
   the verb is `být` and its number follows the noun's (`Jsem dobrý advokát`, `Jsme dobří advokáti`): only the person
   is drawn. The vocative has no verb.
 - Above the sentence: the adjective and the noun in their base forms, then the case and number in the UI language,
-  e.g. `dobrý · advokát — dative singular`. The gender is not shown: knowing it is part of the drill. The sentence is
-  the verb form and its preposition, capitalised, then a field for the adjective and one for the noun, then a full
-  stop: `Pomáháme ___ ___.`, `Mluvím o ___ ___.`, `Dívám se na ___ ___.`, and in the vocative `___ ___!`. There is no
-  pronoun. On a narrow screen the sentence wraps and the fields keep their order. Sentences can be absurd (`Pomáhám
-  zajímavé aktivitě`): it is a grammar drill, and the data cannot tell an animate feminine noun from an inanimate one.
+  e.g. `dobrý · advokát — 3. dative, singular`, with the cases named and numbered as in the noun quiz. The gender is
+  not shown: knowing it is part of the drill. The sentence is the verb form and its preposition, capitalised, then a
+  field for the adjective and one for the noun, then a full stop: `Pomáháme ___ ___.`, `Mluvím o ___ ___.`,
+  `Dívám se na ___ ___.`, and in the vocative `___ ___!`. There is no pronoun. On a narrow screen the sentence wraps
+  and the fields keep their order. Sentences can be absurd (`Pomáhám zajímavé aktivitě`): it is a grammar drill, and
+  the data cannot tell an animate feminine noun from an inanimate one.
 - The adjective's accepted forms come from the language's adjective declension generator (the round's case and
   number, the noun's gender, and its plural gender in the plural); the noun's are its cell's. The matching rules are
   the usual ones. The special-character buttons and the typing shortcuts work in both fields.

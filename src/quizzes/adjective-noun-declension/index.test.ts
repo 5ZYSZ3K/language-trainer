@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { UI_LANGUAGES } from '../../i18n'
 import { SOURCES } from '../../sources'
 import { uiTexts } from '../../ui'
-import { nounCaseIds, nounNumbers } from '../noun-declension/cells'
+import { nounCaseIds, nounCaseLabelKey, nounNumbers } from '../noun-declension/cells'
+import { nounDeclension } from '../noun-declension/index'
 import { ADJECTIVE_DECLENSION_GENERATORS, adjectiveNounContract, adjectiveNounDeclension, caseLabelKey, formText, numberLabelKey } from './index'
 
 describe('adjectiveNounDeclension', () => {
@@ -56,12 +57,20 @@ describe('the texts of adjectiveNounDeclension', () => {
     }
   })
 
-  it('words the case and number of a sentence, e.g. dative singular, from the two labels', () => {
+  it('names every case as the noun quiz does, numbered the way Czech does, in each UI language', () => {
+    for (const language of UI_LANGUAGES) {
+      for (const id of nounCaseIds) {
+        expect(texts[language][caseLabelKey(id)], `${language} ${id}`).toBe(nounDeclension.texts[language][nounCaseLabelKey(id)])
+      }
+    }
+  })
+
+  it('words the case and number of a sentence, e.g. 3. dative, singular, from the two labels', () => {
     for (const language of UI_LANGUAGES) {
       expect(texts[language].form, language).toContain('{case}')
       expect(texts[language].form, language).toContain('{number}')
     }
-    expect(formText((key) => texts.en[key]!, 'dat', 'sg')).toBe('dative singular')
+    expect(formText((key) => texts.en[key]!, 'dat', 'sg')).toBe('3. dative, singular')
     expect(formText((key) => texts.cs[key]!, 'ins', 'pl')).toBe('7. pád – instrumentál, množné číslo')
   })
 
