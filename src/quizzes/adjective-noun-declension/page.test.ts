@@ -48,10 +48,10 @@ describe('a sentence', () => {
     expect(page.sentence?.lead).toBe('Dívám se na')
   })
 
-  it('in the nominative, has být agree with the noun: Jsem dobrý advokát, Jsme malé děti', () => {
-    expect(pageOf([dobrýAdvokát, být], { cases: ['nom'] }).page.sentence?.lead).toBe('Jsem')
+  it('in the nominative, puts to before být, which agrees with the noun: To je dobrý advokát, To jsou malé děti', () => {
+    expect(pageOf([dobrýAdvokát, být], { cases: ['nom'] }).page.sentence?.lead).toBe('To je')
     const { page } = pageOf([dítě, být], { cases: ['nom'] })
-    expect(page.sentence).toMatchObject({ number: 'pl', lead: 'Jsme' })
+    expect(page.sentence).toMatchObject({ number: 'pl', lead: 'To jsou' })
     // děti agree in the feminine plural: malé, not malá.
     page.enter(0, 'malá')
     expect(page.fields[0]).toEqual({ state: 'wrong', acceptedForms: ['malé'] })

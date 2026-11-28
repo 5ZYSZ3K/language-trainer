@@ -8,10 +8,12 @@ import type { GoverningVerb } from './governing-verbs'
  * case to use. So not `mávat` (`mávat někomu`, dative), `chlubit se` (`chlubit se někomu`), `stát se`
  * (`stát se někomu`), `radit` (`radit klid`, accusative), `čekat na` (`čekat na nádraží`, locative), `psát o`
  * (`psát o pomoc`, accusative) or `jít za` (`jít za roh`, accusative). Not `žít mezi` either: `mezi` needs more than
- * one thing, and the draw also asks for the singular.
+ * one thing, and the draw also asks for the singular. `být` alone also takes the instrumental (`Jsem dobrým
+ * advokátem`), so the nominative's sentence is `To je ___ ___.` / `To jsou ___ ___.`: after `to`, only the nominative
+ * fits.
  */
 export const czechGoverningVerbs: readonly GoverningVerb[] = [
-  { verb: 'být', case: 'nom', show: { '3sg': 'je' } },
+  { verb: 'být', subject: 'to', case: 'nom', show: { '3sg': 'je' } },
 
   { verb: 'bát se', case: 'gen' },
   { verb: 'ptát se', case: 'gen' },

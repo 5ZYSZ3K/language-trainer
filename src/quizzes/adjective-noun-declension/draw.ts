@@ -31,9 +31,10 @@ const numbersIn = (noun: PairedNounItem, caseId: CaseId): GrammaticalNumber[] =>
 /**
  * A new round, each part drawn uniformly in turn: a noun (never `previous` again, unless it is the only one), one of
  * its adjectives, a case the filter has ticked, a number the noun has in that case, a governing verb followed by that
- * case and a person and number for the verb. In the nominative the verb's number follows the noun's (`jsme dobří
- * advokáti`), so only the person is drawn; the vocative has no verb. A case is only drawn where the noun has it and
- * some governing verb is followed by it (the vocative needs none). Undefined when nothing is left to draw.
+ * case and a person and number for the verb. A verb with a subject is always in the third person (`to je`), and in the
+ * nominative the verb's number follows the noun's (`to jsou dobří advokáti`); the vocative has no verb. A case is only
+ * drawn where the noun has it and some governing verb is followed by it (the vocative needs none). Undefined when
+ * nothing is left to draw.
  */
 export function drawSentence(
   nouns: readonly PairedNounItem[],
@@ -59,6 +60,8 @@ export function drawSentence(
     verbs.filter((verb) => verb.case === caseId),
     random,
   )
-  const persons = caseId === 'nom' ? PERSONS.filter((person) => person.endsWith(number)) : PERSONS
+  const persons = PERSONS.filter(
+    (person) => (item.subject === undefined || person.startsWith('3')) && (caseId !== 'nom' || person.endsWith(number)),
+  )
   return { noun, adjective, caseId, number, verb: { item, person: pick(persons, random) } }
 }

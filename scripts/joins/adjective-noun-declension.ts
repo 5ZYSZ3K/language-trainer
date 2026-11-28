@@ -213,7 +213,16 @@ function joinVerbs({ verbs, governingVerbs }: AdjectiveNounJoinInputs, problems:
       }),
     ) as Record<Person, string>
     if (problems.length > before) return []
-    return [{ kind: 'verb', verb: entry.verb, ...(entry.preposition === undefined ? {} : { preposition: entry.preposition }), case: entry.case, forms }]
+    return [
+      {
+        kind: 'verb',
+        verb: entry.verb,
+        ...(entry.subject === undefined ? {} : { subject: entry.subject }),
+        ...(entry.preposition === undefined ? {} : { preposition: entry.preposition }),
+        case: entry.case,
+        forms,
+      },
+    ]
   })
 }
 

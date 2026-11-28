@@ -57,6 +57,7 @@ const verb = (name: string, caseId: GoverningCase, stem: string, preposition?: s
 export const být: GoverningVerbItem = {
   kind: 'verb',
   verb: 'být',
+  subject: 'to',
   case: 'nom',
   forms: { '1sg': 'jsem', '2sg': 'jsi', '3sg': 'je', '1pl': 'jsme', '2pl': 'jste', '3pl': 'jsou' },
 }

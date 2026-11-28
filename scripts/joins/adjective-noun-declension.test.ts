@@ -37,7 +37,7 @@ const verbs = [
   verb('stát se', 'stanu se', 'staneš se', 'stane se', 'staneme se', 'stanete se', 'stanou se'),
 ]
 const governingVerbs: GoverningVerb[] = [
-  { verb: 'být', case: 'nom', show: { '3sg': 'je' } },
+  { verb: 'být', subject: 'to', case: 'nom', show: { '3sg': 'je' } },
   { verb: 'bát se', case: 'gen' },
   { verb: 'pomáhat', case: 'dat' },
   { verb: 'vidět', case: 'acc' },
@@ -92,11 +92,12 @@ describe('joinAdjectivesWithNouns', () => {
     expect(nohaItem).toMatchObject({ cells: [cell('nom-sg', 'noha'), cell('gen-pl', 'noh', 'nohou')] })
   })
 
-  it('gives a verb its preposition when it has one, its case, and the first variant of each person unless the entry names another', () => {
+  it('gives a verb its subject and its preposition when it has them, its case, and the first variant of each person unless the entry names another', () => {
     const items = joinAdjectivesWithNouns(inputs()).items
     expect(items.find((item) => item.kind === 'verb' && item.verb === 'být')).toEqual({
       kind: 'verb',
       verb: 'být',
+      subject: 'to',
       case: 'nom',
       forms: { '1sg': 'jsem', '2sg': 'jsi', '3sg': 'je', '1pl': 'jsme', '2pl': 'jste', '3pl': 'jsou' },
     })

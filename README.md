@@ -159,22 +159,26 @@ be an item of the noun dataset, so add it to the noun list and scrape it first. 
     forms of the governing verbs.
   - **The governing verbs**, `src/quizzes/adjective-noun-declension/governing-verbs.cs.ts` (one module per learned
     language): each a verb of the verb dataset, the case it is always followed by (`nom`, `gen`, `dat`, `acc`, `loc` or
-    `ins`) and at most one preposition, one that never changes its form (so none of `v`, `s`, `k`, `z`); an entry may
-    name the variant to show for a person where the verb dataset's first one is the wrong one (`být` shows `je`, not
-    `jest`). Each verb, or verb with its preposition, is there once. Only the join and `check-data` read it; the page
-    gets the verbs from the dataset.
+    `ins`) and at most one preposition, one that never changes its form (so none of `v`, `s`, `k`, `z`). A verb is
+    there only if, with its preposition, it takes that case and no other (not `mávat`, which also takes the dative in
+    `mávat někomu`). An entry may put a subject before the verb, which is then always in the third person (`být` has
+    `to`, because `Jsem dobrým advokátem` takes the instrumental but `To je` only the nominative), and may name the
+    variant to show for a person where the verb dataset's first one is the wrong one (`být` shows `je`, not `jest`).
+    Each verb, or verb with its preposition, is there once. Only the join and `check-data` read it; the page gets the
+    verbs from the dataset.
 
-  Its items are the nouns, in pairing order, then the verbs, in module order:
-  `{ "kind": "noun", "prompt": "dítě", "gender": "s.", "pluralGender": "ž.", "adjectives": ["boží", …], "cells": [ { "id":
-  "nom-sg", "acceptedForms": [{ "value": "dítě" }] }, … ] }` and `{ "kind": "verb", "verb": "mluvit", "preposition": "o",
-  "case": "loc", "forms": { "1sg": "mluvím", "2sg": "mluvíš", "3sg": "mluví", "1pl": "mluvíme", "2pl": "mluvíte", "3pl":
-  "mluví" } }`. A noun's gender is the noun dataset's, `pluralGender` is the pairing's `plural-gender` (only when it is
-  given), and its `cells` are its noun dataset cells, every case included, without the variants marked `non-final`
-  (the noun ends the phrase, so *advokát*'s `dat-sg` is just `advokátovi`) and without any remark (this quiz shows
-  none). A verb's `forms` hold one form per person: the verb dataset's first variant, unless the entry names another.
-  The contract checks both shapes, and keeps a noun's key (`noun:<prompt>`) apart from a verb's (`verb:<verb>`, plus
-  `+<preposition>`). The adjective forms are not data: the language's adjective declension generator decides them
-  (`src/quizzes/adjective-noun-declension/declension-of-adjectives_with_nouns.ts`, the owner's, for Czech).
+  Its items are the nouns, in pairing order, then the verbs, in module order: `{ "kind": "noun", "prompt": "dítě",
+  "gender": "s.", "pluralGender": "ž.", "adjectives": ["boží", …], "cells": [ { "id": "nom-sg", "acceptedForms": [{
+  "value": "dítě" }] }, … ] }` and `{ "kind": "verb", "verb": "mluvit", "preposition": "o", "case": "loc", "forms": {
+  "1sg": "mluvím", "2sg": "mluvíš", "3sg": "mluví", "1pl": "mluvíme", "2pl": "mluvíte", "3pl": "mluví" } }`; a verb with
+  a subject has it too (`"subject": "to"`). A noun's gender is the noun dataset's, `pluralGender` is the pairing's
+  `plural-gender` (only when it is given), and its `cells` are its noun dataset cells, every case included, without the
+  variants marked `non-final` (the noun ends the phrase, so *advokát*'s `dat-sg` is just `advokátovi`) and without any
+  remark (this quiz shows none). A verb's `forms` hold one form per person: the verb dataset's first variant, unless the
+  entry names another. The contract checks both shapes, and keeps a noun's key (`noun:<prompt>`) apart from a verb's
+  (`verb:<verb>`, plus `+<preposition>`). The adjective forms are not data: the language's adjective declension
+  generator decides them (`src/quizzes/adjective-noun-declension/declension-of-adjectives_with_nouns.ts`, the owner's,
+  for Czech).
 
   The join writes the file laid out by Prettier and replaced in one step, as the scraper does. It writes nothing,
   lists every problem and exits 1 if a pairing noun is not a noun of the noun dataset, has no gender there or another
@@ -600,15 +604,16 @@ still need to be reviewed.
 - Each round draws, each uniformly: a noun (never the same one twice in a row, unless there is only one), one of its
   adjectives, a case the filter has ticked, a number the noun has in that case (`dveře` is always plural, `zdraví`
   always singular), a governing verb followed by that case, and a person and number for the verb. In the nominative
-  the verb is `být` and its number follows the noun's (`Jsem dobrý advokát`, `Jsme dobří advokáti`): only the person
-  is drawn. The vocative has no verb.
-- Above the sentence: the adjective and the noun in their base forms, then the case and number in the UI language,
-  e.g. `dobrý · advokát — 3. dative, singular`, with the cases named and numbered as in the noun quiz. The gender is
-  not shown: knowing it is part of the drill. The sentence is the verb form and its preposition, capitalised, then a
-  field for the adjective and one for the noun, then a full stop: `Pomáháme ___ ___.`, `Mluvím o ___ ___.`,
-  `Dívám se na ___ ___.`, and in the vocative `___ ___!`. There is no pronoun. On a narrow screen the sentence wraps
-  and the fields keep their order. Sentences can be absurd (`Pomáhám zajímavé aktivitě`): it is a grammar drill, and
-  the data cannot tell an animate feminine noun from an inanimate one.
+  the sentence is `To je ___ ___.` or `To jsou ___ ___.`: `být` after `to` is in the third person and its number
+  follows the noun's (`To je dobrý advokát`, `To jsou dobří advokáti`), so nothing about the verb is drawn. The
+  vocative has no verb.
+- Above the sentence: the adjective and the noun in their base forms, then the case and number in the UI language, e.g.
+  `dobrý · advokát — 3. dative, singular`, with the cases named and numbered as in the noun quiz. The gender is not
+  shown: knowing it is part of the drill. The sentence is the verb form, after its subject and with its preposition,
+  capitalised (`To je`, `Mluvím o`), then a field for the adjective and one for the noun, then a full stop: `Pomáháme
+  ___ ___.`, `Mluvím o ___ ___.`, `Dívám se na ___ ___.`, and in the vocative `___ ___!`. There is no personal pronoun.
+  On a narrow screen the sentence wraps and the fields keep their order. Sentences can be absurd (`Pomáhám zajímavé
+  aktivitě`): it is a grammar drill, and the data cannot tell an animate feminine noun from an inanimate one.
 - The adjective's accepted forms come from the language's adjective declension generator (the round's case and
   number, the noun's gender, and its plural gender in the plural); the noun's are its cell's. The matching rules are
   the usual ones. The special-character buttons and the typing shortcuts work in both fields.

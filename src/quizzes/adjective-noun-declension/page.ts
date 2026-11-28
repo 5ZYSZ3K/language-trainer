@@ -28,7 +28,10 @@ export interface Sentence {
   readonly noun: string
   readonly caseId: CaseId
   readonly number: GrammaticalNumber
-  /** Before the fields: the verb form and its preposition, capitalised (`Dívám se na`); empty in the vocative. */
+  /**
+   * Before the fields: the verb form, after its subject and with its preposition, capitalised (`To je`, `Dívám se na`);
+   * empty in the vocative.
+   */
   readonly lead: string
   /** After the fields: a full stop, or an exclamation mark in the vocative (`___ ___!`). */
   readonly end: '.' | '!'
@@ -46,8 +49,8 @@ const capitalised = (text: string): string => text.charAt(0).toUpperCase() + tex
 
 function leadOf(verb: Draw['verb']): string {
   if (!verb) return ''
-  const form = verb.item.forms[verb.person]
-  return capitalised(verb.item.preposition === undefined ? form : `${form} ${verb.item.preposition}`)
+  const { subject, preposition, forms } = verb.item
+  return capitalised([subject, forms[verb.person], preposition].filter((word) => word !== undefined).join(' '))
 }
 
 /**

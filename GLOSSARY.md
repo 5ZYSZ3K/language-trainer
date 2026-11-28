@@ -161,8 +161,9 @@ version.
 ### Adjectives with nouns
 
 **Sentence**:
-What a round of adjectives with nouns shows: a governing verb's form, with its preposition if it has one, followed by a
-blank for the adjective and one for the noun (`Mluvím o ___ ___.`). A vocative sentence has no verb (`___ ___!`).
+What a round of adjectives with nouns shows: a governing verb's form, after its subject and with its preposition if it
+has them, followed by a blank for the adjective and one for the noun (`Mluvím o ___ ___.`, `To je ___ ___.`). A
+vocative sentence has no verb (`___ ___!`).
 
 **Governing verb**:
 A verb, with at most one preposition, that is always followed by one case: `pomáhat` by the dative, `mluvit o` by the

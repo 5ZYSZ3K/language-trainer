@@ -8,6 +8,8 @@ import type { GoverningCase, Person } from './items'
 export interface GoverningVerb {
   /** A prompt of the verb dataset. */
   readonly verb: string
+  /** A word the sentence puts before the verb form, which is then always in the third person (Czech `to`: `To je`). */
+  readonly subject?: string
   readonly case: GoverningCase
   /** One that never changes its form (Czech: not `v`, `s`, `k` or `z`, which become `ve`, `se`, `ke`, `ze`). */
   readonly preposition?: string

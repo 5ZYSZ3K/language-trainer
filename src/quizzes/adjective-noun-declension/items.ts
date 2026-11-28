@@ -37,6 +37,8 @@ export interface GoverningVerbItem {
   kind: 'verb'
   /** A prompt of the verb dataset. */
   verb: string
+  /** A word before the verb form (`to`), which puts the form in the third person. */
+  subject?: string
   /** At most one, and one that never changes its form. */
   preposition?: string
   case: GoverningCase
@@ -54,8 +56,8 @@ const isText = (value: unknown): value is string => typeof value === 'string' &&
  * (each a non-empty text, none twice) and `cells`: at least one, with ids among the noun quiz's cell ids, in their order
  * and without repeats, each with at least one variant and no remarks (this quiz shows none).
  *
- * A verb has a non-empty `verb`, an optional non-empty `preposition`, a `case` among `GOVERNING_CASES` and `forms`, a
- * non-empty text for each of `PERSONS`. Other properties are ignored.
+ * A verb has a non-empty `verb`, an optional non-empty `subject` and `preposition`, a `case` among `GOVERNING_CASES`
+ * and `forms`, a non-empty text for each of `PERSONS`. Other properties are ignored.
  */
 export const adjectiveNounContract: Contract<AdjectiveNounItem> = {
   validateItem(value) {
@@ -109,6 +111,7 @@ function nounProblems(value: Record<string, unknown>): string[] {
 function verbProblems(value: Record<string, unknown>): string[] {
   const problems: string[] = []
   if (!isText(value.verb)) problems.push('missing verb')
+  if (value.subject !== undefined && !isText(value.subject)) problems.push('subject must be text')
   if (value.preposition !== undefined && !isText(value.preposition)) problems.push('preposition must be text')
   if (!isGoverningCase(value.case)) {
     problems.push(`case must be one of ${GOVERNING_CASES.join(', ')}, found ${JSON.stringify(value.case)}`)

@@ -58,14 +58,21 @@ describe('drawSentence', () => {
     expect(new Set(drawn.map((draw) => draw.verb?.person))).toEqual(new Set(['1sg', '2sg', '3sg', '1pl', '2pl', '3pl']))
   })
 
-  it('in the nominative, uses být and makes its number follow the noun’s: jsem dobrý advokát, jsme dobří advokáti', () => {
+  it('in the nominative, uses to + být in the third person, its number following the noun’s: to je dobrý advokát, to jsou dobří advokáti', () => {
     const drawn = draws(new Set<CaseId>(['nom']), 600)
     for (const draw of drawn) {
       expect(draw.verb?.item).toBe(být)
-      expect(draw.verb?.person.endsWith(draw.number)).toBe(true)
+      expect(draw.verb?.person).toBe(`3${draw.number}`)
     }
-    // Only the person is drawn.
-    expect(new Set(drawn.map((draw) => draw.verb?.person.slice(0, 1)))).toEqual(new Set(['1', '2', '3']))
+    // Nothing about the verb is drawn: its number is the noun's, and both occur.
+    expect(new Set(drawn.map((draw) => draw.verb?.person))).toEqual(new Set(['3sg', '3pl']))
+  })
+
+  it('puts a verb with a subject in the third person in any case, since the subject is', () => {
+    const toPomáhat = { ...pomáhat, subject: 'to' }
+    const random = seeded(1)
+    const persons = Array.from({ length: 300 }, () => drawSentence(nouns, [toPomáhat], new Set<CaseId>(['dat']), undefined, random)?.verb?.person)
+    expect(new Set(persons)).toEqual(new Set(['3sg', '3pl']))
   })
 
   it('in the vocative, draws no verb', () => {

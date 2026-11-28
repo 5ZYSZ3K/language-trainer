@@ -40,6 +40,7 @@ describe('adjectiveNounContract', () => {
     const { preposition: _preposition, ...plainVerb } = verb
     expect(check(plainNoun)).toEqual([])
     expect(check(plainVerb)).toEqual([])
+    expect(check({ ...verb, subject: 'to' })).toEqual([])
   })
 
   it('refuses anything that is neither a noun nor a verb', () => {
@@ -71,8 +72,9 @@ describe('adjectiveNounContract', () => {
     ])
   })
 
-  it('refuses a verb without a verb, with a preposition that is not text, or with the vocative or no case', () => {
+  it('refuses a verb without a verb, with a subject or a preposition that is not text, or with the vocative or no case', () => {
     expect(check({ ...verb, verb: '' })).toEqual(['missing verb'])
+    expect(check({ ...verb, subject: '' })).toEqual(['subject must be text'])
     expect(check({ ...verb, preposition: '' })).toEqual(['preposition must be text'])
     expect(check({ ...verb, case: 'voc' })).toEqual(['case must be one of nom, gen, dat, acc, loc, ins, found "voc"'])
     expect(check({ ...verb, case: undefined })).toEqual(['case must be one of nom, gen, dat, acc, loc, ins, found undefined'])

@@ -12,7 +12,7 @@ describe('the Czech governing verbs', () => {
     expect(changing).toEqual([])
   })
 
-  it('show je, not jest, for the 3rd person singular of být, the verb of the nominative', () => {
-    expect(czechGoverningVerbs.filter((entry) => entry.case === 'nom')).toEqual([{ verb: 'být', case: 'nom', show: { '3sg': 'je' } }])
+  it('frame the nominative as to je / to jsou: být after to, which alone takes only the nominative, showing je, not jest', () => {
+    expect(czechGoverningVerbs.filter((entry) => entry.case === 'nom')).toEqual([{ verb: 'být', subject: 'to', case: 'nom', show: { '3sg': 'je' } }])
   })
 })
