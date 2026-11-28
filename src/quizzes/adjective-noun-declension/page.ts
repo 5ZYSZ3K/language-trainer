@@ -1,9 +1,10 @@
 import type { Cell } from '../../core/cell'
 import { Round, type CellState } from '../../core/round'
 import { nounCellId, type CaseId, type GrammaticalNumber } from '../noun-declension/cells'
+import { readFilter, saveFilter, type CellFilter } from '../noun-declension/filter'
 import type { QuizSettings } from '../quiz-type'
 import { drawSentence, splitItems, type Draw } from './draw'
-import { FilterDraft, readCaseFilter, saveCaseFilter, type CaseFilter } from './filter'
+import { FilterDraft } from './filter'
 import type { AdjectiveDeclensionGenerator } from './generators'
 import type { AdjectiveNounItem, GoverningVerbItem, PairedNounItem } from './items'
 
@@ -14,7 +15,7 @@ export const SENTENCE_METER = 'sentences'
 export interface SentencePageDeps {
   readonly items: readonly AdjectiveNounItem[]
   readonly generator: AdjectiveDeclensionGenerator
-  /** The quiz's saved settings for the pool: the case filter. */
+  /** The quiz's saved settings for the pool: the filter, a case and a number each (the noun quiz's). */
   readonly settings: QuizSettings
   record(meterId: string, correct: boolean): void
   /** Returns [0, 1), like Math.random. */
@@ -55,12 +56,12 @@ function leadOf(verb: Draw['verb']): string {
 
 /**
  * The quiz page without its DOM: the round on the page, what checking does to it and the meters it records, and the
- * case filter with its dialog. `mount.ts` draws what this says, and hands it every Enter, click and closed dialog.
+ * filter with its dialog. `mount.ts` draws what this says, and hands it every Enter, click and closed dialog.
  */
 export class SentencePage {
   private readonly nouns: PairedNounItem[]
   private readonly verbs: GoverningVerbItem[]
-  private caseFilter: CaseFilter
+  private cellFilter: CellFilter
   private draw: Draw | undefined
   /** The two cells the round asks, the adjective's and the noun's; none when there is nothing to ask. */
   private cells: Cell[] = []
@@ -72,12 +73,12 @@ export class SentencePage {
     const { nouns, verbs } = splitItems(deps.items)
     this.nouns = nouns
     this.verbs = verbs
-    // Saved settings may come from an older build: readCaseFilter checks them.
-    this.caseFilter = readCaseFilter(deps.settings.get())
+    // Saved settings may come from an older build: readFilter checks them (a filter of cases ticks every form).
+    this.cellFilter = readFilter(deps.settings.get())
   }
 
-  get filter(): CaseFilter {
-    return this.caseFilter
+  get filter(): CellFilter {
+    return this.cellFilter
   }
 
   /** The round on the page, or undefined when the filter leaves nothing to ask for. */
@@ -99,7 +100,7 @@ export class SentencePage {
 
   /** A new sentence, drawn at random (see drawSentence). The one on the page is left as it is, unfinished if it was. */
   start(): void {
-    this.draw = drawSentence(this.nouns, this.verbs, this.caseFilter, this.draw?.noun, this.deps.random)
+    this.draw = drawSentence(this.nouns, this.verbs, this.cellFilter, this.draw?.noun, this.deps.random)
     this.cells = this.draw ? cellsOf(this.draw, this.deps.generator) : []
     // A round with nothing to ask is complete from the start, so nothing can be checked or recorded in it.
     this.round = new Round({ prompt: this.draw?.noun.prompt ?? '', cells: this.cells }, NO_EVENTS)
@@ -127,7 +128,7 @@ export class SentencePage {
 
   /** Opens the filter dialog's draft on the filter in use. */
   openFilter(): void {
-    this.filterDraft.open(this.caseFilter)
+    this.filterDraft.open(this.cellFilter)
   }
 
   /**
@@ -137,8 +138,8 @@ export class SentencePage {
   closeFilter(): boolean {
     const chosen = this.filterDraft.close()
     if (!chosen) return false
-    this.caseFilter = chosen
-    this.deps.settings.set(saveCaseFilter(chosen))
+    this.cellFilter = chosen
+    this.deps.settings.set(saveFilter(chosen))
     this.start()
     return true
   }

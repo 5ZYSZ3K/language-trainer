@@ -1,6 +1,6 @@
 import { pickNext } from '../../core/pick'
-import { nounCellId, nounNumbers, partsOf, type CaseId, type GrammaticalNumber } from '../noun-declension/cells'
-import type { CaseFilter } from './filter'
+import { nounCaseIds, nounCellId, nounNumbers, type CaseId, type GrammaticalNumber } from '../noun-declension/cells'
+import type { CellFilter } from '../noun-declension/filter'
 import { isGoverningCase, PERSONS, type AdjectiveNounItem, type GoverningVerbItem, type PairedNounItem, type Person } from './items'
 
 /** What one round asks: an adjective with its noun, in a case and a number, after a governing verb's form. */
@@ -24,36 +24,47 @@ export function splitItems(items: readonly AdjectiveNounItem[]): { nouns: Paired
 /** One of `choices`, all equally likely. */
 const pick = <T>(choices: readonly T[], random: () => number): T => pickNext(choices, undefined, random)
 
-/** The numbers `noun` has in a case: both, or only the one it has (`dveře` only plural, `zdraví` only singular). */
-const numbersIn = (noun: PairedNounItem, caseId: CaseId): GrammaticalNumber[] =>
-  nounNumbers.filter((number) => noun.cells.some((cell) => cell.id === nounCellId(caseId, number)))
+/**
+ * The numbers a round on `noun` may ask for in a case: those the filter has ticked in it and the noun has (`dveře` has
+ * only the plural, `zdraví` only the singular).
+ */
+const numbersIn = (noun: PairedNounItem, caseId: CaseId, filter: CellFilter): GrammaticalNumber[] =>
+  nounNumbers.filter((number) => {
+    const id = nounCellId(caseId, number)
+    return filter.has(id) && noun.cells.some((cell) => cell.id === id)
+  })
+
+/**
+ * The cases a round on `noun` may ask for, in case order: those with a number left to ask (see numbersIn) and some
+ * governing verb followed by them (the vocative needs none).
+ */
+const casesOf = (noun: PairedNounItem, verbs: readonly GoverningVerbItem[], filter: CellFilter): CaseId[] =>
+  nounCaseIds.filter(
+    (caseId) => numbersIn(noun, caseId, filter).length > 0 && (!isGoverningCase(caseId) || verbs.some((verb) => verb.case === caseId)),
+  )
 
 /**
  * A new round, each part drawn uniformly in turn: a noun (never `previous` again, unless it is the only one), one of
- * its adjectives, a case the filter has ticked, a number the noun has in that case, a governing verb followed by that
- * case and a person and number for the verb. A verb with a subject is always in the third person (`to je`), and in the
- * nominative the verb's number follows the noun's (`to jsou dobří advokáti`); the vocative has no verb. A case is only
- * drawn where the noun has it and some governing verb is followed by it (the vocative needs none). Undefined when
- * nothing is left to draw.
+ * its adjectives, a case, a number, a governing verb followed by that case and a person and number for the verb. The
+ * case is one where the filter ticks a form the noun has, and some governing verb is followed by it (the vocative needs
+ * none); the number is one the filter ticks in that case and the noun has. A noun is drawn only if it has such a case.
+ * A verb with a subject is always in the third person (`to je`), and in the nominative the verb's number follows the
+ * noun's (`to jsou dobří advokáti`); the vocative has no verb. Undefined when nothing is left to draw.
  */
 export function drawSentence(
   nouns: readonly PairedNounItem[],
   verbs: readonly GoverningVerbItem[],
-  filter: CaseFilter,
+  filter: CellFilter,
   previous: PairedNounItem | undefined,
   random: () => number,
 ): Draw | undefined {
-  const casesOf = (noun: PairedNounItem): CaseId[] => {
-    const own = new Set(noun.cells.map((cell) => partsOf(cell.id)?.caseId))
-    return [...filter].filter((caseId) => own.has(caseId) && (!isGoverningCase(caseId) || verbs.some((verb) => verb.case === caseId)))
-  }
-  const eligible = nouns.filter((noun) => casesOf(noun).length > 0)
+  const eligible = nouns.filter((noun) => casesOf(noun, verbs, filter).length > 0)
   if (eligible.length === 0) return undefined
 
   const noun = pickNext(eligible, previous, random)
   const adjective = pick(noun.adjectives, random)
-  const caseId = pick(casesOf(noun), random)
-  const number = pick(numbersIn(noun, caseId), random)
+  const caseId = pick(casesOf(noun, verbs, filter), random)
+  const number = pick(numbersIn(noun, caseId, filter), random)
   if (!isGoverningCase(caseId)) return { noun, adjective, caseId, number }
 
   const item = pick(

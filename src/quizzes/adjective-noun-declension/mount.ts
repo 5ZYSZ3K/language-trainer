@@ -2,7 +2,7 @@ import { getUiLanguage } from '../../i18n'
 import { fillTexts } from '../../i18n/dom'
 import { enableShortcuts, fillSpecialChars, finder, renderShortcutHelp, syncRoundActions } from '../../ui'
 import type { QuizHost, QuizInstance } from '../quiz-type'
-import { createCaseFilterDialog } from './filter-dialog'
+import { createFilterDialog } from './filter-dialog'
 import { ADJECTIVE_DECLENSION_GENERATORS } from './generators'
 import type { AdjectiveNounItem } from './items'
 import { SentencePage } from './page'
@@ -45,9 +45,9 @@ const AREA = `
 /**
  * One sentence per round (see SentencePage, which decides everything this draws): the adjective and the noun in their
  * base forms with the case and number above it, then the verb form, a field for the adjective and one for the noun, and
- * a full stop. Enter checks a field and moves on; "Check all", "Filters" (a dialog of the seven cases) and "Skip", which
- * turns into "Next sentence" once both fields are checked. Records into the meters `adjectives`, `nouns` (per checked
- * field) and `sentences` (per completed sentence).
+ * a full stop. Enter checks a field and moves on; "Check all", "Filters" (a dialog of the 14 forms, a case and a number
+ * each, as the noun quiz's) and "Skip", which turns into "Next sentence" once both fields are checked. Records into the
+ * meters `adjectives`, `nouns` (per checked field) and `sentences` (per completed sentence).
  */
 export function mountAdjectiveNounDeclension(container: HTMLElement, host: QuizHost<AdjectiveNounItem>): QuizInstance {
   const { items, language } = host
@@ -84,6 +84,7 @@ export function mountAdjectiveNounDeclension(container: HTMLElement, host: QuizH
 
   function applyTexts(): void {
     applyStaticTexts()
+    filterDialog.applyTexts()
     render()
   }
 
@@ -126,7 +127,7 @@ export function mountAdjectiveNounDeclension(container: HTMLElement, host: QuizH
   // ---- static controls --------------------------------------------------------------------------
 
   // Closing the dialog applies its ticks; if they changed, the page has started a new sentence.
-  const filterDialog = createCaseFilterDialog(find<HTMLDialogElement>('#filter-dialog'), page.filterDraft, () => {
+  const filterDialog = createFilterDialog(find<HTMLDialogElement>('#filter-dialog'), page.filterDraft, () => {
     if (page.closeFilter()) showNewSentence()
   })
   find('#filters').addEventListener('click', () => {

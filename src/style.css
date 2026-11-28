@@ -500,8 +500,8 @@ button.link {
   padding: 0 0.4rem;
 }
 
-/* The dialogs: the noun's filter (a grid with a row per case and a column per number) and the explanation an ⓘ opens, and
-   the case filter of adjectives with nouns. */
+/* The dialogs: the filter of nouns and of adjectives with nouns (a grid with a row per case and a column per number) and
+   the explanation an ⓘ opens. */
 dialog.filters,
 dialog.explanation {
   max-width: min(32rem, calc(100vw - 2rem));
@@ -589,23 +589,6 @@ dialog.explanation::backdrop {
 
 .filters-actions .primary {
   margin-left: auto;
-}
-
-/* The case filter of adjectives with nouns: one checkbox per case. */
-.case-filter {
-  display: grid;
-  gap: 0.35rem;
-}
-
-.case-filter label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.case-filter input[type='checkbox'] {
-  width: 1.2rem;
-  height: 1.2rem;
 }
 
 /* Adjectives with nouns: the adjective and the noun above the sentence, then the sentence, whose two fields stand in for

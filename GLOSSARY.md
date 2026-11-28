@@ -125,7 +125,8 @@ _Avoid_: preferences
 **Filter**:
 What the learner has chosen to be asked. In noun declension it is the noun cells to see: only those are shown, all of
 them except the given cell are asked, and a random noun is only picked if at least one of its cells is asked. In
-adjectives with nouns it is the cases a round may ask for.
+adjectives with nouns it is the same set of cells, a case and a number each, read as the forms a sentence may ask for:
+a noun is only drawn in a form that is ticked and that it has.
 
 ### Grammar
 

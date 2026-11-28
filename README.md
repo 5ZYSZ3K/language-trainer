@@ -424,16 +424,18 @@ src/
   languages/   the languages that can be learned: characters, typing shortcuts, names (registry in index.ts)
   sources/     the data sources and which datasets each provides (registry in index.ts)
   quizzes/     one folder per quiz type: contract, score meters, texts, mount (the quiz's DOM)
-               (registry in index.ts); noun-declension also holds its filter (pure, tested) and the filter dialog,
-               its remark codes with what a checked cell's answer line and the explanation dialog show (pure,
-               tested) and the explanation dialog, and its contract's carry-over hook (pure, tested);
+               (registry in index.ts); noun-declension also holds its filter (pure, tested; adjectives with nouns
+               uses it too) and the filter dialog, its remark codes with what a checked cell's answer line and the
+               explanation dialog show (pure, tested) and the explanation dialog, and its contract's carry-over hook
+               (pure, tested);
                numerals holds its ranges and picking, the version list rules and the numeral generator of each
                learned language (cs.ts), all pure and tested; adjective-noun-declension holds its contract (items.ts),
                the owner's Czech adjective declension generator (declension-of-adjectives_with_nouns.ts, used as it
                is), its adapter to the quiz's ids (cs.ts) and the generators by language (generators.ts), the
                governing verbs of each learned language (governing-verbs.<id>.ts, read only by the join), the draw of
-               a round (draw.ts), the case filter (filter.ts), the page without its DOM (page.ts), all pure and
-               tested, and the DOM that draws it (mount.ts, filter-dialog.ts)
+               a round (draw.ts), the filter dialog's ticks while it is open (filter.ts, over the noun quiz's
+               filter), the page without its DOM (page.ts), all pure and tested, and the DOM that draws it (mount.ts,
+               filter-dialog.ts)
   datasets/    the pool (language, source, quiz type), the dataset file's envelope and the loader of the bundled
                datasets
   registry.ts  findById(): how anything looks up an entry of a registry by its id
@@ -602,11 +604,13 @@ still need to be reviewed.
 ### Adjectives with nouns
 
 - Each round draws, each uniformly: a noun (never the same one twice in a row, unless there is only one), one of its
-  adjectives, a case the filter has ticked, a number the noun has in that case (`dveře` is always plural, `zdraví`
-  always singular), a governing verb followed by that case, and a person and number for the verb. In the nominative
-  the sentence is `To je ___ ___.` or `To jsou ___ ___.`: `být` after `to` is in the third person and its number
-  follows the noun's (`To je dobrý advokát`, `To jsou dobří advokáti`), so nothing about the verb is drawn. The
-  vocative has no verb.
+  adjectives, a case, a number, a governing verb followed by that case, and a person and number for the verb. The case
+  is one where the filter ticks a form the noun has and some governing verb is followed by it (the vocative needs
+  none); the number is one the filter ticks in that case and the noun has (`dveře` is always plural, `zdraví` always
+  singular). So with the genitive singular and plural and the instrumental singular ticked, half the sentences are in
+  the instrumental. A noun is drawn only if it has such a case. In the nominative the sentence is `To je ___ ___.` or
+  `To jsou ___ ___.`: `být` after `to` is in the third person and its number follows the noun's (`To je dobrý
+  advokát`, `To jsou dobří advokáti`), so nothing about the verb is drawn. The vocative has no verb.
 - Above the sentence: the adjective and the noun in their base forms, then the case and number in the UI language, e.g.
   `dobrý · advokát — 3. dative, singular`, with the cases named and numbered as in the noun quiz. The gender is not
   shown: knowing it is part of the drill. The sentence is the verb form, after its subject and with its preposition,
@@ -622,12 +626,15 @@ still need to be reviewed.
   empty fields as wrong, and "Skip" / "Next sentence" is highlighted the way the verb and noun quizzes highlight theirs.
   A checked field turns green with a ✓, or red with ✗ and every accepted form joined by ` / `. There are no remark
   chips.
-- **Filters.** The Filters button opens a dialog with a checkbox per case (all seven, no numbers), "Select all" and
-  "Clear all"; all cases are ticked at first. Closing it (Done, Esc, a click outside) applies the choice and, if
-  anything changed, starts a new sentence. The choice is remembered per pool in `localStorage` under `settings`, and
-  checked when it is read back (an older build's value ticks every case). With nothing ticked, the round shows *The
-  current filters leave nothing to ask for.* instead of the sentence: "Next sentence" is highlighted, "Check all" is
-  disabled, and nothing is scored.
+- **Filters.** The Filters button opens a dialog like the noun quiz's: a grid of all 14 forms (7 cases × singular /
+  plural), each a checkbox named by its case and number (*3. dative, singular*). A row heading or a column heading
+  switches the whole row or column; "Select all" and "Clear all" do what they say. All forms are ticked at first.
+  Closing it (Done, Esc, a click outside) applies the choice and, if anything changed, starts a new sentence. The
+  choice is remembered per pool in `localStorage` under `settings`, saved as the noun quiz saves its own, and checked
+  when it is read back (anything else, such as an older build's filter of cases, ticks every form). When the filter
+  leaves no noun a form to ask (nothing ticked, or only forms no noun has, such as the plural of nouns that have none),
+  the round shows *The current filters leave nothing to ask for.* instead of the sentence: "Next sentence" is
+  highlighted, "Check all" is disabled, and nothing is scored.
 - Scores, per pool: adjective forms correct / checked, noun forms correct / checked, sentences fully correct /
   completed. A skipped sentence counts only the fields it checked, and is not completed.
 - The source is the site's own rules (the adjective forms are its generator's), so the unverified warning is shown, as

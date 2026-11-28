@@ -18,6 +18,9 @@ export const caseLabelKey = (caseId: CaseId): AdjectiveNounTextKey => `case.${ca
 /** The key of a number's name: `number.<id>`. */
 export const numberLabelKey = (number: GrammaticalNumber): AdjectiveNounTextKey => `number.${number}`
 
+/** The key of a number's column heading in the filter: `filters.number.<id>`. */
+export const filterNumberKey = (number: GrammaticalNumber): AdjectiveNounTextKey => `filters.number.${number}`
+
 /** The case and the number a sentence asks for, in the texts `translate` gives: "3. dative, singular". */
 export const formText = (translate: (key: AdjectiveNounTextKey) => string, caseId: CaseId, number: GrammaticalNumber): string =>
   translate('form').replace('{case}', translate(caseLabelKey(caseId))).replace('{number}', translate(numberLabelKey(number)))

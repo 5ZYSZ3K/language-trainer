@@ -4,7 +4,7 @@ import type { AdjectiveNounTextKey } from './texts.en'
 export const cs: Record<AdjectiveNounTextKey, string> = {
   title: 'Trénink přídavných jmen s podstatnými jmény',
   name: 'Přídavná jména s podstatnými jmény',
-  intro: 'Doplňte přídavné a podstatné jméno v tvaru, který věta potřebuje, a potom odpovědi zkontrolujte. Tlačítkem Filtry můžete procvičovat jen některé pády.',
+  intro: 'Doplňte přídavné a podstatné jméno v tvaru, který věta potřebuje, a potom odpovědi zkontrolujte. Tlačítkem Filtry můžete procvičovat jen některé tvary.',
   empty: 'Zatím tu nejsou žádná podstatná jména k procvičování.',
 
   'case.nom': '1. pád – nominativ',
@@ -23,8 +23,10 @@ export const cs: Record<AdjectiveNounTextKey, string> = {
   next: 'Další věta',
 
   'filters.open': 'Filtry',
-  'filters.title': 'Pády k procvičování',
-  'filters.hint': 'Zaškrtněte pády, na které se chcete nechat ptát.',
+  'filters.title': 'Tvary k procvičování',
+  'filters.hint': 'Zaškrtněte tvary, na které se chcete nechat ptát. Nadpis řádku nebo sloupce přepne celý řádek nebo sloupec.',
+  'filters.number.sg': 'Jednotné číslo',
+  'filters.number.pl': 'Množné číslo',
   'filters.selectAll': 'Vybrat vše',
   'filters.clearAll': 'Zrušit výběr',
   'filters.done': 'Hotovo',
