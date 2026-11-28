@@ -500,7 +500,7 @@ button.link {
   padding: 0 0.4rem;
 }
 
-/* The dialogs: the filter of nouns and of adjectives with nouns (a grid with a row per case and a column per number) and
+/* The dialogs: the filter of nouns and of the sentence quizzes (a grid with a row per case and a column per number) and
    the explanation an ⓘ opens. */
 dialog.filters,
 dialog.explanation {

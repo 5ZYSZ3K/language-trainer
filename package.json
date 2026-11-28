@@ -13,6 +13,7 @@
     "scrape:cs:verbs": "tsx scraper/cli.ts --language cs --quiz verb-present-tense",
     "scrape:cs:nouns": "tsx scraper/cli.ts --language cs --quiz noun-declension",
     "join:cs:adjectives": "tsx scripts/join.ts cs/language-trainer/adjective-noun-declension",
+    "join:cs:demonstratives": "tsx scripts/join.ts cs/language-trainer/demonstrative-noun-declension",
     "publish-pages": "tsx scripts/publish-pages.ts"
   },
   "devDependencies": {
