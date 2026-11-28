@@ -432,10 +432,13 @@ src/
                learned language (cs.ts), all pure and tested; adjective-noun-declension holds its contract (items.ts),
                the owner's Czech adjective declension generator (declension-of-adjectives_with_nouns.ts, used as it
                is), its adapter to the quiz's ids (cs.ts) and the generators by language (generators.ts), the
-               governing verbs of each learned language (governing-verbs.<id>.ts, read only by the join), the draw of
-               a round (draw.ts), the filter dialog's ticks while it is open (filter.ts, over the noun quiz's
-               filter), the page without its DOM (page.ts), all pure and tested, and the DOM that draws it (mount.ts,
-               filter-dialog.ts)
+               governing verbs of each learned language (governing-verbs.<id>.ts, read only by the join), what fills
+               its first blank (draw.ts, page.ts) and its mount (mount.ts). It also holds what every sentence quiz
+               shares, each part taking what fills the first blank, the cases the quiz offers, its texts and its
+               meters: the items and their contract checks (sentence-items.ts), the draw of a round
+               (sentence-draw.ts), the filter dialog's ticks while it is open (filter.ts, over the noun quiz's
+               filter) and the page without its DOM (sentence-page.ts), all pure and tested, the texts every sentence
+               quiz has (sentence-texts.ts), and the DOM that draws the page (sentence-mount.ts, filter-dialog.ts)
   datasets/    the pool (language, source, quiz type), the dataset file's envelope and the loader of the bundled
                datasets
   registry.ts  findById(): how anything looks up an entry of a registry by its id
@@ -464,8 +467,9 @@ scripts/       check-data.ts: validates data/ and source-material/ before every 
                each joined dataset is in step; publish-pages.ts: commits dist/ to the local gh-pages branch (tested
                against a temporary repo); registry.test.ts: checks the registries and the scraper's adapters against
                each other; join.ts: the command that writes a joined dataset (`npm run join:cs:adjectives`)
-  joins/       the joined datasets (index.ts: `JOINS`), what a join is and reads (join.ts), and each join:
-               adjective-noun-declension.ts, the Czech adjectives with nouns (pure, tested)
+  joins/       the joined datasets (index.ts: `JOINS`), what a join is and reads (join.ts), what the joins of the
+               sentence quizzes share (sentence.ts), and each join: adjective-noun-declension.ts, the Czech adjectives
+               with nouns (pure, tested)
 ```
 
 Rules the layout keeps: `src/` never imports from `scraper/` or `scripts/`, nor refers to `source-material/` (a
@@ -487,6 +491,14 @@ typed lists; nothing is discovered dynamically.
   different interaction. A quiz that wants to remember something between visits (a filter, say) saves it through
   `host.settings`, which the shell keeps per pool. If its items hold something written by hand, its contract gets a
   `carryOver` hook, so that a forced scrape keeps it. Its id is permanent. The selector picks it up by itself.
+- **A sentence quiz** (see the glossary) is such a quiz type built from what the sentence quizzes share, in
+  `src/quizzes/adjective-noun-declension/`. Its noun item is a `SentenceNounItem` (sentence-items.ts, with the checks its
+  contract is made of). Its rules (`SentenceQuizRules`: what fills the first blank, with its base form for a noun and its
+  accepted forms in a case and number, and the cases the quiz offers) and its meters make its `SentenceQuizPage`
+  (sentence-page.ts). Its texts have every `SentenceTextKey` of its cases (sentence-texts.ts) and `field.<kind>`, the
+  first field's label; its mount hands the page and its translator to `mountSentenceQuiz` (sentence-mount.ts). Its
+  dataset is a joined dataset (below) whose join is `joinSentenceQuiz` (`scripts/joins/sentence.ts`) with the quiz's own
+  `SentenceNounRules`.
 - **A source.** (It shows up in the selector as soon as a second source provides something for the language.)
   Add `src/sources/<id>.ts` (name, url, trust, license, attribution, `provides`) and register it
   in `src/sources/index.ts`. Add `scraper/sources/<id>/` with a request policy and one adapter per provided

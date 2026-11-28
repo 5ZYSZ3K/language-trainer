@@ -1,4 +1,9 @@
-/** The quiz's own texts. Its Czech twin is typed against these keys, so a key missing there is a compile error. */
+import type { SentenceTextKey } from './sentence-texts'
+
+/**
+ * The quiz's own texts, with every text a sentence quiz has. Its Czech twin is typed against these keys, so a key missing
+ * there is a compile error.
+ */
 export const en = {
   title: 'Czech adjectives with nouns',
   name: 'Adjectives with nouns',
@@ -37,6 +42,6 @@ export const en = {
   'meter.adjectives': 'Adjective forms correct',
   'meter.nouns': 'Noun forms correct',
   'meter.sentences': 'Sentences fully correct',
-}
+} satisfies Record<SentenceTextKey | 'field.adjective', string> & Record<string, string>
 
 export type AdjectiveNounTextKey = keyof typeof en

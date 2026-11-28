@@ -591,8 +591,8 @@ dialog.explanation::backdrop {
   margin-left: auto;
 }
 
-/* Adjectives with nouns: the adjective and the noun above the sentence, then the sentence, whose two fields stand in for
-   its blanks. On a narrow screen it wraps, and the fields keep their order. */
+/* The sentence quizzes: the first blank's word and the noun above the sentence, then the sentence, whose two fields stand
+   in for its blanks. On a narrow screen it wraps, and the fields keep their order. */
 .sentence-prompt strong {
   margin-left: 0;
 }
