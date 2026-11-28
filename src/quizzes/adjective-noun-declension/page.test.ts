@@ -1,12 +1,15 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { cs as czechLanguage } from '../../languages/cs'
 import type { CaseId } from '../noun-declension/cells'
-import { allCells, cellsOfCase } from '../noun-declension/filter'
+import { allCells, cellsOfCase, cellsOfNumber } from '../noun-declension/filter'
 import { ADJECTIVE_DECLENSION_GENERATORS } from './generators'
 import type { AdjectiveNounItem, PairedNounItem } from './items'
+import { createGoToNoun } from './mount'
 import { SentencePage } from './page'
-import { advokát, být, dívatSeNa, otherVerbs, pomáhat, zdraví } from './test-support'
+import { advokát, být, dívatSeNa, dveře, otherVerbs, pomáhat, seeded, zdraví } from './test-support'
 
-// The page without its DOM: mount.ts draws what this model says and hands it every key press and click.
+// The page without its DOM: mount.ts draws what this model says and hands it every key press and click. Go to noun is
+// driven through the go-to line mount.ts builds, on stand-ins for its elements.
 
 const czech = ADJECTIVE_DECLENSION_GENERATORS.cs!
 const dobrýAdvokát: PairedNounItem = { ...advokát, adjectives: ['dobrý'] }
@@ -151,6 +154,143 @@ describe('the meters', () => {
     expect(records).toEqual([['adjectives', false]])
     expect(page.sentence?.noun).toBe('zdraví')
     expect(page.fields.map((field) => field.state)).toEqual(['open', 'open'])
+  })
+})
+
+describe('Go to noun', () => {
+  afterEach(() => vi.unstubAllGlobals())
+
+  /**
+   * The go-to line mount.ts puts on `page` (createGoToNoun), on stand-ins for its form, field and miss line: these tests
+   * run without a DOM. `go` types a word into the field and presses Go.
+   */
+  function goToLineOf(page: SentencePage) {
+    const field = { value: '', lang: '', focus: () => {}, addEventListener: () => {} }
+    const missLine = {
+      hidden: true,
+      text: '',
+      replaceChildren: (...parts: (string | { textContent: string })[]) => {
+        missLine.text = parts.map((part) => (typeof part === 'string' ? part : part.textContent)).join('')
+      },
+    }
+    const elements: Record<string, object> = { input: field, '.go-to-miss': missLine }
+    let submit: ((event: { preventDefault(): void }) => void) | undefined
+    const form = {
+      innerHTML: '',
+      querySelector: (selector: string) => elements[selector] ?? null,
+      addEventListener: (type: string, listener: typeof submit) => void (type === 'submit' && (submit = listener)),
+    }
+    // The miss line puts the typed word in a <strong>.
+    vi.stubGlobal('document', { createElement: () => ({ lang: '', textContent: '' }) })
+    let opened = 0
+    createGoToNoun(form as unknown as HTMLFormElement, page, czechLanguage, () => opened++)
+    return {
+      go(typed: string): void {
+        field.value = typed
+        submit!({ preventDefault: () => {} })
+      },
+      /** What is left in the field. */
+      get field() {
+        return field.value
+      },
+      /** The miss line, if it is shown. */
+      get miss() {
+        return missLine.hidden ? undefined : missLine.text
+      },
+      /** How many times a noun was opened and the page asked to draw it. */
+      get opened() {
+        return opened
+      },
+    }
+  }
+
+  it('opens a listed noun by its prompt, forgiving case and spaces, and draws the rest as a random round would', () => {
+    // A random sentence after advokát would be on zdraví.
+    const { page } = pageOf([dobrýAdvokát, zdraví, dveře, pomáhat], dative)
+    const line = goToLineOf(page)
+    expect(page.sentence?.noun).toBe('advokát')
+    line.go(' Dveře ')
+    expect(page.sentence).toEqual({ adjective: 'dřevěný', noun: 'dveře', caseId: 'dat', number: 'pl', lead: 'Pomáhám', end: '.' })
+    expect(page.fields.map((field) => field.state)).toEqual(['open', 'open'])
+    expect(line).toMatchObject({ field: '', miss: undefined, opened: 1 })
+  })
+
+  it('refuses a word that is not a noun of the pool (another word, a missing diacritic, a governing verb), says so and keeps it in the field', () => {
+    const { page, records } = pageOf([dobrýAdvokát, dveře, pomáhat], dative)
+    const line = goToLineOf(page)
+    page.enter(0, 'dobrému')
+    for (const typed of ['stůl', 'dvere', 'advokáti', 'pomáhat']) {
+      line.go(typed)
+      expect(line).toMatchObject({ field: typed, miss: `No noun “${typed}” in this list.` })
+    }
+    // An empty field is not looked up at all.
+    line.go('  ')
+    expect(line).toMatchObject({ field: '  ', miss: 'No noun “pomáhat” in this list.', opened: 0 })
+    // The sentence on the page stays as it was, its checked field included.
+    expect(page.sentence?.noun).toBe('advokát')
+    expect(page.fields.map((field) => field.state)).toEqual(['correct', 'open'])
+    expect(records).toEqual([['adjectives', true]])
+    // A word it then finds clears the miss line.
+    line.go('dveře')
+    expect(line).toMatchObject({ field: '', miss: undefined, opened: 1 })
+  })
+
+  it('asks only for a form the filter has ticked and the noun has, a case and a number, as a random round would', () => {
+    const { page } = pageOf([dobrýAdvokát, dveře, pomáhat, ...otherVerbs], { cells: ['gen-sg', 'gen-pl', 'ins-pl'] }, seeded(1))
+    const line = goToLineOf(page)
+    const formsOpened = (typed: string) =>
+      new Set(Array.from({ length: 200 }, () => (line.go(typed), `${page.sentence!.caseId}-${page.sentence!.number}`)))
+    expect(formsOpened('advokát')).toEqual(new Set(['gen-sg', 'gen-pl', 'ins-pl']))
+    expect(formsOpened('dveře')).toEqual(new Set(['gen-pl', 'ins-pl']))
+  })
+
+  it('opens a noun none of whose forms is ticked with nothing to ask for, and scores nothing', () => {
+    // Only singular forms are ticked, and dveře has none: advokát still has something to ask.
+    const { page, records } = pageOf([dobrýAdvokát, dveře, pomáhat], { cells: cellsOfNumber('sg') })
+    const line = goToLineOf(page)
+    expect(page.sentence?.noun).toBe('advokát')
+    line.go('dveře')
+    expect(line).toMatchObject({ field: '', miss: undefined, opened: 1 })
+    expect(page.sentence).toBeUndefined()
+    expect(page.fields).toEqual([])
+    expect(page.complete).toBe(true)
+    page.checkAll([])
+    expect(records).toEqual([])
+  })
+
+  it('with nothing ticked at all, opens any noun with nothing to ask for', () => {
+    const { page, records } = pageOf([dobrýAdvokát, dveře, pomáhat], { cells: [] })
+    const line = goToLineOf(page)
+    line.go('advokát')
+    expect(line).toMatchObject({ field: '', miss: undefined, opened: 1 })
+    expect(page.sentence).toBeUndefined()
+    expect(page.complete).toBe(true)
+    expect(records).toEqual([])
+  })
+
+  it('scores the sentence it opens the same as a random one', () => {
+    const { page, records } = pageOf([dobrýAdvokát, zdraví, dveře, pomáhat], dative)
+    goToLineOf(page).go('dveře')
+    page.enter(0, 'dřevěným')
+    page.enter(1, 'dveřím')
+    expect(records).toEqual([
+      ['adjectives', true],
+      ['nouns', true],
+      ['sentences', true],
+    ])
+  })
+
+  it('opens even the noun on the page, and after it the next sentence goes back to random nouns', () => {
+    const { page } = pageOf([dobrýAdvokát, zdraví, dveře, pomáhat], dative)
+    const line = goToLineOf(page)
+    line.go('advokát')
+    expect(page.sentence?.noun).toBe('advokát')
+    line.go('dveře')
+    // Next: a random noun again, other than the one opened (random 0 takes the first of the rest).
+    page.start()
+    expect(page.sentence?.noun).toBe('advokát')
+    page.start()
+    expect(page.sentence?.noun).toBe('zdraví')
   })
 })
 

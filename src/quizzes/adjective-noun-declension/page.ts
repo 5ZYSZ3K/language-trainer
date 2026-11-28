@@ -3,7 +3,7 @@ import { Round, type CellState } from '../../core/round'
 import { nounCellId, type CaseId, type GrammaticalNumber } from '../noun-declension/cells'
 import { readFilter, saveFilter, type CellFilter } from '../noun-declension/filter'
 import type { QuizSettings } from '../quiz-type'
-import { drawSentence, splitItems, type Draw } from './draw'
+import { drawSentence, drawSentenceOn, splitItems, type Draw } from './draw'
 import { FilterDraft } from './filter'
 import type { AdjectiveDeclensionGenerator } from './generators'
 import type { AdjectiveNounItem, GoverningVerbItem, PairedNounItem } from './items'
@@ -59,7 +59,8 @@ function leadOf(verb: Draw['verb']): string {
  * filter with its dialog. `mount.ts` draws what this says, and hands it every Enter, click and closed dialog.
  */
 export class SentencePage {
-  private readonly nouns: PairedNounItem[]
+  /** The pool's nouns, in dataset order: what Go to noun looks the typed word up in. */
+  readonly nouns: readonly PairedNounItem[]
   private readonly verbs: GoverningVerbItem[]
   private cellFilter: CellFilter
   private draw: Draw | undefined
@@ -98,9 +99,14 @@ export class SentencePage {
     return this.round.complete
   }
 
-  /** A new sentence, drawn at random (see drawSentence). The one on the page is left as it is, unfinished if it was. */
-  start(): void {
-    this.draw = drawSentence(this.nouns, this.verbs, this.cellFilter, this.draw?.noun, this.deps.random)
+  /**
+   * A new sentence: on `noun` (Go to noun), or on a random noun if none is given (see drawSentence); the rest is drawn
+   * the same either way (see drawSentenceOn). The one on the page is left as it is, unfinished if it was.
+   */
+  start(noun?: PairedNounItem): void {
+    this.draw = noun
+      ? drawSentenceOn(noun, this.verbs, this.cellFilter, this.deps.random)
+      : drawSentence(this.nouns, this.verbs, this.cellFilter, this.draw?.noun, this.deps.random)
     this.cells = this.draw ? cellsOf(this.draw, this.deps.generator) : []
     // A round with nothing to ask is complete from the start, so nothing can be checked or recorded in it.
     this.round = new Round({ prompt: this.draw?.noun.prompt ?? '', cells: this.cells }, NO_EVENTS)

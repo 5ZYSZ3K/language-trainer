@@ -44,12 +44,8 @@ const casesOf = (noun: PairedNounItem, verbs: readonly GoverningVerbItem[], filt
   )
 
 /**
- * A new round, each part drawn uniformly in turn: a noun (never `previous` again, unless it is the only one), one of
- * its adjectives, a case, a number, a governing verb followed by that case and a person and number for the verb. The
- * case is one where the filter ticks a form the noun has, and some governing verb is followed by it (the vocative needs
- * none); the number is one the filter ticks in that case and the noun has. A noun is drawn only if it has such a case.
- * A verb with a subject is always in the third person (`to je`), and in the nominative the verb's number follows the
- * noun's (`to jsou dobří advokáti`); the vocative has no verb. Undefined when nothing is left to draw.
+ * A new round, each part drawn uniformly in turn: a noun (never `previous` again, unless it is the only one), then the
+ * rest as drawSentenceOn draws it. Only a noun with a case left to ask is drawn. Undefined when no noun has one.
  */
 export function drawSentence(
   nouns: readonly PairedNounItem[],
@@ -60,10 +56,28 @@ export function drawSentence(
 ): Draw | undefined {
   const eligible = nouns.filter((noun) => casesOf(noun, verbs, filter).length > 0)
   if (eligible.length === 0) return undefined
+  return drawSentenceOn(pickNext(eligible, previous, random), verbs, filter, random)
+}
 
-  const noun = pickNext(eligible, previous, random)
+/**
+ * A round on `noun` (a random one, or one opened with Go to noun), the rest drawn uniformly in turn: one of its
+ * adjectives, a case, a number, a governing verb followed by that case and a person and number for the verb. The case is
+ * one where the filter ticks a form the noun has, and some governing verb is followed by it (the vocative needs none);
+ * the number is one the filter ticks in that case and the noun has. A verb with a subject is always in the third person
+ * (`to je`), and in the nominative the verb's number follows the noun's (`to jsou dobří advokáti`); the vocative has no
+ * verb. Undefined when the filter leaves the noun no such case.
+ */
+export function drawSentenceOn(
+  noun: PairedNounItem,
+  verbs: readonly GoverningVerbItem[],
+  filter: CellFilter,
+  random: () => number,
+): Draw | undefined {
+  const cases = casesOf(noun, verbs, filter)
+  if (cases.length === 0) return undefined
+
   const adjective = pick(noun.adjectives, random)
-  const caseId = pick(casesOf(noun, verbs, filter), random)
+  const caseId = pick(cases, random)
   const number = pick(numbersIn(noun, caseId, filter), random)
   if (!isGoverningCase(caseId)) return { noun, adjective, caseId, number }
 

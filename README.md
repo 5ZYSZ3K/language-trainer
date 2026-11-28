@@ -635,6 +635,14 @@ still need to be reviewed.
   leaves no noun a form to ask (nothing ticked, or only forms no noun has, such as the plural of nouns that have none),
   the round shows *The current filters leave nothing to ask for.* instead of the sentence: "Next sentence" is
   highlighted, "Check all" is disabled, and nothing is scored.
+- **Going to a noun** works as in the noun quiz: under the buttons, *Go to noun:* opens one paired noun by the
+  dictionary form (`dveře`, `Čech`), with the same matching, the same *No noun "…" in this list.* for a word that is
+  not a noun of the pool (the governing verbs are not looked up), and the text left in the field to be corrected. The
+  sentence that opens draws the rest as a random one would (one of that noun's adjectives, a case where the filter
+  ticks a form the noun has, a number ticked in it, a governing verb and a person) and is scored the same; Next then
+  goes back to random nouns. A noun the filter leaves nothing for (none of its forms ticked: `dveře` with only singular
+  forms, say) gets *The current filters leave nothing to ask for.*, as above. The special-character buttons and the
+  typing shortcuts work in that field too.
 - Scores, per pool: adjective forms correct / checked, noun forms correct / checked, sentences fully correct /
   completed. A skipped sentence counts only the fields it checked, and is not completed.
 - The source is the site's own rules (the adjective forms are its generator's), so the unverified warning is shown, as

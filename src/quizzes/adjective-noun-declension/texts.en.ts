@@ -23,6 +23,8 @@ export const en = {
   'field.noun': 'The noun',
   nothing: 'The current filters leave nothing to ask for.',
   next: 'Next sentence',
+  'goTo.label': 'Go to noun:',
+  'goTo.notFound': 'No noun “{word}” in this list.',
 
   'filters.open': 'Filters',
   'filters.title': 'Forms to practise',
