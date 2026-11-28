@@ -19103,19 +19103,6 @@
     },
     {
       "kind": "verb",
-      "verb": "radit",
-      "case": "dat",
-      "forms": {
-        "1sg": "radím",
-        "2sg": "radíš",
-        "3sg": "radí",
-        "1pl": "radíme",
-        "2pl": "radíte",
-        "3pl": "radí"
-      }
-    },
-    {
-      "kind": "verb",
       "verb": "smát se",
       "case": "dat",
       "forms": {
@@ -19220,20 +19207,6 @@
     },
     {
       "kind": "verb",
-      "verb": "čekat",
-      "preposition": "na",
-      "case": "acc",
-      "forms": {
-        "1sg": "čekám",
-        "2sg": "čekáš",
-        "3sg": "čeká",
-        "1pl": "čekáme",
-        "2pl": "čekáte",
-        "3pl": "čekají"
-      }
-    },
-    {
-      "kind": "verb",
       "verb": "dívat se",
       "preposition": "na",
       "case": "acc",
@@ -19332,20 +19305,6 @@
     },
     {
       "kind": "verb",
-      "verb": "psát",
-      "preposition": "o",
-      "case": "loc",
-      "forms": {
-        "1sg": "píši",
-        "2sg": "píšeš",
-        "3sg": "píše",
-        "1pl": "píšeme",
-        "2pl": "píšete",
-        "3pl": "píší"
-      }
-    },
-    {
-      "kind": "verb",
       "verb": "pracovat",
       "preposition": "na",
       "case": "loc",
@@ -19374,45 +19333,6 @@
     },
     {
       "kind": "verb",
-      "verb": "chlubit se",
-      "case": "ins",
-      "forms": {
-        "1sg": "chlubím se",
-        "2sg": "chlubíš se",
-        "3sg": "chlubí se",
-        "1pl": "chlubíme se",
-        "2pl": "chlubíte se",
-        "3pl": "chlubí se"
-      }
-    },
-    {
-      "kind": "verb",
-      "verb": "stát se",
-      "case": "ins",
-      "forms": {
-        "1sg": "stanu se",
-        "2sg": "staneš se",
-        "3sg": "stane se",
-        "1pl": "staneme se",
-        "2pl": "stanete se",
-        "3pl": "stanou se"
-      }
-    },
-    {
-      "kind": "verb",
-      "verb": "mávat",
-      "case": "ins",
-      "forms": {
-        "1sg": "mávám",
-        "2sg": "máváš",
-        "3sg": "mává",
-        "1pl": "máváme",
-        "2pl": "máváte",
-        "3pl": "mávají"
-      }
-    },
-    {
-      "kind": "verb",
       "verb": "hýbat",
       "case": "ins",
       "forms": {
@@ -19435,34 +19355,6 @@
         "1pl": "pohybujeme",
         "2pl": "pohybujete",
         "3pl": "pohybují"
-      }
-    },
-    {
-      "kind": "verb",
-      "verb": "jít",
-      "preposition": "za",
-      "case": "ins",
-      "forms": {
-        "1sg": "jdu",
-        "2sg": "jdeš",
-        "3sg": "jde",
-        "1pl": "jdeme",
-        "2pl": "jdete",
-        "3pl": "jdou"
-      }
-    },
-    {
-      "kind": "verb",
-      "verb": "žít",
-      "preposition": "mezi",
-      "case": "ins",
-      "forms": {
-        "1sg": "žiji",
-        "2sg": "žiješ",
-        "3sg": "žije",
-        "1pl": "žijeme",
-        "2pl": "žijete",
-        "3pl": "žijí"
       }
     }
   ]

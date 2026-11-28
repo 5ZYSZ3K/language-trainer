@@ -3,6 +3,12 @@ import type { GoverningVerb } from './governing-verbs'
 /**
  * The Czech governing verbs, settled with the owner (#11), in the order of the cases. Each verb is a prompt of
  * `cs/prirucka/verb-present-tense`. Run `npm run join:cs:adjectives` after changing them.
+ *
+ * A verb is here only if, with its preposition, it takes one case and no other: the sentence alone must say which
+ * case to use. So not `mávat` (`mávat někomu`, dative), `chlubit se` (`chlubit se někomu`), `stát se`
+ * (`stát se někomu`), `radit` (`radit klid`, accusative), `čekat na` (`čekat na nádraží`, locative), `psát o`
+ * (`psát o pomoc`, accusative) or `jít za` (`jít za roh`, accusative). Not `žít mezi` either: `mezi` needs more than
+ * one thing, and the draw also asks for the singular.
  */
 export const czechGoverningVerbs: readonly GoverningVerb[] = [
   { verb: 'být', case: 'nom', show: { '3sg': 'je' } },
@@ -19,7 +25,6 @@ export const czechGoverningVerbs: readonly GoverningVerb[] = [
   { verb: 'děkovat', case: 'dat' },
   { verb: 'rozumět', case: 'dat' },
   { verb: 'telefonovat', case: 'dat' },
-  { verb: 'radit', case: 'dat' },
   { verb: 'smát se', case: 'dat' },
 
   { verb: 'vidět', case: 'acc' },
@@ -29,7 +34,6 @@ export const czechGoverningVerbs: readonly GoverningVerb[] = [
   { verb: 'znát', case: 'acc' },
   { verb: 'milovat', case: 'acc' },
   { verb: 'navštěvovat', case: 'acc' },
-  { verb: 'čekat', preposition: 'na', case: 'acc' },
   { verb: 'dívat se', preposition: 'na', case: 'acc' },
   { verb: 'myslet', preposition: 'na', case: 'acc' },
   { verb: 'zajímat se', preposition: 'o', case: 'acc' },
@@ -38,15 +42,9 @@ export const czechGoverningVerbs: readonly GoverningVerb[] = [
   { verb: 'vědět', preposition: 'o', case: 'loc' },
   { verb: 'slyšet', preposition: 'o', case: 'loc' },
   { verb: 'číst', preposition: 'o', case: 'loc' },
-  { verb: 'psát', preposition: 'o', case: 'loc' },
   { verb: 'pracovat', preposition: 'na', case: 'loc' },
   { verb: 'trvat', preposition: 'na', case: 'loc' },
 
-  { verb: 'chlubit se', case: 'ins' },
-  { verb: 'stát se', case: 'ins' },
-  { verb: 'mávat', case: 'ins' },
   { verb: 'hýbat', case: 'ins' },
   { verb: 'pohybovat', case: 'ins' },
-  { verb: 'jít', preposition: 'za', case: 'ins' },
-  { verb: 'žít', preposition: 'mezi', case: 'ins' },
 ]
