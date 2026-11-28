@@ -9,7 +9,7 @@ and one set of decisions at the root.
   as the source for every name you write.
 - **`README.md`**: the detailed spec and the current record of decisions. Read the section for the area you are
   working in:
-  - *How it works* and *Everyday use*: the three manual steps (scrape, build, publish) and the npm scripts.
+  - *How it works* and *Everyday use*: the manual steps (scrape, join, build, publish) and the npm scripts.
   - *Data*: each quiz type's contract, the cell ids, the numerals ranges, and what `check-data` refuses.
   - *The scraper* and *The prirucka adapter*: targets, incremental scrapes, exit codes, politeness, how entries are
     accepted, and *Words known to fail*.

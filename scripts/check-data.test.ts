@@ -4,7 +4,8 @@ import { dirname, join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 import type { QuizType } from '../src/quizzes'
 import type { Source } from '../src/sources'
-import { checkData, checkSourceMaterial, readDataFiles } from './check-data'
+import { checkData, checkJoins, checkSourceMaterial, readDataFiles } from './check-data'
+import { joinedText, type Join } from './joins/join'
 
 /** A made-up quiz type whose items are `{ n: number }`, so that these tests do not depend on a real contract. */
 const numbers: QuizType<unknown> = {
@@ -243,6 +244,48 @@ describe('checkSourceMaterial', () => {
       'source-material/cs/alpha/numbers.json: its dataset data/cs/alpha/numbers.json cannot be read, so its words cannot be checked',
     ])
     expect(check(sideFiles, { [OK_PATH]: '{' }).problems).toHaveLength(1)
+  })
+})
+
+describe('checkJoins', () => {
+  const JOINED = 'cs/alpha/numbers.json'
+  /** A made-up join: the numbers of the list `cs/numbers.txt`, one per line, as `{ n }` items. */
+  const numbersJoin: Join = {
+    pool: { language: 'cs', source: 'alpha', quizType: 'numbers' },
+    command: 'npm run join:numbers',
+    datasets: [],
+    lists: ['cs/numbers.txt'],
+    make({ lists }) {
+      const lines = (lists['cs/numbers.txt'] ?? '').split('\n').filter(Boolean)
+      const bad = lines.filter((line) => Number.isNaN(Number(line)))
+      if (bad.length > 0) return { items: [], problems: bad.map((line) => `${JSON.stringify(line)} is not a number`) }
+      return { items: lines.map((line) => ({ n: Number(line) })), problems: [] }
+    },
+  }
+  const check = (committed: string | undefined, list: string) =>
+    checkJoins([numbersJoin], { data: committed === undefined ? {} : { [JOINED]: committed }, lists: { 'cs/numbers.txt': list } })
+
+  it('has no problems when the committed file is what the join would write now', async () => {
+    const written = await joinedText(numbersJoin, [{ n: 1 }, { n: 2 }])
+    expect(await check(written, '1\n2\n')).toEqual([])
+  })
+
+  it('fails on a stale joined dataset: one whose inputs changed since it was joined, naming the command that joins it again', async () => {
+    const written = await joinedText(numbersJoin, [{ n: 1 }, { n: 2 }])
+    expect(await check(written, '1\n2\n3\n')).toEqual(['data/cs/alpha/numbers.json is out of step with its inputs. Run: npm run join:numbers'])
+    expect(await check(undefined, '1\n')).toEqual(['data/cs/alpha/numbers.json is out of step with its inputs. Run: npm run join:numbers'])
+  })
+
+  it('fails on a joined dataset edited by hand, even when its items are still valid', async () => {
+    const edited = (await joinedText(numbersJoin, [{ n: 1 }, { n: 2 }])).replace('2', '7')
+    expect(await check(edited, '1\n2\n')).toEqual(['data/cs/alpha/numbers.json is out of step with its inputs. Run: npm run join:numbers'])
+  })
+
+  it("reports every problem the join finds in its inputs, and nothing about the file, which it could not make again", async () => {
+    expect(await check('{}', '1\nx\ny\n')).toEqual([
+      'data/cs/alpha/numbers.json cannot be joined: "x" is not a number',
+      'data/cs/alpha/numbers.json cannot be joined: "y" is not a number',
+    ])
   })
 })
 

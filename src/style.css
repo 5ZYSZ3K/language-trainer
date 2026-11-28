@@ -500,7 +500,8 @@ button.link {
   padding: 0 0.4rem;
 }
 
-/* The noun's two dialogs: the filter (a grid with a row per case and a column per number) and the explanation an ⓘ opens. */
+/* The dialogs: the filter of nouns and of adjectives with nouns (a grid with a row per case and a column per number) and
+   the explanation an ⓘ opens. */
 dialog.filters,
 dialog.explanation {
   max-width: min(32rem, calc(100vw - 2rem));
@@ -588,6 +589,57 @@ dialog.explanation::backdrop {
 
 .filters-actions .primary {
   margin-left: auto;
+}
+
+/* Adjectives with nouns: the adjective and the noun above the sentence, then the sentence, whose two fields stand in for
+   its blanks. On a narrow screen it wraps, and the fields keep their order. */
+.sentence-prompt strong {
+  margin-left: 0;
+}
+
+.sentence {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.4rem 0.5rem;
+  font-size: 1.15rem;
+}
+
+/* On a line with the text inside the fields. */
+.sentence .lead,
+.sentence .end {
+  padding-top: 0.45rem;
+}
+
+.sentence .end {
+  margin-left: -0.35rem;
+}
+
+.sentence .blank {
+  display: flex;
+  flex-direction: column;
+  width: 11rem;
+  max-width: 100%;
+}
+
+.sentence .blank input {
+  flex: none;
+  width: 100%;
+}
+
+.sentence .blank .answer {
+  font-size: 0.95rem;
+}
+
+/* A checked field has a mark, not colour alone; a wrong one also shows every accepted form. */
+.sentence .blank[data-state='correct'] .answer::before {
+  content: '✓';
+  color: var(--ok-border);
+}
+
+.sentence .blank[data-state='wrong'] .answer::before {
+  content: '✗ ';
+  color: var(--bad-border);
 }
 
 /* The numerals result: the learner's own version (if it was one), then the others, each with its remarks as small tags,

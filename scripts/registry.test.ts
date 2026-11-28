@@ -1,4 +1,7 @@
 // Lives in scripts/ rather than src/: it checks the scraper's adapters too, which src/ must never import.
+import { readFileSync } from 'node:fs'
+import { dirname, join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { loadDataset } from '../src/datasets/load'
 import { poolKey, type Pool } from '../src/datasets/pool'
@@ -7,6 +10,7 @@ import { QUIZ_TYPES } from '../src/quizzes'
 import { defaultPool } from '../src/selection'
 import { SOURCES, type Source } from '../src/sources'
 import { ADAPTERS, SCRAPER_SOURCES } from '../scraper/harness/registry'
+import { JOINS } from './joins'
 
 const duplicates = (values: string[]) => values.filter((value, i) => values.indexOf(value) !== i)
 
@@ -76,6 +80,25 @@ describe('scraper registry', () => {
     const sourceIds = SOURCES.map((s) => s.id)
     expect(SCRAPER_SOURCES.map((s) => s.id).filter((id) => !sourceIds.includes(id))).toEqual([])
     expect(duplicates(SCRAPER_SOURCES.map((s) => s.id))).toEqual([])
+  })
+})
+
+describe('joins', () => {
+  it('make each a dataset that a source provides with no adapter (manual), one join per dataset', () => {
+    const joined = JOINS.map((entry) => poolKey(entry.pool))
+    expect(duplicates(joined)).toEqual([])
+    const manual = SOURCES.flatMap((source) => source.provides.filter((entry) => entry.manual).map((entry) => poolKey({ ...entry, source: source.id })))
+    expect(joined.filter((key) => !manual.includes(key))).toEqual([])
+  })
+
+  it('each have the npm script they name, which runs scripts/join.ts on their dataset', () => {
+    const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+    const { scripts } = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')) as { scripts: Record<string, string> }
+    for (const entry of JOINS) {
+      const script = /^npm run (\S+)$/.exec(entry.command)?.[1]
+      expect(script, entry.command).toBeDefined()
+      expect(scripts[script!], entry.command).toBe(`tsx scripts/join.ts ${poolKey(entry.pool)}`)
+    }
   })
 })
 

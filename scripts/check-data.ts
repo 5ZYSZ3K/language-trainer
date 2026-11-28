@@ -2,8 +2,8 @@
  * Usage: npm run check-data  (also the second step of `npm run build`)
  *
  * Validates the committed datasets in data/ against the registries, so that a broken or empty site is never
- * built, and therefore never published; then the side files in source-material/ against their datasets. Lists
- * every problem, then exits 1.
+ * built, and therefore never published; then the side files in source-material/ against their datasets; then each
+ * joined dataset against what its join (scripts/joins) makes of its inputs now. Lists every problem, then exits 1.
  */
 import { realpathSync } from 'node:fs'
 import { readdir, readFile } from 'node:fs/promises'
@@ -15,6 +15,8 @@ import { datasetPath, POOL_FIELDS, type Pool } from '../src/datasets/pool'
 import { QUIZ_TYPES, type QuizType } from '../src/quizzes'
 import { findById } from '../src/registry'
 import { SOURCES, type Source } from '../src/sources'
+import { JOINS } from './joins'
+import { joinedText, readFilesBelow, type Join, type JoinInputs } from './joins/join'
 
 export interface DataRegistries {
   readonly sources: readonly Source[]
@@ -229,6 +231,28 @@ function articleIdProblems(entry: Record<string, unknown>, articles: Record<stri
 }
 
 /**
+ * Runs each join in memory on `inputs` (`data` is every file below data/, the committed joined datasets among them, and
+ * `lists` the lists the joins read) and reports, for each joined dataset, every problem its join finds in its inputs,
+ * or, if there is none, that the committed file is out of step when it differs from what the join would write now
+ * (also when it is missing). So a re-scrape or an edit of an input can never reach the site with a stale joined dataset.
+ * `root`, if given, is where the repository's Prettier config is looked up.
+ */
+export async function checkJoins(joins: readonly Join[], inputs: JoinInputs, root?: string): Promise<string[]> {
+  const problems: string[] = []
+  for (const join of joins) {
+    const path = datasetPath(join.pool)
+    const result = join.make(inputs)
+    if (result.problems.length > 0) {
+      for (const problem of result.problems) problems.push(`data/${path} cannot be joined: ${problem}`)
+      continue
+    }
+    const text = await joinedText(join, result.items, root === undefined ? undefined : resolve(root, 'data', path))
+    if (inputs.data[path] !== text) problems.push(`data/${path} is out of step with its inputs. Run: ${join.command}`)
+  }
+  return problems
+}
+
+/**
  * Every file below `dir` (dotfiles such as .DS_Store skipped) keyed by its slash-separated path from `dir`.
  * A missing folder has no files.
  */
@@ -258,9 +282,11 @@ if (isEntryPoint) {
   const registries = { sources: SOURCES, quizTypes: QUIZ_TYPES }
   const files = await readDataFiles(join(root, 'data'))
   const sideFiles = await readDataFiles(join(root, 'source-material'))
+  const lists = await readFilesBelow(join(root, 'lists'), JOINS.flatMap((entry) => entry.lists))
   const data = checkData(registries, files)
   const material = checkSourceMaterial(registries, files, sideFiles)
-  const problems = [...data.problems, ...material.problems]
+  const joined = await checkJoins(JOINS, { data: files, lists }, root)
+  const problems = [...data.problems, ...material.problems, ...joined]
   if (problems.length > 0) {
     console.error(`Data check failed, ${problems.length} problem(s):`)
     for (const problem of problems) console.error(`  - ${problem}`)

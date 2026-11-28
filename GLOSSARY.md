@@ -41,15 +41,17 @@ All the items of one quiz type, for one language, from one source.
 _Avoid_: word list, data file
 
 **Manual dataset**:
-A dataset that is written by hand, with no adapter behind it (the numerals ranges).
+A dataset that no adapter makes: one written by hand (the numerals ranges), or a joined dataset.
 
 **Joined dataset**:
-A dataset made from other datasets and hand-written input, neither scraped nor written by hand: adjectives with nouns
-takes its nouns' forms, its verbs' forms and the adjectives paired with each noun. The build refuses one that differs
-from what a join would make of its inputs now.
+A manual dataset that a join makes from other datasets and hand-written input, rather than one scraped or written by
+hand: adjectives with nouns takes its nouns' forms, its verbs' forms and the adjectives paired with each noun. The build
+refuses one that differs from what its join would make of its inputs now.
 
 **Join**:
-Making a joined dataset again from its inputs. The owner runs it by hand, like a scrape, after any of them changes.
+The build-time step that makes one joined dataset from its inputs, as an adapter makes a scraped one; also one run of
+it. The owner runs it by hand, like a scrape, after any of its inputs changes; the build runs it too, writing nothing,
+to check the committed dataset against it.
 _Avoid_: merge, generate
 
 ### A round
@@ -123,7 +125,8 @@ _Avoid_: preferences
 **Filter**:
 What the learner has chosen to be asked. In noun declension it is the noun cells to see: only those are shown, all of
 them except the given cell are asked, and a random noun is only picked if at least one of its cells is asked. In
-adjectives with nouns it is the cases a round may ask for.
+adjectives with nouns it is the same set of cells, a case and a number each, read as the forms a sentence may ask for:
+a noun is only drawn in a form that is ticked and that it has.
 
 ### Grammar
 
@@ -159,8 +162,9 @@ version.
 ### Adjectives with nouns
 
 **Sentence**:
-What a round of adjectives with nouns shows: a governing verb's form, with its preposition if it has one, followed by a
-blank for the adjective and one for the noun (`Mluvím o ___ ___.`). A vocative sentence has no verb (`___ ___!`).
+What a round of adjectives with nouns shows: a governing verb's form, after its subject and with its preposition if it
+has them, followed by a blank for the adjective and one for the noun (`Mluvím o ___ ___.`, `To je ___ ___.`). A
+vocative sentence has no verb (`___ ___!`).
 
 **Governing verb**:
 A verb, with at most one preposition, that is always followed by one case: `pomáhat` by the dative, `mluvit o` by the
