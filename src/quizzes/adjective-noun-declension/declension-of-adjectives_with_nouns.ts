@@ -304,10 +304,10 @@ const grammarCaseGenderEndings = {
 } as const;
 
 type DeclensionType = keyof typeof grammarCaseGenderEndings;
-type GrammarCase = keyof (typeof grammarCaseGenderEndings)[DeclensionType];
-type GrammarNumber =
+export type GrammarCase = keyof (typeof grammarCaseGenderEndings)[DeclensionType];
+export type GrammarNumber =
   keyof (typeof grammarCaseGenderEndings)[DeclensionType][GrammarCase];
-type GrammarGender =
+export type GrammarGender =
   keyof (typeof grammarCaseGenderEndings)[DeclensionType][GrammarCase][GrammarNumber];
 
 const declensionTypeByFinalLetter = {
@@ -374,7 +374,7 @@ type AdjectiveObject = {
   indeclinable: boolean;
 };
 
-type DeclineProps = {
+export type DeclineProps = {
   adjective: string | AdjectiveObject;
   grammarCase: GrammarCase;
   grammarNumber: GrammarNumber;
@@ -383,7 +383,7 @@ type DeclineProps = {
   dual?: boolean;
 };
 
-function declineAnAdjective({
+export function declineAnAdjective({
   adjective,
   grammarCase,
   grammarNumber,
@@ -420,95 +420,3 @@ function declineAnAdjective({
     return stem + ending;
   });
 }
-
-console.log(
-  declineAnAdjective({
-    adjective: "inteligentní",
-    grammarCase: "genitiv",
-    grammarNumber: "singular",
-    grammarGender: "s.",
-  }),
-);
-console.log(
-  declineAnAdjective({
-    adjective: "chytrý",
-    grammarCase: "lokál",
-    grammarNumber: "plural",
-    grammarGender: "m. živ.",
-  }),
-);
-console.log(
-  declineAnAdjective({
-    adjective: { value: "šik", indeclinable: true },
-    grammarCase: "vokativ",
-    grammarNumber: "singular",
-    grammarGender: "m. živ.",
-  }),
-);
-console.log(
-  declineAnAdjective({
-    adjective: { value: "šik", indeclinable: true },
-    grammarCase: "vokativ",
-    grammarNumber: "singular",
-    grammarGender: "m. živ.",
-  }),
-);
-console.log(
-  declineAnAdjective({
-    adjective: "dobrý",
-    grammarCase: "vokativ",
-    grammarNumber: "plural",
-    grammarGender: "m. živ.",
-  }),
-);
-console.log(
-  declineAnAdjective({
-    adjective: "ambiciózní",
-    grammarCase: "instrumentál",
-    grammarNumber: "plural",
-    grammarGender: "s.",
-    pluralGrammarGender: "ž.",
-  }),
-);
-console.log(
-  declineAnAdjective({
-    adjective: "dlouhý",
-    grammarCase: "instrumentál",
-    grammarNumber: "plural",
-    grammarGender: "ž.",
-    dual: true,
-  }),
-);
-// Possessives: the bare form stays (vidím otcův dům), other forms use the otcov- stem (otcovi bratři).
-console.log(
-  declineAnAdjective({
-    adjective: "otcův",
-    grammarCase: "akuzativ",
-    grammarNumber: "singular",
-    grammarGender: "m. neživ.",
-  }),
-);
-console.log(
-  declineAnAdjective({
-    adjective: "otcův",
-    grammarCase: "nominativ",
-    grammarNumber: "plural",
-    grammarGender: "m. živ.",
-  }),
-);
-console.log(
-  declineAnAdjective({
-    adjective: "matčin",
-    grammarCase: "lokál",
-    grammarNumber: "singular",
-    grammarGender: "ž.",
-  }),
-);
-console.log(
-  declineAnAdjective({
-    adjective: "otcův",
-    grammarCase: "lokál",
-    grammarNumber: "singular",
-    grammarGender: "m. neživ.",
-  }),
-);
