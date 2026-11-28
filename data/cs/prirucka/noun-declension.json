@@ -31,13 +31,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "advokáta" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "advokátovi" }, { "value": "advokátu" }]
+          "acceptedForms": [
+            { "value": "advokátovi" },
+            { "value": "advokátu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "advokáta" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "advokáte" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "advokátovi" }, { "value": "advokátu" }]
+          "acceptedForms": [
+            { "value": "advokátovi" },
+            { "value": "advokátu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "advokátem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "advokáti" }] },
@@ -179,7 +185,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "Američanovi" },
-            { "value": "Američanu" }
+            { "value": "Američanu", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "Američana" }] },
@@ -188,7 +194,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "Američanovi" },
-            { "value": "Američanu" }
+            { "value": "Američanu", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "Američanem" }] },
@@ -214,7 +220,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "Angličanovi" },
-            { "value": "Angličanu" }
+            { "value": "Angličanu", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "Angličana" }] },
@@ -223,7 +229,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "Angličanovi" },
-            { "value": "Angličanu" }
+            { "value": "Angličanu", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "Angličanem" }] },
@@ -422,13 +428,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "autora" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "autorovi" }, { "value": "autoru" }]
+          "acceptedForms": [
+            { "value": "autorovi" },
+            { "value": "autoru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "autora" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "autore" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "autorovi" }, { "value": "autoru" }]
+          "acceptedForms": [
+            { "value": "autorovi" },
+            { "value": "autoru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "autorem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "autoři" }] },
@@ -640,13 +652,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "biologa" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "biologovi" }, { "value": "biologu" }]
+          "acceptedForms": [
+            { "value": "biologovi" },
+            { "value": "biologu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "biologa" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "biologu" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "biologovi" }, { "value": "biologu" }]
+          "acceptedForms": [
+            { "value": "biologovi" },
+            { "value": "biologu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "biologem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "biologové" }] },
@@ -732,13 +750,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "bobra" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "bobrovi" }, { "value": "bobru" }]
+          "acceptedForms": [
+            { "value": "bobrovi" },
+            { "value": "bobru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "bobra" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "bobře" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "bobrovi" }, { "value": "bobru" }]
+          "acceptedForms": [
+            { "value": "bobrovi" },
+            { "value": "bobru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "bobrem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "bobři" }] },
@@ -831,53 +855,6 @@
       ]
     },
     {
-      "prompt": "bratr",
-      "gender": "m. živ.",
-      "cells": [
-        { "id": "nom-sg", "acceptedForms": [{ "value": "bratr" }] },
-        { "id": "gen-sg", "acceptedForms": [{ "value": "bratra" }] },
-        {
-          "id": "dat-sg",
-          "acceptedForms": [{ "value": "bratrovi" }, { "value": "bratru" }]
-        },
-        { "id": "acc-sg", "acceptedForms": [{ "value": "bratra" }] },
-        { "id": "voc-sg", "acceptedForms": [{ "value": "bratře" }] },
-        {
-          "id": "loc-sg",
-          "acceptedForms": [{ "value": "bratrovi" }, { "value": "bratru" }]
-        },
-        { "id": "ins-sg", "acceptedForms": [{ "value": "bratrem" }] },
-        {
-          "id": "nom-pl",
-          "acceptedForms": [{ "value": "bratři" }, { "value": "bratří" }]
-        },
-        {
-          "id": "gen-pl",
-          "acceptedForms": [{ "value": "bratrů" }, { "value": "bratří" }]
-        },
-        {
-          "id": "dat-pl",
-          "acceptedForms": [{ "value": "bratrům" }, { "value": "bratřím" }]
-        },
-        {
-          "id": "acc-pl",
-          "acceptedForms": [{ "value": "bratry" }, { "value": "bratří" }]
-        },
-        {
-          "id": "voc-pl",
-          "acceptedForms": [{ "value": "bratři" }, { "value": "bratří" }]
-        },
-        {
-          "id": "loc-pl",
-          "acceptedForms": [{ "value": "bratrech" }, { "value": "bratřích" }]
-        },
-        {
-          "id": "ins-pl",
-          "acceptedForms": [{ "value": "bratry" }, { "value": "bratřími" }]
-        }
-      ]
-    },
-    {
       "prompt": "bratranec",
       "gender": "m. živ.",
       "cells": [
@@ -957,13 +934,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "brouka" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "broukovi" }, { "value": "brouku" }]
+          "acceptedForms": [
+            { "value": "broukovi" },
+            { "value": "brouku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "brouka" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "brouku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "broukovi" }, { "value": "brouku" }]
+          "acceptedForms": [
+            { "value": "broukovi" },
+            { "value": "brouku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "broukem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "brouci" }] },
@@ -1088,13 +1071,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "býka" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "býkovi" }, { "value": "býku" }]
+          "acceptedForms": [
+            { "value": "býkovi" },
+            { "value": "býku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "býka" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "býku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "býkovi" }, { "value": "býku" }]
+          "acceptedForms": [
+            { "value": "býkovi" },
+            { "value": "býku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "býkem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "býci" }] },
@@ -1504,13 +1493,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "Čecha" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "Čechovi" }, { "value": "Čechu" }]
+          "acceptedForms": [
+            { "value": "Čechovi" },
+            { "value": "Čechu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "Čecha" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "Čechu" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "Čechovi" }, { "value": "Čechu" }]
+          "acceptedForms": [
+            { "value": "Čechovi" },
+            { "value": "Čechu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "Čechem" }] },
         {
@@ -1576,13 +1571,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "čerta" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "čertovi" }, { "value": "čertu" }]
+          "acceptedForms": [
+            { "value": "čertovi" },
+            { "value": "čertu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "čerta" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "čerte" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "čertovi" }, { "value": "čertu" }]
+          "acceptedForms": [
+            { "value": "čertovi" },
+            { "value": "čertu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "čertem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "čerti" }] },
@@ -1780,13 +1781,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "ďábla" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "ďáblovi" }, { "value": "ďáblu" }]
+          "acceptedForms": [
+            { "value": "ďáblovi" },
+            { "value": "ďáblu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "ďábla" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "ďáble" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "ďáblovi" }, { "value": "ďáblu" }]
+          "acceptedForms": [
+            { "value": "ďáblovi" },
+            { "value": "ďáblu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "ďáblem" }] },
         {
@@ -1895,13 +1902,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "dědečka" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "dědečkovi" }, { "value": "dědečku" }]
+          "acceptedForms": [
+            { "value": "dědečkovi" },
+            { "value": "dědečku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "dědečka" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "dědečku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "dědečkovi" }, { "value": "dědečku" }]
+          "acceptedForms": [
+            { "value": "dědečkovi" },
+            { "value": "dědečku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "dědečkem" }] },
         {
@@ -1970,13 +1983,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "děkana" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "děkanovi" }, { "value": "děkanu" }]
+          "acceptedForms": [
+            { "value": "děkanovi" },
+            { "value": "děkanu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "děkana" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "děkane" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "děkanovi" }, { "value": "děkanu" }]
+          "acceptedForms": [
+            { "value": "děkanovi" },
+            { "value": "děkanu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "děkanem" }] },
         {
@@ -2187,13 +2206,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "docenta" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "docentovi" }, { "value": "docentu" }]
+          "acceptedForms": [
+            { "value": "docentovi" },
+            { "value": "docentu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "docenta" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "docente" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "docentovi" }, { "value": "docentu" }]
+          "acceptedForms": [
+            { "value": "docentovi" },
+            { "value": "docentu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "docentem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "docenti" }] },
@@ -2213,13 +2238,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "doktora" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "doktorovi" }, { "value": "doktoru" }]
+          "acceptedForms": [
+            { "value": "doktorovi" },
+            { "value": "doktoru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "doktora" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "doktore" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "doktorovi" }, { "value": "doktoru" }]
+          "acceptedForms": [
+            { "value": "doktorovi" },
+            { "value": "doktoru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "doktorem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "doktoři" }] },
@@ -2281,7 +2312,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "dominikánovi" },
-            { "value": "dominikánu" }
+            { "value": "dominikánu", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "dominikána" }] },
@@ -2290,7 +2321,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "dominikánovi" },
-            { "value": "dominikánu" }
+            { "value": "dominikánu", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "dominikánem" }] },
@@ -2599,13 +2630,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "Egypťana" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "Egypťanovi" }, { "value": "Egypťanu" }]
+          "acceptedForms": [
+            { "value": "Egypťanovi" },
+            { "value": "Egypťanu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "Egypťana" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "Egypťane" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "Egypťanovi" }, { "value": "Egypťanu" }]
+          "acceptedForms": [
+            { "value": "Egypťanovi" },
+            { "value": "Egypťanu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "Egypťanem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "Egypťané" }] },
@@ -2645,13 +2682,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "ekonoma" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "ekonomovi" }, { "value": "ekonomu" }]
+          "acceptedForms": [
+            { "value": "ekonomovi" },
+            { "value": "ekonomu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "ekonoma" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "ekonome" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "ekonomovi" }, { "value": "ekonomu" }]
+          "acceptedForms": [
+            { "value": "ekonomovi" },
+            { "value": "ekonomu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "ekonomem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "ekonomové" }] },
@@ -2927,13 +2970,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "Fina" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "Finovi" }, { "value": "Finu" }]
+          "acceptedForms": [
+            { "value": "Finovi" },
+            { "value": "Finu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "Fina" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "Fine" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "Finovi" }, { "value": "Finu" }]
+          "acceptedForms": [
+            { "value": "Finovi" },
+            { "value": "Finu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "Finem" }] },
         {
@@ -3062,13 +3111,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "fyzika" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "fyzikovi" }, { "value": "fyziku" }]
+          "acceptedForms": [
+            { "value": "fyzikovi" },
+            { "value": "fyziku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "fyzika" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "fyziku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "fyzikovi" }, { "value": "fyziku" }]
+          "acceptedForms": [
+            { "value": "fyzikovi" },
+            { "value": "fyziku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "fyzikem" }] },
         {
@@ -3136,7 +3191,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "generálmajorovi" },
-            { "value": "generálmajoru" }
+            { "value": "generálmajoru", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "generálmajora" }] },
@@ -3145,7 +3200,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "generálmajorovi" },
-            { "value": "generálmajoru" }
+            { "value": "generálmajoru", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "generálmajorem" }] },
@@ -3189,13 +3244,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "génia" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "géniovi" }, { "value": "géniu" }]
+          "acceptedForms": [
+            { "value": "géniovi" },
+            { "value": "géniu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "génia" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "génie" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "géniovi" }, { "value": "géniu" }]
+          "acceptedForms": [
+            { "value": "géniovi" },
+            { "value": "géniu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "géniem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "géniové" }] },
@@ -3217,7 +3278,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "gentlemanovi" },
-            { "value": "gentlemanu" }
+            { "value": "gentlemanu", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "gentlemana" }] },
@@ -3226,7 +3287,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "gentlemanovi" },
-            { "value": "gentlemanu" }
+            { "value": "gentlemanu", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "gentlemanem" }] },
@@ -3675,7 +3736,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "harlekýnovi" },
-            { "value": "harlekýnu" }
+            { "value": "harlekýnu", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "harlekýna" }] },
@@ -3684,7 +3745,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "harlekýnovi" },
-            { "value": "harlekýnu" }
+            { "value": "harlekýnu", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "harlekýnem" }] },
@@ -3844,13 +3905,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "heretika" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "heretikovi" }, { "value": "heretiku" }]
+          "acceptedForms": [
+            { "value": "heretikovi" },
+            { "value": "heretiku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "heretika" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "heretiku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "heretikovi" }, { "value": "heretiku" }]
+          "acceptedForms": [
+            { "value": "heretikovi" },
+            { "value": "heretiku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "heretikem" }] },
         {
@@ -4141,13 +4208,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "hocha" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "hochovi" }, { "value": "hochu" }]
+          "acceptedForms": [
+            { "value": "hochovi" },
+            { "value": "hochu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "hocha" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "hochu" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "hochovi" }, { "value": "hochu" }]
+          "acceptedForms": [
+            { "value": "hochovi" },
+            { "value": "hochu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "hochem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "hoši" }] },
@@ -4253,13 +4326,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "horníka" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "horníkovi" }, { "value": "horníku" }]
+          "acceptedForms": [
+            { "value": "horníkovi" },
+            { "value": "horníku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "horníka" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "horníku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "horníkovi" }, { "value": "horníku" }]
+          "acceptedForms": [
+            { "value": "horníkovi" },
+            { "value": "horníku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "horníkem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "horníci" }] },
@@ -4331,13 +4410,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "hosta" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "hostovi" }, { "value": "hostu" }]
+          "acceptedForms": [
+            { "value": "hostovi" },
+            { "value": "hostu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "hosta" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "hoste" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "hostovi" }, { "value": "hostu" }]
+          "acceptedForms": [
+            { "value": "hostovi" },
+            { "value": "hostu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "hostem" }] },
         {
@@ -4573,13 +4658,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "hrocha" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "hrochovi" }, { "value": "hrochu" }]
+          "acceptedForms": [
+            { "value": "hrochovi" },
+            { "value": "hrochu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "hrocha" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "hrochu" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "hrochovi" }, { "value": "hrochu" }]
+          "acceptedForms": [
+            { "value": "hrochovi" },
+            { "value": "hrochu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "hrochem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "hroši" }] },
@@ -4809,13 +4900,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "hříšníka" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "hříšníkovi" }, { "value": "hříšníku" }]
+          "acceptedForms": [
+            { "value": "hříšníkovi" },
+            { "value": "hříšníku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "hříšníka" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "hříšníku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "hříšníkovi" }, { "value": "hříšníku" }]
+          "acceptedForms": [
+            { "value": "hříšníkovi" },
+            { "value": "hříšníku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "hříšníkem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "hříšníci" }] },
@@ -4877,7 +4974,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "hudebníkovi" },
-            { "value": "hudebníku" }
+            { "value": "hudebníku", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "hudebníka" }] },
@@ -4886,7 +4983,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "hudebníkovi" },
-            { "value": "hudebníku" }
+            { "value": "hudebníku", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "hudebníkem" }] },
@@ -5105,13 +5202,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "hýla" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "hýlovi" }, { "value": "hýlu" }]
+          "acceptedForms": [
+            { "value": "hýlovi" },
+            { "value": "hýlu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "hýla" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "hýle" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "hýlovi" }, { "value": "hýlu" }]
+          "acceptedForms": [
+            { "value": "hýlovi" },
+            { "value": "hýlu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "hýlem" }] },
         {
@@ -5159,7 +5262,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "hypochondrovi" },
-            { "value": "hypochondru" }
+            { "value": "hypochondru", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "hypochondra" }] },
@@ -5168,7 +5271,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "hypochondrovi" },
-            { "value": "hypochondru" }
+            { "value": "hypochondru", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "hypochondrem" }] },
@@ -5229,13 +5332,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "chemika" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "chemikovi" }, { "value": "chemiku" }]
+          "acceptedForms": [
+            { "value": "chemikovi" },
+            { "value": "chemiku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "chemika" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "chemiku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "chemikovi" }, { "value": "chemiku" }]
+          "acceptedForms": [
+            { "value": "chemikovi" },
+            { "value": "chemiku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "chemikem" }] },
         {
@@ -5427,13 +5536,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "chrta" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "chrtovi" }, { "value": "chrtu" }]
+          "acceptedForms": [
+            { "value": "chrtovi" },
+            { "value": "chrtu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "chrta" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "chrte" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "chrtovi" }, { "value": "chrtu" }]
+          "acceptedForms": [
+            { "value": "chrtovi" },
+            { "value": "chrtu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "chrtem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "chrti" }] },
@@ -5453,13 +5568,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "chudáka" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "chudákovi" }, { "value": "chudáku" }]
+          "acceptedForms": [
+            { "value": "chudákovi" },
+            { "value": "chudáku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "chudáka" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "chudáku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "chudákovi" }, { "value": "chudáku" }]
+          "acceptedForms": [
+            { "value": "chudákovi" },
+            { "value": "chudáku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "chudákem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "chudáci" }] },
@@ -5604,13 +5725,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "idiota" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "idiotovi" }, { "value": "idiotu" }]
+          "acceptedForms": [
+            { "value": "idiotovi" },
+            { "value": "idiotu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "idiota" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "idiote" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "idiotovi" }, { "value": "idiotu" }]
+          "acceptedForms": [
+            { "value": "idiotovi" },
+            { "value": "idiotu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "idiotem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "idioti" }] },
@@ -5730,13 +5857,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "Itala" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "Italovi" }, { "value": "Italu" }]
+          "acceptedForms": [
+            { "value": "Italovi" },
+            { "value": "Italu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "Itala" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "Itale" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "Italovi" }, { "value": "Italu" }]
+          "acceptedForms": [
+            { "value": "Italovi" },
+            { "value": "Italu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "Italem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "Italové" }] },
@@ -5953,7 +6086,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "jezevčíkovi" },
-            { "value": "jezevčíku" }
+            { "value": "jezevčíku", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "jezevčíka" }] },
@@ -5962,7 +6095,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "jezevčíkovi" },
-            { "value": "jezevčíku" }
+            { "value": "jezevčíku", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "jezevčíkem" }] },
@@ -6145,13 +6278,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "kamaráda" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "kamarádovi" }, { "value": "kamarádu" }]
+          "acceptedForms": [
+            { "value": "kamarádovi" },
+            { "value": "kamarádu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "kamaráda" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "kamaráde" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "kamarádovi" }, { "value": "kamarádu" }]
+          "acceptedForms": [
+            { "value": "kamarádovi" },
+            { "value": "kamarádu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "kamarádem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "kamarádi" }] },
@@ -6498,13 +6637,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "klokana" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "klokanovi" }, { "value": "klokanu" }]
+          "acceptedForms": [
+            { "value": "klokanovi" },
+            { "value": "klokanu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "klokana" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "klokane" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "klokanovi" }, { "value": "klokanu" }]
+          "acceptedForms": [
+            { "value": "klokanovi" },
+            { "value": "klokanu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "klokanem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "klokani" }] },
@@ -6564,13 +6709,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "kluka" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "klukovi" }, { "value": "kluku" }]
+          "acceptedForms": [
+            { "value": "klukovi" },
+            { "value": "kluku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "kluka" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "kluku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "klukovi" }, { "value": "kluku" }]
+          "acceptedForms": [
+            { "value": "klukovi" },
+            { "value": "kluku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "klukem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "kluci" }] },
@@ -6590,13 +6741,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "kmotra" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "kmotrovi" }, { "value": "kmotru" }]
+          "acceptedForms": [
+            { "value": "kmotrovi" },
+            { "value": "kmotru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "kmotra" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "kmotře" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "kmotrovi" }, { "value": "kmotru" }]
+          "acceptedForms": [
+            { "value": "kmotrovi" },
+            { "value": "kmotru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "kmotrem" }] },
         {
@@ -6722,13 +6879,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "kocoura" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "kocourovi" }, { "value": "kocouru" }]
+          "acceptedForms": [
+            { "value": "kocourovi" },
+            { "value": "kocouru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "kocoura" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "kocoure" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "kocourovi" }, { "value": "kocouru" }]
+          "acceptedForms": [
+            { "value": "kocourovi" },
+            { "value": "kocouru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "kocourem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "kocouři" }] },
@@ -6891,13 +7054,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "kominíka" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "kominíkovi" }, { "value": "kominíku" }]
+          "acceptedForms": [
+            { "value": "kominíkovi" },
+            { "value": "kominíku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "kominíka" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "kominíku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "kominíkovi" }, { "value": "kominíku" }]
+          "acceptedForms": [
+            { "value": "kominíkovi" },
+            { "value": "kominíku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "kominíkem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "kominíci" }] },
@@ -7556,13 +7725,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "králíka" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "králíkovi" }, { "value": "králíku" }]
+          "acceptedForms": [
+            { "value": "králíkovi" },
+            { "value": "králíku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "králíka" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "králíku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "králíkovi" }, { "value": "králíku" }]
+          "acceptedForms": [
+            { "value": "králíkovi" },
+            { "value": "králíku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "králíkem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "králíci" }] },
@@ -7677,13 +7852,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "krtka" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "krtkovi" }, { "value": "krtku" }]
+          "acceptedForms": [
+            { "value": "krtkovi" },
+            { "value": "krtku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "krtka" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "krtku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "krtkovi" }, { "value": "krtku" }]
+          "acceptedForms": [
+            { "value": "krtkovi" },
+            { "value": "krtku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "krtkem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "krtci" }] },
@@ -8353,13 +8534,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "lektora" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "lektorovi" }, { "value": "lektoru" }]
+          "acceptedForms": [
+            { "value": "lektorovi" },
+            { "value": "lektoru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "lektora" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "lektore" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "lektorovi" }, { "value": "lektoru" }]
+          "acceptedForms": [
+            { "value": "lektorovi" },
+            { "value": "lektoru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "lektorem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "lektoři" }] },
@@ -8519,7 +8706,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "lichokopytníkovi" },
-            { "value": "lichokopytníku" }
+            { "value": "lichokopytníku", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "lichokopytníka" }] },
@@ -8528,7 +8715,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "lichokopytníkovi" },
-            { "value": "lichokopytníku" }
+            { "value": "lichokopytníku", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "lichokopytníkem" }] },
@@ -8746,13 +8933,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "lotra" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "lotrovi" }, { "value": "lotru" }]
+          "acceptedForms": [
+            { "value": "lotrovi" },
+            { "value": "lotru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "lotra" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "lotře" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "lotrovi" }, { "value": "lotru" }]
+          "acceptedForms": [
+            { "value": "lotrovi" },
+            { "value": "lotru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "lotrem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "lotři" }] },
@@ -8976,13 +9169,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "Maďara" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "Maďarovi" }, { "value": "Maďaru" }]
+          "acceptedForms": [
+            { "value": "Maďarovi" },
+            { "value": "Maďaru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "Maďara" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "Maďare" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "Maďarovi" }, { "value": "Maďaru" }]
+          "acceptedForms": [
+            { "value": "Maďarovi" },
+            { "value": "Maďaru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "Maďarem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "Maďaři" }] },
@@ -9042,13 +9241,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "magistra" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "magistrovi" }, { "value": "magistru" }]
+          "acceptedForms": [
+            { "value": "magistrovi" },
+            { "value": "magistru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "magistra" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "magistře" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "magistrovi" }, { "value": "magistru" }]
+          "acceptedForms": [
+            { "value": "magistrovi" },
+            { "value": "magistru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "magistrem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "magistři" }] },
@@ -9148,13 +9353,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "maniaka" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "maniakovi" }, { "value": "maniaku" }]
+          "acceptedForms": [
+            { "value": "maniakovi" },
+            { "value": "maniaku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "maniaka" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "maniaku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "maniakovi" }, { "value": "maniaku" }]
+          "acceptedForms": [
+            { "value": "maniakovi" },
+            { "value": "maniaku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "maniakem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "maniaci" }] },
@@ -9184,47 +9395,6 @@
         { "id": "voc-pl", "acceptedForms": [{ "value": "manipulace" }] },
         { "id": "loc-pl", "acceptedForms": [{ "value": "manipulacích" }] },
         { "id": "ins-pl", "acceptedForms": [{ "value": "manipulacemi" }] }
-      ]
-    },
-    {
-      "prompt": "manžel",
-      "gender": "m. živ.",
-      "cells": [
-        { "id": "nom-sg", "acceptedForms": [{ "value": "manžel" }] },
-        { "id": "gen-sg", "acceptedForms": [{ "value": "manžela" }] },
-        {
-          "id": "dat-sg",
-          "acceptedForms": [{ "value": "manželovi" }, { "value": "manželu" }]
-        },
-        { "id": "acc-sg", "acceptedForms": [{ "value": "manžela" }] },
-        { "id": "voc-sg", "acceptedForms": [{ "value": "manželi" }] },
-        {
-          "id": "loc-sg",
-          "acceptedForms": [{ "value": "manželovi" }, { "value": "manželu" }]
-        },
-        { "id": "ins-sg", "acceptedForms": [{ "value": "manželem" }] },
-        {
-          "id": "nom-pl",
-          "acceptedForms": [{ "value": "manželé" }, { "value": "manželové" }]
-        },
-        { "id": "gen-pl", "acceptedForms": [{ "value": "manželů" }] },
-        { "id": "dat-pl", "acceptedForms": [{ "value": "manželům" }] },
-        {
-          "id": "acc-pl",
-          "acceptedForms": [{ "value": "manžele" }, { "value": "manžely" }]
-        },
-        {
-          "id": "voc-pl",
-          "acceptedForms": [{ "value": "manželé" }, { "value": "manželové" }]
-        },
-        {
-          "id": "loc-pl",
-          "acceptedForms": [{ "value": "manželech" }, { "value": "manželích" }]
-        },
-        {
-          "id": "ins-pl",
-          "acceptedForms": [{ "value": "manželi" }, { "value": "manžely" }]
-        }
       ]
     },
     {
@@ -9338,13 +9508,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "medvěda" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "medvědovi" }, { "value": "medvědu" }]
+          "acceptedForms": [
+            { "value": "medvědovi" },
+            { "value": "medvědu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "medvěda" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "medvěde" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "medvědovi" }, { "value": "medvědu" }]
+          "acceptedForms": [
+            { "value": "medvědovi" },
+            { "value": "medvědu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "medvědem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "medvědi" }] },
@@ -9364,13 +9540,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "medvídka" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "medvídkovi" }, { "value": "medvídku" }]
+          "acceptedForms": [
+            { "value": "medvídkovi" },
+            { "value": "medvídku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "medvídka" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "medvídku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "medvídkovi" }, { "value": "medvídku" }]
+          "acceptedForms": [
+            { "value": "medvídkovi" },
+            { "value": "medvídku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "medvídkem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "medvídci" }] },
@@ -9596,13 +9778,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "ministra" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "ministrovi" }, { "value": "ministru" }]
+          "acceptedForms": [
+            { "value": "ministrovi" },
+            { "value": "ministru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "ministra" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "ministře" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "ministrovi" }, { "value": "ministru" }]
+          "acceptedForms": [
+            { "value": "ministrovi" },
+            { "value": "ministru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "ministrem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "ministři" }] },
@@ -9632,35 +9820,6 @@
         { "id": "voc-pl", "acceptedForms": [{ "value": "minisukně" }] },
         { "id": "loc-pl", "acceptedForms": [{ "value": "minisukních" }] },
         { "id": "ins-pl", "acceptedForms": [{ "value": "minisukněmi" }] }
-      ]
-    },
-    {
-      "prompt": "míra",
-      "gender": "ž.",
-      "cells": [
-        { "id": "nom-sg", "acceptedForms": [{ "value": "míra" }] },
-        { "id": "gen-sg", "acceptedForms": [{ "value": "míry" }] },
-        { "id": "dat-sg", "acceptedForms": [{ "value": "míře" }] },
-        { "id": "acc-sg", "acceptedForms": [{ "value": "míru" }] },
-        { "id": "voc-sg", "acceptedForms": [{ "value": "míro" }] },
-        { "id": "loc-sg", "acceptedForms": [{ "value": "míře" }] },
-        {
-          "id": "ins-sg",
-          "acceptedForms": [{ "value": "měrou" }, { "value": "mírou" }]
-        },
-        { "id": "nom-pl", "acceptedForms": [{ "value": "míry" }] },
-        { "id": "gen-pl", "acceptedForms": [{ "value": "měr" }] },
-        {
-          "id": "dat-pl",
-          "acceptedForms": [{ "value": "měrám" }, { "value": "mírám" }]
-        },
-        { "id": "acc-pl", "acceptedForms": [{ "value": "míry" }] },
-        { "id": "voc-pl", "acceptedForms": [{ "value": "míry" }] },
-        {
-          "id": "loc-pl",
-          "acceptedForms": [{ "value": "měrách" }, { "value": "mírách" }]
-        },
-        { "id": "ins-pl", "acceptedForms": [{ "value": "mírami" }] }
       ]
     },
     {
@@ -9763,13 +9922,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "mistra" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "mistrovi" }, { "value": "mistru" }]
+          "acceptedForms": [
+            { "value": "mistrovi" },
+            { "value": "mistru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "mistra" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "mistře" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "mistrovi" }, { "value": "mistru" }]
+          "acceptedForms": [
+            { "value": "mistrovi" },
+            { "value": "mistru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "mistrem" }] },
         {
@@ -10025,7 +10190,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "morousovi" },
-            { "value": "morousu" },
+            { "value": "morousu", "remarks": ["non-final"] },
             { "value": "morousi" }
           ]
         },
@@ -10041,7 +10206,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "morousovi" },
-            { "value": "morousu" },
+            { "value": "morousu", "remarks": ["non-final"] },
             { "value": "morousi" }
           ]
         },
@@ -10098,13 +10263,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "motýla" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "motýlovi" }, { "value": "motýlu" }]
+          "acceptedForms": [
+            { "value": "motýlovi" },
+            { "value": "motýlu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "motýla" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "motýle" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "motýlovi" }, { "value": "motýlu" }]
+          "acceptedForms": [
+            { "value": "motýlovi" },
+            { "value": "motýlu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "motýlem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "motýli" }] },
@@ -10195,7 +10366,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "mravenečníkovi" },
-            { "value": "mravenečníku" }
+            { "value": "mravenečníku", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "mravenečníka" }] },
@@ -10204,7 +10375,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "mravenečníkovi" },
-            { "value": "mravenečníku" }
+            { "value": "mravenečníku", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "mravenečníkem" }] },
@@ -10983,35 +11154,6 @@
       ]
     },
     {
-      "prompt": "noha",
-      "gender": "ž.",
-      "cells": [
-        { "id": "nom-sg", "acceptedForms": [{ "value": "noha" }] },
-        { "id": "gen-sg", "acceptedForms": [{ "value": "nohy" }] },
-        { "id": "dat-sg", "acceptedForms": [{ "value": "noze" }] },
-        { "id": "acc-sg", "acceptedForms": [{ "value": "nohu" }] },
-        { "id": "voc-sg", "acceptedForms": [{ "value": "noho" }] },
-        { "id": "loc-sg", "acceptedForms": [{ "value": "noze" }] },
-        { "id": "ins-sg", "acceptedForms": [{ "value": "nohou" }] },
-        { "id": "nom-pl", "acceptedForms": [{ "value": "nohy" }] },
-        {
-          "id": "gen-pl",
-          "acceptedForms": [{ "value": "noh" }, { "value": "nohou" }]
-        },
-        { "id": "dat-pl", "acceptedForms": [{ "value": "nohám" }] },
-        { "id": "acc-pl", "acceptedForms": [{ "value": "nohy" }] },
-        { "id": "voc-pl", "acceptedForms": [{ "value": "nohy" }] },
-        {
-          "id": "loc-pl",
-          "acceptedForms": [{ "value": "nohách" }, { "value": "nohou" }]
-        },
-        {
-          "id": "ins-pl",
-          "acceptedForms": [{ "value": "nohama" }, { "value": "nohami" }]
-        }
-      ]
-    },
-    {
       "prompt": "nominativ",
       "gender": "m. neživ.",
       "cells": [
@@ -11101,13 +11243,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "občana" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "občanovi" }, { "value": "občanu" }]
+          "acceptedForms": [
+            { "value": "občanovi" },
+            { "value": "občanu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "občana" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "občane" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "občanovi" }, { "value": "občanu" }]
+          "acceptedForms": [
+            { "value": "občanovi" },
+            { "value": "občanu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "občanem" }] },
         {
@@ -11282,13 +11430,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "obra" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "obrovi" }, { "value": "obru" }]
+          "acceptedForms": [
+            { "value": "obrovi" },
+            { "value": "obru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "obra" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "obře" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "obrovi" }, { "value": "obru" }]
+          "acceptedForms": [
+            { "value": "obrovi" },
+            { "value": "obru", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "obrem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "obři" }] },
@@ -11844,13 +11998,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "osla" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "oslovi" }, { "value": "oslu" }]
+          "acceptedForms": [
+            { "value": "oslovi" },
+            { "value": "oslu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "osla" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "osle" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "oslovi" }, { "value": "oslu" }]
+          "acceptedForms": [
+            { "value": "oslovi" },
+            { "value": "oslu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "oslem" }] },
         {
@@ -12125,13 +12285,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "pána" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "pánovi" }, { "value": "pánu" }]
+          "acceptedForms": [
+            { "value": "pánovi" },
+            { "value": "pánu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "pána" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "pane" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "pánovi" }, { "value": "pánu" }]
+          "acceptedForms": [
+            { "value": "pánovi" },
+            { "value": "pánu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "pánem" }] },
         {
@@ -12259,7 +12425,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "paranoikovi" },
-            { "value": "paranoiku" }
+            { "value": "paranoiku", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "paranoika" }] },
@@ -12268,7 +12434,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "paranoikovi" },
-            { "value": "paranoiku" }
+            { "value": "paranoiku", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "paranoikem" }] },
@@ -12415,13 +12581,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "páva" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "pávovi" }, { "value": "pávu" }]
+          "acceptedForms": [
+            { "value": "pávovi" },
+            { "value": "pávu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "páva" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "páve" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "pávovi" }, { "value": "pávu" }]
+          "acceptedForms": [
+            { "value": "pávovi" },
+            { "value": "pávu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "pávem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "pávi" }] },
@@ -12461,13 +12633,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "pejska" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "pejskovi" }, { "value": "pejsku" }]
+          "acceptedForms": [
+            { "value": "pejskovi" },
+            { "value": "pejsku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "pejska" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "pejsku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "pejskovi" }, { "value": "pejsku" }]
+          "acceptedForms": [
+            { "value": "pejskovi" },
+            { "value": "pejsku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "pejskem" }] },
         {
@@ -12599,13 +12777,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "psa" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "psovi" }, { "value": "psu" }]
+          "acceptedForms": [
+            { "value": "psovi" },
+            { "value": "psu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "psa" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "pse" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "psovi" }, { "value": "psu" }]
+          "acceptedForms": [
+            { "value": "psovi" },
+            { "value": "psu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "psem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "psi" }] },
@@ -12645,13 +12829,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "piráta" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "pirátovi" }, { "value": "pirátu" }]
+          "acceptedForms": [
+            { "value": "pirátovi" },
+            { "value": "pirátu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "piráta" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "piráte" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "pirátovi" }, { "value": "pirátu" }]
+          "acceptedForms": [
+            { "value": "pirátovi" },
+            { "value": "pirátu", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "pirátem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "piráti" }] },
@@ -13220,13 +13410,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "Poláka" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "Polákovi" }, { "value": "Poláku" }]
+          "acceptedForms": [
+            { "value": "Polákovi" },
+            { "value": "Poláku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "Poláka" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "Poláku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "Polákovi" }, { "value": "Poláku" }]
+          "acceptedForms": [
+            { "value": "Polákovi" },
+            { "value": "Poláku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "Polákem" }] },
         { "id": "nom-pl", "acceptedForms": [{ "value": "Poláci" }] },
@@ -13326,13 +13522,19 @@
         { "id": "gen-sg", "acceptedForms": [{ "value": "politika" }] },
         {
           "id": "dat-sg",
-          "acceptedForms": [{ "value": "politikovi" }, { "value": "politiku" }]
+          "acceptedForms": [
+            { "value": "politikovi" },
+            { "value": "politiku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "politika" }] },
         { "id": "voc-sg", "acceptedForms": [{ "value": "politiku" }] },
         {
           "id": "loc-sg",
-          "acceptedForms": [{ "value": "politikovi" }, { "value": "politiku" }]
+          "acceptedForms": [
+            { "value": "politikovi" },
+            { "value": "politiku", "remarks": ["non-final"] }
+          ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "politikem" }] },
         {
@@ -13638,7 +13840,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "poštmistrovi" },
-            { "value": "poštmistru" }
+            { "value": "poštmistru", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "poštmistra" }] },
@@ -13647,7 +13849,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "poštmistrovi" },
-            { "value": "poštmistru" }
+            { "value": "poštmistru", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "poštmistrem" }] },
@@ -14250,7 +14452,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "profesionálovi" },
-            { "value": "profesionálu" }
+            { "value": "profesionálu", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "profesionála" }] },
@@ -14259,7 +14461,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "profesionálovi" },
-            { "value": "profesionálu" }
+            { "value": "profesionálu", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "profesionálem" }] },
@@ -14282,7 +14484,7 @@
           "id": "dat-sg",
           "acceptedForms": [
             { "value": "profesorovi" },
-            { "value": "profesoru" }
+            { "value": "profesoru", "remarks": ["non-final"] }
           ]
         },
         { "id": "acc-sg", "acceptedForms": [{ "value": "profesora" }] },
@@ -14291,7 +14493,7 @@
           "id": "loc-sg",
           "acceptedForms": [
             { "value": "profesorovi" },
-            { "value": "profesoru" }
+            { "value": "profesoru", "remarks": ["non-final"] }
           ]
         },
         { "id": "ins-sg", "acceptedForms": [{ "value": "profesorem" }] },
