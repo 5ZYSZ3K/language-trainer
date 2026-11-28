@@ -21,6 +21,8 @@ export const cs: Record<AdjectiveNounTextKey, string> = {
   'field.noun': 'Podstatné jméno',
   nothing: 'Současné filtry nenechávají nic k procvičení.',
   next: 'Další věta',
+  'goTo.label': 'Přejít na podstatné jméno:',
+  'goTo.notFound': 'Podstatné jméno „{word}“ v seznamu není.',
 
   'filters.open': 'Filtry',
   'filters.title': 'Tvary k procvičování',

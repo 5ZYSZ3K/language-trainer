@@ -1,6 +1,7 @@
 import { getUiLanguage } from '../../i18n'
 import { fillTexts } from '../../i18n/dom'
-import { enableShortcuts, fillSpecialChars, finder, renderShortcutHelp, syncRoundActions } from '../../ui'
+import type { Language } from '../../languages'
+import { createGoTo, enableShortcuts, fillSpecialChars, finder, renderShortcutHelp, syncRoundActions, type GoTo } from '../../ui'
 import type { QuizHost, QuizInstance } from '../quiz-type'
 import { createFilterDialog } from './filter-dialog'
 import { ADJECTIVE_DECLENSION_GENERATORS } from './generators'
@@ -32,6 +33,7 @@ const AREA = `
       <button type="button" id="check-all" data-i18n="checkAll"></button>
       <button type="button" id="next"></button>
     </div>
+    <form id="go-to" class="go-to"></form>
   </main>
 
   <dialog id="filter-dialog" class="filters"></dialog>
@@ -46,8 +48,9 @@ const AREA = `
  * One sentence per round (see SentencePage, which decides everything this draws): the adjective and the noun in their
  * base forms with the case and number above it, then the verb form, a field for the adjective and one for the noun, and
  * a full stop. Enter checks a field and moves on; "Check all", "Filters" (a dialog of the 14 forms, a case and a number
- * each, as the noun quiz's) and "Skip", which turns into "Next sentence" once both fields are checked. Records into the
- * meters `adjectives`, `nouns` (per checked field) and `sentences` (per completed sentence).
+ * each, as the noun quiz's) and "Skip", which turns into "Next sentence" once both fields are checked. Under the
+ * buttons, a line to open a sentence on one noun by its dictionary form, the rest drawn as for a random one. Records
+ * into the meters `adjectives`, `nouns` (per checked field) and `sentences` (per completed sentence).
  */
 export function mountAdjectiveNounDeclension(container: HTMLElement, host: QuizHost<AdjectiveNounItem>): QuizInstance {
   const { items, language } = host
@@ -85,6 +88,7 @@ export function mountAdjectiveNounDeclension(container: HTMLElement, host: QuizH
   function applyTexts(): void {
     applyStaticTexts()
     filterDialog.applyTexts()
+    goTo.applyTexts()
     render()
   }
 
@@ -135,7 +139,11 @@ export function mountAdjectiveNounDeclension(container: HTMLElement, host: QuizH
     filterDialog.open()
   })
 
-  // Characters go into the field last typed in, or the first one still open.
+  const goToEl = find<HTMLFormElement>('#go-to')
+  const goTo = createGoToNoun(goToEl, page, language, showNewSentence)
+  goTo.input.addEventListener('focus', () => (lastFocused = goTo.input))
+
+  // Characters go into the field last typed in (the go-to field included), or the first one still open.
   fillSpecialChars(find('#chars'), language, () =>
     lastFocused && !lastFocused.readOnly ? lastFocused : inputs.find((input) => !input.readOnly),
   )
@@ -161,11 +169,12 @@ export function mountAdjectiveNounDeclension(container: HTMLElement, host: QuizH
 
   // Enter once the sentence is done starts the next one, wherever in the exercise the focus is. This listens while the
   // event is still on its way down (capture), before any field or button sees it: so the Enter that checks the last
-  // field (sentence not done yet) is left to the field, and only a later Enter gets here.
+  // field (sentence not done yet) is left to the field, and only a later Enter gets here. An Enter in the go-to line is
+  // always left to it.
   exerciseEl.addEventListener(
     'keydown',
     (event) => {
-      if (event.key !== 'Enter' || !page.complete) return
+      if (event.key !== 'Enter' || !page.complete || goToEl.contains(event.target as Node)) return
       // Stop here: a button must not also be activated by this Enter.
       event.preventDefault()
       event.stopPropagation()
@@ -182,4 +191,15 @@ export function mountAdjectiveNounDeclension(container: HTMLElement, host: QuizH
     newSentence()
   }
   return { applyTexts }
+}
+
+/**
+ * Fills `form` with the Go to noun line (the shared go-to block): it looks the typed word up among the page's nouns
+ * only, never the governing verbs, starts a sentence on the noun it finds and then calls `onOpened`, to draw it.
+ */
+export function createGoToNoun(form: HTMLFormElement, page: SentencePage, language: Language, onOpened: () => void): GoTo {
+  return createGoTo(form, page.nouns, language, t, (found) => {
+    page.start(found)
+    onOpened()
+  })
 }
