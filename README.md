@@ -487,7 +487,8 @@ src/
                governing verbs of each learned language (governing-verbs.<id>.ts, read only by the joins), what fills
                its first blank (draw.ts, page.ts) and its mount (mount.ts). It also holds what every sentence quiz
                shares, each part taking the cases the quiz offers, its texts and its meters: the items and their
-               contract checks (sentence-items.ts), the draw of a round and its steps, the noun, the case and number
+               contract checks (sentence-items.ts), the keys that every Czech adapter looks a form up by in the
+               owner's files (grammar-keys.cs.ts), the draw of a round and its steps, the noun, the case and number
                and the verb's person (sentence-draw.ts), the filter dialog's ticks while it is open (filter.ts, over
                the noun quiz's filter) and the page without its DOM (sentence-page.ts: SentenceRoundPage, the page of
                any sentence quiz whatever its round holds, and SentenceQuizPage, the page of a quiz of two fields that
